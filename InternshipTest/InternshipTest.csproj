@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.7.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Data.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfChart.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.SfDiagram.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -43,10 +46,14 @@
     <Reference Include="Syncfusion.Tools.WPF, Version=16.4460.0.52, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Expression.Blend.Sdk3.1.0.1340.1\lib\net35\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Interactivity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
@@ -71,10 +78,50 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="alglib\alglibinternal.cs" />
+    <Compile Include="alglib\alglibmisc.cs" />
+    <Compile Include="alglib\alglib_info.cs" />
+    <Compile Include="alglib\ap.cs" />
+    <Compile Include="alglib\dataanalysis.cs" />
+    <Compile Include="alglib\diffequations.cs" />
+    <Compile Include="alglib\fasttransforms.cs" />
+    <Compile Include="alglib\integration.cs" />
+    <Compile Include="alglib\interpolation.cs" />
+    <Compile Include="alglib\linalg.cs" />
+    <Compile Include="alglib\optimization.cs" />
+    <Compile Include="alglib\solvers.cs" />
+    <Compile Include="alglib\specialfunctions.cs" />
+    <Compile Include="alglib\statistics.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Path\Path.cs" />
+    <Compile Include="Classes\Path\PathSector.cs" />
+    <Compile Include="Classes\Path\PathSectorViewModel.cs" />
+    <Compile Include="Classes\Path\PathViewModel.cs" />
+    <Compile Include="Classes\Path\Tabular\TabularPathSection.cs" />
+    <Compile Include="Classes\Path\Tabular\TabularPathSectionViewModel.cs" />
+    <Compile Include="Classes\Results\LapTimeSimulation.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\GGDiagram.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\GGVDiagram.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\GGVDiagramViewModel.cs" />
+    <Compile Include="Classes\Simulation\LapTimeSimulation\LapTimSimulation.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Aerodynamics.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Brakes.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Car.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Engine.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Inertia.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\InputTables\EngineCurvesPoints.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\InputTables\AerodynamicMapPoint.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\InputTables\AerodynamicMapViewModel.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\InputTables\EngineCurvesViewModel.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\InputTables\GearRatio.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\InputTables\GearRatiosViewModel.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Suspension.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Tire.cs" />
+    <Compile Include="Classes\Vehicle\OneWheelModel\Transmission.cs" />
+    <Compile Include="Classes\Vehicle\TireModelMF52.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -98,6 +145,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
