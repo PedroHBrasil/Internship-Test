@@ -6,79 +6,92 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle.OneWheel
 {
-    /*
-     * Contains the aerodynamic properties of a car:
-     *  - AeroID: string which identifies the object;
-     *  - AeroMapPoints: class which defines the aerodynamic map (coefficients as function of speed and car height);
-     *  - FrontalArea: double which represents the vehicle's front view projection area [m²]; and
-     *  - AirDensity: double which represents the density of the air [kg/m³].
-     */
-    class Aerodynamics
+    /// <summary>
+    /// Contais the information about a one wheel model's vehicle aerodynamics.
+    /// </summary>
+    public class Aerodynamics : GenericInfo
     {
-        // Properties ------------------------------------------------------------------------------------------------------
-        public string AeroID { get; set; }
-        public List<AerodynamicMapPoint> AerodynamicMapPoints { get; set; }
+        #region Properties
+        /// <summary>
+        /// Aerodynamic map properties (wind speed, ride height, CD and CL).
+        /// </summary>
+        public AerodynamicMap AerodynamicMap { get; set; }
+        /// <summary>
+        /// Area of the vehicle's projection over the front plane projection [m²].
+        /// </summary>
         public double FrontalArea { get; set; }
+        /// <summary>
+        /// Density of the environment air [kg/m³].
+        /// </summary>
         public double AirDensity { get; set; }
-
-        public List<double> AerodynamicMapWindSpeeds { get; set; }
-        public List<double> AerodynamicMapCarHeights { get; set; }
-
-        // Constructors ----------------------------------------------------------------------------------------------------
-        public Aerodynamics()
+        /// <summary>
+        /// Wind speeds of the aerodynamic map [m/s].
+        /// </summary>
+        private List<double> AerodynamicMapWindSpeeds { get; set; }
+        /// <summary>
+        /// Ride heights of the aerodynamic map [m].
+        /// </summary>
+        private List<double> AerodynamicMapRideHeights { get; set; }
+        #endregion
+        #region Constructors
+        public Aerodynamics() { }
+        public Aerodynamics(string aeroID, string description, AerodynamicMap aeroMap, double frontalArea, double airDensity)
         {
-            AeroID = "Default";
-            AerodynamicMapPoints = new List<AerodynamicMapPoint>();
-            FrontalArea = 1; // m²
-            AirDensity = 1; // kg/m³
-        }
-        public Aerodynamics(string aeroID, List<AerodynamicMapPoint> aeroMapPoints, double frontalArea, double airDensity)
-        {
-            AeroID = aeroID;
-            AerodynamicMapPoints = aeroMapPoints;
-            FrontalArea = Math.Abs(frontalArea); // m²
-            AirDensity = Math.Abs(airDensity); // kg/m³
+            ID = aeroID;
+            Description = description;
+            AerodynamicMap = aeroMap;
+            FrontalArea = Math.Abs(frontalArea);
+            AirDensity = Math.Abs(airDensity);
             AerodynamicMapWindSpeeds = new List<double>();
-            AerodynamicMapCarHeights = new List<double>();
-            GetAerodynamicMapParameters();
+            AerodynamicMapRideHeights = new List<double>();
         }
-        // Methods ---------------------------------------------------------------------------------------------------------
+        #endregion
+        #region Methods
         public override string ToString()
         {
-            return AeroID;
+            return ID;
         }
-
-        private void GetAerodynamicMapParameters()
+        /// <summary>
+        /// Gets the aerodynamic map's wind speeds and ride heights.
+        /// </summary>
+        public void GetAerodynamicMapParameters()
         {
             // Aerodyanmic map row sweep "for" loop
-            foreach (AerodynamicMapPoint aerodynamicMapPoint in AerodynamicMapPoints)
+            foreach (AerodynamicMapPoint aerodynamicMapPoint in AerodynamicMap.MapPoints)
             {
                 // Current row parameters
                 double aerodynamicMapRowWindSpeed = aerodynamicMapPoint.WindRelativeSpeed;
-                double aerodynamicMapRowCarHeight = aerodynamicMapPoint.CarHeight;
+                double aerodynamicMapRowrideHeight = aerodynamicMapPoint.RideHeight;
                 // New parameter indicators initialization
                 bool isNewWindSpeed = true;
-                bool isNewCarHeight = true;
+                bool isNewrideHeight = true;
                 // New parameter indicators value determination
                 foreach (double windSpeed in AerodynamicMapWindSpeeds)
                 {
                     if (aerodynamicMapRowWindSpeed == windSpeed) isNewWindSpeed = false;
                 }
-                foreach (double carHeight in AerodynamicMapCarHeights)
+                foreach (double rideHeight in AerodynamicMapRideHeights)
                 {
-                    if (aerodynamicMapRowCarHeight == carHeight) isNewCarHeight = false;
+                    if (aerodynamicMapRowrideHeight == rideHeight) isNewrideHeight = false;
                 }
                 // New parameter values registration
                 if (isNewWindSpeed) AerodynamicMapWindSpeeds.Add(aerodynamicMapRowWindSpeed);
-                if (isNewCarHeight) AerodynamicMapCarHeights.Add(aerodynamicMapRowCarHeight);
+                if (isNewrideHeight) AerodynamicMapRideHeights.Add(aerodynamicMapRowrideHeight);
             }
             // Sort to ascending order
             AerodynamicMapWindSpeeds = AerodynamicMapWindSpeeds.OrderBy(d => d).ToList();
-            AerodynamicMapCarHeights = AerodynamicMapCarHeights.OrderBy(d => d).ToList();
+            AerodynamicMapRideHeights = AerodynamicMapRideHeights.OrderBy(d => d).ToList();
         }
 
-        public AerodynamicMapPoint InterpolateAerodynamicMap(double windSpeed, double carHeight)
+        /// <summary>
+        /// Interpolates the aerodynamic map to get aerodynamic coefficients.
+        /// </summary>
+        /// <param name="windSpeed"> Relative speed of the wind [m/s]. </param>
+        /// <param name="rideHeight"> Distance between the car and the ground [m]. </param>
+        /// <returns> Interpolated aerodynamic map point (wind speed, ride height, CD and CL). </returns>
+        public AerodynamicMapPoint InterpolateAerodynamicMap(double windSpeed, double rideHeight)
         {
+            AerodynamicMapPoint interpolatedAerodynamicMapPoint = new AerodynamicMapPoint();
             // Map interpolation based on the wind speed
             // Interpolated map list initialization
             List<AerodynamicMapPoint> aerodynamicMapInterpolatedByWindSpeed = new List<AerodynamicMapPoint>();
@@ -86,21 +99,21 @@ namespace InternshipTest.Vehicle.OneWheel
             if (windSpeed <= AerodynamicMapWindSpeeds.Min()) // Case speed is lower
             {
                 // Aerodynamic map rows sweep "for" loop
-                for (int row = 0; row < AerodynamicMapPoints.Count; row++)
+                for (int row = 0; row < AerodynamicMap.MapPoints.Count; row++)
                 {
                     // Checks if the speed in this row is the lowest speed of the map and gets the object if it is
-                    if (AerodynamicMapPoints[row].WindRelativeSpeed == AerodynamicMapWindSpeeds.Min())
-                        aerodynamicMapInterpolatedByWindSpeed.Add(AerodynamicMapPoints[row]);
+                    if (AerodynamicMap.MapPoints[row].WindRelativeSpeed == AerodynamicMapWindSpeeds.Min())
+                        aerodynamicMapInterpolatedByWindSpeed.Add(AerodynamicMap.MapPoints[row]);
                 }
             }
             else if (windSpeed >= AerodynamicMapWindSpeeds.Max()) // Case speed is higher
             {
                 // Aerodynamic map rows sweep "for" loop
-                for (int row = 0; row < AerodynamicMapPoints.Count; row++)
+                for (int row = 0; row < AerodynamicMap.MapPoints.Count; row++)
                 {
                     // Checks if the speed in this row is the highest speed of the map and gets the object if it is
-                    if (AerodynamicMapPoints[row].WindRelativeSpeed == AerodynamicMapWindSpeeds.Max())
-                        aerodynamicMapInterpolatedByWindSpeed.Add(AerodynamicMapPoints[row]);
+                    if (AerodynamicMap.MapPoints[row].WindRelativeSpeed == AerodynamicMapWindSpeeds.Max())
+                        aerodynamicMapInterpolatedByWindSpeed.Add(AerodynamicMap.MapPoints[row]);
                 }
             }
             else // Case the speed is in the aerodynamic map values interval
@@ -115,12 +128,12 @@ namespace InternshipTest.Vehicle.OneWheel
                 List<AerodynamicMapPoint> lowerAerodynamicMapPoints = new List<AerodynamicMapPoint>();
                 List<AerodynamicMapPoint> higherAerodynamicMapPoints = new List<AerodynamicMapPoint>();
                 // Gets the objects of the lower and upper aerodynamic maps
-                for (int row = 0; row < AerodynamicMapPoints.Count; row++)
+                for (int row = 0; row < AerodynamicMap.MapPoints.Count; row++)
                 {
-                    if (AerodynamicMapPoints[row].WindRelativeSpeed == lowerWindSpeed)
-                        lowerAerodynamicMapPoints.Add(AerodynamicMapPoints[row]);
-                    else if (AerodynamicMapPoints[row].WindRelativeSpeed == higherWindSpeed)
-                        higherAerodynamicMapPoints.Add(AerodynamicMapPoints[row]);
+                    if (AerodynamicMap.MapPoints[row].WindRelativeSpeed == lowerWindSpeed)
+                        lowerAerodynamicMapPoints.Add(AerodynamicMap.MapPoints[row]);
+                    else if (AerodynamicMap.MapPoints[row].WindRelativeSpeed == higherWindSpeed)
+                        higherAerodynamicMapPoints.Add(AerodynamicMap.MapPoints[row]);
                 }
                 // Linear interpolation ratio
                 double windSpeedInterpolationRatio = (windSpeed - lowerWindSpeed) / (higherWindSpeed - lowerWindSpeed);
@@ -131,13 +144,16 @@ namespace InternshipTest.Vehicle.OneWheel
                     {
                         AerodynamicMapPoint lowerAerodynamicMapPoint = lowerAerodynamicMapPoints[iLowerWindSpeed];
                         AerodynamicMapPoint higherAerodynamicMapPoint = higherAerodynamicMapPoints[iHigherWindSpeed];
-                        if (lowerAerodynamicMapPoint.CarHeight == higherAerodynamicMapPoint.CarHeight)
+                        if (lowerAerodynamicMapPoint.RideHeight == higherAerodynamicMapPoint.RideHeight)
                         {
                             // Interpolated aerodynamic map point
-                            AerodynamicMapPoint aerodynamicMapPoint = new AerodynamicMapPoint(windSpeed,
-                                lowerAerodynamicMapPoint.CarHeight + (higherAerodynamicMapPoint.CarHeight - lowerAerodynamicMapPoint.CarHeight) * windSpeedInterpolationRatio,
-                                lowerAerodynamicMapPoint.DragCoefficient + (higherAerodynamicMapPoint.DragCoefficient - lowerAerodynamicMapPoint.DragCoefficient) * windSpeedInterpolationRatio,
-                                lowerAerodynamicMapPoint.LiftCoefficient + (higherAerodynamicMapPoint.LiftCoefficient - lowerAerodynamicMapPoint.LiftCoefficient) * windSpeedInterpolationRatio);
+                            AerodynamicMapPoint aerodynamicMapPoint = new AerodynamicMapPoint
+                            {
+                                WindRelativeSpeed = windSpeed,
+                                RideHeight = lowerAerodynamicMapPoint.RideHeight,
+                                DragCoefficient = lowerAerodynamicMapPoint.DragCoefficient + (higherAerodynamicMapPoint.DragCoefficient - lowerAerodynamicMapPoint.DragCoefficient) * windSpeedInterpolationRatio,
+                                LiftCoefficient = lowerAerodynamicMapPoint.LiftCoefficient + (higherAerodynamicMapPoint.LiftCoefficient - lowerAerodynamicMapPoint.LiftCoefficient) * windSpeedInterpolationRatio
+                            };
                             // Registering of the point
                             aerodynamicMapInterpolatedByWindSpeed.Add(aerodynamicMapPoint);
                         }
@@ -147,55 +163,83 @@ namespace InternshipTest.Vehicle.OneWheel
 
             // Map interpolation based on the car height
             // Checks if the car height is lower, higher or in the range of the aerodynamic map
-            if (carHeight <= AerodynamicMapCarHeights.Min()) // Case height is lower
+            if (rideHeight <= AerodynamicMapRideHeights.Min()) // Case height is lower
             {
                 // Aerodynamic map rows sweep "for" loop
                 for (int row = 0; row < aerodynamicMapInterpolatedByWindSpeed.Count; row++)
                 {
                     // Checks if the height in this row is the lowest height of the map and gets the object if it is
-                    if (aerodynamicMapInterpolatedByWindSpeed[row].CarHeight == AerodynamicMapCarHeights.Min())
-                        return aerodynamicMapInterpolatedByWindSpeed[row];
+                    if (aerodynamicMapInterpolatedByWindSpeed[row].RideHeight == AerodynamicMapRideHeights.Min())
+                        interpolatedAerodynamicMapPoint = aerodynamicMapInterpolatedByWindSpeed[row];
                 }
             }
-            else if (carHeight >= AerodynamicMapCarHeights.Max()) // Case height is higher
+            else if (rideHeight >= AerodynamicMapRideHeights.Max()) // Case height is higher
             {
                 // Aerodynamic map rows sweep "for" loop
                 for (int row = 0; row < aerodynamicMapInterpolatedByWindSpeed.Count; row++)
                 {
                     // Checks if the height in this row is the highest height of the map and gets the object if it is
-                    if (aerodynamicMapInterpolatedByWindSpeed[row].CarHeight == AerodynamicMapCarHeights.Max())
-                        return aerodynamicMapInterpolatedByWindSpeed[row];
+                    if (aerodynamicMapInterpolatedByWindSpeed[row].RideHeight == AerodynamicMapRideHeights.Max())
+                        interpolatedAerodynamicMapPoint = aerodynamicMapInterpolatedByWindSpeed[row];
                 }
             }
             else
             {
                 // Finds the map's next lower height compared to the car height
-                int iCarHeight = 0;
-                while (carHeight <= AerodynamicMapCarHeights[iCarHeight]) iCarHeight++;
+                int irideHeight = 0;
+                while (rideHeight <= AerodynamicMapRideHeights[irideHeight]) irideHeight++;
                 // Lower and higher wind speeds
-                double lowerCarHeight = AerodynamicMapWindSpeeds[iCarHeight];
-                double higherCarHeight = AerodynamicMapWindSpeeds[iCarHeight + 1];
+                double lowerrideHeight = AerodynamicMapRideHeights[irideHeight];
+                double higherrideHeight = AerodynamicMapRideHeights[irideHeight + 1];
                 // Lower and upper aerodynamic map points initialization
                 AerodynamicMapPoint lowerAerodynamicMapPoint = new AerodynamicMapPoint();
                 AerodynamicMapPoint higherAerodynamicMapPoint = new AerodynamicMapPoint();
                 // Gets the objects of the lower and upper aerodynamic map points
                 for (int row = 0; row < aerodynamicMapInterpolatedByWindSpeed.Count; row++)
                 {
-                    if (aerodynamicMapInterpolatedByWindSpeed[row].CarHeight == lowerCarHeight)
+                    if (aerodynamicMapInterpolatedByWindSpeed[row].RideHeight == lowerrideHeight)
                         lowerAerodynamicMapPoint = aerodynamicMapInterpolatedByWindSpeed[row];
-                    else if (aerodynamicMapInterpolatedByWindSpeed[row].CarHeight == higherCarHeight)
+                    else if (aerodynamicMapInterpolatedByWindSpeed[row].RideHeight == higherrideHeight)
                         higherAerodynamicMapPoint = aerodynamicMapInterpolatedByWindSpeed[row];
                 }
                 // Linear interpolation ratio
-                double carHeightInterpolationRatio = (carHeight - lowerCarHeight) / (higherCarHeight - lowerCarHeight);
+                double rideHeightInterpolationRatio = (rideHeight - lowerrideHeight) / (higherrideHeight - lowerrideHeight);
                 // Interpolated aerodynamic map point
-                AerodynamicMapPoint aerodynamicMapPoint = new AerodynamicMapPoint(windSpeed, carHeight,
-                    lowerAerodynamicMapPoint.DragCoefficient + (higherAerodynamicMapPoint.DragCoefficient - lowerAerodynamicMapPoint.DragCoefficient) * carHeightInterpolationRatio,
-                    lowerAerodynamicMapPoint.LiftCoefficient + (higherAerodynamicMapPoint.LiftCoefficient - lowerAerodynamicMapPoint.LiftCoefficient) * carHeightInterpolationRatio);
+                AerodynamicMapPoint aerodynamicMapPoint = new AerodynamicMapPoint() {WindRelativeSpeed = windSpeed, RideHeight = rideHeight,
+                    DragCoefficient = lowerAerodynamicMapPoint.DragCoefficient + (higherAerodynamicMapPoint.DragCoefficient - lowerAerodynamicMapPoint.DragCoefficient) * rideHeightInterpolationRatio,
+                    LiftCoefficient = lowerAerodynamicMapPoint.LiftCoefficient + (higherAerodynamicMapPoint.LiftCoefficient - lowerAerodynamicMapPoint.LiftCoefficient) * rideHeightInterpolationRatio};
                 // Method return value
-                return aerodynamicMapPoint;
+                interpolatedAerodynamicMapPoint = aerodynamicMapPoint;
             }
-            return new AerodynamicMapPoint();
+            return interpolatedAerodynamicMapPoint;
+        }
+
+        #endregion
+    }
+
+    public class AerodynamicsMethods
+    {
+        /// <summary>
+        /// Gets the aerodynamic drag force.
+        /// </summary>
+        /// <param name="aerodynamics"> Vehicle's aerodynamics parameters. </param>
+        /// <param name="aerodynamicMapPoint"> Aerodynamic map point. </param>
+        /// <param name="speed"> Wind's Relative Speed [m/s] </param>
+        /// <returns> Aerodynamic drag force [N] </returns>
+        public static double GetAerodynamicDrag(Aerodynamics aerodynamics, AerodynamicMapPoint aerodynamicMapPoint, double speed)
+        {
+            return aerodynamicMapPoint.DragCoefficient * aerodynamics.AirDensity * aerodynamics.FrontalArea * Math.Pow(speed, 2) / 2;
+        }
+        /// <summary>
+        /// Gets the aerodynamic lift force.
+        /// </summary>
+        /// <param name="aerodynamics"> Vehicle's aerodynamics parameters. </param>
+        /// <param name="aerodynamicMapPoint"> Aerodynamic map point. </param>
+        /// <param name="speed"> Wind's Relative Speed [m/s] </param>
+        /// <returns> Aerodynamic lift force [N] </returns>
+        public static double GetAerodynamicLift(Aerodynamics aerodynamics, AerodynamicMapPoint aerodynamicMapPoint, double speed)
+        {
+            return aerodynamicMapPoint.LiftCoefficient * aerodynamics.AirDensity * aerodynamics.FrontalArea * Math.Pow(speed, 2) / 2;
         }
     }
 }

@@ -7,39 +7,64 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Simulation
 {
+    /// <summary>
+    /// Contains a GGV diagram information.
+    /// </summary>
     [Serializable]
-    class GGVDiagram
+    public class GGVDiagram : GenericInfo
     {
-        // Properties
+        #region Properties
+        /// <summary>
+        /// Car and setup associated with the GGV diagram.
+        /// </summary>
         public Vehicle.OneWheel.Car Car { get; set; }
+        /// <summary>
+        /// Amount of points at each GG diagram.
+        /// </summary>
         public int AmountOfPointsPerSpeed { get; set; }
+        /// <summary>
+        /// Amount of speeds of the GGV diagram.
+        /// </summary>
         public int AmountOfSpeeds { get; set; }
+        /// <summary>
+        /// Lowest speed of the GG diagrams [m/s].
+        /// </summary>
         public double LowestSpeed { get; set; }
+        /// <summary>
+        /// Highest speed of the GG diagrams [m/s].
+        /// </summary>
         public double HighestSpeed { get; set; }
-
+        /// <summary>
+        /// Speeds of the GGV Diagram [m/s].
+        /// </summary>
         public double[] Speeds { get; set; }
+        /// <summary>
+        /// GG diagrams which constitute the GGV diagram.
+        /// </summary>
         public List<GGDiagram> GGDiagrams { get; set; }
-        // Constructors
-        public GGVDiagram(Vehicle.OneWheel.Car car, int amountOfPointsPerSpeed, int amountOfSpeeds, double lowestSpeed, double highestSpeed)
+        #endregion
+
+        #region Constructors
+        public GGVDiagram() { }
+
+        public GGVDiagram(string id, string description, Vehicle.OneWheel.Car car, int amountOfPointsPerSpeed, int amountOfSpeeds, double lowestSpeed, double highestSpeed)
         {
+            ID = id;
+            Description = description;
             Car = car;
             AmountOfPointsPerSpeed = amountOfPointsPerSpeed;
             AmountOfSpeeds = amountOfSpeeds;
             LowestSpeed = lowestSpeed;
             HighestSpeed = highestSpeed;
-
+        }
+        #endregion
+        #region Methods
+        /// <summary>
+        /// Generates a GGV diagram.
+        /// </summary>
+        public void GenerateGGVDiagram()
+        {
             GGDiagrams = new List<GGDiagram>();
-
-            GenerateGGVDiagram();
-        }
-        // Methods
-        public override string ToString()
-        {
-            return "C: " + Car.CarID + " - S: " + Car.SetupID + " - nS: " + AmountOfSpeeds.ToString() + " - nP: " + AmountOfPointsPerSpeed.ToString();
-        }
-
-        private void GenerateGGVDiagram()
-        {
             // Checks if the inputed speed limits extrapolate the car's operation speed range
             if (LowestSpeed < Car.LowestSpeed) LowestSpeed = Car.LowestSpeed;
             if (HighestSpeed > Car.HighestSpeed) HighestSpeed = Car.HighestSpeed;
@@ -51,14 +76,24 @@ namespace InternshipTest.Simulation
                 GGDiagrams.Add(new GGDiagram(speed, Car, AmountOfPointsPerSpeed));
             }
         }
-
-        public GGDiagram GetGGDiagramFromInterpolationBySpeed(double speed, Vehicle.OneWheel.Car car)
+        /// <summary>
+        /// Gets a GG diagram for a given speed.
+        /// </summary>
+        /// <param name="speed"> Car speed [m/s]. </param>
+        /// <param name="car"> Car and Setup object. </param>
+        /// <returns> Interpolated GG diagram </returns>
+        public GGDiagram GetGGDiagramForASpeed(double speed, Vehicle.OneWheel.Car car)
         {
             // Checks if the speed is in the GGV diagram speed range
-            if (speed < LowestSpeed || speed > HighestSpeed) return GetGGDiagramByExtrapolationOfTheGGVDiagram(speed);
-            else return GetGGDiagramByInterpolationOfTheGGVDiagram(speed, car);
+            if (speed < LowestSpeed || speed > HighestSpeed) return _GetGGDiagramByExtrapolationOfTheGGVDiagram(speed);
+            else return _GetGGDiagramByInterpolationOfTheGGVDiagram(speed, car);
         }
-        private GGDiagram GetGGDiagramByExtrapolationOfTheGGVDiagram(double speed)
+        /// <summary>
+        /// Gets a GG diagram via extrapolation of the GGV diagram (gets the closest GG).
+        /// </summary>
+        /// <param name="speed"> Car's speed [m/s]. </param>
+        /// <returns> Extrapolated GG diagram </returns>
+        private GGDiagram _GetGGDiagramByExtrapolationOfTheGGVDiagram(double speed)
         {
             // Gets the index of the GG diagram to be used 
             int extrapolationIndex;
@@ -70,14 +105,20 @@ namespace InternshipTest.Simulation
             extrapolatedGGDiagram.GetAssociatedCurvatures();
             return extrapolatedGGDiagram;
         }
-        private GGDiagram GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.OneWheel.Car car)
+        /// <summary>
+        /// Gets a GG diagram via interpolation of the GGV diagram.
+        /// </summary>
+        /// <param name="speed"> Car's speed [m/s]. </param>
+        /// <param name="car"> Car and Setup object. </param>
+        /// <returns> Interpolated GG diagram </returns>
+        private GGDiagram _GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.OneWheel.Car car)
         {
             // Result initialization
             GGDiagram interpolatedGGDiagram = new GGDiagram(car);
             // Gets the index of the index of the immediately lower speed GG diagram
             int iLowerSpeed;
             for (iLowerSpeed = 0; iLowerSpeed < AmountOfSpeeds - 1; iLowerSpeed++)
-                if (speed > Speeds[iLowerSpeed] && speed < Speeds[iLowerSpeed + 1]) break;
+                if (speed > Speeds[iLowerSpeed] && speed <= Speeds[iLowerSpeed + 1]) break;
             // Gets the GG diagrams to be interpolated
             GGDiagram lowerSpeedGGDiagram = GGDiagrams[iLowerSpeed];
             GGDiagram higherSpeedGGDiagram = GGDiagrams[iLowerSpeed + 1];
@@ -100,5 +141,6 @@ namespace InternshipTest.Simulation
             // Returns the interpolated GG diagram
             return interpolatedGGDiagram;
         }
+        #endregion
     }
 }

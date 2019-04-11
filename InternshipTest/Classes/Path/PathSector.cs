@@ -6,24 +6,29 @@ using System.Threading.Tasks;
 
 namespace InternshipTest
 {
+    /// <summary>
+    /// Contains the information about a path sector.
+    /// </summary>
     public class PathSector
     {
-        // Properties ---------------------------------------------------
-        public int SectorID { get; set; }
-        public double SectorStartDistance { get; set; }
-        public bool IsDRSEnabled { get; set; }
-        // Constructors -------------------------------------------------
-        public PathSector()
+        #region Properties
+        /// <summary>
+        /// Path sector index.
+        /// </summary>
+        public int Index { get; set; }
+        /// <summary>
+        /// Path sector start distance [m].
+        /// </summary>
+        public double StartDistance { get; set; }
+        #endregion
+
+        #region Constructors
+        public PathSector() { }
+        public PathSector(int index, double startDistance)
         {
-            SectorID = 0;
-            SectorStartDistance = 0;
-            IsDRSEnabled = false;
+            Index = index;
+            StartDistance = startDistance;
         }
-        public PathSector(int sectorID, double sectorStartDistance, bool isDRSEnabled)
-        {
-            SectorID = sectorID;
-            SectorStartDistance = sectorStartDistance;
-            IsDRSEnabled = isDRSEnabled;
-        }
+        #endregion
     }
 }

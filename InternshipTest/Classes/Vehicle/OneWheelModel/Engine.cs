@@ -6,41 +6,42 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle.OneWheel
 {
-    /*
-     * Contains the inertia properties of a car:
-     *  - EngineID: string which identifies the variable;
-     *  - EngineCurves: list which contains the torque, braking torque and specific consumption curves;
-     *  - MaxThrottle: double which represents the vehicle's maximum throttle opening(torque curve scalling factor); and
-     *  - FuelDensity: double which represents the vehicle's fuel's density.
-     */
-    class Engine
+    /// <summary>
+    /// Contains the information about a one wheel model's engine subsystem.
+    /// </summary>
+    public class Engine : GenericInfo
     {
-        // Properties ---------------------------------------------------------------------------------------------------------
-        public string EngineID { get; set; }
-        public List<EngineCurvesPoint> EngineCurves { get; set; }
+        #region Properties
+        /// <summary>
+        /// Engine's curves (torque, braking torque and specific fuel consumption as functions of the rotational speed).
+        /// </summary>
+        public EngineCurves EngineCurves { get; set; }
+        /// <summary>
+        /// Ratio which represents the maximum avaliable throttle openning.
+        /// </summary>
         public double MaxThrottle { get; set; }
+        /// <summary>
+        /// Density of the engine's fuel [kg/m³].
+        /// </summary>
         public double FuelDensity { get; set; }
+        #endregion
+        #region Constructors
+        public Engine() { }
 
-        // Constructors -------------------------------------------------------------------------------------------------------
-        public Engine()
+        public Engine(string engineID, string description, EngineCurves engineCurves, double maxThrottle, double fuelDensity)
         {
-            EngineID = "Default";
-            EngineCurves = new List<EngineCurvesPoint>();
-            MaxThrottle = 100; // %
-            FuelDensity = 719.7; // kg/m^3 (gasoline) 
-        }
-
-        public Engine(string engineID, List<EngineCurvesPoint> engineCurves, double maxThrottle, double fuelDensity)
-        {
-            EngineID = engineID;
+            ID = engineID;
+            Description = description;
             EngineCurves = engineCurves;
             MaxThrottle = Math.Abs(maxThrottle); // %
             FuelDensity = Math.Abs(fuelDensity); // kg/m^3
         }
-        // Methods ------------------------------------------------------------------------------------------------------------
+        #endregion
+        #region Methods
         public override string ToString()
         {
-            return EngineID;
+            return ID;
         }
+        #endregion
     }
 }

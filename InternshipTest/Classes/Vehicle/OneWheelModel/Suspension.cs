@@ -6,38 +6,37 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle.OneWheel
 {
-    /*
-     * Contains the parametrs of a car's suspension.
-     *  - SuspensionID: string which identifies the object;
-     *  - HeaveStiffness: Equivalent stiffness of the suspension in heave (without tires) [N/mm]; and
-     *  - CarHeight: When loaded only with the car's weight, the distance 
-     *  between a reference point in the chassis and the ground [mm].
-     */
-    class Suspension
+    /// <summary>
+    /// Contains the information about a one wheel model's suspension subsystem.
+    /// </summary>
+    public class Suspension : GenericInfo
     {
-        // Properties -------------------------------------------------------------------------
-        public string SuspensionID { get; set; }
+        #region Properties
+        /// <summary>
+        /// Equivalent stiffness in heave of the car [N/m].
+        /// </summary>
         public double HeaveStiffness { get; set; }
-        public double CarHeight { get; set; }
+        /// <summary>
+        /// Distance between the ground and the car (reference for the aerodynamic map) [m].
+        /// </summary>
+        public double RideHeight { get; set; }
+        #endregion
+        #region Constructors
+        public Suspension() { }
 
-        // Constructors -----------------------------------------------------------------------
-        public Suspension()
+        public Suspension(string suspensionID, string description, double heaveStiffness, double rideHeight)
         {
-            SuspensionID = "Default";
-            HeaveStiffness = 1; // N/mm
-            CarHeight = 1; // mm
+            ID = suspensionID;
+            Description = description;
+            HeaveStiffness = Math.Abs(heaveStiffness);
+            RideHeight = Math.Abs(rideHeight);
         }
-
-        public Suspension(string suspensionID, double heaveStiffness, double carHeight)
-        {
-            SuspensionID = suspensionID;
-            HeaveStiffness = heaveStiffness; // N/mm
-            CarHeight = carHeight; // mm
-        }
-        // Methods ----------------------------------------------------------------------------
+        #endregion
+        #region Methods
         public override string ToString()
         {
-            return SuspensionID;
+            return ID;
         }
+        #endregion
     }
 }

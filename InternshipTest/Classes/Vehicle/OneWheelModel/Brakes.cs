@@ -6,34 +6,32 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle.OneWheel
 {
-    class Brakes
+    /// <summary>
+    /// Containsthe information about a one wheel model brakes subsystem.
+    /// </summary>
+    public class Brakes : GenericInfo
     {
-        /*
-         * Contains the brakes properties of a car:
-         *  - BrakesID: string which identifies the object; and
-         *  - MaxTorque: double which represents the maximum appliable torque allowed by the brake system [Nm].
-         */
-        // Properties ---------------------------------------------------------------
-        public string BrakesID { get; set; }
+        #region Properties
+        /// <summary>
+        /// Maximum appliable torque by the brakes subsystem [N*m].
+        /// </summary>
         public double MaxTorque { get; set; }
+        #endregion
+        #region Constructors
+        public Brakes() { }
 
-        // Constructors -------------------------------------------------------------
-        public Brakes()
+        public Brakes(string brakesID, string description, double maxTorque)
         {
-            BrakesID = "Default";
-            MaxTorque = 1; // Nm
-        }
-
-        public Brakes(string brakesID, double maxTorque)
-        {
-            BrakesID = brakesID;
+            ID = brakesID;
+            Description = description;
             MaxTorque = Math.Abs(maxTorque); // Nm
         }
-
-        // Methods -----------------------------------------------------------------
+        #endregion
+        #region Methods
         public override string ToString()
         {
-            return BrakesID;
+            return ID;
         }
+        #endregion
     }
 }

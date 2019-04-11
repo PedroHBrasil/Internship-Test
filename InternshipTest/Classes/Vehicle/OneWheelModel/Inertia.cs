@@ -6,44 +6,46 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle.OneWheel
 {
-    /*
-     * Contains the inertia properties of a car:
-     *  - InertiaID: string which identifies the object;
-     *  - TotalMass: double which represents the vehicle's total mass in kg;
-     *  - UnsprungMass: double which represents the vehicle's total unsprung mass in kg; and
-     *  - RotPartsMI: double which represents the total moment of inertia of the vehicle's rotational parts.
-     */
-    class Inertia
+    /// <summary>
+    /// Contains the information about a one wheel model's vehicle's inertia.
+    /// </summary>
+    public class Inertia : GenericInfo
     {
-        // Properties ------------------------------------------------------------------------
-        public string InertiaID { get; set; }
+        #region Properties
+        /// <summary>
+        /// Car total mass [kg].
+        /// </summary>
         public double TotalMass { get; set; }
+        /// <summary>
+        /// Car's total unsprung mass [kg]. 
+        /// </summary>
         public double UnsprungMass { get; set; }
+        /// <summary>
+        /// Sum of the car's rotational parts moment of inertia [kg*m²].
+        /// </summary>
         public double RotPartsMI { get; set; }
+        /// <summary>
+        /// Gravity acceleration [m/s²].
+        /// </summary>
         public double Gravity { get; set; }
-
-        // Constructors ----------------------------------------------------------------------
-        public Inertia()
+        #endregion
+        #region Constructors
+        public Inertia() { }
+        public Inertia(string inertiaID, string description, double totalMass, double unsprungMass, double rotPartsMI, double gravity)
         {
-            InertiaID = "Default";
-            TotalMass = 260; // kg
-            UnsprungMass = 50; // kg
-            RotPartsMI = 5; // kg*m^2
-            Gravity = 10;   // m/s²
+            ID = inertiaID;
+            Description = description;
+            TotalMass = Math.Abs(totalMass);
+            UnsprungMass = Math.Abs(unsprungMass);
+            RotPartsMI = Math.Abs(rotPartsMI);
+            Gravity = Math.Abs(gravity);
         }
-
-        public Inertia(string inertiaID, double totalMass, double unsprungMass, double rotPartsMI, double gravity)
-        {
-            InertiaID = inertiaID;
-            TotalMass = Math.Abs(totalMass); // kg
-            UnsprungMass = Math.Abs(unsprungMass); // kg
-            RotPartsMI = Math.Abs(rotPartsMI); // kg*m^2
-            Gravity = Math.Abs(gravity);   // m/s²
-        }
-        // Methods ---------------------------------------------------------------------------
+        #endregion
+        #region Methods
         public override string ToString()
         {
-            return InertiaID;
+            return ID;
         }
+        #endregion
     }
 }

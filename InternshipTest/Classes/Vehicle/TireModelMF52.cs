@@ -7,170 +7,110 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
-    /*
-     * Contains the MF5.2 tire model coefficients of a tire.
-     *  - FzO [N]: nominal normal load;
-     *  - VO [m/s]: nominal speed; and
-     *  - RO [m]: unloaded radius.
-     */
-    class TireModelMF52
+    /// <summary>
+    /// Contains the parameters of a Pacejka's MF5.2 tire model.
+    /// </summary>
+    public class TireModelMF52 : GenericInfo
     {
-        // Fields
-        private double ksi0 = 1, ksi1 = 1, ksi2 = 1, ksi3 = 1, ksi4 = 1, ksi5 = 1, ksi6 = 1, ksi7 = 1, ksi8 = 1,
+        #region Fields
+        private readonly double ksi0 = 1, ksi1 = 1, ksi2 = 1, ksi3 = 1, ksi4 = 1, ksi5 = 1, ksi6 = 1, ksi7 = 1, ksi8 = 1,
             epsilonx = Math.Pow(10, -3), epsilony = Math.Pow(10, -1), epsilonK = Math.Pow(10, -2), epsilonV = Math.Pow(10, -3);
-
-        // Properties ---------------------------------------------------------------------------------------------------------------------------
+        #endregion
+        #region Properties
         // Tire Model Coefficents File
         public string FileLocation { get; set; }
         // Tire Model adimensionalization coefficients
-        public double FzO { get; set; }
-        public double VO { get; set; }
-        public double RO { get; set; }
+        public double FzO { get; set; }        public double VO { get; set; }        public double RO { get; set; }
         // Tire Model coefficients
-        public double pKy1 { get; set; }
-        public double pKy2 { get; set; }
-        public double pKy3 { get; set; }
-        public double pKy4 { get; set; }
-        public double pKy5 { get; set; }
-        public double pKy6 { get; set; }
-        public double pKy7 { get; set; }
-        public double pVy1 { get; set; }
-        public double pVy2 { get; set; }
-        public double pVy3 { get; set; }
-        public double pHy1 { get; set; }
-        public double pHy2 { get; set; }
-        public double pEy1 { get; set; }
-        public double pEy2 { get; set; }
-        public double pEy3 { get; set; }
-        public double pEy4 { get; set; }
-        public double pEy5 { get; set; }
-        public double pDy1 { get; set; }
-        public double pDy2 { get; set; }
-        public double pDy3 { get; set; }
-        public double pCy1 { get; set; }
-        public double qHz1 { get; set; }
-        public double qHz2 { get; set; }
-        public double qHz3 { get; set; }
-        public double qHz4 { get; set; }
-        public double qBz1 { get; set; }
-        public double qBz2 { get; set; }
-        public double qBz3 { get; set; }
-        public double qBz4 { get; set; }
-        public double qBz5 { get; set; }
-        public double qBz6 { get; set; }
-        public double qBz9 { get; set; }
-        public double qBz10 { get; set; }
-        public double qDz1 { get; set; }
-        public double qDz2 { get; set; }
-        public double qDz3 { get; set; }
-        public double qDz4 { get; set; }
-        public double qDz6 { get; set; }
-        public double qDz7 { get; set; }
-        public double qDz8 { get; set; }
-        public double qDz9 { get; set; }
-        public double qDz10 { get; set; }
-        public double qDz11 { get; set; }
-        public double qEz1 { get; set; }
-        public double qEz2 { get; set; }
-        public double qEz3 { get; set; }
-        public double qEz4 { get; set; }
-        public double qEz5 { get; set; }
-        public double qCz1 { get; set; }
-        public double pVx1 { get; set; }
-        public double pVx2 { get; set; }
-        public double pHx1 { get; set; }
-        public double pHx2 { get; set; }
-        public double pKx1 { get; set; }
-        public double pKx2 { get; set; }
-        public double pKx3 { get; set; }
-        public double pEx1 { get; set; }
-        public double pEx2 { get; set; }
-        public double pEx3 { get; set; }
-        public double pEx4 { get; set; }
-        public double pDx1 { get; set; }
-        public double pDx2 { get; set; }
-        public double pDx3 { get; set; }
-        public double pCx1 { get; set; }
-        public double rHx1 { get; set; }
-        public double rEx1 { get; set; }
-        public double rEx2 { get; set; }
-        public double rCx1 { get; set; }
-        public double rBx1 { get; set; }
-        public double rBx2 { get; set; }
-        public double rBx3 { get; set; }
-        public double rVy1 { get; set; }
-        public double rVy2 { get; set; }
-        public double rVy3 { get; set; }
-        public double rVy4 { get; set; }
-        public double rVy5 { get; set; }
-        public double rVy6 { get; set; }
-        public double rHy1 { get; set; }
-        public double rHy2 { get; set; }
-        public double rEy1 { get; set; }
-        public double rEy2 { get; set; }
-        public double rCy1 { get; set; }
-        public double rBy1 { get; set; }
-        public double rBy2 { get; set; }
-        public double rBy3 { get; set; }
-        public double rBy4 { get; set; }
-        public double ssz1 { get; set; }
-        public double ssz2 { get; set; }
-        public double ssz3 { get; set; }
-        public double ssz4 { get; set; }
-        public double qsx1 { get; set; }
-        public double qsx2 { get; set; }
-        public double qsx3 { get; set; }
-        public double qsx4 { get; set; }
-        public double qsx5 { get; set; }
-        public double qsx6 { get; set; }
-        public double qsx7 { get; set; }
-        public double qsx8 { get; set; }
-        public double qsx9 { get; set; }
-        public double qsx10 { get; set; }
-        public double qsx11 { get; set; }
-        public double qsx12 { get; set; }
-        public double qsx13 { get; set; }
-        public double qsx14 { get; set; }
-        public double qsy1 { get; set; }
-        public double qsy2 { get; set; }
-        public double qsy3 { get; set; }
-        public double qsy4 { get; set; }
-        public double qsy5 { get; set; }
-        public double qsy6 { get; set; }
-        public double qsy7 { get; set; }
+        public double pKy1 { get; set; }        public double pKy2 { get; set; }        public double pKy3 { get; set; }
+        public double pKy4 { get; set; }        public double pKy5 { get; set; }        public double pKy6 { get; set; }
+        public double pKy7 { get; set; }        public double pVy1 { get; set; }        public double pVy2 { get; set; }
+        public double pVy3 { get; set; }        public double pHy1 { get; set; }        public double pHy2 { get; set; }
+        public double pEy1 { get; set; }        public double pEy2 { get; set; }        public double pEy3 { get; set; }
+        public double pEy4 { get; set; }        public double pEy5 { get; set; }        public double pDy1 { get; set; }
+        public double pDy2 { get; set; }        public double pDy3 { get; set; }        public double pCy1 { get; set; }
+        public double qHz1 { get; set; }        public double qHz2 { get; set; }        public double qHz3 { get; set; }
+        public double qHz4 { get; set; }        public double qBz1 { get; set; }        public double qBz2 { get; set; }
+        public double qBz3 { get; set; }        public double qBz4 { get; set; }        public double qBz5 { get; set; }
+        public double qBz6 { get; set; }        public double qBz9 { get; set; }        public double qBz10 { get; set; }
+        public double qDz1 { get; set; }        public double qDz2 { get; set; }        public double qDz3 { get; set; }
+        public double qDz4 { get; set; }        public double qDz6 { get; set; }        public double qDz7 { get; set; }
+        public double qDz8 { get; set; }        public double qDz9 { get; set; }        public double qDz10 { get; set; }
+        public double qDz11 { get; set; }        public double qEz1 { get; set; }        public double qEz2 { get; set; }
+        public double qEz3 { get; set; }        public double qEz4 { get; set; }        public double qEz5 { get; set; }
+        public double qCz1 { get; set; }        public double pVx1 { get; set; }        public double pVx2 { get; set; }
+        public double pHx1 { get; set; }        public double pHx2 { get; set; }        public double pKx1 { get; set; }
+        public double pKx2 { get; set; }        public double pKx3 { get; set; }        public double pEx1 { get; set; }
+        public double pEx2 { get; set; }        public double pEx3 { get; set; }        public double pEx4 { get; set; }
+        public double pDx1 { get; set; }        public double pDx2 { get; set; }        public double pDx3 { get; set; }
+        public double pCx1 { get; set; }        public double rHx1 { get; set; }        public double rEx1 { get; set; }
+        public double rEx2 { get; set; }        public double rCx1 { get; set; }        public double rBx1 { get; set; }
+        public double rBx2 { get; set; }        public double rBx3 { get; set; }        public double rVy1 { get; set; }
+        public double rVy2 { get; set; }        public double rVy3 { get; set; }        public double rVy4 { get; set; }
+        public double rVy5 { get; set; }        public double rVy6 { get; set; }        public double rHy1 { get; set; }
+        public double rHy2 { get; set; }        public double rEy1 { get; set; }        public double rEy2 { get; set; }
+        public double rCy1 { get; set; }        public double rBy1 { get; set; }        public double rBy2 { get; set; }
+        public double rBy3 { get; set; }        public double rBy4 { get; set; }        public double ssz1 { get; set; }
+        public double ssz2 { get; set; }        public double ssz3 { get; set; }        public double ssz4 { get; set; }
+        public double qsx1 { get; set; }        public double qsx2 { get; set; }        public double qsx3 { get; set; }
+        public double qsx4 { get; set; }        public double qsx5 { get; set; }        public double qsx6 { get; set; }
+        public double qsx7 { get; set; }        public double qsx8 { get; set; }        public double qsx9 { get; set; }
+        public double qsx10 { get; set; }        public double qsx11 { get; set; }        public double qsx12 { get; set; }
+        public double qsx13 { get; set; }        public double qsx14 { get; set; }        public double qsy1 { get; set; }
+        public double qsy2 { get; set; }        public double qsy3 { get; set; }        public double qsy4 { get; set; }
+        public double qsy5 { get; set; }        public double qsy6 { get; set; }        public double qsy7 { get; set; }
         // Tire Model scaling factors
-        public double lambdaFzO { get; set; }
-        public double lambdaMux { get; set; }
-        public double lambdaMuy { get; set; }
-        public double lambdaMuV { get; set; }
-        public double lambdaKxk { get; set; }
-        public double lambdaKya { get; set; }
-        public double lambdaCx { get; set; }
-        public double lambdaCy { get; set; }
-        public double lambdaEx { get; set; }
-        public double lambdaEy { get; set; }
-        public double lambdaHx { get; set; }
-        public double lambdaHy { get; set; }
-        public double lambdaVx { get; set; }
-        public double lambdaVy { get; set; }
-        public double lambdaKyg { get; set; }
-        public double lambdaKzg { get; set; }
-        public double lambdat { get; set; }
-        public double lambdaMr { get; set; }
-        public double lambdaxa { get; set; }
-        public double lambdayk { get; set; }
-        public double lambdaVyk { get; set; }
-        public double lambdas { get; set; }
-        public double lambdaCz { get; set; }
-        public double lambdaMx { get; set; }
-        public double lambdaVMx { get; set; }
-        public double lambdaMy { get; set; }
-
-        // Constructors ----------------------------------------------------------------------------------------------------------------------------
+        public double lambdaFzO { get; set; }        public double lambdaMux { get; set; }
+        public double lambdaMuy { get; set; }        public double lambdaMuV { get; set; }
+        public double lambdaKxk { get; set; }        public double lambdaKya { get; set; }
+        public double lambdaCx { get; set; }        public double lambdaCy { get; set; }
+        public double lambdaEx { get; set; }        public double lambdaEy { get; set; }
+        public double lambdaHx { get; set; }        public double lambdaHy { get; set; }
+        public double lambdaVx { get; set; }        public double lambdaVy { get; set; }
+        public double lambdaKyg { get; set; }        public double lambdaKzg { get; set; }
+        public double lambdat { get; set; }        public double lambdaMr { get; set; }
+        public double lambdaxa { get; set; }        public double lambdayk { get; set; }
+        public double lambdaVyk { get; set; }        public double lambdas { get; set; }
+        public double lambdaCz { get; set; }        public double lambdaMx { get; set; }
+        public double lambdaVMx { get; set; }        public double lambdaMy { get; set; }
+        #endregion
+        #region Constructors
         public TireModelMF52()
         {
-            // Tire model file address
-            FileLocation = " ";
+            _SetUpNewTireModel();
+        }
+
+        public TireModelMF52(string modelID, string description, string fileLocation, List<double> lambdaList)
+        {
+            ID = modelID;
+            Description = description;
+            FileLocation = fileLocation;
+            // Sets up a new tire model with all of the coefficients equal to zero
+            _SetUpNewTireModel();
+            // Loads the coefficients from the desired file
+            _LoadCoefficientsFromFile();            
+            // Scaling factors
+            lambdaFzO = lambdaList[0]; lambdaMux = lambdaList[1]; lambdaMuy = lambdaList[2];
+            lambdaMuV = lambdaList[3]; lambdaKxk = lambdaList[4]; lambdaKya = lambdaList[5];
+            lambdaCx = lambdaList[6]; lambdaCy = lambdaList[7]; lambdaEx = lambdaList[8];
+            lambdaEy = lambdaList[9]; lambdaHx = lambdaList[10]; lambdaHy = lambdaList[11];
+            lambdaVx = lambdaList[12]; lambdaVy = lambdaList[13]; lambdaKyg = lambdaList[14];
+            lambdaKzg = lambdaList[15]; lambdat = lambdaList[16]; lambdaMr = lambdaList[17];
+            lambdaxa = lambdaList[18]; lambdayk = lambdaList[19]; lambdaVyk = lambdaList[20];
+            lambdas = lambdaList[21]; lambdaCz = lambdaList[22]; lambdaMx = lambdaList[23];
+            lambdaVMx = lambdaList[24]; lambdaMy = lambdaList[25];
+        }
+        #endregion
+        #region Methods
+        public override string ToString()
+        {
+            return ID;
+        }
+        /// <summary>
+        /// Sets up the tire model coefficients so that thay are all zero.
+        /// </summary>
+        private void _SetUpNewTireModel()
+        {
             // Adimensionalization coefficients
             FzO = 0; VO = 0; RO = 0;
             // Fitting coefficients
@@ -195,63 +135,12 @@ namespace InternshipTest.Vehicle
             lambdas = 1; lambdaCz = 1; lambdaMx = 1;
             lambdaVMx = 1; lambdaMy = 1;
         }
-
-        public TireModelMF52(double FzO, double VO, double RO, double pKy1, double pKy2, double pKy3, double pKy4, double pKy5, double pKy6, double pKy7,
-            double pVy1, double pVy2, double pVy3, double pHy1, double pHy2, double pEy1, double pEy2, double pEy3, double pEy4, double pEy5,
-            double pDy1, double pDy2, double pDy3, double pCy1, double qHz1, double qHz2, double qHz3, double qHz4, double qBz1, double qBz2,
-            double qBz3, double qBz4, double qBz5, double qBz6, double qBz9, double qBz10, double qDz1, double qDz2, double qDz3, double qDz4,
-            double qDz6, double qDz7, double qDz8, double qDz9, double qDz10, double qDz11, double qEz1, double qEz2, double qEz3, double qEz4,
-            double qEz5, double qCz1, double pVx1, double pVx2, double pHx1, double pHx2, double pKx1, double pKx2, double pKx3, double pEx1,
-            double pEx2, double pEx3, double pEx4, double pDx1, double pDx2, double pDx3, double pCx1, double rHx1, double rEx1, double rEx2,
-            double rCx1, double rBx1, double rBx2, double rBx3, double rVy1, double rVy2, double rVy3, double rVy4, double rVy5, double rVy6,
-            double rHy1, double rHy2, double rEy1, double rEy2, double rCy1, double rBy1, double rBy2, double rBy3, double rBy4, double ssz1,
-            double ssz2, double ssz3, double ssz4, double qsx1, double qsx2, double qsx3, double qsx4, double qsx5, double qsx6, double qsx7,
-            double qsx8, double qsx9, double qsx10, double qsx11, double qsx12, double qsx13, double qsx14, double qsy1, double qsy2, double qsy3,
-            double qsy4, double qsy5, double qsy6, double qsy7, double lambdaFzO, double lambdaMux, double lambdaMuy, double lambdaMuV, double lambdaKxk,
-            double lambdaKya, double lambdaCx, double lambdaCy, double lambdaEx, double lambdaEy, double lambdaHx, double lambdaHy, double lambdaVx,
-            double lambdaVy, double lambdaKyg, double lambdaKzg, double lambdat, double lambdaMr, double lambdaxa, double lambdayk, double lambdaVyk, double lambdas, double lambdaCz,
-            double lambdaMx, double lambdaVMx, double lambdaMy)
-        {
-            // Tire model file address
-            FileLocation = " ";
-            // Adimensionalization coefficients
-            this.FzO = FzO; this.VO = VO; this.RO = RO;
-            // Fitting coefficients
-            this.pKy1 = pKy1; this.pKy2 = pKy2; this.pKy3 = pKy3; this.pKy4 = pKy4; this.pKy5 = pKy5; this.pKy6 = pKy6; this.pKy7 = pKy7; this.pVy1 = pVy1; this.pVy2 = pVy2;
-            this.pVy3 = pVy3; this.pHy1 = pHy1; this.pHy2 = pHy2; this.pEy1 = pEy1; this.pEy2 = pEy2; this.pEy3 = pEy3; this.pEy4 = pEy4; this.pEy5 = pEy5;
-            this.pDy1 = pDy1; this.pDy2 = pDy2; this.pDy3 = pDy3; this.pCy1 = pCy1; this.qHz1 = qHz1; this.qHz2 = qHz2; this.qHz3 = qHz3; this.qHz4 = qHz4;
-            this.qBz1 = qBz1; this.qBz2 = qBz2; this.qBz3 = qBz3; this.qBz4 = qBz4; this.qBz5 = qBz5; this.qBz6 = qBz6; this.qBz9 = qBz9; this.qBz10 = qBz10;
-            this.qDz1 = qDz1; this.qDz2 = qDz2; this.qDz3 = qDz3; this.qDz4 = qDz4; this.qDz6 = qDz6; this.qDz7 = qDz7; this.qDz8 = qDz8; this.qDz9 = qDz9;
-            this.qDz10 = qDz10; this.qDz11 = qDz11; this.qEz1 = qEz1; this.qEz2 = qEz2; this.qEz3 = qEz3; this.qEz4 = qEz4; this.qEz5 = qEz5; this.qCz1 = qCz1;
-            this.pVx1 = pVx1; this.pVx2 = pVx2; this.pHx1 = pHx1; this.pHx2 = pHx2; this.pKx1 = pKx1; this.pKx2 = pKx2; this.pKx3 = pKx3; this.pEx1 = pEx1;
-            this.pEx2 = pEx2; this.pEx3 = pEx3; this.pEx4 = pEx4; this.pDx1 = pDx1; this.pDx2 = pDx2; this.pDx3 = pDx3; this.pCx1 = pCx1; this.rHx1 = rHx1;
-            this.rEx1 = rEx1; this.rEx2 = rEx2; this.rCx1 = rCx1; this.rBx1 = rBx1; this.rBx2 = rBx2; this.rBx3 = rBx3; this.rVy1 = rVy1; this.rVy2 = rVy2;
-            this.rVy3 = rVy3; this.rVy4 = rVy4; this.rVy5 = rVy5; this.rVy6 = rVy6; this.rHy1 = rHy1; this.rHy2 = rHy2; this.rEy1 = rEy1; this.rEy2 = rEy2;
-            this.rCy1 = rCy1; this.rBy1 = rBy1; this.rBy2 = rBy2; this.rBy3 = rBy3; this.rBy4 = rBy4; this.ssz1 = ssz1; this.ssz2 = ssz2; this.ssz3 = ssz3;
-            this.ssz4 = ssz4; this.qsx1 = qsx1; this.qsx2 = qsx2; this.qsx3 = qsx3; this.qsx4 = qsx4; this.qsx5 = qsx5; this.qsx6 = qsx6; this.qsx7 = qsx7;
-            this.qsx8 = qsx8; this.qsx9 = qsx9; this.qsx10 = qsx10; this.qsx11 = qsx11; this.qsx12 = qsx12; this.qsx13 = qsx13; this.qsx14 = qsx14;
-            this.qsy1 = qsy1; this.qsy2 = qsy2; this.qsy3 = qsy3; this.qsy4 = qsy4; this.qsy5 = qsy5; this.qsy6 = qsy6; this.qsy7 = qsy7;
-            // Scaling factors
-            this.lambdaFzO = lambdaFzO; this.lambdaMux = lambdaMux; this.lambdaMuy = lambdaMuy;
-            this.lambdaMuV = lambdaMuV; this.lambdaKxk = lambdaKxk; this.lambdaKya = lambdaKya;
-            this.lambdaCx = lambdaCx; this.lambdaCy = lambdaCy; this.lambdaEx = lambdaEx;
-            this.lambdaEy = lambdaEy; this.lambdaHx = lambdaHx; this.lambdaHy = lambdaHy;
-            this.lambdaVx = lambdaVx; this.lambdaVy = lambdaVy; this.lambdaKyg = lambdaKyg;
-            this.lambdaKzg = lambdaKzg; this.lambdat = lambdat; this.lambdaMr = lambdaMr;
-            this.lambdaxa = lambdaxa; this.lambdayk = lambdayk; this.lambdaVyk = lambdaVyk;
-            this.lambdas = lambdas; this.lambdaCz = lambdaCz; this.lambdaMx = lambdaMx;
-            this.lambdaVMx = lambdaVMx; this.lambdaMy = lambdaMy;
-        }
-
-        public TireModelMF52(string fileLocation, List<double> lambdaList)
-        {
-            // Tire Model file address
-            FileLocation = fileLocation;
-
-            // Reads the coefficients in the .txt file
-            var fileArray = File.ReadAllLines(fileLocation);
-            // Loop for writing of the coefficients
-            foreach (var line in File.ReadLines(fileLocation))
+        /// <summary>
+        /// Opens the tire model coefficients file and assigns each to the correspondent property. 
+        /// </summary>
+        private void _LoadCoefficientsFromFile()
+        {// Loop for writing of the coefficients
+            foreach (var line in File.ReadLines(FileLocation))
             {
                 // Splits the line betweencoefficient name [0] and coefficient value [1]
                 var tempLine = line.Split('\t');
@@ -377,19 +266,16 @@ namespace InternshipTest.Vehicle
                     default: continue;
                 }
             }
-            // Scaling factors
-            lambdaFzO = lambdaList[0]; lambdaMux = lambdaList[1]; lambdaMuy = lambdaList[2];
-            lambdaMuV = lambdaList[3]; lambdaKxk = lambdaList[4]; lambdaKya = lambdaList[5];
-            lambdaCx = lambdaList[6]; lambdaCy = lambdaList[7]; lambdaEx = lambdaList[8];
-            lambdaEy = lambdaList[9]; lambdaHx = lambdaList[10]; lambdaHy = lambdaList[11];
-            lambdaVx = lambdaList[12]; lambdaVy = lambdaList[13]; lambdaKyg = lambdaList[14];
-            lambdaKzg = lambdaList[15]; lambdat = lambdaList[16]; lambdaMr = lambdaList[17];
-            lambdaxa = lambdaList[18]; lambdayk = lambdaList[19]; lambdaVyk = lambdaList[20];
-            lambdas = lambdaList[21]; lambdaCz = lambdaList[22]; lambdaMx = lambdaList[23];
-            lambdaVMx = lambdaList[24]; lambdaMy = lambdaList[25];
         }
-
-        // Methods
+        /// <summary>
+        /// Uses the MF52 equations to calculate the tire's longitudinal force.
+        /// </summary>
+        /// <param name="kappa">Longitudinal Slip</param>
+        /// <param name="alpha">Slip Angle [rad]</param>
+        /// <param name="Fz">Normal Load [N]</param>
+        /// <param name="gamma">Inclination Angle [rad]</param>
+        /// <param name="Vc">Print's center travel speed [m/s]</param>
+        /// <returns>Tire Longitudinal Force (Fx) [N]</returns>
         public double GetTireFx(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
             // Speed components
@@ -425,11 +311,19 @@ namespace InternshipTest.Vehicle
             double alphaS = alphaStar + SHxAlpha;
             double GxAlphaO = Math.Cos(CxAlpha * Math.Atan(BxAlpha * SHxAlpha - ExAlpha * (BxAlpha * SHxAlpha - Math.Atan(BxAlpha * SHxAlpha))));
             double GxAlpha = Math.Cos(CxAlpha * Math.Atan(BxAlpha * alphaS - ExAlpha * (BxAlpha * alphaS - Math.Atan(BxAlpha * alphaS)))) / GxAlphaO;
-            double Fx = GxAlphaO * FxO;
+            double Fx = GxAlpha * FxO;
 
             return Fx;
         }
-
+        /// <summary>
+        /// Uses the MF52 equations to calculate the tire's lateral force.
+        /// </summary>
+        /// <param name="kappa">Longitudinal Slip</param>
+        /// <param name="alpha">Slip Angle [rad]</param>
+        /// <param name="Fz">Normal Load [N]</param>
+        /// <param name="gamma">Inclination Angle [rad]</param>
+        /// <param name="Vc">Print's center travel speed [m/s]</param>
+        /// <returns>Tire Lateral Force (Fy) [N]</returns>
         public double GetTireFy(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
             // Speed components
@@ -473,7 +367,15 @@ namespace InternshipTest.Vehicle
 
             return Fy;
         }
-
+        /// <summary>
+        /// Uses the MF52 equations to calculate the tire's Overturning Moment.
+        /// </summary>
+        /// <param name="kappa">Longitudinal Slip</param>
+        /// <param name="alpha">Slip Angle [rad]</param>
+        /// <param name="Fz">Normal Load [N]</param>
+        /// <param name="gamma">Inclination Angle [rad]</param>
+        /// <param name="Vc">Print's center travel speed [m/s]</param>
+        /// <returns>Tire Overturning Moment (Mx) [Nm]</returns>
         public double GetTireMx(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
             // Speed components
@@ -500,7 +402,15 @@ namespace InternshipTest.Vehicle
 
             return Mx;
         }
-
+        /// <summary>
+        /// Uses the MF52 equations to calculate the tire's Rolling Resistance Moment.
+        /// </summary>
+        /// <param name="kappa">Longitudinal Slip</param>
+        /// <param name="alpha">Slip Angle [rad]</param>
+        /// <param name="Fz">Normal Load [N]</param>
+        /// <param name="gamma">Inclination Angle [rad]</param>
+        /// <param name="Vc">Print's center travel speed [m/s]</param>
+        /// <returns>Tire Rolling Resistance Moment (My) [Nm]</returns>
         public double GetTireMy(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
             // Speed components
@@ -526,6 +436,15 @@ namespace InternshipTest.Vehicle
 
             return My;
         }
+        /// <summary>
+        /// Uses the MF52 equations to calculate the tire's Self-Aligning Torque.
+        /// </summary>
+        /// <param name="kappa">Longitudinal Slip</param>
+        /// <param name="alpha">Slip Angle [rad]</param>
+        /// <param name="Fz">Normal Load [N]</param>
+        /// <param name="gamma">Inclination Angle [rad]</param>
+        /// <param name="Vc">Print's center travel speed [m/s]</param>
+        /// <returns>Tire Self-Aligning Torque (Mz) [Nm]</returns>
         public double GetTireMz(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
             // Speed components
@@ -634,5 +553,6 @@ namespace InternshipTest.Vehicle
 
             return Mz;
         }
+        #endregion
     }
 }

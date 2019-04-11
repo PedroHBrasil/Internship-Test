@@ -7,12 +7,15 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,6 +23,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Syncfusion.SfSkinManager;
 using Syncfusion.UI.Xaml.Charts;
+using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Tools.Controls;
 
 namespace InternshipTest
@@ -27,9 +31,9 @@ namespace InternshipTest
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow
+    public partial class MainWindow : Window
     {
-		#region Fields
+        #region Fields
         private string currentVisualStyle;
         #endregion
 
@@ -39,43 +43,41 @@ namespace InternshipTest
         /// </summary>
         /// <value></value>
         /// <remarks></remarks>
-        public string CurrentVisualStyle
-        {
-            get
-            {
+        public string CurrentVisualStyle {
+            get {
                 return currentVisualStyle;
             }
-            set
-            {
+            set {
                 currentVisualStyle = value;
-                OnVisualStyleChanged();
+                _OnVisualStyleChanged();
             }
         }
         #endregion
         public MainWindow()
         {
             InitializeComponent();
-			this.Loaded += OnLoaded;
+            // Sets the application theme
+            CurrentVisualStyle = "Blend";
+            // this.Loaded += OnLoaded;
 
-            PopulateFields();
+            _PopulateFields();
         }
-		/// <summary>
+        /// <summary>
         /// Called when [loaded].
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void _OnLoaded(object sender, RoutedEventArgs e)
         {
-            CurrentVisualStyle = "Blend";
         }
-		/// <summary>
+        /// <summary>
         /// On Visual Style Changed.
         /// </summary>
         /// <remarks></remarks>
-        private void OnVisualStyleChanged()
+        private void _OnVisualStyleChanged()
         {
             VisualStyles visualStyle = VisualStyles.Default;
-            Enum.TryParse(CurrentVisualStyle, out visualStyle);            
+            Enum.TryParse(CurrentVisualStyle, out visualStyle);
             if (visualStyle != VisualStyles.Default)
             {
                 SfSkinManager.ApplyStylesOnApplication = true;
@@ -83,40 +85,12 @@ namespace InternshipTest
                 SfSkinManager.ApplyStylesOnApplication = false;
             }
         }
-        private void MainRibbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (vehicleInputTab.IsChecked)
-            {
-                vehicleInputEnvironment.Visibility = Visibility.Visible;
-                pathInputEnvironment.Visibility = Visibility.Hidden;
-                simulationInputEnvironment.Visibility = Visibility.Hidden;
-                resultsAnalysisEnvironment.Visibility = Visibility.Hidden;
-            }
-            else if (pathInputTab.IsChecked)
-            {
-                vehicleInputEnvironment.Visibility = Visibility.Hidden;
-                pathInputEnvironment.Visibility = Visibility.Visible;
-                simulationInputEnvironment.Visibility = Visibility.Hidden;
-                resultsAnalysisEnvironment.Visibility = Visibility.Hidden;
-            }
-            else if (simulationInputTab.IsChecked)
-            {
-                vehicleInputEnvironment.Visibility = Visibility.Hidden;
-                pathInputEnvironment.Visibility = Visibility.Hidden;
-                simulationInputEnvironment.Visibility = Visibility.Visible;
-                resultsAnalysisEnvironment.Visibility = Visibility.Hidden;
-            }
-            else if (resultsTab.IsChecked)
-            {
-                vehicleInputEnvironment.Visibility = Visibility.Hidden;
-                pathInputEnvironment.Visibility = Visibility.Hidden;
-                simulationInputEnvironment.Visibility = Visibility.Hidden;
-                resultsAnalysisEnvironment.Visibility = Visibility.Visible;
-            }
-        }
 
         #region Sample Preparation
-        private void PopulateFields()
+        /// <summary>
+        /// Populates the UI fields with sample values.
+        /// </summary>
+        private void _PopulateFields()
         {
             // Inertia
             oneWheelInertiaIDTextBox.Text = "inertia1";
@@ -128,7 +102,7 @@ namespace InternshipTest
             // Suspension
             oneWheelSuspensionIDTextBox.Text = "susp1";
             oneWheelHeaveStiffnessTextBox.Text = "100";
-            oneWheelCarHeightTextbox.Text = "50";
+            oneWheelRideHeightTextbox.Text = "50";
 
             // Brakes
             oneWheelBrakesIDTextBox.Text = "brk1";
@@ -137,9 +111,21 @@ namespace InternshipTest
             // Tire
             oneWheelTireIDTextBox.Text = "tire1";
             oneWheelTireStiffnessTextBox.Text = "120";
+
+            // Tire Model
             oneWheelTireModelTextBox.Text = @"D:\Google Drive\Work\OptimumG\Internship Test\Programs\Auxiliar Files\TireModelMF52.txt";
             oneWheelLambdaMuxTextBox.Text = "0.66";
             oneWheelLambdaMuyTextBox.Text = "0.66";
+            oneWheelTireModelIDTextBox.Text = "tireModel1";
+
+            // Gear Ratios
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(2.75));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.938));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.556));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.348));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.208));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.095));
+            oneWheelGearRatiosSetIDTextBox.Text = "gearRatios1";
 
             // Transmission
             oneWheelTransmissionIDTextBox.Text = "trans1";
@@ -149,10 +135,42 @@ namespace InternshipTest
             oneWheelGearShiftTimeTextBox.Text = "0.2";
             oneWheelTransmissionEfficiencyTextBox.Text = "87.5";
 
+            // Aerodynamic Map
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(40, 30, 1, -2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(40, 40, 1.1, -1.9));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(40, 50, 1.2, -1.8));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(70, 30, 1.1, -2.1));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(70, 40, 1.2, -2.2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(70, 50, 1.3, -2.3));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(100, 30, 1.1, -2.3));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(100, 40, 1, -2.2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(100, 50, 0.9, -2.1));
+            oneWheelAerodynamicMapIDTextBox.Text = "aeroMap1";
+
             // Aerodynamics
             oneWheelAerodynamicsIDTextBox.Text = "aero1";
             oneWheelFrontalAreaTextBox.Text = "1.2";
             oneWheelAirDensityTextBox.Text = "1.3";
+
+            // Engine Curves
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(3000, 55.77, 3.0, 390.45));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(3500, 52.50, 3.5, 381.50));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(4000, 54.71, 4.0, 381.80));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(4500, 57.77, 4.5, 379.02));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(5000, 70.67, 5.0, 367.21));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(5500, 79.63, 5.5, 366.58));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(6000, 83.18, 6.0, 361.44));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(6500, 83.82, 6.5, 362.35));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(7000, 83.86, 7.0, 364.99));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(7500, 84.50, 7.5, 369.16));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(8000, 82.56, 8.0, 372.97));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(8500, 77.88, 8.5, 375.73));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(9000, 72.16, 9.0, 378.86));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(9500, 66.65, 9.5, 383.92));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(10000, 61.16, 10.0, 391.00));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(10500, 55.94, 10.5, 398.92));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(11000, 50.23, 11.0, 407.68));
+            oneWheelEngineCurvesIDTextBox.Text = "engineCurves1";
 
             // Engine
             oneWheelEngineIDTextBox.Text = "engine1";
@@ -162,60 +180,496 @@ namespace InternshipTest
             // Car and setup fields
             oneWheelCarIDTextBox.Text = "car1";
             oneWheelSetupIDTextBox.Text = "setup1";
-            oneWheelInertiaCombobox.Text = "inertia1";
-            oneWheelTireCombobox.Text = "tire1";
-            oneWheelEngineCombobox.Text = "engine1";
-            oneWheelTransmissionCombobox.Text = "trans1";
-            oneWheelAerodynamicsCombobox.Text = "aero1";
-            oneWheelDRSCombobox.Text = "aero1";
-            oneWheelSuspensionCombobox.Text = "susp1";
-            oneWheelBrakesCombobox.Text = "brk1";
+
+            // Path Sectors
+            tabularPathSectorsStartDistancesListBox.Items.Add(new PathSector(1, 0));
+            tabularPathSectorsStartDistancesListBox.Items.Add(new PathSector(2, 50));
+            tabularPathSectorsStartDistancesListBox.Items.Add(new PathSector(3, 207.075));
+            tabularPathSectorsStartDistancesListBox.Items.Add(new PathSector(4, 257.075));
+            _ReorderAndResetListboxSectorsIndexes();
+            tabularPathSectorsSetIDTextBox.Text = "sectorSet1";
+
+            // Path Sections
+            tabularPathSectionsListBox.Items.Add(new TabularPathSection(TabularPathSection.SectionType.Straight, 50, 0, 0));
+            tabularPathSectionsListBox.Items.Add(new TabularPathSection(TabularPathSection.SectionType.Right, 62.83, 20, 20));
+            tabularPathSectionsListBox.Items.Add(new TabularPathSection(TabularPathSection.SectionType.Left, 31.415, 10, 10));
+            tabularPathSectionsListBox.Items.Add(new TabularPathSection(TabularPathSection.SectionType.Right, 62.83, 20, 20));
+            tabularPathSectionsListBox.Items.Add(new TabularPathSection(TabularPathSection.SectionType.Straight, 50, 0, 0));
+            tabularPathSectionsListBox.Items.Add(new TabularPathSection(TabularPathSection.SectionType.Right, 157.08, 50, 50));
+            tabularPathSectionsSetIDTextBox.Text = "sections1";
 
             // Path
             tabularPathIDTextBox.Text = "testPath";
             tabularPathResolutionTextBox.Text = "100";
 
             // GGV Diagram
-            GGVDiagramAmountOfPointsPerSpeedTextBox.Text = "40";
-            GGVDiagramAmountOfSpeedsTextBox.Text = "20";
-            GGVDiagramLowestSpeedTextBox.Text = "10";
-            GGVDiagramHighestSpeedTextBox.Text = "100";
+            ggvDiagramAmountOfPointsPerSpeedTextBox.Text = "40";
+            ggvDiagramAmountOfSpeedsTextBox.Text = "20";
+            ggvDiagramLowestSpeedTextBox.Text = "10";
+            ggvDiagramHighestSpeedTextBox.Text = "120";
         }
         #endregion
 
-        #region One Wheel Car Input Methods
-        #region CarAndSetup
-        private void OneWheelAddCarAndSetupToListBox_Click(object sender, RoutedEventArgs e)
+        #region Main Menu Methods
+        #region Main Navigation Controls Click Methods
+
+        /// <summary>
+        /// Displays the file options buttons (new/save/load) and hides all of the other Mainmenu buttons options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _ProjectEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (oneWheelCarIDTextBox.Text!=null &&
-                oneWheelSetupIDTextBox.Text!=null &&
-                oneWheelInertiaCombobox.Text!=null &&
-                oneWheelEngineCombobox!=null &&
-                oneWheelTransmissionCombobox.Text!=null &&
-                oneWheelAerodynamicsCombobox.Text!=null &&
-                oneWheelDRSCombobox!=null &&
-                oneWheelSuspensionCombobox!=null &&
-                oneWheelBrakesCombobox!=null)
+            _CollapseOptionsButtons();
+            projectButtonOptionsGrid.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Displays the vehicle options buttons (models) and hides all of the other Mainmenu buttons options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _VehicleInputEnvironmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseOptionsButtons();
+            vehicleButtonOptionsGrid.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Displays the path options buttons (input methods) and hides all of the other Mainmenu buttons options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _PathInputEnvironmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseOptionsButtons();
+            pathButtonOptionsGrid.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Displays the simulation options buttons (types) and hides all of the other Mainmenu buttons options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SimulationInputEnvironmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseOptionsButtons();
+            simulationButtonOptionsGrid.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Displays the results analysis options buttons (types) and hides all of the other Mainmenu buttons options.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _ResultsAnalysisEnvironmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseOptionsButtons();
+            resultsButtonOptionsGrid.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Hides all the main navigation controls options and displays the help file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _HelpEnvironmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseOptionsButtons();
+        }
+
+        /// <summary>
+        /// Changes the application theme according o the combobox selection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _ThemeSelectionCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ComboBoxItem themeItem = themeSelectionCombobox.SelectedItem as ComboBoxItem;
+            CurrentVisualStyle = themeItem.Content.ToString();
+        }
+
+        /// <summary>
+        /// Collapses the UI's options menu.
+        /// </summary>
+        private void _CollapseOptionsButtons()
+        {
+            projectButtonOptionsGrid.Visibility = Visibility.Collapsed;
+            vehicleButtonOptionsGrid.Visibility = Visibility.Collapsed;
+            pathButtonOptionsGrid.Visibility = Visibility.Collapsed;
+            simulationButtonOptionsGrid.Visibility = Visibility.Collapsed;
+            resultsButtonOptionsGrid.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+        #region Main Controls Options Methods
+
+        /// <summary>
+        /// Collapses all of the work environments of the main work environment 
+        /// </summary>
+        /// <param name="dockingManager"></param>
+        private void _CollapseMainDockingManagerContent()
+        {
+            oneWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
+            twoWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
+            fourWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
+            tabularPathInputDockingManager.Visibility = Visibility.Collapsed;
+            drawPathInputDockingManager.Visibility = Visibility.Collapsed;
+            optimizePathInputDockingManager.Visibility = Visibility.Collapsed;
+            ggvDiagramDockingManager.Visibility = Visibility.Collapsed;
+            lapTimeSimulationDockingManager.Visibility = Visibility.Collapsed;
+            ggvDiagramResultsAnalysisGrid.Visibility = Visibility.Collapsed;
+            lapTimeSimulationResultsAnalysisGrid.Visibility = Visibility.Collapsed;
+            _CollapseOptionsButtons();
+        }
+
+        #region Project Button Options Methods
+
+        /// <summary>
+        /// Clears the UI, so that a new project can be defined.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _NewProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ClearUILists();
+            _CollapseOptionsButtons();
+        }
+
+        /// <summary>
+        /// Opens a dialog box where the user will choose a file (or create a new one) to save the
+        /// project's objects which are contained in the UI lists.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SaveProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the save dialog box
+            SaveFileDialog saveFileDialog = new SaveFileDialog()
+            {
+                Title = "Save Project",
+                RestoreDirectory = true,
+                DefaultExt = "xml",
+                AddExtension = true,
+                Filter = "xml files (*.xml)|*.xml"
+            };
+            // Displays the save file dialog box
+            saveFileDialog.ShowDialog();
+            // Checks if the file name is not an empty string
+            if (saveFileDialog.FileName != "")
+            {
+                // Initializes the project object's lists
+                // One Wheel Model Cars
+                List<Vehicle.OneWheel.Car> oneWheelCars = new List<Vehicle.OneWheel.Car>();
+                List<Vehicle.OneWheel.Inertia> oneWheelInertias = new List<Vehicle.OneWheel.Inertia>();
+                List<Vehicle.OneWheel.Suspension> oneWheelSuspensions = new List<Vehicle.OneWheel.Suspension>();
+                List<Vehicle.OneWheel.Brakes> oneWheelBrakes = new List<Vehicle.OneWheel.Brakes>();
+                List<Vehicle.OneWheel.Tire> oneWheelTires = new List<Vehicle.OneWheel.Tire>();
+                List<Vehicle.OneWheel.Transmission> oneWheelTransmissions = new List<Vehicle.OneWheel.Transmission>();
+                List<Vehicle.OneWheel.Aerodynamics> oneWheelAerodynamics = new List<Vehicle.OneWheel.Aerodynamics>();
+                List<Vehicle.OneWheel.Engine> oneWheelEngines = new List<Vehicle.OneWheel.Engine>();
+                // Two Wheel Model Cars
+                // Four Wheel Model Cars
+                // Tabular Paths
+                List<Path> tabularPaths = new List<Path>();
+                // Drawn Paths
+                // Optimization Paths
+                // GGV Diagrams
+                List<Simulation.GGVDiagram> ggvDiagrams = new List<Simulation.GGVDiagram>();
+                // Lap Time Simulations
+                List<Simulation.LapTimeSimulation> lapTimeSimulations = new List<Simulation.LapTimeSimulation>();
+
+                // Fills the lists with the UI elements
+                // One Wheel Model Cars
+                foreach (Vehicle.OneWheel.Car car in oneWheelCarAndSetupListBox.Items)
+                    oneWheelCars.Add(car);
+                foreach (Vehicle.OneWheel.Inertia inertia in oneWheelInertiaListBox.Items)
+                    oneWheelInertias.Add(inertia);
+                foreach (Vehicle.OneWheel.Suspension suspension in oneWheelSuspensionListBox.Items)
+                    oneWheelSuspensions.Add(suspension);
+                foreach (Vehicle.OneWheel.Brakes brakes in oneWheelBrakesListBox.Items)
+                    oneWheelBrakes.Add(brakes);
+                foreach (Vehicle.OneWheel.Tire tires in oneWheelTireListBox.Items)
+                    oneWheelTires.Add(tires);
+                foreach (Vehicle.OneWheel.Transmission transmission in oneWheelTransmissionListBox.Items)
+                    oneWheelTransmissions.Add(transmission);
+                foreach (Vehicle.OneWheel.Aerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
+                    oneWheelAerodynamics.Add(aerodynamics);
+                foreach (Vehicle.OneWheel.Engine engine in oneWheelEngineListBox.Items)
+                    oneWheelEngines.Add(engine);
+                // Two Wheel Model Cars
+                // Four Wheel Model Cars
+                // Tabular Paths
+                foreach (Path path in tabularPathsListBox.Items)
+                    tabularPaths.Add(path);
+                // Drawn Paths
+                // Optimization Paths
+                // GGV Diagrams
+                foreach (Simulation.GGVDiagram ggvDiagram in simulationGGVDiagramListBox.Items)
+                    ggvDiagrams.Add(ggvDiagram);
+                // Lap Time Simulations
+                foreach (Simulation.LapTimeSimulation lapTimeSimulation in lapTimeSimulationListBox.Items)
+                    lapTimeSimulations.Add(lapTimeSimulation);
+
+                // Creates the project object
+                Project project = new Project(oneWheelCars, oneWheelInertias, oneWheelSuspensions, oneWheelBrakes, oneWheelTires,
+                    oneWheelTransmissions, oneWheelAerodynamics, oneWheelEngines, tabularPaths, ggvDiagrams, lapTimeSimulations);
+                // Saves the project to the file
+                project.Save(saveFileDialog.FileName);
+                _CollapseOptionsButtons();
+            }
+
+        }
+
+        /// <summary>
+        /// Opens a dialog box where the user chooses the project's file to be loaded. Then,
+        /// the UI's listboxes get cleared and filled by the file's objects.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LoadProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the open file dialog box
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Load Project",
+                RestoreDirectory = true
+            };
+            // Displays the open file dialog box
+            openFileDialog.ShowDialog();
+            // Initializes and loads the project object
+            Project project = new Project();
+            project = project.Load(openFileDialog.FileName);
+            // Clears the UI lists and loads the file's objects
+            _ClearUILists();
+            // One Wheel Model Cars
+            foreach (Vehicle.OneWheel.Car car in project.OneWheelCars)
+                oneWheelCarAndSetupListBox.Items.Add(car);
+            foreach (Vehicle.OneWheel.Inertia inertia in project.OneWheelInertias)
+                oneWheelInertiaListBox.Items.Add(inertia);
+            foreach (Vehicle.OneWheel.Suspension suspension in project.OneWheelSuspensions)
+                oneWheelSuspensionListBox.Items.Add(suspension);
+            foreach (Vehicle.OneWheel.Brakes brakes in project.OneWheelBrakes)
+                oneWheelBrakesListBox.Items.Add(brakes);
+            foreach (Vehicle.OneWheel.Tire tires in project.OneWheelTires)
+                oneWheelTireListBox.Items.Add(tires);
+            foreach (Vehicle.OneWheel.Transmission transmission in project.OneWheelTransmissions)
+                oneWheelTransmissionListBox.Items.Add(transmission);
+            foreach (Vehicle.OneWheel.Aerodynamics aerodynamics in project.OneWheelAerodynamics)
+                oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
+            foreach (Vehicle.OneWheel.Engine engine in project.OneWheelEngines)
+                oneWheelEngineListBox.Items.Add(engine);
+            // Two Wheel Model Cars
+            // Four Wheel Model Cars
+            // Tabular Paths
+            foreach (Path path in project.TabularPaths)
+                tabularPathsListBox.Items.Add(path);
+            // Drawn Paths
+            // Optimization Paths
+            // GGV Diagrams
+            foreach (Simulation.GGVDiagram ggvDiagram in project.GGVDiagrams)
+                simulationGGVDiagramListBox.Items.Add(ggvDiagram);
+            // Lap Time Simulations
+            foreach (Simulation.LapTimeSimulation lapTimeSimulation in project.LapTimeSimulations)
+                lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
+            _CollapseOptionsButtons();
+        }
+
+        /// <summary>
+        /// Clears all the lists of the UI.
+        /// </summary>
+        private void _ClearUILists()
+        {
+            // Clears the UI lists
+            // One Wheel Model Cars
+            oneWheelCarAndSetupListBox.Items.Clear();
+            oneWheelInertiaListBox.Items.Clear();
+            oneWheelSuspensionListBox.Items.Clear();
+            oneWheelBrakesListBox.Items.Clear();
+            oneWheelTireListBox.Items.Clear();
+            oneWheelTransmissionListBox.Items.Clear();
+            oneWheelAerodynamicsListBox.Items.Clear();
+            oneWheelEngineListBox.Items.Clear();
+            // Two Wheel Model Cars
+            // Four Wheel Model Cars
+            // Tabular Paths
+            tabularPathsListBox.Items.Clear();
+            // Drawn Paths
+            // Optimization Paths
+            // GGV Diagrams
+            simulationGGVDiagramListBox.Items.Clear();
+            // Lap Time Simulations
+            lapTimeSimulationListBox.Items.Clear();
+        }
+
+        #endregion
+        #region Vehicle Button Options Methods
+        /// <summary>
+        /// Changes the work environment to the One Wheel vehicle model input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelVehicleButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            oneWheelVehicleInputDockingManager.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Changes the work environment to the Two Wheel vehicle model input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelVehicleButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            twoWheelVehicleInputDockingManager.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Changes the work environment to the Four Wheel vehicle model input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _FourWheelVehicleButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            fourWheelVehicleInputDockingManager.Visibility = Visibility.Visible;
+        }
+        #endregion
+        #region Path Button Options Methods
+        /// <summary>
+        /// Changes the work environment to the Tabular Path input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            tabularPathInputDockingManager.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Changes the work environment to the Path Drawing environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DrawPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            drawPathInputDockingManager.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Changes the work environment to the Path Optimization environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OptimizePathButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            optimizePathInputDockingManager.Visibility = Visibility.Visible;
+        }
+        #endregion
+        #region Simulation Button Options Methods
+        /// <summary>
+        /// Changes the work environment to the GGV Diagram environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GGVDiagramButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            ggvDiagramDockingManager.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Changes the work environment to the Lap Time Simulation environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            lapTimeSimulationDockingManager.Visibility = Visibility.Visible;
+        }
+        #endregion
+        #region Results Analysis Button Methods
+        /// <summary>
+        /// Changes the work environment to the GGV Diagram results analysis environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GGVDiagramResultsAnalysisButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            ggvDiagramResultsAnalysisGrid.Visibility = Visibility.Visible;
+        }
+        /// <summary>
+        /// Changes the work environment to the lap time simulation results analysis environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            lapTimeSimulationResultsAnalysisGrid.Visibility = Visibility.Visible;
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #region One Wheel Car Input Methods
+
+        #region CarAndSetup
+
+        /// <summary>
+        /// Creates a one wheel model car/setup object and adds it to the one wheel mmodel car/setup listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddCarAndSetupToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelCarIDTextBox.Text != "" &&
+                oneWheelSetupIDTextBox.Text != "" &&
+                oneWheelInertiaCombobox.Text != "" &&
+                oneWheelEngineCombobox.Text != "" &&
+                oneWheelTransmissionCombobox.Text != "" &&
+                oneWheelAerodynamicsCombobox.Text != "" &&
+                oneWheelSuspensionCombobox.Text != "" &&
+                oneWheelBrakesCombobox.Text != "")
             {
                 // Gets the object's properties values
                 string carID = oneWheelCarIDTextBox.Text;
                 string setupID = oneWheelSetupIDTextBox.Text;
+                string description = oneWheelCarAndSetupDescriptionTextBox.Text;
                 Vehicle.OneWheel.Inertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.OneWheel.Inertia;
                 Vehicle.OneWheel.Tire tire = oneWheelTireCombobox.SelectedItem as Vehicle.OneWheel.Tire;
                 Vehicle.OneWheel.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.OneWheel.Engine;
                 Vehicle.OneWheel.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.OneWheel.Transmission;
                 Vehicle.OneWheel.Aerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheel.Aerodynamics;
-                Vehicle.OneWheel.Aerodynamics drs = oneWheelDRSCombobox.SelectedItem as Vehicle.OneWheel.Aerodynamics;
                 Vehicle.OneWheel.Suspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.OneWheel.Suspension;
                 Vehicle.OneWheel.Brakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.OneWheel.Brakes;
                 // Initializes a new object
-                Vehicle.OneWheel.Car car = new Vehicle.OneWheel.Car(carID, setupID, inertia, tire, engine, transmission, aerodynamics, drs, suspension, brakes);
+                Vehicle.OneWheel.Car car = new Vehicle.OneWheel.Car(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
+                // Gets additional parameters
+                car.GetEquivalentHeaveStiffness();
+                car.GetLinearAccelerationParameters();
+                car.GetCarOperationSpeedRange();
                 // Adds the object to the listbox
                 oneWheelCarAndSetupListBox.Items.Add(car);
             }
+            else System.Windows.MessageBox.Show(
+                "Could not create Car/Setup. \n" +
+                "   It should have a car ID. \n" +
+                "   It should have a setup ID. \n" +
+                "   All of the components boxes must be filled.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteCarAndSetupOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a one wheel model car/setup from the one wheel model car/setup listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteCarAndSetupOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelCarAndSetupListBox.SelectedItems.Count == 1)
@@ -224,7 +678,12 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelCarAndSetupListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model car/setup and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelCarAndSetupListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
             if (oneWheelCarAndSetupListBox.SelectedItems.Count == 1)
@@ -232,35 +691,63 @@ namespace InternshipTest
                 // Gets the selected object
                 Vehicle.OneWheel.Car car = oneWheelCarAndSetupListBox.SelectedItem as Vehicle.OneWheel.Car;
                 // Writes the properties in the UI
-                oneWheelCarIDTextBox.Text = car.CarID;
+                oneWheelCarIDTextBox.Text = car.ID;
                 oneWheelSetupIDTextBox.Text = car.SetupID;
-                oneWheelInertiaCombobox.Text = car.Inertia.InertiaID;
-                oneWheelTireCombobox.Text = car.Tire.TireID;
-                oneWheelEngineCombobox.Text = car.Engine.EngineID;
-                oneWheelTransmissionCombobox.Text = car.Transmission.TransmissionID;
-                oneWheelAerodynamicsCombobox.Text = car.Aerodynamics.AeroID;
-                oneWheelDRSCombobox.Text = car.DRS.AeroID;
-                oneWheelSuspensionCombobox.Text = car.Suspension.SuspensionID;
-                oneWheelBrakesCombobox.Text = car.Brakes.BrakesID;
+                oneWheelCarAndSetupDescriptionTextBox.Text = car.Description;
+                oneWheelInertiaCombobox.Text = car.Inertia.ID;
+                oneWheelTireCombobox.Text = car.Tire.ID;
+                oneWheelEngineCombobox.Text = car.Engine.ID;
+                oneWheelTransmissionCombobox.Text = car.Transmission.ID;
+                oneWheelAerodynamicsCombobox.Text = car.Aerodynamics.ID;
+                oneWheelSuspensionCombobox.Text = car.Suspension.ID;
+                oneWheelBrakesCombobox.Text = car.Brakes.ID;
             }
         }
+
         #endregion
+
         #region Inertia
-        private void OneWheelAddInertiaToListBox_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates a one wheel model inertia object and adds it to the one wheel model inertia listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddInertiaToListBox_Click(object sender, RoutedEventArgs e)
         {
-            // Gets the object's properties values
-            string inertiaID = oneWheelInertiaIDTextBox.Text;
-            double totalMass = double.Parse(oneWheelTotalMassTextBox.Text);
-            double unsprungMass = double.Parse(oneWheelUnsprungMassTextbox.Text);
-            double rotPartsMI = double.Parse(oneWheelRotPartsMITextbox.Text);
-            double gravity = double.Parse(oneWheelGravityAccelTextbox.Text);
-            // Initializes a new object
-            Vehicle.OneWheel.Inertia inertia = new Vehicle.OneWheel.Inertia(inertiaID, totalMass, unsprungMass, rotPartsMI, gravity);
-            // Adds the object to the listbox
-            oneWheelInertiaListBox.Items.Add(inertia);
+            if (oneWheelInertiaIDTextBox.Text != "" &&
+                double.Parse(oneWheelTotalMassTextBox.Text) != 0 &&
+                double.Parse(oneWheelGravityAccelTextbox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string inertiaID = oneWheelInertiaIDTextBox.Text;
+                string description = oneWheelInertiaDescriptionTextBox.Text;
+                double totalMass = double.Parse(oneWheelTotalMassTextBox.Text);
+                double unsprungMass = double.Parse(oneWheelUnsprungMassTextbox.Text);
+                double rotPartsMI = double.Parse(oneWheelRotPartsMITextbox.Text);
+                double gravity = double.Parse(oneWheelGravityAccelTextbox.Text);
+                // Initializes a new object
+                Vehicle.OneWheel.Inertia inertia = new Vehicle.OneWheel.Inertia(inertiaID, description, totalMass, unsprungMass, rotPartsMI, gravity);
+                // Adds the object to the listbox
+                oneWheelInertiaListBox.Items.Add(inertia);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Inertia. \n" +
+                "   It should have an ID. \n" +
+                "   The total mass can't be zero. \n" +
+                "   Gravity can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteInertiaOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a one wheel model inertia from the one wheel model inertia listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteInertiaOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelInertiaListBox.SelectedItems.Count == 1)
@@ -269,7 +756,12 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelInertiaListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model inertia and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelInertiaListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
             if (oneWheelInertiaListBox.SelectedItems.Count == 1)
@@ -277,28 +769,55 @@ namespace InternshipTest
                 // Gets the selected object
                 Vehicle.OneWheel.Inertia inertia = oneWheelInertiaListBox.SelectedItem as Vehicle.OneWheel.Inertia;
                 // Writes the properties in the UI
-                oneWheelInertiaIDTextBox.Text = inertia.InertiaID;
+                oneWheelInertiaIDTextBox.Text = inertia.ID;
+                oneWheelInertiaDescriptionTextBox.Text = inertia.Description;
                 oneWheelTotalMassTextBox.Text = inertia.TotalMass.ToString("F3");
                 oneWheelUnsprungMassTextbox.Text = inertia.UnsprungMass.ToString("F3");
                 oneWheelRotPartsMITextbox.Text = inertia.RotPartsMI.ToString("F3");
                 oneWheelGravityAccelTextbox.Text = inertia.Gravity.ToString("F3");
             }
         }
+
         #endregion
+
         #region Suspension
-        private void OneWheelAddSuspensionToListBox_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates a one wheel model suspension object and adds it to the one wheel model suspension listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddSuspensionToListBox_Click(object sender, RoutedEventArgs e)
         {
-            // Gets the object's properties values
-            string suspensionID = oneWheelSuspensionIDTextBox.Text;
-            double heaveStiffness = double.Parse(oneWheelHeaveStiffnessTextBox.Text);
-            double carHeight = double.Parse(oneWheelCarHeightTextbox.Text);
-            // Initializes a new object
-            Vehicle.OneWheel.Suspension suspension = new Vehicle.OneWheel.Suspension(suspensionID, heaveStiffness, carHeight);
-            // Adds the object to the listbox
-            oneWheelSuspensionListBox.Items.Add(suspension);
+            if (oneWheelSuspensionIDTextBox.Text != "" &&
+                double.Parse(oneWheelHeaveStiffnessTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string suspensionID = oneWheelSuspensionIDTextBox.Text;
+                string description = oneWheelSuspensionDescriptionTextBox.Text;
+                double heaveStiffness = double.Parse(oneWheelHeaveStiffnessTextBox.Text) * 1000;
+                double rideHeight = double.Parse(oneWheelRideHeightTextbox.Text) / 1000;
+                // Initializes a new object
+                Vehicle.OneWheel.Suspension suspension = new Vehicle.OneWheel.Suspension(suspensionID, description, heaveStiffness, rideHeight);
+                // Adds the object to the listbox
+                oneWheelSuspensionListBox.Items.Add(suspension);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Suspension. \n " +
+                "   It should have an ID. \n" +
+                "   The heave stiffness can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteSuspensionOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a one wheel model suspension from the one wheel model suspension listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteSuspensionOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelInertiaListBox.SelectedItems.Count == 1)
@@ -307,32 +826,64 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelSuspensionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model suspension and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelSuspensionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (oneWheelInertiaListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
                 Vehicle.OneWheel.Suspension suspension = oneWheelSuspensionListBox.SelectedItem as Vehicle.OneWheel.Suspension;
                 // Writes the properties in the UI
-                oneWheelSuspensionIDTextBox.Text = suspension.SuspensionID;
-                oneWheelHeaveStiffnessTextBox.Text = suspension.HeaveStiffness.ToString("F3");
-                oneWheelCarHeightTextbox.Text = suspension.CarHeight.ToString("F3");
+                oneWheelSuspensionIDTextBox.Text = suspension.ID;
+                oneWheelSuspensionDescriptionTextBox.Text = suspension.Description;
+                oneWheelHeaveStiffnessTextBox.Text = (suspension.HeaveStiffness / 1000).ToString("F3");
+                oneWheelRideHeightTextbox.Text = (suspension.RideHeight * 1000).ToString("F3");
             }
         }
+
         #endregion
+
         #region Brakes
-        private void OneWheelAddBrakesToListBox_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates a one wheel model brakes object and adds it to the one wheel model brakes listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddBrakesToListBox_Click(object sender, RoutedEventArgs e)
         {
-            // Gets the object's properties values
-            string brakesID = oneWheelBrakesIDTextBox.Text;
-            double maxTorque = double.Parse(oneWheelBrakesMaxTorqueTextBox.Text);
-            // Initializes a new object
-            Vehicle.OneWheel.Brakes brakes = new Vehicle.OneWheel.Brakes(brakesID, maxTorque);
-            // Adds the object to the listbox and the combobox
-            oneWheelBrakesListBox.Items.Add(brakes);
+            if (oneWheelBrakesIDTextBox.Text != "" &&
+                double.Parse(oneWheelBrakesMaxTorqueTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string brakesID = oneWheelBrakesIDTextBox.Text;
+                string description = oneWheelBrakesDescriptionTextBox.Text;
+                double maxTorque = double.Parse(oneWheelBrakesMaxTorqueTextBox.Text);
+                // Initializes a new object
+                Vehicle.OneWheel.Brakes brakes = new Vehicle.OneWheel.Brakes(brakesID, description, maxTorque);
+                // Adds the object to the listbox and the combobox
+                oneWheelBrakesListBox.Items.Add(brakes);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Brakes. \n " +
+                "   It should have an ID. \n" +
+                "   The maximum torque can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteBrakesOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a one wheel model brakes from the one wheel model brakes listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteBrakesOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelBrakesListBox.SelectedItems.Count == 1)
@@ -341,53 +892,137 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelBrakesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model brakes and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelBrakesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (oneWheelBrakesListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
                 Vehicle.OneWheel.Brakes brakes = oneWheelBrakesListBox.SelectedItem as Vehicle.OneWheel.Brakes;
                 // Writes the properties in the UI
-                oneWheelBrakesIDTextBox.Text = brakes.BrakesID;
+                oneWheelBrakesIDTextBox.Text = brakes.ID;
+                oneWheelBrakesDescriptionTextBox.Text = brakes.Description;
                 oneWheelBrakesMaxTorqueTextBox.Text = brakes.MaxTorque.ToString("F3");
             }
         }
+
         #endregion
+
         #region Tire
-        private void OneWheelAddTireToListBox_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates a one wheel model tire object and adds it to the one wheel model tires listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddTireToListBox_Click(object sender, RoutedEventArgs e)
         {
-            // Inputs assigning and convertion.
-            string tireID = oneWheelTireIDTextBox.Text;
-            string tireModelFile = oneWheelTireModelTextBox.Text;
-            double verticalStiffness = double.Parse(oneWheelTireStiffnessTextBox.Text);
-            double lambdaFzO = double.Parse(oneWheelLambdaFzOTextBox.Text);
-            double lambdaMux = double.Parse(oneWheelLambdaMuxTextBox.Text);
-            double lambdaMuy = double.Parse(oneWheelLambdaMuyTextBox.Text);
-            double lambdaMuV = double.Parse(oneWheelLambdaMuVTextBox.Text);
-            double lambdaKxk = double.Parse(oneWheelLambdaKxkTextBox.Text);
-            double lambdaKya = double.Parse(oneWheellambdaKyaTextBox.Text);
-            double lambdaCx = double.Parse(oneWheelLambdaCxTextBox.Text);
-            double lambdaCy = double.Parse(oneWheelLambdaCyTextBox.Text);
-            double lambdaEx = double.Parse(oneWheelLambdaExTextBox.Text);
-            double lambdaEy = double.Parse(oneWheelLambdaEyTextBox.Text);
-            double lambdaHx = double.Parse(oneWheelLambdaHxTextBox.Text);
-            double lambdaHy = double.Parse(oneWheelLambdaHyTextBox.Text);
-            double lambdaVx = double.Parse(oneWheelLambdaVxTextBox.Text);
-            double lambdaVy = double.Parse(oneWheelLambdaVyTextBox.Text);
-            double lambdaKyg = double.Parse(oneWheelLambdaKygTextBox.Text);
-            double lambdaKzg = double.Parse(oneWheelLambdaKzgTextBox.Text);
-            double lambdat = double.Parse(oneWheelLambdatTextBox.Text);
-            double lambdaMr = double.Parse(oneWheelLambdaMrTextBox.Text);
-            double lambdaxa = double.Parse(oneWheelLambdaxaTextBox.Text);
-            double lambdayk = double.Parse(oneWheelLambdaykTextBox.Text);
-            double lambdaVyk = double.Parse(oneWheelLambdaVykTextBox.Text);
-            double lambdas = double.Parse(oneWheelLambdasTextBox.Text);
-            double lambdaCz = double.Parse(oneWheelLambdaCzTextBox.Text);
-            double lambdaMx = double.Parse(oneWheelLambdaMxTextBox.Text);
-            double lambdaVMx = double.Parse(oneWheelLambdaVMxTextBox.Text);
-            double lambdaMy = double.Parse(oneWheelLambdaMyTextBox.Text);
-            // Initializes the scalling factors list
-            List<double> lambdaList = new List<double>
+            if (oneWheelTireIDTextBox.Text != "" &&
+                double.Parse(oneWheelTireStiffnessTextBox.Text) != 0 &&
+                oneWheelTireModelComboBox.SelectedItem != null)
+            {
+                // Inputs assigning and convertion.
+                string tireID = oneWheelTireIDTextBox.Text;
+                string description = oneWheelTireDescriptionTextBox.Text;
+                double verticalStiffness = double.Parse(oneWheelTireStiffnessTextBox.Text) * 1000;
+                Vehicle.TireModelMF52 tireModelMF52 = oneWheelTireModelComboBox.SelectedItem as Vehicle.TireModelMF52;
+                // Initializes a new object
+                Vehicle.OneWheel.Tire tire = new Vehicle.OneWheel.Tire(tireID, description, tireModelMF52, verticalStiffness);
+                // Adds the object to the listbox and the combobox
+                oneWheelTireListBox.Items.Add(tire);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Tire. \n " +
+                "   It should have an ID. \n" +
+                "   A tire model must be selected. \n" +
+                "   The tire stiffness can't be zero.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a one wheel model tire from the one wheel model tires listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteTireOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelTireListBox.SelectedItems.Count == 1)
+            {
+                oneWheelTireListBox.Items.RemoveAt(oneWheelTireListBox.Items.IndexOf(oneWheelTireListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model tire and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelTireListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (oneWheelTireListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheel.Tire tire = oneWheelTireListBox.SelectedItem as Vehicle.OneWheel.Tire;
+                // Writes the properties in the UI
+                oneWheelTireIDTextBox.Text = tire.ID;
+                oneWheelTireDescriptionTextBox.Text = tire.Description;
+                oneWheelTireStiffnessTextBox.Text = (tire.VerticalStiffness / 1000).ToString("F3");
+            }
+        }
+
+        #endregion
+
+        #region Tire Model
+
+        /// <summary>
+        /// Creates a tire model object and adds it to the one wheel model tire model listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddTireModelToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelTireModelIDTextBox.Text != "" &&
+                File.Exists(oneWheelTireModelTextBox.Text))
+            {
+                // Inputs assigning and convertion.
+                string modelID = oneWheelTireModelIDTextBox.Text;
+                string description = oneWheelTireModelDescriptionTextBox.Text;
+                string tireModelFile = oneWheelTireModelTextBox.Text;
+                double lambdaFzO = double.Parse(oneWheelLambdaFzOTextBox.Text);
+                double lambdaMux = double.Parse(oneWheelLambdaMuxTextBox.Text);
+                double lambdaMuy = double.Parse(oneWheelLambdaMuyTextBox.Text);
+                double lambdaMuV = double.Parse(oneWheelLambdaMuVTextBox.Text);
+                double lambdaKxk = double.Parse(oneWheelLambdaKxkTextBox.Text);
+                double lambdaKya = double.Parse(oneWheellambdaKyaTextBox.Text);
+                double lambdaCx = double.Parse(oneWheelLambdaCxTextBox.Text);
+                double lambdaCy = double.Parse(oneWheelLambdaCyTextBox.Text);
+                double lambdaEx = double.Parse(oneWheelLambdaExTextBox.Text);
+                double lambdaEy = double.Parse(oneWheelLambdaEyTextBox.Text);
+                double lambdaHx = double.Parse(oneWheelLambdaHxTextBox.Text);
+                double lambdaHy = double.Parse(oneWheelLambdaHyTextBox.Text);
+                double lambdaVx = double.Parse(oneWheelLambdaVxTextBox.Text);
+                double lambdaVy = double.Parse(oneWheelLambdaVyTextBox.Text);
+                double lambdaKyg = double.Parse(oneWheelLambdaKygTextBox.Text);
+                double lambdaKzg = double.Parse(oneWheelLambdaKzgTextBox.Text);
+                double lambdat = double.Parse(oneWheelLambdatTextBox.Text);
+                double lambdaMr = double.Parse(oneWheelLambdaMrTextBox.Text);
+                double lambdaxa = double.Parse(oneWheelLambdaxaTextBox.Text);
+                double lambdayk = double.Parse(oneWheelLambdaykTextBox.Text);
+                double lambdaVyk = double.Parse(oneWheelLambdaVykTextBox.Text);
+                double lambdas = double.Parse(oneWheelLambdasTextBox.Text);
+                double lambdaCz = double.Parse(oneWheelLambdaCzTextBox.Text);
+                double lambdaMx = double.Parse(oneWheelLambdaMxTextBox.Text);
+                double lambdaVMx = double.Parse(oneWheelLambdaVMxTextBox.Text);
+                double lambdaMy = double.Parse(oneWheelLambdaMyTextBox.Text);
+                // Initializes the scalling factors list
+                List<double> lambdaList = new List<double>
                 {
                     // Assigns the scalling factors to the list
                     lambdaFzO,  lambdaMux,  lambdaMuy,
@@ -400,63 +1035,85 @@ namespace InternshipTest
                     lambdas,    lambdaCz,   lambdaMx,
                     lambdaVMx,  lambdaMy
                 };
-            // Creates the Tire Model object
-            Vehicle.TireModelMF52 TireModelMF52 = new Vehicle.TireModelMF52(tireModelFile, lambdaList);
-            // Initializes a new object
-            Vehicle.OneWheel.Tire tireSubSystem = new Vehicle.OneWheel.Tire(tireID, TireModelMF52, verticalStiffness);
-            // Adds the object to the listbox and the combobox
-            oneWheelTireListBox.Items.Add(tireSubSystem);
+                // Creates the Tire Model object
+                Vehicle.TireModelMF52 tireModelMF52 = new Vehicle.TireModelMF52(modelID, description, tireModelFile, lambdaList);
+                // Adds the object to the listbox and the combobox
+                oneWheelTireModelListBox.Items.Add(tireModelMF52);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Tire Model. \n " +
+                "   It should have an ID. \n" +
+                "   Check if the coefficients file exists. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteTireOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a tire model from the one wheel model tire models listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteTireModelOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (oneWheelTireListBox.SelectedItems.Count == 1)
+            if (oneWheelTireModelListBox.SelectedItems.Count == 1)
             {
-                oneWheelTireListBox.Items.RemoveAt(oneWheelTireListBox.Items.IndexOf(oneWheelTireListBox.SelectedItem));
+                oneWheelTireModelListBox.Items.RemoveAt(oneWheelTireModelListBox.Items.IndexOf(oneWheelTireModelListBox.SelectedItem));
             }
         }
 
-        private void OneWheelTireListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the one wheel model tire models listbox's tire model and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelTireModelListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (oneWheelTireListBox.SelectedItems.Count == 1)
+            if (oneWheelTireModelListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Tire tireSubsystem = oneWheelTireListBox.SelectedItem as Vehicle.OneWheel.Tire;
+                Vehicle.TireModelMF52 tireModel = oneWheelTireModelListBox.SelectedItem as Vehicle.TireModelMF52;
                 // Writes the properties in the UI
-                oneWheelTireIDTextBox.Text = tireSubsystem.TireID;
-                oneWheelTireModelTextBox.Text = tireSubsystem.TireModel.FileLocation;
-                oneWheelTireStiffnessTextBox.Text = tireSubsystem.VerticalStiffness.ToString("F3");
-                oneWheelLambdaFzOTextBox.Text = tireSubsystem.TireModel.lambdaFzO.ToString("F3");
-                oneWheelLambdaMuxTextBox.Text = tireSubsystem.TireModel.lambdaMux.ToString("F3");
-                oneWheelLambdaMuyTextBox.Text = tireSubsystem.TireModel.lambdaMuy.ToString("F3");
-                oneWheelLambdaMuVTextBox.Text = tireSubsystem.TireModel.lambdaMuV.ToString("F3");
-                oneWheelLambdaKxkTextBox.Text = tireSubsystem.TireModel.lambdaKxk.ToString("F3");
-                oneWheellambdaKyaTextBox.Text = tireSubsystem.TireModel.lambdaKya.ToString("F3");
-                oneWheelLambdaCxTextBox.Text = tireSubsystem.TireModel.lambdaCx.ToString("F3");
-                oneWheelLambdaCyTextBox.Text = tireSubsystem.TireModel.lambdaCy.ToString("F3");
-                oneWheelLambdaExTextBox.Text = tireSubsystem.TireModel.lambdaEx.ToString("F3");
-                oneWheelLambdaEyTextBox.Text = tireSubsystem.TireModel.lambdaEy.ToString("F3");
-                oneWheelLambdaHxTextBox.Text = tireSubsystem.TireModel.lambdaHx.ToString("F3");
-                oneWheelLambdaHyTextBox.Text = tireSubsystem.TireModel.lambdaHy.ToString("F3");
-                oneWheelLambdaVxTextBox.Text = tireSubsystem.TireModel.lambdaVx.ToString("F3");
-                oneWheelLambdaVyTextBox.Text = tireSubsystem.TireModel.lambdaVy.ToString("F3");
-                oneWheelLambdaKygTextBox.Text = tireSubsystem.TireModel.lambdaKyg.ToString("F3");
-                oneWheelLambdaKzgTextBox.Text = tireSubsystem.TireModel.lambdaKzg.ToString("F3");
-                oneWheelLambdatTextBox.Text = tireSubsystem.TireModel.lambdat.ToString("F3");
-                oneWheelLambdaMrTextBox.Text = tireSubsystem.TireModel.lambdaMr.ToString("F3");
-                oneWheelLambdaxaTextBox.Text = tireSubsystem.TireModel.lambdaxa.ToString("F3");
-                oneWheelLambdaykTextBox.Text = tireSubsystem.TireModel.lambdayk.ToString("F3");
-                oneWheelLambdaVykTextBox.Text = tireSubsystem.TireModel.lambdaVyk.ToString("F3");
-                oneWheelLambdasTextBox.Text = tireSubsystem.TireModel.lambdas.ToString("F3");
-                oneWheelLambdaCzTextBox.Text = tireSubsystem.TireModel.lambdaCz.ToString("F3");
-                oneWheelLambdaMxTextBox.Text = tireSubsystem.TireModel.lambdaMx.ToString("F3");
-                oneWheelLambdaVMxTextBox.Text = tireSubsystem.TireModel.lambdaVMx.ToString("F3");
-                oneWheelLambdaMyTextBox.Text = tireSubsystem.TireModel.lambdaMy.ToString("F3");
+                oneWheelTireModelIDTextBox.Text = tireModel.ID;
+                oneWheelTireModelDescriptionTextBox.Text = tireModel.Description;
+                oneWheelTireModelTextBox.Text = tireModel.FileLocation;
+                oneWheelLambdaFzOTextBox.Text = tireModel.lambdaFzO.ToString("F3");
+                oneWheelLambdaMuxTextBox.Text = tireModel.lambdaMux.ToString("F3");
+                oneWheelLambdaMuyTextBox.Text = tireModel.lambdaMuy.ToString("F3");
+                oneWheelLambdaMuVTextBox.Text = tireModel.lambdaMuV.ToString("F3");
+                oneWheelLambdaKxkTextBox.Text = tireModel.lambdaKxk.ToString("F3");
+                oneWheellambdaKyaTextBox.Text = tireModel.lambdaKya.ToString("F3");
+                oneWheelLambdaCxTextBox.Text = tireModel.lambdaCx.ToString("F3");
+                oneWheelLambdaCyTextBox.Text = tireModel.lambdaCy.ToString("F3");
+                oneWheelLambdaExTextBox.Text = tireModel.lambdaEx.ToString("F3");
+                oneWheelLambdaEyTextBox.Text = tireModel.lambdaEy.ToString("F3");
+                oneWheelLambdaHxTextBox.Text = tireModel.lambdaHx.ToString("F3");
+                oneWheelLambdaHyTextBox.Text = tireModel.lambdaHy.ToString("F3");
+                oneWheelLambdaVxTextBox.Text = tireModel.lambdaVx.ToString("F3");
+                oneWheelLambdaVyTextBox.Text = tireModel.lambdaVy.ToString("F3");
+                oneWheelLambdaKygTextBox.Text = tireModel.lambdaKyg.ToString("F3");
+                oneWheelLambdaKzgTextBox.Text = tireModel.lambdaKzg.ToString("F3");
+                oneWheelLambdatTextBox.Text = tireModel.lambdat.ToString("F3");
+                oneWheelLambdaMrTextBox.Text = tireModel.lambdaMr.ToString("F3");
+                oneWheelLambdaxaTextBox.Text = tireModel.lambdaxa.ToString("F3");
+                oneWheelLambdaykTextBox.Text = tireModel.lambdayk.ToString("F3");
+                oneWheelLambdaVykTextBox.Text = tireModel.lambdaVyk.ToString("F3");
+                oneWheelLambdasTextBox.Text = tireModel.lambdas.ToString("F3");
+                oneWheelLambdaCzTextBox.Text = tireModel.lambdaCz.ToString("F3");
+                oneWheelLambdaMxTextBox.Text = tireModel.lambdaMx.ToString("F3");
+                oneWheelLambdaVMxTextBox.Text = tireModel.lambdaVMx.ToString("F3");
+                oneWheelLambdaMyTextBox.Text = tireModel.lambdaMy.ToString("F3");
             }
         }
 
-        private void OneWheelTireModelButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Opens a dialog box to select the tire model coefficients file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelTireModelButton_Click(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog
             Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog
@@ -474,33 +1131,53 @@ namespace InternshipTest
                 oneWheelTireModelTextBox.Text = openFileDlg.FileName;
             }
         }
+
         #endregion
+
         #region Transmission
-        private void OneWheelAddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates a transmission object and adds it to the one wheel model transmissions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
         {
-            // Gets the sfdatagrid data
-            List<Vehicle.OneWheel.GearRatio> gearRatios = new List<Vehicle.OneWheel.GearRatio>();
-            Vehicle.OneWheel.GearRatiosViewModel gearRatiosViewModel = oneWheelGearRatiosSfDataGrid.DataContext as Vehicle.OneWheel.GearRatiosViewModel;
-            foreach (Vehicle.OneWheel.GearRatio gearRatio in gearRatiosViewModel.GearRatios)
+            if (oneWheelTransmissionIDTextBox.Text != "" &&
+                oneWheelTransmissionGearRatiosSetComboBox.SelectedItem != null)
             {
-                gearRatios.Add(gearRatio);
+                // Gets the object's data
+                string transmissionID = oneWheelTransmissionIDTextBox.Text;
+                string description = oneWheelTransmissionDescriptionTextBox.Text;
+                string transmissionType = oneWheelTransmissionTypeComboBox.Text;
+                int amountOfDrivenWheels = 2;
+                if (transmissionType == "4WD") amountOfDrivenWheels = 4;
+                Vehicle.OneWheel.GearRatiosSet gearRatiosSet = oneWheelTransmissionGearRatiosSetComboBox.SelectedItem as Vehicle.OneWheel.GearRatiosSet;
+                double primaryRatio = double.Parse(oneWheelPrimaryRatioTextBox.Text);
+                double finalRatio = double.Parse(oneWheelFinalRatioTextBox.Text);
+                double gearShiftTime = double.Parse(oneWheelGearShiftTimeTextBox.Text);
+                double efficiency = double.Parse(oneWheelTransmissionEfficiencyTextBox.Text) / 100;
+                // Initializes a new object
+                Vehicle.OneWheel.Transmission transmission = new Vehicle.OneWheel.Transmission(
+                    transmissionID, description, amountOfDrivenWheels, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
+                // Adds the object to the listbox and the combobox
+                oneWheelTransmissionListBox.Items.Add(transmission);
             }
-            gearRatios.OrderByDescending(gearRatio => gearRatio.Ratio);
-            // Gets the rest of the object's data
-            string transmissionID = oneWheelTransmissionIDTextBox.Text;
-            string transmissionType = oneWheelTransmissionTypeComboBox.Text;
-            double primaryRatio = double.Parse(oneWheelPrimaryRatioTextBox.Text);
-            double finalRatio = double.Parse(oneWheelFinalRatioTextBox.Text);
-            double gearShiftTime = double.Parse(oneWheelGearShiftTimeTextBox.Text);
-            double efficiency = double.Parse(oneWheelTransmissionEfficiencyTextBox.Text);
-            // Initializes a new object
-            Vehicle.OneWheel.Transmission transmission = new Vehicle.OneWheel.Transmission(
-                transmissionID, transmissionType, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatios);
-            // Adds the object to the listbox and the combobox
-            oneWheelTransmissionListBox.Items.Add(transmission);
+            else System.Windows.MessageBox.Show(
+                "Could not create Transmission. \n " +
+                "   It should have an ID. \n" +
+                "   A gear ratios set must be selected.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a transmission from the one wheel model transmissions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
@@ -509,52 +1186,199 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelTransmissionListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the one wheel model transmissions listbox's transmission and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelTransmissionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            // Checks if there's a listbox item selected and then removes it
+            // Checks if there's a listbox item selected
             if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
                 Vehicle.OneWheel.Transmission transmission = oneWheelTransmissionListBox.SelectedItem as Vehicle.OneWheel.Transmission;
-                // Get and writes the tabular data in the UI
-                Vehicle.OneWheel.GearRatiosViewModel gearRatiosViewModel = new Vehicle.OneWheel.GearRatiosViewModel();
-                gearRatiosViewModel.GearRatios.Clear();
-                foreach (Vehicle.OneWheel.GearRatio gearRatio in transmission.GearRatios)
-                {
-                    gearRatiosViewModel.GearRatios.Add(gearRatio);
-                }
-                oneWheelGearRatiosSfDataGrid.DataContext = gearRatiosViewModel;
                 // Writes the properties in the UI
-                oneWheelTransmissionIDTextBox.Text = transmission.TransmissionID;
+                oneWheelTransmissionIDTextBox.Text = transmission.ID;
+                oneWheelTransmissionDescriptionTextBox.Text = transmission.Description;
                 oneWheelTransmissionTypeComboBox.Text = transmission.Type;
+                oneWheelTransmissionGearRatiosSetComboBox.Text = transmission.GearRatiosSet.ToString();
                 oneWheelPrimaryRatioTextBox.Text = transmission.PrimaryRatio.ToString("F3");
                 oneWheelFinalRatioTextBox.Text = transmission.FinalRatio.ToString("F3");
                 oneWheelGearShiftTimeTextBox.Text = transmission.GearShiftTime.ToString("F3");
-                oneWheelTransmissionEfficiencyTextBox.Text = transmission.Efficiency.ToString("F3");
+                oneWheelTransmissionEfficiencyTextBox.Text = (transmission.Efficiency * 100).ToString("F3");
             }
-        }
-        #endregion
-        #region Aerodynamics
-        private void OneWheelAddAerodynamicsToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Gets the sfdatagrid data
-            List<Vehicle.OneWheel.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheel.AerodynamicMapPoint>();
-            Vehicle.OneWheel.AerodynamicMapViewModel aerodynamicMapViewModel = oneWheelAerodynamicMapSfDataGrid.DataContext as Vehicle.OneWheel.AerodynamicMapViewModel;
-            foreach (Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint in aerodynamicMapViewModel.AerodynamicMap)
-            {
-                aerodynamicMapPoints.Add(aerodynamicMapPoint);
-            }
-            // Gets the rest of the object's data
-            string aerodynamicID = oneWheelAerodynamicsIDTextBox.Text;
-            double frontalArea = double.Parse(oneWheelFrontalAreaTextBox.Text);
-            double airDensity = double.Parse(oneWheelAirDensityTextBox.Text);
-            // Initializes a new object
-            Vehicle.OneWheel.Aerodynamics aerodynamics = new Vehicle.OneWheel.Aerodynamics(aerodynamicID, aerodynamicMapPoints, frontalArea, airDensity);
-            // Adds the object to the listbox and the combobox
-            oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
         }
 
-        private void OneWheelDeleteAerodynamicsOfListBox_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Gear Ratios
+
+        /// <summary>
+        /// Creates a gear ratios set object and adds it to the one wheel model gear ratios sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddGearRatioSetToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelGearRatiosSetIDTextBox.Text != "" &&
+                oneWheelGearRatiosListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string setID = oneWheelGearRatiosSetIDTextBox.Text;
+                string description = oneWheelGearRatiosSetDescriptionTextBox.Text;
+                List<Vehicle.OneWheel.GearRatio> gearRatios = new List<Vehicle.OneWheel.GearRatio>();
+                foreach (var gearRatioItem in oneWheelGearRatiosListBox.Items)
+                {
+                    Vehicle.OneWheel.GearRatio gearRatio = gearRatioItem as Vehicle.OneWheel.GearRatio;
+                    gearRatios.Add(gearRatio);
+                }
+                // Initializes a new object
+                Vehicle.OneWheel.GearRatiosSet gearRatiosSet = new Vehicle.OneWheel.GearRatiosSet(setID, description, gearRatios);
+                // Adds the object to the listbox and the combobox
+                oneWheelGearRatiosSetsListBox.Items.Add(gearRatiosSet);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Gear Ratios Set. \n " +
+                "   It should have an ID. \n" +
+                "   The gear ratios list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a gear ratios set from the one wheel model gear ratios sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteGearRatioSetOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelGearRatiosSetsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelGearRatiosSetsListBox.Items.RemoveAt(oneWheelGearRatiosSetsListBox.Items.IndexOf(oneWheelGearRatiosSetsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model gear ratio sets listbox's gear ratio set and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelGearRatioSetListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (oneWheelGearRatiosSetsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheel.GearRatiosSet gearRatioSet = oneWheelGearRatiosSetsListBox.SelectedItem as Vehicle.OneWheel.GearRatiosSet;
+                // Writes the properties in the UI
+                oneWheelGearRatiosSetIDTextBox.Text = gearRatioSet.ID;
+                oneWheelGearRatiosSetDescriptionTextBox.Text = gearRatioSet.Description;
+                // Clears and writes the list in the UI
+                oneWheelGearRatiosListBox.Items.Clear();
+                foreach (Vehicle.OneWheel.GearRatio gearRatio in gearRatioSet.GearRatios)
+                {
+                    oneWheelGearRatiosListBox.Items.Add(gearRatio);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a gear ratio object and adds it to the one wheel model gear ratios listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddGearRatioToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (double.Parse(oneWheelNewGearRatioTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                double ratio = double.Parse(oneWheelNewGearRatioTextBox.Text);
+                if (ratio < 0) ratio = -ratio;
+                // Initializes a new object
+                Vehicle.OneWheel.GearRatio gearRatio = new Vehicle.OneWheel.GearRatio(ratio);
+                // Adds the object to the listbox and the combobox
+                oneWheelGearRatiosListBox.Items.Add(gearRatio);
+                // Reorders the gear ratios listbox items in descending order
+                List<Vehicle.OneWheel.GearRatio> gearRatios = new List<Vehicle.OneWheel.GearRatio>();
+                foreach (var gearRatioItem in oneWheelGearRatiosListBox.Items)
+                {
+                    Vehicle.OneWheel.GearRatio currentGearRatio = gearRatioItem as Vehicle.OneWheel.GearRatio;
+                    gearRatios.Add(currentGearRatio);
+                }
+                gearRatios = gearRatios.OrderByDescending(currentGearRatio => currentGearRatio.Ratio).ToList();
+                oneWheelGearRatiosListBox.Items.Clear();
+                foreach (Vehicle.OneWheel.GearRatio currentGearRatio in gearRatios)
+                {
+                    oneWheelGearRatiosListBox.Items.Add(currentGearRatio);
+                }
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Gear Ratio. \n " +
+                "   The ratio can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a gear ratio from the one wheel model gear ratios listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteGearRatioOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelGearRatiosListBox.SelectedItems.Count == 1)
+            {
+                oneWheelGearRatiosListBox.Items.RemoveAt(oneWheelGearRatiosListBox.Items.IndexOf(oneWheelGearRatiosListBox.SelectedItem));
+            }
+        }
+
+        #endregion
+
+        #region Aerodynamics
+
+        /// <summary>
+        /// Creates an aerodynamics object and adds it to the one wheel model aerodynamics listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddAerodynamicsToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelAerodynamicsIDTextBox.Text != "" &&
+                oneWheelAerodynamicMapComboBox.SelectedItem != null)
+            {
+                // Gets the object's data
+                string aerodynamicID = oneWheelAerodynamicsIDTextBox.Text;
+                string description = oneWheelAerodynamicsDescriptionTextBox.Text;
+                Vehicle.OneWheel.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapComboBox.SelectedItem as Vehicle.OneWheel.AerodynamicMap;
+                double frontalArea = double.Parse(oneWheelFrontalAreaTextBox.Text);
+                double airDensity = double.Parse(oneWheelAirDensityTextBox.Text);
+                // Initializes a new object
+                Vehicle.OneWheel.Aerodynamics aerodynamics = new Vehicle.OneWheel.Aerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
+                aerodynamics.GetAerodynamicMapParameters();
+                // Adds the object to the listbox and the combobox
+                oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Aerodynamics. \n " +
+                "   It should have an ID. \n" +
+                "   An aerodynamic map must be selected.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an aerodynamics from the one wheel model aerodynamics listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteAerodynamicsOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
@@ -563,50 +1387,192 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelAerodynamicsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the one wheel model aerodynamics listbox's aerodynamics and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAerodynamicsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
             if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
                 Vehicle.OneWheel.Aerodynamics aerodynamics = oneWheelAerodynamicsListBox.SelectedItem as Vehicle.OneWheel.Aerodynamics;
-                // Get and writes the tabular data in the UI
-                Vehicle.OneWheel.AerodynamicMapViewModel aerodynamicMapViewModel = new Vehicle.OneWheel.AerodynamicMapViewModel();
-                aerodynamicMapViewModel.AerodynamicMap.Clear();
-                foreach (Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint in aerodynamics.AerodynamicMapPoints)
-                {
-                    aerodynamicMapViewModel.AerodynamicMap.Add(aerodynamicMapPoint);
-                }
-                oneWheelGearRatiosSfDataGrid.DataContext = aerodynamicMapViewModel;
                 // Writes the properties in the UI
-                oneWheelAerodynamicsIDTextBox.Text = aerodynamics.AeroID;
+                oneWheelAerodynamicsIDTextBox.Text = aerodynamics.ID;
+                oneWheelAerodynamicsDescriptionTextBox.Text = aerodynamics.Description;
+                oneWheelAerodynamicMapComboBox.Text = aerodynamics.AerodynamicMap.ToString();
                 oneWheelFrontalAreaTextBox.Text = aerodynamics.FrontalArea.ToString("F3");
                 oneWheelAirDensityTextBox.Text = aerodynamics.AirDensity.ToString("F3");
             }
         }
+
         #endregion
-        #region Engine
-        private void OneWheelAddEngineToListBox_Click(object sender, RoutedEventArgs e)
+
+        #region Aerodynamic Map
+
+        /// <summary>
+        /// Creates an aerodynamic map object and adds it to the one wheel model aerodynamic maps listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddAerodynamicMapToListBox_Click(object sender, RoutedEventArgs e)
         {
-            // Gets the sfdatagrid data
-            List<Vehicle.OneWheel.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.OneWheel.EngineCurvesPoint>();
-            Vehicle.OneWheel.EngineCurvesViewModel engineCurvesViewModel = oneWheelEngineCurvesSfDataGrid.DataContext as Vehicle.OneWheel.EngineCurvesViewModel;
-            foreach (Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint in engineCurvesViewModel.EngineCurves)
+            if (oneWheelAerodynamicMapIDTextBox.Text != "" &&
+                oneWheelAerodynamicMapPointsListBox.Items.Count != 0)
             {
-                engineCurvesPoints.Add(engineCurvesPoint);
+                // Gets the object's properties values
+                string mapID = oneWheelAerodynamicMapIDTextBox.Text;
+                string description = oneWheelAerodynamicMapDescriptionTextBox.Text;
+                List<Vehicle.OneWheel.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheel.AerodynamicMapPoint>();
+                foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
+                {
+                    Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.OneWheel.AerodynamicMapPoint;
+                    aerodynamicMapPoints.Add(aerodynamicMapPoint);
+                }
+                // Initializes a new object
+                Vehicle.OneWheel.AerodynamicMap aerodynamicMap = new Vehicle.OneWheel.AerodynamicMap(mapID, description, aerodynamicMapPoints);
+                // Adds the object to the listbox and the combobox
+                oneWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
             }
-            engineCurvesPoints.OrderBy(engineCurvesPoint => engineCurvesPoint.RPM);
-            // Gets the rest of the object's data
-            string engineID = oneWheelEngineIDTextBox.Text;
-            double maxThrottle = double.Parse(oneWheelMaxThrottleTextBox.Text);
-            double fuelDensity = double.Parse(oneWheelFuelDensityTextBox.Text);
-            // Initializes a new object
-            Vehicle.OneWheel.Engine engine = new Vehicle.OneWheel.Engine(engineID, engineCurvesPoints, maxThrottle, fuelDensity);
-            // Adds the object to the listbox and the combobox
-            oneWheelEngineListBox.Items.Add(engine);
+            else System.Windows.MessageBox.Show(
+                "Could not create Aerodynamic Map. \n " +
+                "   It should have an ID. \n" +
+                "   The aerodynamic map points list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void OneWheelDeleteEngineOfListBox_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes an aerodynamic map from the one wheel model aerodynamic maps listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteAerodynamicMapOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelAerodynamicMapsListBox.Items.RemoveAt(oneWheelAerodynamicMapsListBox.Items.IndexOf(oneWheelAerodynamicMapsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model aerodynamic maps listbox's aerodynamic map and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAerodynamicMapsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheel.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapsListBox.SelectedItem as Vehicle.OneWheel.AerodynamicMap;
+                // Writes the properties in the UI
+                oneWheelAerodynamicMapIDTextBox.Text = aerodynamicMap.ID;
+                oneWheelAerodynamicMapDescriptionTextBox.Text = aerodynamicMap.Description;
+                // Clears and writes the list in the UI
+                oneWheelAerodynamicMapPointsListBox.Items.Clear();
+                foreach (Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint in aerodynamicMap.MapPoints)
+                {
+                    oneWheelGearRatiosListBox.Items.Add(aerodynamicMapPoint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates an aerodynamic map point object and adds it to the one wheel model aerodynamic map points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddAerodynamicMapPointToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Gets the object's properties values
+            double speed = double.Parse(oneWheelNewAerodynamicMapPointSpeedTextBox.Text);
+            double rideHeight = double.Parse(oneWheelNewAerodynamicMapPointRideHeightTextBox.Text);
+            double dragCoefficient = double.Parse(oneWheelNewAerodynamicMapPointDragCoefficientTextBox.Text);
+            double liftCoefficient = double.Parse(oneWheelNewAerodynamicMapPointLiftCoefficientTextBox.Text);
+            // Initializes a new object
+            Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint = new Vehicle.OneWheel.AerodynamicMapPoint(speed, rideHeight, dragCoefficient, liftCoefficient);
+            // Adds the object to the listbox and the combobox
+            oneWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
+            // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
+            List<Vehicle.OneWheel.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheel.AerodynamicMapPoint>();
+            foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
+            {
+                Vehicle.OneWheel.AerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.OneWheel.AerodynamicMapPoint;
+                aerodynamicMapPoints.Add(currentAerodynamicMapPoint);
+            }
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentGearRatio => currentGearRatio.RideHeight).ToList();
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentGearRatio => currentGearRatio.WindRelativeSpeed).ToList();
+            oneWheelAerodynamicMapPointsListBox.Items.Clear();
+            foreach (Vehicle.OneWheel.AerodynamicMapPoint currentAerodynamicMapPoint in aerodynamicMapPoints)
+            {
+                oneWheelAerodynamicMapPointsListBox.Items.Add(currentAerodynamicMapPoint);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a aerodynamic map point from the one wheel model aerodynamic map points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelAerodynamicMapPointsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelAerodynamicMapPointsListBox.Items.RemoveAt(oneWheelAerodynamicMapPointsListBox.Items.IndexOf(oneWheelAerodynamicMapPointsListBox.SelectedItem));
+            }
+        }
+
+        #endregion
+
+        #region Engine
+
+        /// <summary>
+        /// Creates an engine object and adds it to the one wheel model engines listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddEngineToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelEngineIDTextBox.Text != "" &&
+                oneWheelEngineCurvesComboBox.SelectedItem != null &&
+                double.Parse(oneWheelMaxThrottleTextBox.Text) != 0 &&
+                double.Parse(oneWheelFuelDensityTextBox.Text) != 0)
+            {
+                // Gets the object's data
+                string engineID = oneWheelEngineIDTextBox.Text;
+                string description = oneWheelEngineDescriptionTextBox.Text;
+                Vehicle.OneWheel.EngineCurves engineCurves = oneWheelEngineCurvesComboBox.SelectedItem as Vehicle.OneWheel.EngineCurves;
+                double maxThrottle = double.Parse(oneWheelMaxThrottleTextBox.Text) / 100;
+                double fuelDensity = double.Parse(oneWheelFuelDensityTextBox.Text);
+                // Initializes a new object
+                Vehicle.OneWheel.Engine engine = new Vehicle.OneWheel.Engine(engineID, description, engineCurves, maxThrottle, fuelDensity);
+                // Adds the object to the listbox and the combobox
+                oneWheelEngineListBox.Items.Add(engine);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Engine. \n " +
+                "   It should have an ID. \n" +
+                "   An engine curves set must be selected. \n" +
+                "   The maximum throttle can't be zero. \n" +
+                "   The fuel density can't be zero.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an engine from the one wheel model engines listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteEngineOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (oneWheelEngineListBox.SelectedItems.Count == 1)
@@ -615,386 +1581,1525 @@ namespace InternshipTest
             }
         }
 
-        private void OneWheelEngineListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the one wheel model engines listbox's engine and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelEngineListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
             if (oneWheelEngineListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
                 Vehicle.OneWheel.Engine engine = oneWheelEngineListBox.SelectedItem as Vehicle.OneWheel.Engine;
-                // Get and writes the tabular data in the UI
-                Vehicle.OneWheel.EngineCurvesViewModel engineCurvesViewModel = new Vehicle.OneWheel.EngineCurvesViewModel();
-                engineCurvesViewModel.EngineCurves.Clear();
-                foreach (Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint in engine.EngineCurves)
-                {
-                    engineCurvesViewModel.EngineCurves.Add(engineCurvesPoint);
-                }
-                oneWheelEngineCurvesSfDataGrid.DataContext = engineCurvesViewModel;
                 // Writes the properties in the UI
-                oneWheelEngineIDTextBox.Text = engine.EngineID;
-                oneWheelMaxThrottleTextBox.Text = engine.MaxThrottle.ToString("F3");
+                oneWheelEngineIDTextBox.Text = engine.ID;
+                oneWheelEngineDescriptionTextBox.Text = engine.Description;
+                oneWheelEngineCurvesComboBox.Text = engine.EngineCurves.ToString();
+                oneWheelMaxThrottleTextBox.Text = (engine.MaxThrottle * 100).ToString("F3");
                 oneWheelFuelDensityTextBox.Text = engine.FuelDensity.ToString("F3");
             }
         }
+
         #endregion
+
+        #region Engine Curves
+
+        /// <summary>
+        /// Creates an engine curves object and adds it to the one wheel model engine curves listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddEngineCurvesToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelEngineCurvesIDTextBox.Text != "" &&
+                oneWheelEngineCurvesPointsListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string curvesID = oneWheelEngineCurvesIDTextBox.Text;
+                string description = oneWheelEngineCurvesDescriptionTextBox.Text;
+                List<Vehicle.OneWheel.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.OneWheel.EngineCurvesPoint>();
+                foreach (var engineCurvesPointItem in oneWheelEngineCurvesPointsListBox.Items)
+                {
+                    Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint = engineCurvesPointItem as Vehicle.OneWheel.EngineCurvesPoint;
+                    engineCurvesPoints.Add(engineCurvesPoint);
+                }
+                // Initializes a new object
+                Vehicle.OneWheel.EngineCurves engineCurves = new Vehicle.OneWheel.EngineCurves(curvesID, description, engineCurvesPoints);
+                // Adds the object to the listbox and the combobox
+                oneWheelEngineCurvesListBox.Items.Add(engineCurves);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Engine Curves. \n " +
+                "   It should have an ID. \n" +
+                "   The engines curves points list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an engine curves from the one wheel model engine curves listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteEngineCurvesOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelEngineCurvesListBox.SelectedItems.Count == 1)
+            {
+                oneWheelEngineCurvesListBox.Items.RemoveAt(oneWheelEngineCurvesListBox.Items.IndexOf(oneWheelEngineCurvesListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model engine curves listbox's engine curves and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelEngineCurvesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (oneWheelEngineCurvesListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheel.EngineCurves engineCurves = oneWheelEngineCurvesListBox.SelectedItem as Vehicle.OneWheel.EngineCurves;
+                // Writes the properties in the UI
+                oneWheelEngineCurvesIDTextBox.Text = engineCurves.ID;
+                oneWheelEngineCurvesDescriptionTextBox.Text = engineCurves.Description;
+                // Clears and writes the list in the UI
+                oneWheelEngineCurvesPointsListBox.Items.Clear();
+                foreach (Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint in engineCurves.CurvesPoints)
+                {
+                    oneWheelGearRatiosListBox.Items.Add(engineCurvesPoint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates an engine curves point object and adds it to the one wheel model engine curves points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAddEngineCurvesPointToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (double.Parse(oneWheelNewEngineCurvesPointTorqueTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                double rpm = double.Parse(oneWheelNewEngineCurvesPointRPMTextBox.Text);
+                if (rpm < 0) rpm = -rpm;
+                double torque = double.Parse(oneWheelNewEngineCurvesPointTorqueTextBox.Text);
+                double brakingTorque = double.Parse(oneWheelNewEngineCurvesPointBrakingTorqueTextBox.Text);
+                double specFuelCons = double.Parse(oneWheelNewEngineCurvesPointSpecFuelConsTextBox.Text);
+                // Initializes a new object
+                Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint = new Vehicle.OneWheel.EngineCurvesPoint(rpm, torque, brakingTorque, specFuelCons);
+                // Adds the object to the listbox and the combobox
+                oneWheelEngineCurvesPointsListBox.Items.Add(engineCurvesPoint);
+                // Reorders the engine curves points listbox items in ascending order of rpm
+                List<Vehicle.OneWheel.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.OneWheel.EngineCurvesPoint>();
+                foreach (var engineCurvesPointItem in oneWheelEngineCurvesPointsListBox.Items)
+                {
+                    Vehicle.OneWheel.EngineCurvesPoint currentEngineCurvesPoint = engineCurvesPointItem as Vehicle.OneWheel.EngineCurvesPoint;
+                    engineCurvesPoints.Add(currentEngineCurvesPoint);
+                }
+                engineCurvesPoints = engineCurvesPoints.OrderBy(currentCurvePoint => currentCurvePoint.RotationalSpeed).ToList();
+                oneWheelEngineCurvesPointsListBox.Items.Clear();
+                foreach (Vehicle.OneWheel.EngineCurvesPoint currentEngineCurvesPoint in engineCurvesPoints)
+                {
+                    oneWheelEngineCurvesPointsListBox.Items.Add(currentEngineCurvesPoint);
+                }
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Engine Curves Point. \n " +
+                "   The torque can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an engine curves points from the one wheel model engine curves points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelDeleteEngineCurvesPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelEngineCurvesPointsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelEngineCurvesPointsListBox.Items.RemoveAt(oneWheelEngineCurvesPointsListBox.Items.IndexOf(oneWheelEngineCurvesPointsListBox.SelectedItem));
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Path Input Methods
 
-        #region Tabular
-        private void AddTabularPathToListboxButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Gets the x and y axis limits so that the path is centralized in the chart area.
+        /// </summary>
+        /// <param name="path"> Path to be displayed </param>
+        /// <returns></returns>
+        private double[] _GetPathChartAxisRange(Path path)
         {
-            // Gets the sfdatagrids data
-            List<TabularPathSection> tabularPathSections = new List<TabularPathSection>();
-            TabularPathSectionViewModel tabularPathSectionsViewModel = tabularPathSectionsSfDataGrid.DataContext as TabularPathSectionViewModel;
-            foreach (TabularPathSection tabularPathSection in tabularPathSectionsViewModel.TabularPathSections)
+            // Average coordinates
+            double averageX = path.CoordinatesX.Average();
+            double averageY = path.CoordinatesY.Average();
+            // Path's minimum and maximum coordinates values
+            double[] minCandidates = new double[2] { path.CoordinatesX.Min(), path.CoordinatesY.Min() };
+            double[] maxCandidates = new double[2] { path.CoordinatesX.Max(), path.CoordinatesY.Max() };
+            // Final axis range
+            double dataRange = maxCandidates.Max() - minCandidates.Min();
+            // Axis limits array
+            double[] axisLimits = new double[4]
             {
-                tabularPathSections.Add(tabularPathSection);
-            }
-            List<PathSector> pathSectors = new List<PathSector>();
-            PathSectorViewModel pathSectorViewModel = tabularPathSectorsSfDataGrid.DataContext as PathSectorViewModel;
-            foreach (PathSector pathSector in pathSectorViewModel.PathSectors)
-            {
-                pathSectors.Add(pathSector);
-            }
-            // Gets the rest of the object's data
-            string pathID = tabularPathIDTextBox.Text;
-            int resolution = int.Parse(tabularPathResolutionTextBox.Text);
-            // Initializes a new object
-            Path path = new Path(pathID, resolution, pathSectors, tabularPathSections);
-            // Adds the object to the listbox and the combobox
-            tabularPathListBox.Items.Add(path);
+                averageX - dataRange * 0.6,
+                averageX + dataRange * 0.6,
+                averageY - dataRange * 0.6,
+                averageY + dataRange * 0.6
+            };
+
+            return axisLimits;
         }
 
-        private void DeleteTabularPathOfListboxButton_Click(object sender, RoutedEventArgs e)
+        #region Tabular
+
+        #region Main Tabular Path
+
+        /// <summary>
+        /// Creates a tabular path object and adds it to the tabular paths listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAddPathToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabularPathIDTextBox.Text != "" &&
+                tabularPathSectorsSetComboBox.SelectedItem != null &&
+                tabularPathSectionsSetComboBox.SelectedItem != null &&
+                int.Parse(tabularPathResolutionTextBox.Text) != 0)
+            {
+                // Gets the object's data
+                string pathID = tabularPathIDTextBox.Text;
+                string description = tabularPathDescriptionTextBox.Text;
+                PathSectorsSet pathSectorsSet = tabularPathSectorsSetComboBox.SelectedItem as PathSectorsSet;
+                TabularPathSectionsSet pathSectionsSet = tabularPathSectionsSetComboBox.SelectedItem as TabularPathSectionsSet;
+                double resolution = double.Parse(tabularPathResolutionTextBox.Text) / 1000;
+                // Initializes a new object
+                Path path = new Path(pathID, description, pathSectorsSet, pathSectionsSet, resolution);
+                path.GeneratePathPointsParametersFromTabular();
+                // Adds the object to the listbox and the combobox
+                tabularPathsListBox.Items.Add(path);
+            }
+            else System.Windows.MessageBox.Show(
+               "Could not create Tabular Path. \n " +
+               "    It should have an ID. \n" +
+               "    A sectors set must be selected. \n" +
+               "    A sections set must be selected. \n" +
+               "    The resolution can't be zero. \n" +
+               "    Note: Negative values are corrected to positive values.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a tabular path from the tabular paths listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathDeletePathOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (tabularPathListBox.SelectedItems.Count == 1)
+            if (tabularPathsListBox.SelectedItems.Count == 1)
             {
-                tabularPathListBox.Items.RemoveAt(tabularPathListBox.Items.IndexOf(tabularPathListBox.SelectedItem));
+                tabularPathsListBox.Items.RemoveAt(tabularPathsListBox.Items.IndexOf(tabularPathsListBox.SelectedItem));
+                if (tabularPathsListBox.Items.Count == 0) _ClearTabularPathDisplayChart();
             }
         }
 
-        private void TabularPathListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the tabular paths listbox's tabular path and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
-            if (tabularPathListBox.SelectedItems.Count == 1)
+            if (tabularPathsListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Path path = tabularPathListBox.SelectedItem as Path;
-                // Get and writes the tabular data in the UI
-                TabularPathSectionViewModel tabularPathSectionViewModel = new TabularPathSectionViewModel();
-                tabularPathSectionViewModel.TabularPathSections.Clear();
-                foreach (TabularPathSection tabularPathSection in path.TabularSections)
-                {
-                    tabularPathSectionViewModel.TabularPathSections.Add(tabularPathSection);
-                }
-                tabularPathSectionsSfDataGrid.DataContext = tabularPathSectionViewModel;
-                PathSectorViewModel pathSectorViewModel = new PathSectorViewModel();
-                pathSectorViewModel.PathSectors.Clear();
-                foreach (PathSector pathSector in path.Sectors)
-                {
-                    pathSectorViewModel.PathSectors.Add(pathSector);
-                }
-                tabularPathSectorsSfDataGrid.DataContext = pathSectorViewModel;
+                Path path = tabularPathsListBox.SelectedItem as Path;
                 // Writes the properties in the UI
-                tabularPathIDTextBox.Text = path.PathID;
-                tabularPathResolutionTextBox.Text = path.Resolution.ToString();
+                tabularPathIDTextBox.Text = path.ID;
+                tabularPathDescriptionTextBox.Text = path.Description;
+                tabularPathSectorsSetComboBox.Text = path.SectorsSet.ToString();
+                tabularPathSectionsSetComboBox.Text = path.TabularSectionsSet.ToString();
+                tabularPathResolutionTextBox.Text = path.Resolution.ToString("F0");
+                // Updates the path display chart if the checkbox is selected
+                if ((bool)tabularPathAllowPathDisplayCheckBox.IsChecked) _UpdateTabularPathDisplayChart();
+            }
+        }
 
-                // Removes the current chart
-                tabularPathVisualizationGrid.Children.Clear();
-                // Initializes the chart
-                SfChart chart = new SfChart() { IsManipulationEnabled = true, Header = path.PathID, FontSize = 30 };
-                // Add zooming/panning feature
-                ChartZoomPanBehavior zooming = new ChartZoomPanBehavior()
+        /// <summary>
+        /// Displays the path chart if the checkbox becomes checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAllowPathDisplayCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (tabularPathsListBox.SelectedItems.Count == 1) _UpdateTabularPathDisplayChart();
+        }
+
+        /// <summary>
+        /// Clears the tabular path display chart area if the checkbox is unchecked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAllowPathDisplayCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _ClearTabularPathDisplayChart();
+        }
+
+        /// <summary>
+        /// Updates the tabular path display chart.
+        /// </summary>
+        private void _UpdateTabularPathDisplayChart()
+        {
+            // Gets the path object from the path listbox
+            Path path = tabularPathsListBox.SelectedItem as Path;
+            // Gets the coordinates of the points of each path sector
+            List<PathViewModel> sectorsPointsViewModels = new List<PathViewModel>();
+            for (int iSector = 0; iSector < path.SectorsSet.Sectors.Count; iSector++)
+            {
+                PathViewModel currentSectorViewModel = new PathViewModel();
+                for (int iPoint = 0; iPoint < path.LocalSectorIndex.Count; iPoint++)
                 {
-                    EnableZoomingToolBar = true,
-                    ZoomRelativeToCursor = true
-                };
-                chart.Behaviors.Add(zooming);
-                // Initializes the chart's axis
-                NumericalAxis xAxis = new NumericalAxis() { Header = "X Coordinates [m]" };
-                NumericalAxis yAxis = new NumericalAxis() { Header = "Y Coordinates [m]" };
-                // Adds the axis to the chart
-                chart.PrimaryAxis = xAxis;
-                chart.SecondaryAxis = yAxis;
-                // Initializes the path view model
-                PathViewModel viewModel = new PathViewModel(path);
-                // Initializes the chart data
-                FastLineSeries series = new FastLineSeries()
+                    if (path.LocalSectorIndex[iPoint] == iSector + 1)
+                    {
+                        PathPoint pathPoint = new PathPoint(path.CoordinatesX[iPoint], path.CoordinatesY[iPoint]);
+                        currentSectorViewModel.PathPoints.Add(pathPoint);
+                    }
+                }
+                sectorsPointsViewModels.Add(currentSectorViewModel);
+            }
+            // Initializes a new chart
+            SfChart chart = new SfChart()
+            {
+                Header = "Path Display: " + path.ID,
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Width = tabularPathDockingWindow.ActualHeight,
+                Legend = new ChartLegend()
+            };
+            // Gets the axis minimum and maximum values
+            double[] axisLimits = _GetPathChartAxisRange(path);
+            // Adds the axis to the chart
+            chart.PrimaryAxis = new NumericalAxis()
+            {
+                Header = "X Coordinates (m)",
+                Minimum = axisLimits[0],
+                Maximum = axisLimits[1],
+                LabelFormat = "N0"
+            };
+            chart.SecondaryAxis = new NumericalAxis()
+            {
+                Header = "Y Coordinates (m)",
+                Minimum = axisLimits[2],
+                Maximum = axisLimits[3],
+                LabelFormat = "N0"
+            };
+            // Adds zoom/panning behaviour to the chart
+            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            {
+                EnableZoomingToolBar = true,
+                EnableMouseWheelZooming = true,
+                EnablePanning = true,
+                ZoomRelativeToCursor = true,
+            };
+            chart.Behaviors.Add(zoomingAndPanning);
+            // Generates and adds the sectors data series to be added to the chart
+            for (int iSector = 0; iSector < sectorsPointsViewModels.Count; iSector++)
+            {
+                FastLineSeries fastLineSeries = new FastLineSeries()
                 {
-                    ItemsSource = viewModel.PathPoints,
+                    Label = "Sector " + (iSector + 1).ToString("N0"),
+                    ItemsSource = sectorsPointsViewModels[iSector].PathPoints,
                     XBindingPath = "CoordinateX",
                     YBindingPath = "CoordinateY",
                     StrokeThickness = 10
                 };
-                // Adds the series to the chart
-                chart.Series.Add(series);
-                // Adds the chart to the UI
-                tabularPathVisualizationGrid.Children.Add(chart);
+                chart.Series.Add(fastLineSeries);
             }
+            // Generates and adds the data series to be added to the chart
+            PathViewModel pathViewModel = new PathViewModel(path);
+            FastLineSeries series = new FastLineSeries()
+            {
+                Label = path.ID,
+                ItemsSource = pathViewModel.PathPoints,
+                XBindingPath = "CoordinateX",
+                YBindingPath = "CoordinateY",
+                StrokeThickness = 5
+            };
+            chart.Series.Add(series);
+            // Clears the preview grid and displays the new chart
+            tabularPathDisplayGrid.Children.Clear();
+            tabularPathDisplayGrid.Children.Add(chart);
+            DockingManager.SetDesiredWidthInDockedMode(tabularPathDockingWindow, 250 + tabularPathDockingWindow.ActualHeight);
+        }
+
+        /// <summary>
+        /// Clears the tabular path display chart area.
+        /// </summary>
+        private void _ClearTabularPathDisplayChart()
+        {
+            // Clears the path sections preview grid
+            tabularPathDisplayGrid.Children.Clear();
+            // Resets the docking window width
+            DockingManager.SetDesiredWidthInDockedMode(tabularPathDockingWindow, 250);
         }
 
         #endregion
-        #endregion
 
-        #region GGV Diagram Input Methods
-        private void AddGGVDiagramToListboxButton_Click(object sender, RoutedEventArgs e)
+        #region Path Sectors
+
+        /// <summary>
+        /// Creates a tabular path sectors set object and adds it to the tabular path sectors sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAddSectorsSetToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (GGVDiagramCarAndSetupCombobox.Text!=null &&
-                GGVDiagramAmountOfPointsPerSpeedTextBox.Text!="0" &&
-                GGVDiagramAmountOfSpeedsTextBox.Text!="0" &&
-                double.Parse(GGVDiagramLowestSpeedTextBox.Text)<= double.Parse(GGVDiagramHighestSpeedTextBox.Text))
+            if (tabularPathSectorsSetIDTextBox.Text != "" &&
+                tabularPathSectorsStartDistancesListBox.Items.Count != 0)
             {
                 // Gets the object's properties values
-                Vehicle.OneWheel.Car car = GGVDiagramCarAndSetupCombobox.SelectedItem as Vehicle.OneWheel.Car;
-                int amountOfPointsPerSpeed = int.Parse(GGVDiagramAmountOfPointsPerSpeedTextBox.Text);
-                int amountOfSpeeds = int.Parse(GGVDiagramAmountOfSpeedsTextBox.Text);
-                double lowestSpeed = double.Parse(GGVDiagramLowestSpeedTextBox.Text);
-                double highestSpeed = double.Parse(GGVDiagramHighestSpeedTextBox.Text);
+                string id = tabularPathSectorsSetIDTextBox.Text;
+                string description = tabularPathSectorsSetDescriptionTextBox.Text;
+                List<PathSector> pathSectorsStartDistances = new List<PathSector>();
+                foreach (var sectorStartDistanceItem in tabularPathSectorsStartDistancesListBox.Items)
+                {
+                    PathSector pathSector = sectorStartDistanceItem as PathSector;
+                    pathSectorsStartDistances.Add(pathSector);
+                }
                 // Initializes a new object
-                Simulation.GGVDiagram diagram = new Simulation.GGVDiagram(car, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed);
-                // Adds the object to the listbox
-                GGVDiagramListBox.Items.Add(diagram);
+                PathSectorsSet pathSectorsSet = new PathSectorsSet(id, description, pathSectorsStartDistances);
+                // Adds the object to the listbox and the combobox
+                tabularPathSectorsSetsListBox.Items.Add(pathSectorsSet);
             }
+            else System.Windows.MessageBox.Show(
+                "Could not create Path Sectors Set. \n " +
+                "   It should have an ID. \n" +
+                "   The sectors list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
-        private void DeleteGGVDiagramOfListboxButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a tabular path sectors set from the one wheel model tabular path sectors sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathDeleteSectorsSetOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (GGVDiagramListBox.SelectedItems.Count == 1)
+            if (tabularPathSectorsSetsListBox.SelectedItems.Count == 1)
             {
-                GGVDiagramListBox.Items.RemoveAt(GGVDiagramListBox.Items.IndexOf(GGVDiagramListBox.SelectedItem));
+                tabularPathSectorsSetsListBox.Items.RemoveAt(tabularPathSectorsSetsListBox.Items.IndexOf(tabularPathSectorsSetsListBox.SelectedItem));
             }
         }
 
-        private void GGVDiagramListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the tabular path sectors sets listbox's path sectors set and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathSectorsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (GGVDiagramListBox.SelectedItems.Count == 1)
+            // Checks if there's a listbox item selected
+            if (tabularPathSectorsSetsListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Simulation.GGVDiagram diagram = GGVDiagramListBox.SelectedItem as Simulation.GGVDiagram;
+                PathSectorsSet sectorsSet = tabularPathSectorsSetsListBox.SelectedItem as PathSectorsSet;
                 // Writes the properties in the UI
-                GGVDiagramCarAndSetupCombobox.Text = diagram.Car.ToString();
-                GGVDiagramAmountOfPointsPerSpeedTextBox.Text = diagram.AmountOfPointsPerSpeed.ToString();
-                GGVDiagramAmountOfSpeedsTextBox.Text = diagram.AmountOfSpeeds.ToString();
-                GGVDiagramLowestSpeedTextBox.Text = diagram.LowestSpeed.ToString();
-                GGVDiagramHighestSpeedTextBox.Text = diagram.HighestSpeed.ToString();
-                // Removes the current surface
-                GGVDiagramVisualizationGrid.Children.Clear();
-                // Sets up a new surface for GGV visualization
-                SfSurfaceChart surface = new SfSurfaceChart()
+                tabularPathSectorsSetIDTextBox.Text = sectorsSet.ID;
+                tabularPathSectorsSetDescriptionTextBox.Text = sectorsSet.Description;
+                // Clears and writes the list in the UI
+                tabularPathSectorsStartDistancesListBox.Items.Clear();
+                foreach (PathSector pathSector in sectorsSet.Sectors)
                 {
-                    EnableRotation = true,
-                    EnableZooming = true,
-                    Header = "GGV Diagram",
-                    FontSize = 30,
-                    Type = SurfaceType.WireframeSurface
-                };
-                // Sets up the surface data
-                Simulation.GGVDiagramViewModel viewModel = new Simulation.GGVDiagramViewModel(diagram);
-                foreach (Simulation.GGVDiagramPoint point in viewModel.GGVDiagramPoints)
-                {
-                    surface.Data.AddPoints(point.LongitudinalAcceleration, point.Speed, point.LateralAcceleration);
+                    tabularPathSectorsStartDistancesListBox.Items.Add(pathSector);
                 }
-                surface.RowSize = viewModel.RowSize;
-                surface.ColumnSize = viewModel.ColumnSize;
-                
-                // Sets up the x axis 
-                SurfaceAxis xAxis = new SurfaceAxis
-                {
-                    Header = "Longitudinal Acceleration [G]",
-                    Minimum = surface.Data.XValues.Min(),
-                    Maximum = surface.Data.XValues.Max(),
-                    LabelFormat = "0.00",
-                    FontSize = 15
-                };
-                surface.XAxis = xAxis;
-
-                // Sets up the y axis
-                SurfaceAxis yAxis = new SurfaceAxis
-                {
-                    Header = "Speed [km/h]",
-                    Minimum = surface.Data.YValues.Min(),
-                    Maximum = surface.Data.YValues.Max(),
-                    LabelFormat = "0.00",
-                    FontSize = 15
-                };
-                surface.YAxis = yAxis;
-
-                // Sets up the z axis
-                SurfaceAxis zAxis = new SurfaceAxis
-                {
-                    Header = "Lateral Acceleration [G]",
-                    Minimum = surface.Data.ZValues.Min(),
-                    Maximum = surface.Data.ZValues.Max(),
-                    LabelFormat = "0.00",
-                    FontSize = 15
-                };
-                surface.ZAxis = zAxis;
-                // Adds a colorbar
-                surface.ColorBar = new ChartColorBar() { DockPosition = ChartDock.Right };
-                // Adds the surface to the UI
-                GGVDiagramVisualizationGrid.Children.Add(surface);
             }
         }
+
+        /// <summary>
+        /// Creates a tabular path sector object and adds it to the tabular path sector start distances listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAddSectorStartDistanceToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (double.Parse(tabularPathNewSectorStartDistanceTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                double startDistance = double.Parse(tabularPathNewSectorStartDistanceTextBox.Text);
+                if (startDistance < 0) startDistance = -startDistance;
+                // Initializes a new object
+                PathSector pathSector = new PathSector(0, startDistance);
+                // Adds the object to the listbox and the combobox
+                tabularPathSectorsStartDistancesListBox.Items.Add(pathSector);
+                _ReorderAndResetListboxSectorsIndexes();
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Sector Start Distance. \n " +
+                "   The start distance can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a tabular path sector start distances from the tabular path sector start distances listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathDeleteSectorStartDistanceOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabularPathSectorsStartDistancesListBox.SelectedItems.Count == 1)
+            {
+                PathSector selectedStartDistance = tabularPathSectorsStartDistancesListBox.SelectedItem as PathSector;
+                if (selectedStartDistance.StartDistance != 0)
+                {
+                    tabularPathSectorsStartDistancesListBox.Items.RemoveAt(tabularPathSectorsStartDistancesListBox.Items.IndexOf(tabularPathSectorsStartDistancesListBox.SelectedItem));
+                    _ReorderAndResetListboxSectorsIndexes();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reorders and resets the indexes of the path sectors listbox's sectors.
+        /// </summary>
+        private void _ReorderAndResetListboxSectorsIndexes()
+        {
+            // Initializes a new path sectors list and fills it with the listbox's objects
+            List<PathSector> pathSectors = new List<PathSector>();
+            foreach (PathSector pathSector in tabularPathSectorsStartDistancesListBox.Items)
+            {
+                pathSectors.Add(pathSector);
+            }
+            // Reorders the path sectors cording to their starting distances
+            pathSectors = pathSectors.OrderBy(pathSector => pathSector.StartDistance).ToList();
+            // Clears the listbox
+            tabularPathSectorsStartDistancesListBox.Items.Clear();
+            // Assigns the new indexes and adds the path sectors to the listbox
+            for (int iSector = 0; iSector < pathSectors.Count; iSector++)
+            {
+                pathSectors[iSector].Index = iSector + 1;
+                tabularPathSectorsStartDistancesListBox.Items.Add(pathSectors[iSector]);
+            }
+        }
+
+        #endregion
+
+        #region Path Sections
+
+        /// <summary>
+        /// Creates a tabular path sections set object and adds it to the tabular path sections sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAddSectionsSetToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabularPathSectionsSetIDTextBox.Text != "" &&
+                tabularPathSectionsListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string id = tabularPathSectionsSetIDTextBox.Text;
+                string description = tabularPathSectionsSetDescriptionTextBox.Text;
+                List<TabularPathSection> pathSections = new List<TabularPathSection>();
+                foreach (var pathSectionItem in tabularPathSectionsListBox.Items)
+                {
+                    TabularPathSection pathSection = pathSectionItem as TabularPathSection;
+                    pathSections.Add(pathSection);
+                }
+                // Initializes a new object
+                TabularPathSectionsSet pathSectionsSet = new TabularPathSectionsSet(id, description, pathSections);
+                // Adds the object to the listbox and the combobox
+                tabularPathSectionsSetsListBox.Items.Add(pathSectionsSet);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Path Sections Set. \n " +
+                "   It should have an ID. \n" +
+                "   The sections list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a tabular path sections set from the one wheel model tabular path sections sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathDeleteSectionsSetOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (tabularPathSectionsSetsListBox.SelectedItems.Count == 1)
+            {
+                tabularPathSectionsSetsListBox.Items.RemoveAt(tabularPathSectionsSetsListBox.Items.IndexOf(tabularPathSectionsSetsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the tabular path sections sets listbox's path section and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathSectionsSetListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (tabularPathSectionsSetsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                TabularPathSectionsSet sectionsSet = tabularPathSectionsSetsListBox.SelectedItem as TabularPathSectionsSet;
+                // Writes the properties in the UI
+                tabularPathSectionsSetIDTextBox.Text = sectionsSet.ID;
+                tabularPathSectionsSetDescriptionTextBox.Text = sectionsSet.Description;
+                // Clears and writes the list in the UI
+                tabularPathSectionsListBox.Items.Clear();
+                foreach (TabularPathSection pathSection in sectionsSet.Sections)
+                {
+                    tabularPathSectionsListBox.Items.Add(pathSection);
+                }
+            }
+        }
+        /// <summary>
+        /// Creates a tabular path section object and adds it to the tabular path sections listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathAddSectionToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabularPathNewSectionTypeComboBox.SelectedItem != null &&
+                double.Parse(tabularPathNewSectionLengthTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                double length = double.Parse(tabularPathNewSectionLengthTextBox.Text);
+                if (length < 0) length = -length;
+                TabularPathSection.SectionType sectionType;
+                double initialRadius;
+                double finalRadius;
+                switch (tabularPathNewSectionTypeComboBox.Text)
+                {
+                    case ("Left"):
+                        sectionType = TabularPathSection.SectionType.Left;
+                        initialRadius = double.Parse(tabularPathNewSectionInitialRadiusTextBox.Text);
+                        finalRadius = double.Parse(tabularPathNewSectionFinalRadiusTextBox.Text);
+                        break;
+                    case ("Right"):
+                        sectionType = TabularPathSection.SectionType.Right;
+                        initialRadius = double.Parse(tabularPathNewSectionInitialRadiusTextBox.Text);
+                        finalRadius = double.Parse(tabularPathNewSectionFinalRadiusTextBox.Text);
+                        break;
+                    default:
+                        sectionType = TabularPathSection.SectionType.Straight;
+                        initialRadius = 0;
+                        finalRadius = 0;
+                        break;
+                }
+                if (initialRadius < 0) initialRadius = -initialRadius;
+                if (finalRadius < 0) finalRadius = -finalRadius;
+                // Initializes a new object
+                TabularPathSection pathSection = new TabularPathSection(sectionType, length, initialRadius, finalRadius);
+                // Adds the object to the listbox and the combobox
+                tabularPathSectionsListBox.Items.Add(pathSection);
+                // Updates the path preview chart
+                if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked) _UpdateTabularPathSectionsPreviewChart();
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Section. \n " +
+                "   The length can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values. \n" +
+                "   Note: Radius equal to zero means straight section. \n" +
+                "   Note: Straight sections radiuses are corrected to zero.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a tabular path section from the tabular path section listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathDeleteSectionOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (tabularPathSectionsListBox.SelectedItems.Count == 1)
+            {
+                tabularPathSectionsListBox.Items.RemoveAt(tabularPathSectionsListBox.Items.IndexOf(tabularPathSectionsListBox.SelectedItem));
+                // Updates the path preview chart
+                if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked && tabularPathSectionsListBox.Items.Count != 0) _UpdateTabularPathSectionsPreviewChart();
+                else _ClearTabularPathSectionsPreviewChart();
+            }
+        }
+
+        /// <summary>
+        /// Updates the tabular path sections preview chart when the checkbox is checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathSectionsAllowPathPreviewCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _UpdateTabularPathSectionsPreviewChart();
+        }
+
+        /// <summary>
+        /// Clears the tabular path sections preview chart when the checkbox is checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TabularPathSectionsAllowPathPreviewCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _ClearTabularPathSectionsPreviewChart();
+        }
+
+        /// <summary>
+        /// Updates the sections preview chart.
+        /// </summary>
+        private void _UpdateTabularPathSectionsPreviewChart()
+        {
+            // Gets a new path sections set from the UI
+            List<TabularPathSection> pathSections = new List<TabularPathSection>();
+            foreach (var pathSectionItem in tabularPathSectionsListBox.Items)
+            {
+                TabularPathSection pathSection = pathSectionItem as TabularPathSection;
+                pathSections.Add(pathSection);
+            }
+            TabularPathSectionsSet sectionsSet = new TabularPathSectionsSet("", "", pathSections);
+            // Initializes a new path with the path sections information
+            PathSectorsSet sectorsSet = new PathSectorsSet("", "", new List<PathSector>() { new PathSector(0, 0) });
+            Path path = new Path("", "", sectorsSet, sectionsSet, 100);
+            path.GeneratePathPointsParametersFromTabular();
+            PathViewModel pathViewModel = new PathViewModel(path);
+            // Initializes a new chart
+            SfChart chart = new SfChart()
+            {
+                Header = "Path Preview",
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Width = tabularPathSectionsDockingWindow.ActualHeight
+            };
+            // Gets the axis minimum and maximum values
+            double[] axisLimits = _GetPathChartAxisRange(path);
+            // Adds the axis to the chart
+            chart.PrimaryAxis = new NumericalAxis()
+            {
+                Header = "X Coordinates (m)",
+                Minimum = axisLimits[0],
+                Maximum = axisLimits[1],
+                LabelFormat = "N0"
+            };
+            chart.SecondaryAxis = new NumericalAxis()
+            {
+                Header = "Y Coordinates (m)",
+                Minimum = axisLimits[2],
+                Maximum = axisLimits[3],
+                LabelFormat = "N0"
+            };
+            // Adds zoom/panning behaviour to the chart
+            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            {
+                EnableZoomingToolBar = true,
+                EnableMouseWheelZooming = true,
+                EnablePanning = true,
+                ZoomRelativeToCursor = true,
+            };
+            chart.Behaviors.Add(zoomingAndPanning);
+            // Generates and adds the data series to be added to the chart
+            FastLineSeries series = new FastLineSeries()
+            {
+                ItemsSource = pathViewModel.PathPoints,
+                XBindingPath = "CoordinateX",
+                YBindingPath = "CoordinateY",
+                StrokeThickness = 10
+            };
+            chart.Series.Add(series);
+            // Clears the preview grid and displays the new chart
+            tabularPathSectionsPreviewGrid.Children.Clear();
+            tabularPathSectionsPreviewGrid.Children.Add(chart);
+            DockingManager.SetDesiredWidthInDockedMode(tabularPathSectionsDockingWindow, 250 + tabularPathSectionsDockingWindow.ActualHeight);
+        }
+
+        /// <summary>
+        /// Clears the path sections preview chart area.
+        /// </summary>
+        private void _ClearTabularPathSectionsPreviewChart()
+        {
+            // Clears the path sections preview grid
+            tabularPathSectionsPreviewGrid.Children.Clear();
+            // Resets the docking window width
+            DockingManager.SetDesiredWidthInDockedMode(tabularPathSectionsDockingWindow, 250);
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region Simulation Methods
+
+        #region GGV Diagram Input Methods
+
+        /// <summary>
+        /// Creates a ggv diagram object, generates it and adds it to the simulation ggv diagrams listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SimulationAddGGVDiagramToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (ggvDiagramIDTextBox.Text != "" &&
+                ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
+                int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 8 &&
+                int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
+                Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
+            {
+                // Gets the object's data
+                string id = ggvDiagramIDTextBox.Text;
+                string description = ggvDiagramDescriptionTextBox.Text;
+                Vehicle.OneWheel.Car car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheel.Car;
+                int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
+                int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
+                double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
+                double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
+                // Initializes a new object
+                Simulation.GGVDiagram ggvDiagram = new Simulation.GGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed);
+                ggvDiagram.GenerateGGVDiagram();
+                // Adds the object to the listbox and the combobox
+                simulationGGVDiagramListBox.Items.Add(ggvDiagram);
+            }
+            else System.Windows.MessageBox.Show(
+               "Could not create GGV Diagram. \n " +
+               "    It should have an ID. \n" +
+               "    A vehicle must be selected. \n" +
+               "    The amount of points per speed should be at least 8. \n" +
+               "    The amount of speeds can't be zero. \n" +
+               "    The lowest speed should be smaller or equal to the highest speed. \n" +
+               "    Note: Negative values are corrected to positive values.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a ggv diagram from the ggv diagrams listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SimulationDeleteGGVDiagramOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (simulationGGVDiagramListBox.SelectedItems.Count == 1)
+            {
+                simulationGGVDiagramListBox.Items.RemoveAt(simulationGGVDiagramListBox.Items.IndexOf(simulationGGVDiagramListBox.SelectedItem));
+                if (simulationGGVDiagramListBox.Items.Count == 0) _ClearSimulationGGVDiagramDisplayChart();
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the simulation ggv diagrams listbox's ggv diagram and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SimulationGGVDiagramListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (simulationGGVDiagramListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Simulation.GGVDiagram ggvDiagram = simulationGGVDiagramListBox.SelectedItem as Simulation.GGVDiagram;
+                // Writes the properties in the UI
+                ggvDiagramIDTextBox.Text = ggvDiagram.ID;
+                ggvDiagramDescriptionTextBox.Text = ggvDiagram.Description;
+                ggvDiagramVehicleSelectionComboBox.Text = ggvDiagram.Car.ToString();
+                ggvDiagramAmountOfPointsPerSpeedTextBox.Text = ggvDiagram.AmountOfPointsPerSpeed.ToString();
+                ggvDiagramAmountOfSpeedsTextBox.Text = ggvDiagram.AmountOfSpeeds.ToString("F0");
+                ggvDiagramLowestSpeedTextBox.Text = (ggvDiagram.LowestSpeed * 3.6).ToString("F2");
+                ggvDiagramHighestSpeedTextBox.Text = (ggvDiagram.HighestSpeed * 3.6).ToString("F2");
+                // Updates the ggv diagram display chart
+                if ((bool)simulationGGVDiagramAllowPathDisplayCheckBox.IsChecked) _UpdateSimulationGGVDiagramDisplayChart();
+            }
+        }
+
+        /// <summary>
+        /// Displays the path chart if the checkbox becomes checked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SimulationGGVDiagramAllowPathDisplayCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (simulationGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
+        }
+
+        /// <summary>
+        /// Clears the GGV Diagram display chart area if the checkbox is unchecked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SimulationGGVDiagramAllowPathDisplayCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _ClearSimulationGGVDiagramDisplayChart();
+        }
+
+        /// <summary>
+        /// Updates the GGV Diagram display chart.
+        /// </summary>
+        private void _UpdateSimulationGGVDiagramDisplayChart()
+        {
+            // Loads the GGV Diagram object and geneates its view model
+            Simulation.GGVDiagram ggvDiagram = simulationGGVDiagramListBox.SelectedItem as Simulation.GGVDiagram;
+            Simulation.GGVDiagramViewModel ggvDiagramViewModel = new Simulation.GGVDiagramViewModel(ggvDiagram);
+            // Initializes the surface chart
+            SfSurfaceChart surface = new SfSurfaceChart()
+            {
+                Header = "GGV Diagram: " + ggvDiagram.ID,
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Width = ggvDiagramDefinitionDockingWindow.ActualHeight,
+                RowSize = ggvDiagramViewModel.RowSize,
+                ColumnSize = ggvDiagramViewModel.ColumnSize,
+                ColorBar = new ChartColorBar() { DockPosition = ChartDock.Right },
+                Type = SurfaceType.WireframeSurface,
+                EnableRotation = true,
+                EnableZooming = true
+            };
+            // Adds the data to the chart
+            for (int i = 0; i < ggvDiagramViewModel.GGVDiagramPoints.Count; i++)
+            {
+                surface.Data.AddPoints(
+                    ggvDiagramViewModel.GGVDiagramPoints[i].LongitudinalAcceleration,
+                    ggvDiagramViewModel.GGVDiagramPoints[i].Speed,
+                    ggvDiagramViewModel.GGVDiagramPoints[i].LateralAcceleration);
+            }
+            // Initializes the surface axis and adds them to the chart
+            SurfaceAxis xAxis = new SurfaceAxis()
+            {
+                Header = "Longitudinal Acceleration [G]",
+                Minimum = surface.Data.XValues.Min(),
+                Maximum = surface.Data.XValues.Max(),
+                LabelFormat = "0.00",
+                FontSize = 15
+            };
+            SurfaceAxis yAxis = new SurfaceAxis()
+            {
+                Header = "Speed [km/h]",
+                Minimum = surface.Data.YValues.Min(),
+                Maximum = surface.Data.YValues.Max(),
+                LabelFormat = "0.00",
+                FontSize = 15
+            };
+            SurfaceAxis zAxis = new SurfaceAxis()
+            {
+                Header = "Lateral Acceleration [G]",
+                Minimum = surface.Data.ZValues.Min(),
+                Maximum = surface.Data.ZValues.Max(),
+                LabelFormat = "0.00",
+                FontSize = 15
+            };
+            surface.XAxis = xAxis;
+            surface.YAxis = yAxis;
+            surface.ZAxis = zAxis;
+            // Clears the preview grid and displays the new chart
+            ggvDiagramDisplayGrid.Children.Clear();
+            ggvDiagramDisplayGrid.Children.Add(surface);
+            DockingManager.SetDesiredWidthInDockedMode(ggvDiagramDefinitionDockingWindow, 250 + ggvDiagramDefinitionDockingWindow.ActualHeight);
+        }
+
+        /// <summary>
+        /// Clears the GGV Diagram display chart area.
+        /// </summary>
+        private void _ClearSimulationGGVDiagramDisplayChart()
+        {
+            // Clears the path sections preview grid
+            ggvDiagramDisplayGrid.Children.Clear();
+            // Resets the docking window width
+            DockingManager.SetDesiredWidthInDockedMode(ggvDiagramDefinitionDockingWindow, 250);
+        }
+
         #endregion
 
         #region Lap Time Simulation Inputs Methods
-        private void AddLapTimeSimulationToListboxButton_Click(object sender, RoutedEventArgs e)
+
+        /// <summary>
+        /// Creates a lap time simulation object, runs the simulation, adds it to the lap time simulation listbox and 
+        /// adds the results object to the results analysis lap time simulation listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationAddToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (LapTimeSimulationModeCombobox.Text!=null && 
-                LapTimeSimulationPathCombobox.Text!=null &&
-                LapTimeSimulationGGVDiagramCombobox.SelectedItem!=null)
+            if (lapTimeSimulationIDTextBox.Text != "" &&
+                lapTimeSimulationModeComboBox.SelectedItem != null &&
+                lapTimeSimulationPathComboBox.SelectedItem != null &&
+                lapTimeSimulationGGVDiagramComboBox.SelectedItem != null)
             {
-                // Gets the object's properties values
-                Simulation.GGVDiagram ggvDiagram = LapTimeSimulationGGVDiagramCombobox.SelectedItem as Simulation.GGVDiagram;
-                Path path = LapTimeSimulationPathCombobox.SelectedItem as Path;
-                string simulationMode = LapTimeSimulationModeCombobox.Text;
+                // Gets the object's data
+                string id = lapTimeSimulationIDTextBox.Text;
+                string description = lapTimeSimulationDescriptionTextBox.Text;
+                string mode = lapTimeSimulationModeComboBox.Text;
                 bool isFirstLap = false;
-                if (simulationMode == "First Lap") isFirstLap = true;
+                if (mode == "First Lap") isFirstLap = true;
+                Path path = lapTimeSimulationPathComboBox.SelectedItem as Path;
+                Simulation.GGVDiagram ggvDiagram = lapTimeSimulationGGVDiagramComboBox.SelectedItem as Simulation.GGVDiagram;
+                // Generates the GGV diagrams list
+                List<Simulation.LapTimeSimulationSectorSetup> ggvDiagrams = new List<Simulation.LapTimeSimulationSectorSetup>();
+                for (int iSector = 1; iSector <= path.SectorsSet.Sectors.Count; iSector++)
+                {
+                    bool isGGVDiagramSpecific = false;
+                    // Sweeps through the sectors setup listbox and adds the specific GGV diagram requested by the user
+                    foreach (Simulation.LapTimeSimulationSectorSetup sectorSetup in lapTimeSimulationGGVDiagramPerSectorListBox.Items)
+                    {
+                        if (sectorSetup.SectorIndex == iSector)
+                        {
+                            isGGVDiagramSpecific = true;
+                            ggvDiagrams.Add(sectorSetup);
+                        }
+                    }
+                    // Adds the default GGV diagram if the sector has no specific GGV diagram.
+                    if (!isGGVDiagramSpecific) ggvDiagrams.Add(new Simulation.LapTimeSimulationSectorSetup(iSector, ggvDiagram));
+                }
                 // Initializes a new object
-                Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(ggvDiagram, path, isFirstLap);
-                // Adds the object to the listbox
+                Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(id, description, path, ggvDiagrams, isFirstLap);
+                Results.LapTimeSimulationResults results = lapTimeSimulation.RunLapTimeSimulation();
+                results.GetElapsedTimeAndLapTime();
+                // Adds the object to the listbox and the combobox
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
+                lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(results);
             }
+            else System.Windows.MessageBox.Show(
+               "Could not create Lap Time Simulation. \n " +
+               "    It should have an ID. \n" +
+               "    A mode must be selected. \n" +
+               "    A path must be selected. \n" +
+               "    A GGV Diagram must be selected.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
         }
 
-        private void DeleteLapTimeSimulationOfListboxButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes a lap time simulation from the lap time simulation listbox and its results object from the results analysis listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationDeleteOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
             if (lapTimeSimulationListBox.SelectedItems.Count == 1)
             {
                 lapTimeSimulationListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
+                lapTimeSimulationResultsAnalysisResultsListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
             }
         }
 
-        private void LapTimeSimulationListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Loads the properties of the lap time simulations listbox's lap time simulation and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-
+            // Checks if there's a listbox item selected
             if (lapTimeSimulationListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
                 Simulation.LapTimeSimulation lapTimeSimulation = lapTimeSimulationListBox.SelectedItem as Simulation.LapTimeSimulation;
                 // Writes the properties in the UI
-                LapTimeSimulationGGVDiagramCombobox.Text = lapTimeSimulation.SimulationGGVDiagram.ToString();
-                LapTimeSimulationPathCombobox.Text = lapTimeSimulation.SimulationPath.ToString();
+                lapTimeSimulationIDTextBox.Text = lapTimeSimulation.ID;
+                lapTimeSimulationDescriptionTextBox.Text = lapTimeSimulation.Description;
+                if (lapTimeSimulation.IsFirstLap) lapTimeSimulationModeComboBox.Text = "First Lap";
+                else lapTimeSimulationModeComboBox.Text = "Normal Lap";
+                lapTimeSimulationPathComboBox.Text = lapTimeSimulation.Path.ToString();
+                lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
+                foreach (Simulation.LapTimeSimulationSectorSetup sectorSetup in lapTimeSimulation.GGVDiagramsPerSector)
+                {
+                    lapTimeSimulationGGVDiagramPerSectorListBox.Items.Add(sectorSetup);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a sector setup object and adds it to the sectors specific GGV Diagrams listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationAddGGVDiagramPerSectorToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (lapTimeSimulationNewSectorIndexComboBox.SelectedItem != null &&
+                lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem != null)
+            {
+                int sectorIndex = int.Parse(lapTimeSimulationNewSectorIndexComboBox.Text);
+                Simulation.GGVDiagram ggvDiagram = lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem as Simulation.GGVDiagram;
+                Simulation.LapTimeSimulationSectorSetup sectorSetup = new Simulation.LapTimeSimulationSectorSetup(sectorIndex, ggvDiagram);
+                lapTimeSimulationGGVDiagramPerSectorListBox.Items.Add(sectorSetup);
+            }
+            else System.Windows.MessageBox.Show(
+               "Could not create Sector's Specific GGV Diagram. \n " +
+               "    A sector index must be selected. \n" +
+               "    A GGV Diagram must be selected.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a sector setup from the sectors specific GGV Diagrams listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationDeleteGGVDiagramPerSectorOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (lapTimeSimulationGGVDiagramPerSectorListBox.SelectedItems.Count == 1)
+            {
+                lapTimeSimulationGGVDiagramPerSectorListBox.Items.RemoveAt(lapTimeSimulationGGVDiagramPerSectorListBox.Items.IndexOf(lapTimeSimulationGGVDiagramPerSectorListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Changes the items of the new sector index combobox to match the selected path.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationPathSelectionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lapTimeSimulationPathComboBox.SelectedItem != null)
+            {
+                Path path = lapTimeSimulationPathComboBox.SelectedItem as Path;
+                lapTimeSimulationNewSectorIndexComboBox.DataContext = path;
+                lapTimeSimulationNewSectorIndexComboBox.ItemsSource = path.SectorsSet.Sectors;
+            }
+        }
+
+
+        private void AddLapTimeSimulationToListboxButton_Click(object sender, RoutedEventArgs e)
+        {/*
+            if (LapTimeSimulationModeCombobox.Text!=null && 
+                LapTimeSimulationPathCombobox.Text!=null)
+            {
+                // Gets the sfdatagrid data
+                SfDataGrid sfDataGrid = lapTimeSimulationPathSectorsSetupGrid.Children[0] as SfDataGrid;
+                Simulation.LapTimeSimulationSectorsSetupViewModel lapTimeSimulationSectorsSetupViewModel = new Simulation.LapTimeSimulationSectorsSetupViewModel();
+                lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups = sfDataGrid.ItemsSource as NoteervableCollection<Simulation.LapTimeSimulationSectorsSetup>;
+                List<Simulation.LapTimeSimulationSectorsSetup> sectorsSetup = lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.ToList();
+                // Gets the object's properties values
+                Path path = LapTimeSimulationPathCombobox.SelectedItem as Path;
+                string simulationMode = LapTimeSimulationModeCombobox.Text;
+                bool isFirstLap = false;
+                if (simulationMode == "First Lap") isFirstLap = true;
+                // Initializes a new object
+                Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(path, sectorsSetup, isFirstLap);
+                // Runs the lap time simulation
+                lapTimeSimulation.RunLapTimeSimulation();
+                // Adds the object to the listbox
+                lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
+            }*/
+        }
+
+        private void DeleteLapTimeSimulationOfListboxButton_Click(object sender, RoutedEventArgs e)
+        {/*
+            // Checks if there's a listbox item selected and then removes it
+            if (lapTimeSimulationListBox.SelectedItems.Count == 1)
+            {
+                lapTimeSimulationListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
+            }*/
+        }
+
+        private void LapTimeSimulationListBox_SelectionChanged_(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            /*
+            if (lapTimeSimulationListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Simulation.LapTimeSimulation lapTimeSimulation = lapTimeSimulationListBox.SelectedItem as Simulation.LapTimeSimulation;
+                // Get and writes the tabular data in the UI
+                Simulation.LapTimeSimulationSectorsSetupViewModel lapTimeSimulationSectorsSetupViewModel = new Simulation.LapTimeSimulationSectorsSetupViewModel();
+                lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.Clear();
+                for (int iSector = 0; iSector < lapTimeSimulation.GGVDiagramsPerSector.Count; iSector++)
+                {
+                    lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.Add(new Simulation.LapTimeSimulationSectorsSetup(lapTimeSimulation.Path.Sectors[iSector], lapTimeSimulation.GGVDiagramsPerSector[iSector].SectorGGVDiagram));
+                }
+                SetLapTimeSimulationSectorsSetupSfDataGrid(lapTimeSimulationSectorsSetupViewModel);
+                // Writes the properties in the UI
+                LapTimeSimulationPathCombobox.Text = lapTimeSimulation.Path.ToString();
                 if (lapTimeSimulation.IsFirstLap) LapTimeSimulationModeCombobox.Text = "First Lap";
                 else LapTimeSimulationModeCombobox.Text = "Normal Lap";
-            }
+            }*/
         }
-        #endregion
 
-        #region Result Analysis Methods
-        #region Lap Time Simulation
-        private void ResultsAnalysisLapTimeSimulationXAxisDataCombobox_DropDownClosed(object sender, EventArgs e)
-        {
-            // Checks if there are items are selected
-            if (resultsAnalysisLapTimeSimulationChecklistbox.SelectedItems.Count > 0 &&
-                resultsAnalysisLapTimeSimulationXAxisDataCombobox.SelectedItem != null &&
-                resultsAnalysisLapTimeSimulationYAxisDataCombobox.SelectedItem != null)
+        private void LapTimeSimulationPathCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {/*
+            if (LapTimeSimulationPathCombobox.Text != null &&
+                ggvDiagramListBox.HasItems)
             {
-                // Initializes a new chart
-                SfChart chart = new SfChart() { Header = "Lap Time Simulation Analysis" };
-                // Add zooming/panning feature
-                ChartZoomPanBehavior zooming = new ChartZoomPanBehavior()
+                // Gets the selected object
+                Path path = LapTimeSimulationPathCombobox.SelectedItem as Path;
+                // Initializes a new sectors setup object
+                Simulation.LapTimeSimulationSectorsSetupViewModel lapTimeSimulationSectorsSetupViewModel = new Simulation.LapTimeSimulationSectorsSetupViewModel();
+                // Fills the object with data
+                foreach (PathSector sector in path.Sectors)
                 {
-                    EnableZoomingToolBar = true,
-                    ZoomRelativeToCursor = true
-                };
-                chart.Behaviors.Add(zooming);
-                // Initializes the chart's axis
-                NumericalAxis xAxis = new NumericalAxis();
-                NumericalAxis yAxis = new NumericalAxis();
-                // Adds the axis to the chart
-                chart.PrimaryAxis = xAxis;
-                chart.SecondaryAxis = yAxis;
-                Results.LapTimeSimulation viewModel;
-                // Sweeps through the simulation check list box to add the series to the chart
-                foreach (Simulation.LapTimeSimulation lapTimeSimulation in resultsAnalysisLapTimeSimulationChecklistbox.SelectedItems)
-                {
-                    // Initializes the lap tim simulation view model
-                    viewModel = new Results.LapTimeSimulation(lapTimeSimulation);
-                    // Fast line data series initialization
-                    FastLineSeries series = new FastLineSeries()
-                    {
-                        ItemsSource = viewModel.Results
-                    };
-                    // Selects the axis binding sources based on the axis comboboxes
-                    switch (resultsAnalysisLapTimeSimulationXAxisDataCombobox.Text)
-                    {
-                        case "Time":
-                            series.XBindingPath = "ElapsedTime";
-                            chart.PrimaryAxis.Header = "Time [s]";
-                            break;
-                        case "Distance":
-                            series.XBindingPath = "ElapsedDistance";
-                            chart.PrimaryAxis.Header = "Distance [m]";
-                            break;
-                        case "Speed":
-                            series.XBindingPath = "Speed";
-                            chart.PrimaryAxis.Header = "Speed [km/h]";
-                            break;
-                        case "Longitudinal Acceleration":
-                            series.XBindingPath = "LongitudinalAcceleration";
-                            chart.PrimaryAxis.Header = "Longitudinal Acceleration [G]";
-                            break;
-                        case "Lateral Acceleration":
-                            series.XBindingPath = "LateralAcceleration";
-                            chart.PrimaryAxis.Header = "Lateral Acceleration [G]";
-                            break;
-                        case "Gear":
-                            series.XBindingPath = "GearNumber";
-                            chart.PrimaryAxis.Header = "Gear Number";
-                            break;
-                        default:
-                            break;
-                    }
-                    switch (resultsAnalysisLapTimeSimulationYAxisDataCombobox.Text)
-                    {
-                        case "Time":
-                            series.YBindingPath = "ElapsedTime";
-                            chart.SecondaryAxis.Header = "Time [s]";
-                            break;
-                        case "Distance":
-                            series.YBindingPath = "ElapsedDistance";
-                            chart.SecondaryAxis.Header = "Distance [m]";
-                            break;
-                        case "Speed":
-                            series.YBindingPath = "Speed";
-                            chart.SecondaryAxis.Header = "Speed [km/h]";
-                            break;
-                        case "Longitudinal Acceleration":
-                            series.YBindingPath = "LongitudinalAcceleration";
-                            chart.SecondaryAxis.Header = "Longitudinal Acceleration [G]";
-                            break;
-                        case "Lateral Acceleration":
-                            series.YBindingPath = "LateralAcceleration";
-                            chart.SecondaryAxis.Header = "Lateral Acceleration [G]";
-                            break;
-                        case "Gear":
-                            series.YBindingPath = "GearNumber";
-                            chart.SecondaryAxis.Header = "Gear Number";
-                            break;
-                        default:
-                            break;
-                    }
-                    // Adds the series to the chart
-                    chart.Series.Add(series);
+                    lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.Add(new Simulation.LapTimeSimulationSectorsSetup(sector, ggvDiagramListBox.Items[0] as Simulation.GGVDiagram));
                 }
-                // Adds legend to the chart
-                chart.Legend = new ChartLegend();
-                // Clears grid
-                resultsAnalysisLapTimeSimulationChartGrid.Children.Clear();
-                // Adds the chart to the grid
-                resultsAnalysisLapTimeSimulationChartGrid.Children.Add(chart);
-            }
-
+                // Clears the data grid content
+                lapTimeSimulationPathSectorsSetupGrid.Children.Clear();
+                // Sets up the datagrid
+                SetLapTimeSimulationSectorsSetupSfDataGrid(lapTimeSimulationSectorsSetupViewModel);
+            }*/
         }
-        #endregion
+
+        private void SetLapTimeSimulationSectorsSetupSfDataGrid()
+        {/*
+            // Clears the input grid
+            lapTimeSimulationPathSectorsSetupGrid.Children.Clear();
+            // Initializes the input data grid
+            SfDataGrid sfDataGrid = new SfDataGrid()
+            {
+                DataContext = viewModel,
+                HeaderRowHeight = 30,
+                LiveDataUpdateMode = Syncfusion.Data.LiveDataUpdateMode.AllowDataShaping,
+                AllowEditing = true,
+                AllowSorting = true
+            };
+            // Adds the data grid's columns
+            GridNumericColumn sectorColumn = new GridNumericColumn()
+            {
+                HeaderText = "Sector",
+                MappingName = "Sector.Index",
+                NumberDecimalDigits = 0
+            };
+            GridComboBoxColumn ggvColumn = new GridComboBoxColumn()
+            {
+                HeaderText = "Sector",
+                MappingName = "SectorGGVDiagram"
+            };
+            sfDataGrid.Columns.Add(sectorColumn);
+            sfDataGrid.Columns.Add(ggvColumn);
+            // Adds the SfDataGrid to the grid
+            tabularPathSectorsGrid.Children.Add(sfDataGrid);*/
+        }
 
         #endregion
 
+        #endregion
+
+        #region Results Analysis Methods
+
+        #region GGV Diagram
+
+        /// <summary>
+        /// Adds a new chart tab to the GGV Diagram results analysis environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GGVDiagramResultsAnalysisChartTabControl_NewButtonClick(object sender, EventArgs e)
+        {
+            TabItemExt item = new TabItemExt
+            {
+
+                Header = "Chart" + (ggvDiagramResultsAnalysisChartTabControl.Items.Count + 1),
+
+            };
+            ggvDiagramResultsAnalysisChartTabControl.Items.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a new chart to the GGV Diagram results analysis environment when the last chart is closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GGVDiagramResultsAnalysisChartTabControl_OnCloseButtonClick(object sender, CloseTabEventArgs e)
+        {
+            if (ggvDiagramResultsAnalysisChartTabControl.Items.Count == 1)
+            {
+                TabItemExt item = new TabItemExt
+                {
+
+                    Header = "Chart" + (ggvDiagramResultsAnalysisChartTabControl.Items.Count),
+
+                };
+                ggvDiagramResultsAnalysisChartTabControl.Items.Add(item);
+            }
+        }
+
+        #endregion
+
+        #region Lap Time Simulation
+
+        /// <summary>
+        /// Adds a new chart tab to the Lap Time Simulation results analysis environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisChartTabControl_NewButtonClick(object sender, EventArgs e)
+        {
+            TabItemExt item = new TabItemExt
+            {
+
+                Header = "Chart" + (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count + 1),
+
+            };
+            lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a new chart to the Lap Time Simulation results analysis environment when the last chart is closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick(object sender, CloseTabEventArgs e)
+        {
+            if (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count == 1)
+            {
+                TabItemExt item = new TabItemExt
+                {
+
+                    Header = "Chart" + (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count),
+
+                };
+                lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Updates the current lap time simulation analysis chart accordingly to the specified type in the combobox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisChartTypeCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            switch (lapTimeSimulationResultsAnalysisChartTypeCombobox.SelectedItem.ToString())
+            {
+                case "2D Chart":
+                    lapTimeSimulationResultsAnalysis2DChartMenuGrid.Visibility = Visibility.Visible;
+                    lapTimeSimulationResultsAnalysisTrackMapMenuGrid.Visibility = Visibility.Collapsed;
+                    break;
+                case "Track Map":
+                    lapTimeSimulationResultsAnalysis2DChartMenuGrid.Visibility = Visibility.Collapsed;
+                    lapTimeSimulationResultsAnalysisTrackMapMenuGrid.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+            _ClearCurrentLapTimeSimulationAnalysisChart();
+        }
+
+
+        /// <summary>
+        /// Clears the current lap time simulation analysis chart
+        /// </summary>
+        private void _ClearCurrentLapTimeSimulationAnalysisChart()
+        {
+            TabItemExt currentChartTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
+            currentChartTab.Content = new Grid();
+        }
+
+        #region 2D Chart
+
+        /// <summary>
+        /// Updates the current lap time simulation analysis 2D chart when the x axis combobox item gets changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            {
+                _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+            }
+            else _ClearCurrentLapTimeSimulationAnalysisChart();
+        }
+
+        /// <summary>
+        /// Updates the current lap time simulation analysis 2D chart when the y axis combobox item gets changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            {
+                _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+            }
+            else _ClearCurrentLapTimeSimulationAnalysisChart();
+        }
+        private void _LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            {
+                _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+            }
+            else _ClearCurrentLapTimeSimulationAnalysisChart();
+        }
+
+        /// <summary>
+        /// Updates the current lap time simulation analysis 2D chart
+        /// </summary>
+        private void _UpdateCurrentLapTimeSimulationAnalysis2DChart()
+        {
+            // Initializes the new chart
+            SfChart chart = new SfChart
+            {
+                Header = "Lap Time Simulation Analysis: 2D Chart",
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Width = tabularPathDockingWindow.ActualHeight,
+                Legend = new ChartLegend(),
+                PrimaryAxis = new NumericalAxis(),
+                SecondaryAxis = new NumericalAxis()
+            };
+            // Adds zoom/panning behaviour to the chart
+            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            {
+                EnableZoomingToolBar = true,
+                EnableMouseWheelZooming = true,
+                EnablePanning = true,
+                ZoomRelativeToCursor = true,
+            };
+            chart.Behaviors.Add(zoomingAndPanning);
+            // Initializes the data series
+            FastLineSeries fastLineSeries;
+            FastScatterBitmapSeries fastScatterSeries;
+            // Sweeps the lap time simulation results and adds the data to the chart.
+            foreach (Results.LapTimeSimulationResults results in lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems)
+            {
+                // Initializes the chart's data series
+                Results.LapTimeSimulationResultsViewModel resultsViewModel = new Results.LapTimeSimulationResultsViewModel(results);
+                fastLineSeries = new FastLineSeries() { ItemsSource = resultsViewModel.ResultsDisplayCollection };
+                fastScatterSeries = new FastScatterBitmapSeries() { ItemsSource = resultsViewModel.ResultsDisplayCollection };
+                // Adds the x axis to the chart with the x axis combobox selected item's type of data.
+                switch (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedValue.ToString())
+                {
+                    case "Time":
+                        chart.PrimaryAxis.Header = "Time [s]";
+                        chart.PrimaryAxis.LabelFormat = "N2";
+                        fastLineSeries.XBindingPath = "ElapsedTime";
+                        fastScatterSeries.XBindingPath = "ElapsedTime";
+                        break;
+                    case "Distance":
+                        chart.PrimaryAxis.Header = "Distance [m]";
+                        chart.PrimaryAxis.LabelFormat = "N2";
+                        fastLineSeries.XBindingPath = "ElapsedDistance";
+                        fastScatterSeries.XBindingPath = "ElapsedDistance";
+                        break;
+                    case "Speed":
+                        chart.PrimaryAxis.Header = "Speed [km/h]";
+                        chart.PrimaryAxis.LabelFormat = "N2";
+                        fastLineSeries.XBindingPath = "Speed";
+                        fastScatterSeries.XBindingPath = "Speed";
+                        break;
+                    case "Longitudinal Acceleration":
+                        chart.PrimaryAxis.Header = "Longitudinal Acceleration [G]";
+                        chart.PrimaryAxis.LabelFormat = "N2";
+                        fastLineSeries.XBindingPath = "LongitudinalAcceleration";
+                        fastScatterSeries.XBindingPath = "LongitudinalAcceleration";
+                        break;
+                    case "Lateral Acceleration":
+                        chart.PrimaryAxis.Header = "Lateral Acceleration [G]";
+                        chart.PrimaryAxis.LabelFormat = "N2";
+                        fastLineSeries.XBindingPath = "LateralAcceleration";
+                        fastScatterSeries.XBindingPath = "LateralAcceleration";
+                        break;
+                    case "Gear":
+                        chart.PrimaryAxis.Header = "Gear Number";
+                        chart.PrimaryAxis.LabelFormat = "N0";
+                        fastLineSeries.XBindingPath = "GearNumber";
+                        fastScatterSeries.XBindingPath = "GearNumber";
+                        break;
+                    default:
+                        break;
+                }
+                // Adds the y axis to the chart with the y axis combobox selected item's type of data.
+                switch (lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedValue.ToString())
+                {
+                    case "Time":
+                        chart.SecondaryAxis.Header = "Time [s]";
+                        chart.SecondaryAxis.LabelFormat = "N2";
+                        fastLineSeries.YBindingPath = "ElapsedTime";
+                        fastScatterSeries.YBindingPath = "ElapsedTime";
+                        break;
+                    case "Distance":
+                        chart.SecondaryAxis.Header = "Distance [m]";
+                        chart.SecondaryAxis.LabelFormat = "N2";
+                        fastLineSeries.YBindingPath = "ElapsedDistance";
+                        fastScatterSeries.YBindingPath = "ElapsedDistance";
+                        break;
+                    case "Speed":
+                        chart.SecondaryAxis.Header = "Speed [km/h]";
+                        chart.SecondaryAxis.LabelFormat = "N2";
+                        fastLineSeries.YBindingPath = "Speed";
+                        fastScatterSeries.YBindingPath = "Speed";
+                        break;
+                    case "Longitudinal Acceleration":
+                        chart.SecondaryAxis.Header = "Longitudinal Acceleration [G]";
+                        chart.SecondaryAxis.LabelFormat = "N2";
+                        fastLineSeries.YBindingPath = "LongitudinalAcceleration";
+                        fastScatterSeries.YBindingPath = "LongitudinalAcceleration";
+                        break;
+                    case "Lateral Acceleration":
+                        chart.SecondaryAxis.Header = "Lateral Acceleration [G]";
+                        chart.SecondaryAxis.LabelFormat = "N2";
+                        fastLineSeries.YBindingPath = "LateralAcceleration";
+                        fastScatterSeries.YBindingPath = "LateralAcceleration";
+                        break;
+                    case "Gear":
+                        chart.SecondaryAxis.Header = "Gear Number";
+                        chart.SecondaryAxis.LabelFormat = "N0";
+                        fastLineSeries.YBindingPath = "GearNumber";
+                        fastScatterSeries.YBindingPath = "GearNumber";
+                        break;
+                    default:
+                        break;
+                }
+                // Adds the series to the chart
+                switch (lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedValue.ToString())
+                {
+                    case "Line":
+                        chart.Series.Add(fastLineSeries);
+                        // Adds a trackball to the chart
+                        ChartTrackBallBehavior trackBall = new ChartTrackBallBehavior();
+                        chart.Behaviors.Add(trackBall);
+                        break;
+                    case "Scatter":
+                        chart.Series.Add(fastScatterSeries);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            // Adds the chart to the current chart tab
+            Grid grid = new Grid();
+            grid.Children.Add(chart);
+            TabItemExt currentChartTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
+            currentChartTab.Content = grid;
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
 
     }
 }

@@ -6,58 +6,105 @@ using System.Threading.Tasks;
 
 namespace InternshipTest
 {
-    /*
-     * Contains a path's parameters:
-     *  - PathID: string which identifies the object;
-     *  - Resolution: integer which represents the path's resolution in mm;
-     *  - sections: list of objects which represents the path's sections (components);
-     *  - CoordinatesX: list of doubles which represents the path's points X coordinates in m;
-     *  - CoordinatesY: list of doubles which represents the path's points Y coordinates in m;
-     *  - ElapsedDistance: list of doubles which represents the path's elapsed distance in m;
-     *  - LocalRadius: list of doubles which represents the path's points local radius in m; and
-     *  - LocalTangentDirection: list of doubles which represents the path's tangents directions as deg,
-     *  where 0 means right and 180 means left.
-     */
-    class Path
+    /// <summary>
+    /// Contains the information of a path.
+    /// </summary>
+    public class Path : GenericInfo
     {
-        // Properties ------------------------------------------------------------------
+        #region Properties
         // Direct inputs
-        public string PathID { get; set; }
-        public int Resolution { get; set; }
-        public List<PathSector> Sectors { get; set; }
-        public List<TabularPathSection> TabularSections { get; set; }
+        /// <summary>
+        /// Resolution to generate the points [m].
+        /// </summary>
+        public double Resolution { get; set; }
+        /// <summary>
+        /// Set of sectors to divide the path.
+        /// </summary>
+        public PathSectorsSet SectorsSet { get; set; }
+        /// <summary>
+        /// Set of tabular sections which defin the path points.
+        /// </summary>
+        public TabularPathSectionsSet TabularSectionsSet { get; set; }
         // Direct points properties
+        /// <summary>
+        /// X axis coordinates of the path points [m].
+        /// </summary>
         public List<double> CoordinatesX { get; set; }
+        /// <summary>
+        /// Y axis coordinates of the path points [m].
+        /// </summary>
         public List<double> CoordinatesY { get; set; }
+        /// <summary>
+        /// Local elapsed distances per point [m].
+        /// </summary>
         public List<double> ElapsedDistance { get; set; }
-        public List<double> LocalRadius { get; set; }
+        /// <summary>
+        /// Local radius at each point [m].
+        /// </summary>
+        private List<double> LocalRadius { get; set; }
+        /// <summary>
+        /// Local curvature at each point [m].
+        /// </summary>
         public List<double> LocalCurvatures { get; set; }
-        public List<double> LocalTangentDirection { get; set; }
+        /// <summary>
+        /// Local path's tangent direction at each point [rad].
+        /// </summary>
+        private List<double> LocalTangentDirection { get; set; }
         // Key values
-        public double PathLength { get; set; }
+        /// <summary>
+        /// Total length of the path [m].
+        /// </summary>
+        private double PathLength { get; set; }
+        /// <summary>
+        /// Amount of points that the path contains.
+        /// </summary>
         public int AmountOfPointsInPath { get; set; }
         // Points geographical atributes
-        public List<double> SectionsSwitchDistances { get; set; }
-        public List<int> LocalSectionIndex { get; set; }
+        /// <summary>
+        /// Elapsed distances at which the sections switch [m].
+        /// </summary>
+        private List<double> SectionsSwitchDistances { get; set; }
+        /// <summary>
+        /// Index of the section at each point.
+        /// </summary>
+        private List<int> LocalSectionIndex { get; set; }
+        /// <summary>
+        /// Index of the sector at each point.
+        /// </summary>
         public List<int> LocalSectorIndex { get; set; }
-        public List<int> IndexInLocalSection { get; set; }
-        public List<int> AmountOfPointsInSections { get; set; }
-        // Constructors ----------------------------------------------------------------
-        public Path()
+        /// <summary>
+        /// Index of the point in the local section.
+        /// </summary>
+        private List<int> IndexInLocalSection { get; set; }
+        /// <summary>
+        /// Amount of points at each section.
+        /// </summary>
+        private List<int> AmountOfPointsInSections { get; set; }
+        #endregion
+        #region Constructors
+        public Path() { }
+
+        public Path(string pathID, string description, PathSectorsSet sectors, TabularPathSectionsSet sections, double resolution)
         {
-            PathID = "Default";
-            Resolution = 100;
-            Sectors = new List<PathSector>();
+            ID = pathID;
+            Description = description;
+            SectorsSet = sectors;
+            TabularSectionsSet = sections;
+            Resolution = Math.Abs(resolution);
         }
-
-        public Path(string pathID, int resolution, List<PathSector> sectors, List<TabularPathSection> sections)
+        #endregion
+        #region Methods
+        public override string ToString()
         {
-            PathID = pathID;
-            Resolution = resolution;
-            Sectors = sectors;
-            TabularSections = sections;
-
-            // Lists initializtion
+            return ID;
+        }
+        #region TabularSectionsBasedPathGeneration
+        /// <summary>
+        /// Generates the path parameters from the tabular data inputs.
+        /// </summary>
+        public void GeneratePathPointsParametersFromTabular()
+        {
+            // Lists initialization
             CoordinatesX = new List<double>();
             CoordinatesY = new List<double>();
             ElapsedDistance = new List<double>();
@@ -70,74 +117,76 @@ namespace InternshipTest
             IndexInLocalSection = new List<int>();
             AmountOfPointsInSections = new List<int>();
 
-            GeneratePathPointsParametersFromTabular();
+            _GetInitialPoint();
+            _GetPathLength();
+            _AssociatePointsToSectionsAndSectors();
+            _GetPointsParameters();
         }
-        // Methods
-        public override string ToString()
-        {
-            return PathID;
-        }
-        #region TabularSectionsBasedPathGeneration
-        private void GeneratePathPointsParametersFromTabular()
-        {
-            GetInitialPoint();
-            GetPathLength();
-            AssociatePointsToSectionsAndSectors();
-            GetPointsParameters();
-        }
-        private void GetInitialPoint()
+        /// <summary>
+        /// Gets the first point of the path and its associated parameters.
+        /// </summary>
+        private void _GetInitialPoint()
         {
             // Starting points parameters
             CoordinatesX.Add(0); CoordinatesY.Add(0);
-            ElapsedDistance.Add(0); LocalRadius.Add(TabularSections[0].InitialRadius);
+            ElapsedDistance.Add(0); LocalRadius.Add(TabularSectionsSet.Sections[0].InitialRadius);
             LocalTangentDirection.Add(0);
             if (LocalRadius[0] == 0) LocalCurvatures.Add(0);
             else LocalCurvatures.Add(1 / LocalRadius[0]);
         }
-        private void GetPathLength()
+        /// <summary>
+        /// Gets the length of the path.
+        /// </summary>
+        private void _GetPathLength()
         {
             PathLength = 0;
-            for (int iSection = 0; iSection < TabularSections.Count; iSection++)
+            for (int iSection = 0; iSection < TabularSectionsSet.Sections.Count; iSection++)
             {
                 // Path length update
-                PathLength += TabularSections[iSection].Length;
+                PathLength += TabularSectionsSet.Sections[iSection].Length;
                 // Section switch distances
                 SectionsSwitchDistances.Add(PathLength);
             }
         }
-        private void AssociatePointsToSectionsAndSectors()
+        /// <summary>
+        /// Associates each path point to their respective sections and sectors.
+        /// </summary>
+        private void _AssociatePointsToSectionsAndSectors()
         {
             // Amount of points in path
-            AmountOfPointsInPath = (int)PathLength * 1000 / Resolution;
+            AmountOfPointsInPath = (int)(PathLength / Resolution);
             // Initialization of section index and point index in section variables
             int currentSectionIndex = 0;
-            int currentSectorIndex = 0;
+            int currentSectorIndex = 1;
             int currentIndexInLocalSection = 0;
-            LocalSectionIndex.Add(0);
-            LocalSectorIndex.Add(0);
-            IndexInLocalSection.Add(0);
+            LocalSectionIndex.Add(currentSectionIndex);
+            LocalSectorIndex.Add(currentSectorIndex);
+            IndexInLocalSection.Add(currentIndexInLocalSection);
             // Association of points to sections and elapsed distance "for" loop
             for (int iPoint = 1; iPoint < AmountOfPointsInPath; iPoint++)
             {
                 // Index in local section update
                 currentIndexInLocalSection++;
                 // Updates the elapsed distance
-                ElapsedDistance.Add(ElapsedDistance[iPoint - 1] + (double)Resolution / 1000);
+                ElapsedDistance.Add(ElapsedDistance[iPoint - 1] + Resolution);
                 // Checks if the section has changed
                 if (ElapsedDistance[iPoint] > SectionsSwitchDistances[currentSectionIndex])
                 {
                     // Updates the section
-                    if (currentSectionIndex < TabularSections.Count - 1) currentSectionIndex++;
+                    if (currentSectionIndex < TabularSectionsSet.Sections.Count - 1) currentSectionIndex++;
                     // Amount of points in sections update
                     AmountOfPointsInSections.Add(currentIndexInLocalSection);
                     // Resets the point index in section counter
                     currentIndexInLocalSection = 0;
                 }
-                // Checks if the sector has changed
-                if (ElapsedDistance[iPoint] > Sectors[currentSectorIndex].SectorStartDistance)
+                // Checks if there is more than one sector
+                if (SectorsSet.Sectors.Count > currentSectorIndex)
                 {
-                    // Updates the sector
-                    if (currentSectorIndex < Sectors.Count - 1) currentSectorIndex++;
+                    // Checks if the sector has changed
+                    if (ElapsedDistance[iPoint] > SectorsSet.Sectors[currentSectorIndex].StartDistance)
+                    {
+                        currentSectorIndex++;
+                    }
                 }
                 // List updates
                 LocalSectionIndex.Add(currentSectionIndex);
@@ -146,7 +195,10 @@ namespace InternshipTest
             }
             AmountOfPointsInSections.Add(currentIndexInLocalSection);
         }
-        private void GetPointsParameters()
+        /// <summary>
+        /// Gets the associated parameters of the points (coordinates, local radius and path's tangent direction).
+        /// </summary>
+        private void _GetPointsParameters()
         {
             // Points coordinates, local radius and tangent direction determination loop
             for (int iPoint = 1; iPoint < AmountOfPointsInPath; iPoint++)
@@ -154,7 +206,7 @@ namespace InternshipTest
                 // Current section index
                 int currentSectionIndex = LocalSectionIndex[iPoint];
                 // Is the section type a straight?
-                if (TabularSections[currentSectionIndex].Type == TabularPathSection.SectionType.Straight)
+                if (TabularSectionsSet.Sections[currentSectionIndex].Type == TabularPathSection.SectionType.Straight)
                 {
                     // Local radius, curvature and local tangent direction update
                     LocalRadius.Add(0);
@@ -164,14 +216,14 @@ namespace InternshipTest
                 else
                 {
                     // Current radius and section's angular length
-                    double initialRadius = TabularSections[currentSectionIndex].InitialRadius;
-                    double finalRadius = TabularSections[currentSectionIndex].FinalRadius;
+                    double initialRadius = TabularSectionsSet.Sections[currentSectionIndex].InitialRadius;
+                    double finalRadius = TabularSectionsSet.Sections[currentSectionIndex].FinalRadius;
                     double currentRadius = initialRadius + (finalRadius - initialRadius) *
                         IndexInLocalSection[iPoint] / AmountOfPointsInSections[currentSectionIndex];
-                    double currentAngularLength = TabularSections[currentSectionIndex].Length /
+                    double currentAngularLength = TabularSectionsSet.Sections[currentSectionIndex].Length /
                         AmountOfPointsInSections[currentSectionIndex] / currentRadius;
                     // Decides the sign o the angular displacement based on the section type (direction)
-                    if (TabularSections[currentSectionIndex].Type == TabularPathSection.SectionType.Left)
+                    if (TabularSectionsSet.Sections[currentSectionIndex].Type == TabularPathSection.SectionType.Left)
                     {
                         currentRadius = -currentRadius;
                         currentAngularLength = -currentAngularLength;
@@ -184,13 +236,14 @@ namespace InternshipTest
                         currentAngularLength);
                 }
                 // Coordinates increments
-                double deltaX = (double)Resolution / 1000 * Math.Cos(LocalTangentDirection[iPoint]);
-                double deltaY = (double)Resolution / 1000 * Math.Sin(LocalTangentDirection[iPoint]);
+                double deltaX = Resolution * Math.Cos(LocalTangentDirection[iPoint]);
+                double deltaY = Resolution * Math.Sin(LocalTangentDirection[iPoint]);
                 // Coordinates update
                 CoordinatesX.Add(CoordinatesX[iPoint - 1] + deltaX);
                 CoordinatesY.Add(CoordinatesY[iPoint - 1] + deltaY);
             }
         }
+        #endregion
         #endregion
     }
 }

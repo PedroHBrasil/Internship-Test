@@ -6,31 +6,37 @@ using System.Threading.Tasks;
 
 namespace InternshipTest
 {
-    /*
-     * Contains the inputs of a path section:
-     *  - Type: string which determines if the section is a straight, a right curve or a left curve;
-     *  - Length: double which represents section's length in m;
-     *  - AngularLength: double which represents section's angular length in deg; 
-     *  - InitialRadius: double which represents section's intial radius in m; and
-     *  - FinalRadius: double which represents section's final radius in m; and
-     */
+    /// <summary>
+    /// Contains the information about a tabular path's section.
+    /// </summary>
     public class TabularPathSection
     {
-        // Properties ---------------------------------------------------------------------------
-        public SectionType Type { get; set; }
-        public double Length { get; set; }
-        public double InitialRadius { get; set; }
-        public double FinalRadius { get; set; }
-
+        #region Section Types Enum
+        /// <summary>
+        /// Possible types of tabular section.
+        /// </summary>
         public enum SectionType { Straight, Left, Right };
-        // Constructors -------------------------------------------------------------------------
-        public TabularPathSection()
-        {
-            Type = SectionType.Straight;
-            Length = 10;
-            InitialRadius = 0;
-            FinalRadius = 0;
-        }
+        #endregion
+        #region Properties
+        /// <summary>
+        /// Section's type (Straight, Left or Right (Corners))
+        /// </summary>
+        public SectionType Type { get; set; }
+        /// <summary>
+        /// Section's length [m].
+        /// </summary>
+        public double Length { get; set; }
+        /// <summary>
+        /// Section's radius at the first point [m].
+        /// </summary>
+        public double InitialRadius { get; set; }
+        /// <summary>
+        /// Section's radius at the last point [m].
+        /// </summary>
+        public double FinalRadius { get; set; }
+        #endregion
+        #region Constructors
+        public TabularPathSection() { }
 
         public TabularPathSection(SectionType type, double length, double initialRadius, double finalRadius)
         {
@@ -39,5 +45,6 @@ namespace InternshipTest
             InitialRadius = initialRadius;
             FinalRadius = finalRadius;
         }
+        #endregion
     }
 }

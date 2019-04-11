@@ -6,38 +6,37 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle.OneWheel
 {
-    /*
-     * Contains the tire properties of a tire:
-     *  - TireID: string which identifies the object;
-     *  - TireModel: class which contains the MF5.2 tire model coefficients of the tire; and
-     *  - VerticalStiffness: double which represents the tire's vertical stiffness in N/mm;
-     */
-    class Tire
+    /// <summary>
+    /// Contains the information about a one wheel model's tire subsystem.
+    /// </summary>
+    public class Tire : GenericInfo
     {
-        // Properties -------------------------------------------------------------------
-        public string TireID { get; set; }
+        #region Properties
+        /// <summary>
+        /// Pacejka's Magic Formula 5.2 data.
+        /// </summary>
         public TireModelMF52 TireModel { get; set; }
+        /// <summary>
+        /// Tire's vertical stiffness [N/m]
+        /// </summary>
         public double VerticalStiffness { get; set; }
+        #endregion
+        #region Constructors
+        public Tire() { }
 
-        // Constructors -----------------------------------------------------------------
-        public Tire()
+        public Tire(string tireID, string description, TireModelMF52 tireModel, double verticalStiffness)
         {
-            TireID = "Default";
-            VerticalStiffness = 100; // N/mm
-            TireModel = new TireModelMF52();
-        }
-
-        public Tire(string tireID, TireModelMF52 tireModel, double verticalStiffness)
-        {
-            TireID = tireID;
-            TireModel = tireModel; // N/mm
+            ID = tireID;
+            Description = description;
+            TireModel = tireModel;
             VerticalStiffness = Math.Abs(verticalStiffness);
         }
-
-        // Methods ----------------------------------------------------------------------
+        #endregion
+        #region Methods
         public override string ToString()
         {
-            return TireID;
+            return ID;
         }
+        #endregion
     }
 }

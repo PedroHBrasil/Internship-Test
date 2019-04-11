@@ -7,11 +7,19 @@ using System.Threading.Tasks;
 
 namespace InternshipTest
 {
-    class PathViewModel
+    /// <summary>
+    /// Used to create the paths charts.
+    /// </summary>
+    public class PathViewModel
     {
-        // Properties
+        #region Properties
+        /// <summary>
+        /// Collection used to display.
+        /// </summary>
         public ObservableCollection<PathPoint> PathPoints { get; set; }
-        // Constructor
+        #endregion
+        #region Contructors
+        public PathViewModel() { PathPoints = new ObservableCollection<PathPoint>(); }
         public PathViewModel(Path path)
         {
             PathPoints = new ObservableCollection<PathPoint>();
@@ -20,17 +28,29 @@ namespace InternshipTest
                 PathPoints.Add(new PathPoint(path.CoordinatesX[iPoint], path.CoordinatesY[iPoint]));
             }
         }
+        #endregion
     }
-    class PathPoint
+    /// <summary>
+    /// Contains the cordinates of a path point.
+    /// </summary>
+    public class PathPoint
     {
-        // Properties
+        #region Properties
+        /// <summary>
+        /// X axis coordinate [m].
+        /// </summary>
         public double CoordinateX { get; set; }
+        /// <summary>
+        /// Y axis coordinate [m].
+        /// </summary>
         public double CoordinateY { get; set; }
-        // Constructor
+        #endregion
+        #region Constructors
         public PathPoint(double coordinateX, double coordinateY)
         {
             CoordinateX = coordinateX;
             CoordinateY = coordinateY;
         }
+        #endregion
     }
 }
