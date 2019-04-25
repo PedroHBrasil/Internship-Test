@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternshipTest.Vehicle.OneWheel
+namespace InternshipTest.Vehicle
 {
     /// <summary>
     /// Contains a one heel model's car subsystems information.

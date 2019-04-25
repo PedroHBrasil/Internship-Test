@@ -25,13 +25,14 @@ using Syncfusion.SfSkinManager;
 using Syncfusion.UI.Xaml.Charts;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Tools.Controls;
+using MathNet.Numerics;
 
 namespace InternshipTest
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         #region Fields
         private string currentVisualStyle;
@@ -109,22 +110,39 @@ namespace InternshipTest
             oneWheelBrakesMaxTorqueTextBox.Text = "2000";
 
             // Tire
-            oneWheelTireIDTextBox.Text = "tire1";
-            oneWheelTireStiffnessTextBox.Text = "120";
+            tireIDTextBox.Text = "tire1";
+            tireStiffnessTextBox.Text = "120";
 
             // Tire Model
-            oneWheelTireModelTextBox.Text = @"D:\Google Drive\Work\OptimumG\Internship Test\Programs\Auxiliar Files\TireModelMF52.txt";
-            oneWheelLambdaMuxTextBox.Text = "0.66";
-            oneWheelLambdaMuyTextBox.Text = "0.66";
-            oneWheelTireModelIDTextBox.Text = "tireModel1";
+            tireModelTextBox.Text = @"D:\Google Drive\Work\OptimumG\Internship Test\Programs\Auxiliar Files\TireModelMF52.txt";
+            lambdaMuxTextBox.Text = "0.66";
+            lambdaMuyTextBox.Text = "0.66";
+            lambdaMuVTextBox.Text = "0.00";
+            tireModelIDTextBox.Text = "tireModel1";
+            tireModelMinSlipAngleTextBox.Text = "-12";
+            tireModelMaxSlipAngleTextBox.Text = "12";
+            tireModelMinLongitudinalSlipTextBox.Text = "-0.15";
+            tireModelMaxLongitudinalSlipTextBox.Text = "0.15";
+
+            // Tire Model Display
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 500, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1500, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, -2, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, 2, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, -.1, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, .1, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(-6, 0, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(6, 0, 1000, 0, 40));
+            tireModelDisplayDataAmountOfPointsTextBox.Text = "100";
 
             // Gear Ratios
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(2.75));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.938));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.556));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.348));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.208));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.OneWheel.GearRatio(1.095));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(2.75));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.938));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.556));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.348));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.208));
+            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.095));
             oneWheelGearRatiosSetIDTextBox.Text = "gearRatios1";
 
             // Transmission
@@ -136,15 +154,15 @@ namespace InternshipTest
             oneWheelTransmissionEfficiencyTextBox.Text = "87.5";
 
             // Aerodynamic Map
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(40, 30, 1, -2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(40, 40, 1.1, -1.9));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(40, 50, 1.2, -1.8));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(70, 30, 1.1, -2.1));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(70, 40, 1.2, -2.2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(70, 50, 1.3, -2.3));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(100, 30, 1.1, -2.3));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(100, 40, 1, -2.2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheel.AerodynamicMapPoint(100, 50, 0.9, -2.1));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(40, 30, 1, -2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(40, 40, 1.1, -1.9));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(40, 50, 1.2, -1.8));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(70, 30, 1.1, -2.1));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(70, 40, 1.2, -2.2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(70, 50, 1.3, -2.3));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(100, 30, 1.1, -2.3));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(100, 40, 1, -2.2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(100, 50, 0.9, -2.1));
             oneWheelAerodynamicMapIDTextBox.Text = "aeroMap1";
 
             // Aerodynamics
@@ -153,23 +171,23 @@ namespace InternshipTest
             oneWheelAirDensityTextBox.Text = "1.3";
 
             // Engine Curves
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(3000, 55.77, 3.0, 390.45));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(3500, 52.50, 3.5, 381.50));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(4000, 54.71, 4.0, 381.80));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(4500, 57.77, 4.5, 379.02));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(5000, 70.67, 5.0, 367.21));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(5500, 79.63, 5.5, 366.58));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(6000, 83.18, 6.0, 361.44));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(6500, 83.82, 6.5, 362.35));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(7000, 83.86, 7.0, 364.99));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(7500, 84.50, 7.5, 369.16));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(8000, 82.56, 8.0, 372.97));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(8500, 77.88, 8.5, 375.73));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(9000, 72.16, 9.0, 378.86));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(9500, 66.65, 9.5, 383.92));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(10000, 61.16, 10.0, 391.00));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(10500, 55.94, 10.5, 398.92));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.OneWheel.EngineCurvesPoint(11000, 50.23, 11.0, 407.68));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3000, 55.77, 3.0, 390.45));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3500, 52.50, 3.5, 381.50));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4000, 54.71, 4.0, 381.80));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4500, 57.77, 4.5, 379.02));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5000, 70.67, 5.0, 367.21));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5500, 79.63, 5.5, 366.58));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6000, 83.18, 6.0, 361.44));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6500, 83.82, 6.5, 362.35));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7000, 83.86, 7.0, 364.99));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7500, 84.50, 7.5, 369.16));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8000, 82.56, 8.0, 372.97));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8500, 77.88, 8.5, 375.73));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9000, 72.16, 9.0, 378.86));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9500, 66.65, 9.5, 383.92));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10000, 61.16, 10.0, 391.00));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10500, 55.94, 10.5, 398.92));
+            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(11000, 50.23, 11.0, 407.68));
             oneWheelEngineCurvesIDTextBox.Text = "engineCurves1";
 
             // Engine
@@ -310,6 +328,7 @@ namespace InternshipTest
         /// <param name="dockingManager"></param>
         private void _CollapseMainDockingManagerContent()
         {
+            tireInputDockingManager.Visibility = Visibility.Collapsed;
             oneWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
             twoWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
             fourWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
@@ -360,14 +379,14 @@ namespace InternshipTest
             {
                 // Initializes the project object's lists
                 // One Wheel Model Cars
-                List<Vehicle.OneWheel.Car> oneWheelCars = new List<Vehicle.OneWheel.Car>();
-                List<Vehicle.OneWheel.Inertia> oneWheelInertias = new List<Vehicle.OneWheel.Inertia>();
-                List<Vehicle.OneWheel.Suspension> oneWheelSuspensions = new List<Vehicle.OneWheel.Suspension>();
-                List<Vehicle.OneWheel.Brakes> oneWheelBrakes = new List<Vehicle.OneWheel.Brakes>();
-                List<Vehicle.OneWheel.Tire> oneWheelTires = new List<Vehicle.OneWheel.Tire>();
-                List<Vehicle.OneWheel.Transmission> oneWheelTransmissions = new List<Vehicle.OneWheel.Transmission>();
-                List<Vehicle.OneWheel.Aerodynamics> oneWheelAerodynamics = new List<Vehicle.OneWheel.Aerodynamics>();
-                List<Vehicle.OneWheel.Engine> oneWheelEngines = new List<Vehicle.OneWheel.Engine>();
+                List<Vehicle.Car> oneWheelCars = new List<Vehicle.Car>();
+                List<Vehicle.Inertia> oneWheelInertias = new List<Vehicle.Inertia>();
+                List<Vehicle.Suspension> oneWheelSuspensions = new List<Vehicle.Suspension>();
+                List<Vehicle.Brakes> oneWheelBrakes = new List<Vehicle.Brakes>();
+                List<Vehicle.Tire> oneWheelTires = new List<Vehicle.Tire>();
+                List<Vehicle.Transmission> oneWheelTransmissions = new List<Vehicle.Transmission>();
+                List<Vehicle.Aerodynamics> oneWheelAerodynamics = new List<Vehicle.Aerodynamics>();
+                List<Vehicle.Engine> oneWheelEngines = new List<Vehicle.Engine>();
                 // Two Wheel Model Cars
                 // Four Wheel Model Cars
                 // Tabular Paths
@@ -381,21 +400,21 @@ namespace InternshipTest
 
                 // Fills the lists with the UI elements
                 // One Wheel Model Cars
-                foreach (Vehicle.OneWheel.Car car in oneWheelCarAndSetupListBox.Items)
+                foreach (Vehicle.Car car in oneWheelCarAndSetupListBox.Items)
                     oneWheelCars.Add(car);
-                foreach (Vehicle.OneWheel.Inertia inertia in oneWheelInertiaListBox.Items)
+                foreach (Vehicle.Inertia inertia in oneWheelInertiaListBox.Items)
                     oneWheelInertias.Add(inertia);
-                foreach (Vehicle.OneWheel.Suspension suspension in oneWheelSuspensionListBox.Items)
+                foreach (Vehicle.Suspension suspension in oneWheelSuspensionListBox.Items)
                     oneWheelSuspensions.Add(suspension);
-                foreach (Vehicle.OneWheel.Brakes brakes in oneWheelBrakesListBox.Items)
+                foreach (Vehicle.Brakes brakes in oneWheelBrakesListBox.Items)
                     oneWheelBrakes.Add(brakes);
-                foreach (Vehicle.OneWheel.Tire tires in oneWheelTireListBox.Items)
+                foreach (Vehicle.Tire tires in tireListBox.Items)
                     oneWheelTires.Add(tires);
-                foreach (Vehicle.OneWheel.Transmission transmission in oneWheelTransmissionListBox.Items)
+                foreach (Vehicle.Transmission transmission in oneWheelTransmissionListBox.Items)
                     oneWheelTransmissions.Add(transmission);
-                foreach (Vehicle.OneWheel.Aerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
+                foreach (Vehicle.Aerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
                     oneWheelAerodynamics.Add(aerodynamics);
-                foreach (Vehicle.OneWheel.Engine engine in oneWheelEngineListBox.Items)
+                foreach (Vehicle.Engine engine in oneWheelEngineListBox.Items)
                     oneWheelEngines.Add(engine);
                 // Two Wheel Model Cars
                 // Four Wheel Model Cars
@@ -443,21 +462,21 @@ namespace InternshipTest
             // Clears the UI lists and loads the file's objects
             _ClearUILists();
             // One Wheel Model Cars
-            foreach (Vehicle.OneWheel.Car car in project.OneWheelCars)
+            foreach (Vehicle.Car car in project.OneWheelCars)
                 oneWheelCarAndSetupListBox.Items.Add(car);
-            foreach (Vehicle.OneWheel.Inertia inertia in project.OneWheelInertias)
+            foreach (Vehicle.Inertia inertia in project.OneWheelInertias)
                 oneWheelInertiaListBox.Items.Add(inertia);
-            foreach (Vehicle.OneWheel.Suspension suspension in project.OneWheelSuspensions)
+            foreach (Vehicle.Suspension suspension in project.OneWheelSuspensions)
                 oneWheelSuspensionListBox.Items.Add(suspension);
-            foreach (Vehicle.OneWheel.Brakes brakes in project.OneWheelBrakes)
+            foreach (Vehicle.Brakes brakes in project.OneWheelBrakes)
                 oneWheelBrakesListBox.Items.Add(brakes);
-            foreach (Vehicle.OneWheel.Tire tires in project.OneWheelTires)
-                oneWheelTireListBox.Items.Add(tires);
-            foreach (Vehicle.OneWheel.Transmission transmission in project.OneWheelTransmissions)
+            foreach (Vehicle.Tire tires in project.OneWheelTires)
+                tireListBox.Items.Add(tires);
+            foreach (Vehicle.Transmission transmission in project.OneWheelTransmissions)
                 oneWheelTransmissionListBox.Items.Add(transmission);
-            foreach (Vehicle.OneWheel.Aerodynamics aerodynamics in project.OneWheelAerodynamics)
+            foreach (Vehicle.Aerodynamics aerodynamics in project.OneWheelAerodynamics)
                 oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
-            foreach (Vehicle.OneWheel.Engine engine in project.OneWheelEngines)
+            foreach (Vehicle.Engine engine in project.OneWheelEngines)
                 oneWheelEngineListBox.Items.Add(engine);
             // Two Wheel Model Cars
             // Four Wheel Model Cars
@@ -486,7 +505,7 @@ namespace InternshipTest
             oneWheelInertiaListBox.Items.Clear();
             oneWheelSuspensionListBox.Items.Clear();
             oneWheelBrakesListBox.Items.Clear();
-            oneWheelTireListBox.Items.Clear();
+            tireListBox.Items.Clear();
             oneWheelTransmissionListBox.Items.Clear();
             oneWheelAerodynamicsListBox.Items.Clear();
             oneWheelEngineListBox.Items.Clear();
@@ -504,6 +523,16 @@ namespace InternshipTest
 
         #endregion
         #region Vehicle Button Options Methods
+        /// <summary>
+        /// Changes the work environment to the tire model input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TireButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            tireInputDockingManager.Visibility = Visibility.Visible;
+        }
         /// <summary>
         /// Changes the work environment to the One Wheel vehicle model input environment.
         /// </summary>
@@ -614,6 +643,487 @@ namespace InternshipTest
         #endregion
         #endregion
 
+        #region Vehicle Input Methods
+
+        #region Tires
+
+        #region Tire
+
+        /// <summary>
+        /// Creates a tire object and adds it to the tires listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddTireToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tireIDTextBox.Text != "" &&
+                double.Parse(tireStiffnessTextBox.Text) != 0 &&
+                tireModelComboBox.SelectedItem != null)
+            {
+                // Inputs assigning and convertion.
+                string tireID = tireIDTextBox.Text;
+                string description = tireDescriptionTextBox.Text;
+                double verticalStiffness = double.Parse(tireStiffnessTextBox.Text) * 1000;
+                Vehicle.TireModelMF52 tireModelMF52 = tireModelComboBox.SelectedItem as Vehicle.TireModelMF52;
+                // Initializes a new object
+                Vehicle.Tire tire = new Vehicle.Tire(tireID, description, tireModelMF52, verticalStiffness);
+                // Adds the object to the listbox and the combobox
+                tireListBox.Items.Add(tire);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Tire. \n " +
+                "   It should have an ID. \n" +
+                "   A tire model must be selected. \n" +
+                "   The tire stiffness can't be zero.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a tire from the tires listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteTireOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (tireListBox.SelectedItems.Count == 1)
+            {
+                tireListBox.Items.RemoveAt(tireListBox.Items.IndexOf(tireListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's tire and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TireListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (tireListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.Tire tire = tireListBox.SelectedItem as Vehicle.Tire;
+                // Writes the properties in the UI
+                tireIDTextBox.Text = tire.ID;
+                tireDescriptionTextBox.Text = tire.Description;
+                tireStiffnessTextBox.Text = (tire.VerticalStiffness / 1000).ToString("F3");
+            }
+        }
+
+        #endregion
+
+        #region Tire Model
+
+        /// <summary>
+        /// Creates a tire model object and adds it to the tire model listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddTireModelToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tireModelIDTextBox.Text != "" &&
+                File.Exists(tireModelTextBox.Text))
+            {
+                // Inputs assigning and convertion.
+                string modelID = tireModelIDTextBox.Text;
+                string description = tireModelDescriptionTextBox.Text;
+                string tireModelFile = tireModelTextBox.Text;
+                double alphaMin = double.Parse(tireModelMinSlipAngleTextBox.Text);
+                double alphaMax = double.Parse(tireModelMaxSlipAngleTextBox.Text);
+                double kappaMin = double.Parse(tireModelMinLongitudinalSlipTextBox.Text);
+                double kappaMax = double.Parse(tireModelMaxLongitudinalSlipTextBox.Text);
+                double lambdaFzO = double.Parse(lambdaFzOTextBox.Text);
+                double lambdaMux = double.Parse(lambdaMuxTextBox.Text);
+                double lambdaMuy = double.Parse(lambdaMuyTextBox.Text);
+                double lambdaMuV = double.Parse(lambdaMuVTextBox.Text);
+                double lambdaKxk = double.Parse(lambdaKxkTextBox.Text);
+                double lambdaKya = double.Parse(lambdaKyaTextBox.Text);
+                double lambdaCx = double.Parse(lambdaCxTextBox.Text);
+                double lambdaCy = double.Parse(lambdaCyTextBox.Text);
+                double lambdaEx = double.Parse(lambdaExTextBox.Text);
+                double lambdaEy = double.Parse(lambdaEyTextBox.Text);
+                double lambdaHx = double.Parse(lambdaHxTextBox.Text);
+                double lambdaHy = double.Parse(lambdaHyTextBox.Text);
+                double lambdaVx = double.Parse(lambdaVxTextBox.Text);
+                double lambdaVy = double.Parse(lambdaVyTextBox.Text);
+                double lambdaKyg = double.Parse(lambdaKygTextBox.Text);
+                double lambdaKzg = double.Parse(lambdaKzgTextBox.Text);
+                double lambdat = double.Parse(lambdatTextBox.Text);
+                double lambdaMr = double.Parse(lambdaMrTextBox.Text);
+                double lambdaxa = double.Parse(lambdaxaTextBox.Text);
+                double lambdayk = double.Parse(lambdaykTextBox.Text);
+                double lambdaVyk = double.Parse(lambdaVykTextBox.Text);
+                double lambdas = double.Parse(lambdasTextBox.Text);
+                double lambdaCz = double.Parse(lambdaCzTextBox.Text);
+                double lambdaMx = double.Parse(lambdaMxTextBox.Text);
+                double lambdaVMx = double.Parse(lambdaVMxTextBox.Text);
+                double lambdaMy = double.Parse(lambdaMyTextBox.Text);
+                // Initializes the scalling factors list
+                List<double> lambdaList = new List<double>
+                {
+                    // Assigns the scalling factors to the list
+                    lambdaFzO,  lambdaMux,  lambdaMuy,
+                    lambdaMuV,  lambdaKxk,  lambdaKya,
+                    lambdaCx,   lambdaCy,   lambdaEx,
+                    lambdaEy,   lambdaHx,   lambdaHy,
+                    lambdaVx,   lambdaVy,   lambdaKyg,
+                    lambdaKzg,  lambdat,    lambdaMr,
+                    lambdaxa,   lambdayk,   lambdaVyk,
+                    lambdas,    lambdaCz,   lambdaMx,
+                    lambdaVMx,  lambdaMy
+                };
+                // Creates the Tire Model object
+                Vehicle.TireModelMF52 tireModelMF52 = new Vehicle.TireModelMF52(modelID, description, tireModelFile, lambdaList, alphaMin, alphaMax, kappaMin, kappaMax);
+                // Adds the object to the listbox and the combobox
+                tireModelListBox.Items.Add(tireModelMF52);
+                tireModelDisplayCheckListBox.Items.Add(tireModelMF52);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Tire Model. \n " +
+                "   It should have an ID. \n" +
+                "   Check if the coefficients file exists. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a tire model from the tire models listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteTireModelOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (tireModelListBox.SelectedItems.Count == 1)
+            {
+                tireModelListBox.Items.RemoveAt(tireModelListBox.Items.IndexOf(tireModelListBox.SelectedItem));
+                tireModelDisplayCheckListBox.Items.RemoveAt(tireModelDisplayCheckListBox.Items.IndexOf(tireModelDisplayCheckListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the tire models listbox's tire model and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TireModelListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (tireModelListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TireModelMF52 tireModel = tireModelListBox.SelectedItem as Vehicle.TireModelMF52;
+                // Writes the properties in the UI
+                tireModelIDTextBox.Text = tireModel.ID;
+                tireModelDescriptionTextBox.Text = tireModel.Description;
+                tireModelTextBox.Text = tireModel.FileLocation;
+                tireModelMinSlipAngleTextBox.Text = tireModel.AlphaMin.ToString("F3");
+                tireModelMaxSlipAngleTextBox.Text = tireModel.AlphaMax.ToString("F3");
+                tireModelMinLongitudinalSlipTextBox.Text = tireModel.KappaMin.ToString("F3");
+                tireModelMinLongitudinalSlipTextBox.Text = tireModel.KappaMax.ToString("F3");
+                lambdaFzOTextBox.Text = tireModel.lambdaFzO.ToString("F3");
+                lambdaMuxTextBox.Text = tireModel.lambdaMux.ToString("F3");
+                lambdaMuyTextBox.Text = tireModel.lambdaMuy.ToString("F3");
+                lambdaMuVTextBox.Text = tireModel.lambdaMuV.ToString("F3");
+                lambdaKxkTextBox.Text = tireModel.lambdaKxk.ToString("F3");
+                lambdaKyaTextBox.Text = tireModel.lambdaKya.ToString("F3");
+                lambdaCxTextBox.Text = tireModel.lambdaCx.ToString("F3");
+                lambdaCyTextBox.Text = tireModel.lambdaCy.ToString("F3");
+                lambdaExTextBox.Text = tireModel.lambdaEx.ToString("F3");
+                lambdaEyTextBox.Text = tireModel.lambdaEy.ToString("F3");
+                lambdaHxTextBox.Text = tireModel.lambdaHx.ToString("F3");
+                lambdaHyTextBox.Text = tireModel.lambdaHy.ToString("F3");
+                lambdaVxTextBox.Text = tireModel.lambdaVx.ToString("F3");
+                lambdaVyTextBox.Text = tireModel.lambdaVy.ToString("F3");
+                lambdaKygTextBox.Text = tireModel.lambdaKyg.ToString("F3");
+                lambdaKzgTextBox.Text = tireModel.lambdaKzg.ToString("F3");
+                lambdatTextBox.Text = tireModel.lambdat.ToString("F3");
+                lambdaMrTextBox.Text = tireModel.lambdaMr.ToString("F3");
+                lambdaxaTextBox.Text = tireModel.lambdaxa.ToString("F3");
+                lambdaykTextBox.Text = tireModel.lambdayk.ToString("F3");
+                lambdaVykTextBox.Text = tireModel.lambdaVyk.ToString("F3");
+                lambdasTextBox.Text = tireModel.lambdas.ToString("F3");
+                lambdaCzTextBox.Text = tireModel.lambdaCz.ToString("F3");
+                lambdaMxTextBox.Text = tireModel.lambdaMx.ToString("F3");
+                lambdaVMxTextBox.Text = tireModel.lambdaVMx.ToString("F3");
+                lambdaMyTextBox.Text = tireModel.lambdaMy.ToString("F3");
+            }
+        }
+
+        /// <summary>
+        /// Opens a dialog box to select the tire model coefficients file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TireModelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog
+            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog
+            {
+                // Set filter for file extension and default file extension  
+                DefaultExt = ".txt",
+                Filter = "Text documents (.txt)|*.txt"
+            };
+            // Launch OpenFileDialog by calling ShowDialog method
+            Nullable<bool> result = openFileDlg.ShowDialog();
+            // Get the selected file name and display in a TextBox.
+            // Load content of file in a TextBlock
+            if (result == true)
+            {
+                tireModelTextBox.Text = openFileDlg.FileName;
+            }
+        }
+
+        #region Tire Model Display
+
+        /// <summary>
+        /// Creates a tire model point object and adds it to the tire model points checklistbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddTireModelParameterSetToCheckListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Gets the parameters from the UI
+            double longitudinalSlip = double.Parse(tireModelDisplayParametersLongitudinalSlipTextBox.Text);
+            double slipAngle = double.Parse(tireModelDisplayParametersSlipAngleTextBox.Text);
+            double verticalLoad = double.Parse(tireModelDisplayParametersVerticalLoadTextBox.Text);
+            double inclinationAngle = double.Parse(tireModelDisplayParametersInclinationAngleTextBox.Text);
+            double speed = double.Parse(tireModelDisplayParametersSpeedTextBox.Text);
+            // Initializes the new tire model point object
+            Vehicle.TireModelMF52Point tireModelPoint = new Vehicle.TireModelMF52Point(longitudinalSlip, slipAngle, verticalLoad, inclinationAngle, speed);
+            // Adds the object to the checklistbox
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(tireModelPoint);
+        }
+
+        /// <summary>
+        /// Deletes a tire model point from the tire model points checklistbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteTireModelParameterSetOfCheckListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (tireModelListBox.SelectedItems.Count == 1)
+            {
+                tireModelListBox.Items.RemoveAt(tireModelListBox.Items.IndexOf(tireModelListBox.SelectedItem));
+                tireModelDisplayCheckListBox.Items.RemoveAt(tireModelDisplayCheckListBox.Items.IndexOf(tireModelDisplayCheckListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Adds a new chart tab to the Tire Model analysis environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TireModelDisplayChartTabControl_NewButtonClick(object sender, EventArgs e)
+        {
+            TabItemExt item = new TabItemExt
+            {
+
+                Header = "Chart" + (tireModelDisplayChartTabControl.Items.Count + 1),
+
+            };
+            tireModelDisplayChartTabControl.Items.Add(item);
+        }
+
+        /// <summary>
+        /// Adds a new chart to the Tire Model analysis environment when the last chart is closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TireModelDisplayChartTabControl_OnCloseButtonClick(object sender, CloseTabEventArgs e)
+        {
+            if (tireModelDisplayChartTabControl.Items.Count == 1)
+            {
+                TabItemExt item = new TabItemExt
+                {
+
+                    Header = "Chart" + (tireModelDisplayChartTabControl.Items.Count),
+
+                };
+                tireModelDisplayChartTabControl.Items.Add(item);
+            }
+        }
+
+        private void _TireModelDisplayCheckListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _TireModelParameterSetsCheckListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _TireModelDisplayChartYAxisDataComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _TireModelDisplayChartXAxisDataComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _TireModelDisplayXAxisRangeMinTextBox_ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _TireModelDisplayXAxisRangeMaxTextBox_ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _TireModelDisplayYAxisAmountOfPointsTextBox_ValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            _UpdateCurrentTireModelDisplayChart();
+        }
+
+        private void _UpdateCurrentTireModelDisplayChart()
+        {
+            // Checks if all of the information needed to generate the chart is ok.
+            if (tireModelDisplayCheckListBox.SelectedItems.Count==0 || tireModelDisplayParameterSetsCheckListBox.SelectedItems.Count==0 || tireModelDisplayChartYAxisDataComboBox.SelectedValue == null || tireModelDisplayChartXAxisDataComboBox.SelectedValue == null || !double.TryParse(tireModelDisplayXAxisRangeMinTextBox.Text, out double rangeMin) || !double.TryParse(tireModelDisplayXAxisRangeMaxTextBox.Text, out double rangeMax) || rangeMin >= rangeMax || !int.TryParse(tireModelDisplayDataAmountOfPointsTextBox.Text, out int amountOfPoints) || amountOfPoints <= 0)
+            {
+                TabItemExt currentTab = tireModelDisplayChartTabControl.SelectedItem as TabItemExt;
+                if (currentTab!=null) currentTab.Content = new Grid();
+                return;
+            }
+            // Initializes the new chart
+            SfChart chart = new SfChart
+            {
+                Header = "Tire Model Analysis",
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Legend = new ChartLegend()
+                {
+                    ItemsPanel = mainWorkGrid.Resources["chartsLegendsPanelTemplate"] as ItemsPanelTemplate,
+                    DockPosition = ChartDock.Right,
+                    MaxWidth = 200
+                },
+                PrimaryAxis = new NumericalAxis(),
+                SecondaryAxis = new NumericalAxis()
+            };
+            // Adds zoom/panning behaviour to the chart
+            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            {
+                EnableZoomingToolBar = true,
+                EnableMouseWheelZooming = true,
+                EnablePanning = true,
+                ZoomRelativeToCursor = true,
+            };
+            chart.Behaviors.Add(zoomingAndPanning);
+            // Adds a trackball to the chart
+            ChartTrackBallBehavior trackBall = new ChartTrackBallBehavior();
+            chart.Behaviors.Add(trackBall);
+            // X axis data generation
+            double[] xAxisData = Generate.LinearSpaced(int.Parse(tireModelDisplayDataAmountOfPointsTextBox.Text), double.Parse(tireModelDisplayXAxisRangeMinTextBox.Text), double.Parse(tireModelDisplayXAxisRangeMaxTextBox.Text));
+            // Chart's data generation (current tire model -> current tire model parameter set -> current curve point).
+            foreach (Vehicle.TireModelMF52 tireModel in tireModelDisplayCheckListBox.SelectedItems)
+            {
+                foreach (Vehicle.TireModelMF52Point tireModelMF52ParametersSet in tireModelDisplayParameterSetsCheckListBox.SelectedItems)
+                {
+                    // Current data set list
+                    Vehicle.TireModelMF52ViewModel tireModelViewModel = new Vehicle.TireModelMF52ViewModel();
+                    FastLineSeries fastLineSeries = new FastLineSeries();                        
+                    for (int iPoint = 0; iPoint < int.Parse(tireModelDisplayDataAmountOfPointsTextBox.Text); iPoint++)
+                    {
+                        // Current point's parameters set
+                        Vehicle.TireModelMF52Point currentPoint = new Vehicle.TireModelMF52Point(tireModelMF52ParametersSet.LongitudinalSlip, tireModelMF52ParametersSet.SlipAngle, tireModelMF52ParametersSet.VerticalLoad, tireModelMF52ParametersSet.InclinationAngle, tireModelMF52ParametersSet.Speed);
+                        switch (tireModelDisplayChartXAxisDataComboBox.SelectedValue.ToString())
+                        {
+                            case "Longitudinal Slip":
+                                currentPoint.LongitudinalSlip = xAxisData[iPoint];
+                                chart.PrimaryAxis.Header = "Longitudinal Slip";
+                                chart.PrimaryAxis.LabelFormat = "N2";
+                                fastLineSeries.XBindingPath = "LongitudinalSlip";
+                                break;
+                            case "Slip Angle":
+                                currentPoint.SlipAngle = xAxisData[iPoint];
+                                chart.PrimaryAxis.Header = "Slip Angle [deg]";
+                                chart.PrimaryAxis.LabelFormat = "N2";
+                                fastLineSeries.XBindingPath = "SlipAngle";
+                                break;
+                            case "Vertical Load":
+                                currentPoint.VerticalLoad = xAxisData[iPoint];
+                                chart.PrimaryAxis.Header = "Vertical Load [N]";
+                                chart.PrimaryAxis.LabelFormat = "N0";
+                                fastLineSeries.XBindingPath = "VerticalLoad";
+                                break;
+                            case "Inclination Angle":
+                                currentPoint.InclinationAngle = xAxisData[iPoint];
+                                break;
+                            case "Speed":
+                                currentPoint.Speed = xAxisData[iPoint];
+                                chart.PrimaryAxis.Header = "Speed [km/h]";
+                                chart.PrimaryAxis.LabelFormat = "N1";
+                                fastLineSeries.XBindingPath = "Speed";
+                                break;
+                            default:
+                                break;
+                        }
+                        // Gets the y axis data
+                        switch (tireModelDisplayChartYAxisDataComboBox.SelectedValue.ToString())
+                        {
+                            case "Longitudinal Force":
+                                currentPoint.GetLongitudinalForce(tireModel);
+                                chart.SecondaryAxis.Header = "Longitudinal Force [N]";
+                                chart.SecondaryAxis.LabelFormat = "N0";
+                                fastLineSeries.YBindingPath = "LongitudinalForce";
+                                break;
+                            case "Lateral Force":
+                                currentPoint.GetLateralForce(tireModel);
+                                chart.SecondaryAxis.Header = "Lateral Force [N]";
+                                chart.SecondaryAxis.LabelFormat = "N0";
+                                fastLineSeries.YBindingPath = "LateralForce";
+                                break;
+                            case "Overturning Moment":
+                                currentPoint.GetOverturningMoment(tireModel);
+                                chart.SecondaryAxis.Header = "Overturning Moment [Nm]";
+                                chart.SecondaryAxis.LabelFormat = "N1";
+                                fastLineSeries.YBindingPath = "OverturningMoment";
+                                break;
+                            case "Rolling Moment":
+                                currentPoint.GetRollingMoment(tireModel);
+                                chart.SecondaryAxis.Header = "Rolling Moment [Nm]";
+                                chart.SecondaryAxis.LabelFormat = "N1";
+                                fastLineSeries.YBindingPath = "RollingMoment";
+                                break;
+                            case "Self-Aligning Torque":
+                                currentPoint.GetSelfAligningTorque(tireModel);
+                                chart.SecondaryAxis.Header = "Self-Aligning Torque [Nm]";
+                                chart.SecondaryAxis.LabelFormat = "N1";
+                                fastLineSeries.YBindingPath = "SelfAligningTorque";
+                                break;
+                            default:
+                                break;
+                        }
+                        // Adds the current point to the current list
+                        tireModelViewModel.TireModelMF52Points.Add(currentPoint);
+                    }
+                    string seriesLabel = "TM: " + tireModel.ID + " - LS: " + tireModelMF52ParametersSet.LongitudinalSlip.ToString("F2") + " - SA: " + tireModelMF52ParametersSet.SlipAngle.ToString("F2") + " - VL: " + tireModelMF52ParametersSet.VerticalLoad.ToString("F0") + " - IA: " + tireModelMF52ParametersSet.InclinationAngle.ToString("F2") + " - S:" + tireModelMF52ParametersSet.Speed.ToString("F1");
+                    fastLineSeries.ItemsSource = tireModelViewModel.TireModelMF52Points;
+                    fastLineSeries.Label = seriesLabel;
+                    // Adds the current series to the chart.
+                    chart.Series.Add(fastLineSeries);                    
+                }
+            }
+            // Adds the chart to the current chart tab
+            Grid grid = new Grid();
+            grid.Children.Add(chart);
+            TabItemExt currentChartTab = tireModelDisplayChartTabControl.SelectedItem as TabItemExt;
+            currentChartTab.Content = grid;
+        }
+
+        #endregion
+        #endregion
+
+        #endregion
+
         #region One Wheel Car Input Methods
 
         #region CarAndSetup
@@ -638,15 +1148,15 @@ namespace InternshipTest
                 string carID = oneWheelCarIDTextBox.Text;
                 string setupID = oneWheelSetupIDTextBox.Text;
                 string description = oneWheelCarAndSetupDescriptionTextBox.Text;
-                Vehicle.OneWheel.Inertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.OneWheel.Inertia;
-                Vehicle.OneWheel.Tire tire = oneWheelTireCombobox.SelectedItem as Vehicle.OneWheel.Tire;
-                Vehicle.OneWheel.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.OneWheel.Engine;
-                Vehicle.OneWheel.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.OneWheel.Transmission;
-                Vehicle.OneWheel.Aerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheel.Aerodynamics;
-                Vehicle.OneWheel.Suspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.OneWheel.Suspension;
-                Vehicle.OneWheel.Brakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.OneWheel.Brakes;
+                Vehicle.Inertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.Inertia;
+                Vehicle.Tire tire = oneWheelTireCombobox.SelectedItem as Vehicle.Tire;
+                Vehicle.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.Engine;
+                Vehicle.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.Transmission;
+                Vehicle.Aerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.Aerodynamics;
+                Vehicle.Suspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.Suspension;
+                Vehicle.Brakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.Brakes;
                 // Initializes a new object
-                Vehicle.OneWheel.Car car = new Vehicle.OneWheel.Car(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
+                Vehicle.Car car = new Vehicle.Car(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
                 // Gets additional parameters
                 car.GetEquivalentHeaveStiffness();
                 car.GetLinearAccelerationParameters();
@@ -689,7 +1199,7 @@ namespace InternshipTest
             if (oneWheelCarAndSetupListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Car car = oneWheelCarAndSetupListBox.SelectedItem as Vehicle.OneWheel.Car;
+                Vehicle.Car car = oneWheelCarAndSetupListBox.SelectedItem as Vehicle.Car;
                 // Writes the properties in the UI
                 oneWheelCarIDTextBox.Text = car.ID;
                 oneWheelSetupIDTextBox.Text = car.SetupID;
@@ -727,7 +1237,7 @@ namespace InternshipTest
                 double rotPartsMI = double.Parse(oneWheelRotPartsMITextbox.Text);
                 double gravity = double.Parse(oneWheelGravityAccelTextbox.Text);
                 // Initializes a new object
-                Vehicle.OneWheel.Inertia inertia = new Vehicle.OneWheel.Inertia(inertiaID, description, totalMass, unsprungMass, rotPartsMI, gravity);
+                Vehicle.Inertia inertia = new Vehicle.Inertia(inertiaID, description, totalMass, unsprungMass, rotPartsMI, gravity);
                 // Adds the object to the listbox
                 oneWheelInertiaListBox.Items.Add(inertia);
             }
@@ -767,7 +1277,7 @@ namespace InternshipTest
             if (oneWheelInertiaListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Inertia inertia = oneWheelInertiaListBox.SelectedItem as Vehicle.OneWheel.Inertia;
+                Vehicle.Inertia inertia = oneWheelInertiaListBox.SelectedItem as Vehicle.Inertia;
                 // Writes the properties in the UI
                 oneWheelInertiaIDTextBox.Text = inertia.ID;
                 oneWheelInertiaDescriptionTextBox.Text = inertia.Description;
@@ -798,7 +1308,7 @@ namespace InternshipTest
                 double heaveStiffness = double.Parse(oneWheelHeaveStiffnessTextBox.Text) * 1000;
                 double rideHeight = double.Parse(oneWheelRideHeightTextbox.Text) / 1000;
                 // Initializes a new object
-                Vehicle.OneWheel.Suspension suspension = new Vehicle.OneWheel.Suspension(suspensionID, description, heaveStiffness, rideHeight);
+                Vehicle.Suspension suspension = new Vehicle.Suspension(suspensionID, description, heaveStiffness, rideHeight);
                 // Adds the object to the listbox
                 oneWheelSuspensionListBox.Items.Add(suspension);
             }
@@ -836,7 +1346,7 @@ namespace InternshipTest
             if (oneWheelInertiaListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Suspension suspension = oneWheelSuspensionListBox.SelectedItem as Vehicle.OneWheel.Suspension;
+                Vehicle.Suspension suspension = oneWheelSuspensionListBox.SelectedItem as Vehicle.Suspension;
                 // Writes the properties in the UI
                 oneWheelSuspensionIDTextBox.Text = suspension.ID;
                 oneWheelSuspensionDescriptionTextBox.Text = suspension.Description;
@@ -864,7 +1374,7 @@ namespace InternshipTest
                 string description = oneWheelBrakesDescriptionTextBox.Text;
                 double maxTorque = double.Parse(oneWheelBrakesMaxTorqueTextBox.Text);
                 // Initializes a new object
-                Vehicle.OneWheel.Brakes brakes = new Vehicle.OneWheel.Brakes(brakesID, description, maxTorque);
+                Vehicle.Brakes brakes = new Vehicle.Brakes(brakesID, description, maxTorque);
                 // Adds the object to the listbox and the combobox
                 oneWheelBrakesListBox.Items.Add(brakes);
             }
@@ -902,233 +1412,11 @@ namespace InternshipTest
             if (oneWheelBrakesListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Brakes brakes = oneWheelBrakesListBox.SelectedItem as Vehicle.OneWheel.Brakes;
+                Vehicle.Brakes brakes = oneWheelBrakesListBox.SelectedItem as Vehicle.Brakes;
                 // Writes the properties in the UI
                 oneWheelBrakesIDTextBox.Text = brakes.ID;
                 oneWheelBrakesDescriptionTextBox.Text = brakes.Description;
                 oneWheelBrakesMaxTorqueTextBox.Text = brakes.MaxTorque.ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Tire
-
-        /// <summary>
-        /// Creates a one wheel model tire object and adds it to the one wheel model tires listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddTireToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelTireIDTextBox.Text != "" &&
-                double.Parse(oneWheelTireStiffnessTextBox.Text) != 0 &&
-                oneWheelTireModelComboBox.SelectedItem != null)
-            {
-                // Inputs assigning and convertion.
-                string tireID = oneWheelTireIDTextBox.Text;
-                string description = oneWheelTireDescriptionTextBox.Text;
-                double verticalStiffness = double.Parse(oneWheelTireStiffnessTextBox.Text) * 1000;
-                Vehicle.TireModelMF52 tireModelMF52 = oneWheelTireModelComboBox.SelectedItem as Vehicle.TireModelMF52;
-                // Initializes a new object
-                Vehicle.OneWheel.Tire tire = new Vehicle.OneWheel.Tire(tireID, description, tireModelMF52, verticalStiffness);
-                // Adds the object to the listbox and the combobox
-                oneWheelTireListBox.Items.Add(tire);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Tire. \n " +
-                "   It should have an ID. \n" +
-                "   A tire model must be selected. \n" +
-                "   The tire stiffness can't be zero.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a one wheel model tire from the one wheel model tires listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteTireOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelTireListBox.SelectedItems.Count == 1)
-            {
-                oneWheelTireListBox.Items.RemoveAt(oneWheelTireListBox.Items.IndexOf(oneWheelTireListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of a listbox's one wheel model tire and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelTireListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (oneWheelTireListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.OneWheel.Tire tire = oneWheelTireListBox.SelectedItem as Vehicle.OneWheel.Tire;
-                // Writes the properties in the UI
-                oneWheelTireIDTextBox.Text = tire.ID;
-                oneWheelTireDescriptionTextBox.Text = tire.Description;
-                oneWheelTireStiffnessTextBox.Text = (tire.VerticalStiffness / 1000).ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Tire Model
-
-        /// <summary>
-        /// Creates a tire model object and adds it to the one wheel model tire model listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddTireModelToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelTireModelIDTextBox.Text != "" &&
-                File.Exists(oneWheelTireModelTextBox.Text))
-            {
-                // Inputs assigning and convertion.
-                string modelID = oneWheelTireModelIDTextBox.Text;
-                string description = oneWheelTireModelDescriptionTextBox.Text;
-                string tireModelFile = oneWheelTireModelTextBox.Text;
-                double lambdaFzO = double.Parse(oneWheelLambdaFzOTextBox.Text);
-                double lambdaMux = double.Parse(oneWheelLambdaMuxTextBox.Text);
-                double lambdaMuy = double.Parse(oneWheelLambdaMuyTextBox.Text);
-                double lambdaMuV = double.Parse(oneWheelLambdaMuVTextBox.Text);
-                double lambdaKxk = double.Parse(oneWheelLambdaKxkTextBox.Text);
-                double lambdaKya = double.Parse(oneWheellambdaKyaTextBox.Text);
-                double lambdaCx = double.Parse(oneWheelLambdaCxTextBox.Text);
-                double lambdaCy = double.Parse(oneWheelLambdaCyTextBox.Text);
-                double lambdaEx = double.Parse(oneWheelLambdaExTextBox.Text);
-                double lambdaEy = double.Parse(oneWheelLambdaEyTextBox.Text);
-                double lambdaHx = double.Parse(oneWheelLambdaHxTextBox.Text);
-                double lambdaHy = double.Parse(oneWheelLambdaHyTextBox.Text);
-                double lambdaVx = double.Parse(oneWheelLambdaVxTextBox.Text);
-                double lambdaVy = double.Parse(oneWheelLambdaVyTextBox.Text);
-                double lambdaKyg = double.Parse(oneWheelLambdaKygTextBox.Text);
-                double lambdaKzg = double.Parse(oneWheelLambdaKzgTextBox.Text);
-                double lambdat = double.Parse(oneWheelLambdatTextBox.Text);
-                double lambdaMr = double.Parse(oneWheelLambdaMrTextBox.Text);
-                double lambdaxa = double.Parse(oneWheelLambdaxaTextBox.Text);
-                double lambdayk = double.Parse(oneWheelLambdaykTextBox.Text);
-                double lambdaVyk = double.Parse(oneWheelLambdaVykTextBox.Text);
-                double lambdas = double.Parse(oneWheelLambdasTextBox.Text);
-                double lambdaCz = double.Parse(oneWheelLambdaCzTextBox.Text);
-                double lambdaMx = double.Parse(oneWheelLambdaMxTextBox.Text);
-                double lambdaVMx = double.Parse(oneWheelLambdaVMxTextBox.Text);
-                double lambdaMy = double.Parse(oneWheelLambdaMyTextBox.Text);
-                // Initializes the scalling factors list
-                List<double> lambdaList = new List<double>
-                {
-                    // Assigns the scalling factors to the list
-                    lambdaFzO,  lambdaMux,  lambdaMuy,
-                    lambdaMuV,  lambdaKxk,  lambdaKya,
-                    lambdaCx,   lambdaCy,   lambdaEx,
-                    lambdaEy,   lambdaHx,   lambdaHy,
-                    lambdaVx,   lambdaVy,   lambdaKyg,
-                    lambdaKzg,  lambdat,    lambdaMr,
-                    lambdaxa,   lambdayk,   lambdaVyk,
-                    lambdas,    lambdaCz,   lambdaMx,
-                    lambdaVMx,  lambdaMy
-                };
-                // Creates the Tire Model object
-                Vehicle.TireModelMF52 tireModelMF52 = new Vehicle.TireModelMF52(modelID, description, tireModelFile, lambdaList);
-                // Adds the object to the listbox and the combobox
-                oneWheelTireModelListBox.Items.Add(tireModelMF52);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Tire Model. \n " +
-                "   It should have an ID. \n" +
-                "   Check if the coefficients file exists. \n" +
-                "   Note: Negative values are corrected to positive values.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a tire model from the one wheel model tire models listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteTireModelOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelTireModelListBox.SelectedItems.Count == 1)
-            {
-                oneWheelTireModelListBox.Items.RemoveAt(oneWheelTireModelListBox.Items.IndexOf(oneWheelTireModelListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model tire models listbox's tire model and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelTireModelListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (oneWheelTireModelListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.TireModelMF52 tireModel = oneWheelTireModelListBox.SelectedItem as Vehicle.TireModelMF52;
-                // Writes the properties in the UI
-                oneWheelTireModelIDTextBox.Text = tireModel.ID;
-                oneWheelTireModelDescriptionTextBox.Text = tireModel.Description;
-                oneWheelTireModelTextBox.Text = tireModel.FileLocation;
-                oneWheelLambdaFzOTextBox.Text = tireModel.lambdaFzO.ToString("F3");
-                oneWheelLambdaMuxTextBox.Text = tireModel.lambdaMux.ToString("F3");
-                oneWheelLambdaMuyTextBox.Text = tireModel.lambdaMuy.ToString("F3");
-                oneWheelLambdaMuVTextBox.Text = tireModel.lambdaMuV.ToString("F3");
-                oneWheelLambdaKxkTextBox.Text = tireModel.lambdaKxk.ToString("F3");
-                oneWheellambdaKyaTextBox.Text = tireModel.lambdaKya.ToString("F3");
-                oneWheelLambdaCxTextBox.Text = tireModel.lambdaCx.ToString("F3");
-                oneWheelLambdaCyTextBox.Text = tireModel.lambdaCy.ToString("F3");
-                oneWheelLambdaExTextBox.Text = tireModel.lambdaEx.ToString("F3");
-                oneWheelLambdaEyTextBox.Text = tireModel.lambdaEy.ToString("F3");
-                oneWheelLambdaHxTextBox.Text = tireModel.lambdaHx.ToString("F3");
-                oneWheelLambdaHyTextBox.Text = tireModel.lambdaHy.ToString("F3");
-                oneWheelLambdaVxTextBox.Text = tireModel.lambdaVx.ToString("F3");
-                oneWheelLambdaVyTextBox.Text = tireModel.lambdaVy.ToString("F3");
-                oneWheelLambdaKygTextBox.Text = tireModel.lambdaKyg.ToString("F3");
-                oneWheelLambdaKzgTextBox.Text = tireModel.lambdaKzg.ToString("F3");
-                oneWheelLambdatTextBox.Text = tireModel.lambdat.ToString("F3");
-                oneWheelLambdaMrTextBox.Text = tireModel.lambdaMr.ToString("F3");
-                oneWheelLambdaxaTextBox.Text = tireModel.lambdaxa.ToString("F3");
-                oneWheelLambdaykTextBox.Text = tireModel.lambdayk.ToString("F3");
-                oneWheelLambdaVykTextBox.Text = tireModel.lambdaVyk.ToString("F3");
-                oneWheelLambdasTextBox.Text = tireModel.lambdas.ToString("F3");
-                oneWheelLambdaCzTextBox.Text = tireModel.lambdaCz.ToString("F3");
-                oneWheelLambdaMxTextBox.Text = tireModel.lambdaMx.ToString("F3");
-                oneWheelLambdaVMxTextBox.Text = tireModel.lambdaVMx.ToString("F3");
-                oneWheelLambdaMyTextBox.Text = tireModel.lambdaMy.ToString("F3");
-            }
-        }
-
-        /// <summary>
-        /// Opens a dialog box to select the tire model coefficients file.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelTireModelButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Create OpenFileDialog
-            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog
-            {
-                // Set filter for file extension and default file extension  
-                DefaultExt = ".txt",
-                Filter = "Text documents (.txt)|*.txt"
-            };
-            // Launch OpenFileDialog by calling ShowDialog method
-            Nullable<bool> result = openFileDlg.ShowDialog();
-            // Get the selected file name and display in a TextBox.
-            // Load content of file in a TextBlock
-            if (result == true)
-            {
-                oneWheelTireModelTextBox.Text = openFileDlg.FileName;
             }
         }
 
@@ -1152,13 +1440,13 @@ namespace InternshipTest
                 string transmissionType = oneWheelTransmissionTypeComboBox.Text;
                 int amountOfDrivenWheels = 2;
                 if (transmissionType == "4WD") amountOfDrivenWheels = 4;
-                Vehicle.OneWheel.GearRatiosSet gearRatiosSet = oneWheelTransmissionGearRatiosSetComboBox.SelectedItem as Vehicle.OneWheel.GearRatiosSet;
+                Vehicle.GearRatiosSet gearRatiosSet = oneWheelTransmissionGearRatiosSetComboBox.SelectedItem as Vehicle.GearRatiosSet;
                 double primaryRatio = double.Parse(oneWheelPrimaryRatioTextBox.Text);
                 double finalRatio = double.Parse(oneWheelFinalRatioTextBox.Text);
                 double gearShiftTime = double.Parse(oneWheelGearShiftTimeTextBox.Text);
                 double efficiency = double.Parse(oneWheelTransmissionEfficiencyTextBox.Text) / 100;
                 // Initializes a new object
-                Vehicle.OneWheel.Transmission transmission = new Vehicle.OneWheel.Transmission(
+                Vehicle.Transmission transmission = new Vehicle.Transmission(
                     transmissionID, description, amountOfDrivenWheels, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
                 // Adds the object to the listbox and the combobox
                 oneWheelTransmissionListBox.Items.Add(transmission);
@@ -1197,7 +1485,7 @@ namespace InternshipTest
             if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Transmission transmission = oneWheelTransmissionListBox.SelectedItem as Vehicle.OneWheel.Transmission;
+                Vehicle.Transmission transmission = oneWheelTransmissionListBox.SelectedItem as Vehicle.Transmission;
                 // Writes the properties in the UI
                 oneWheelTransmissionIDTextBox.Text = transmission.ID;
                 oneWheelTransmissionDescriptionTextBox.Text = transmission.Description;
@@ -1227,14 +1515,14 @@ namespace InternshipTest
                 // Gets the object's properties values
                 string setID = oneWheelGearRatiosSetIDTextBox.Text;
                 string description = oneWheelGearRatiosSetDescriptionTextBox.Text;
-                List<Vehicle.OneWheel.GearRatio> gearRatios = new List<Vehicle.OneWheel.GearRatio>();
+                List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
                 foreach (var gearRatioItem in oneWheelGearRatiosListBox.Items)
                 {
-                    Vehicle.OneWheel.GearRatio gearRatio = gearRatioItem as Vehicle.OneWheel.GearRatio;
+                    Vehicle.GearRatio gearRatio = gearRatioItem as Vehicle.GearRatio;
                     gearRatios.Add(gearRatio);
                 }
                 // Initializes a new object
-                Vehicle.OneWheel.GearRatiosSet gearRatiosSet = new Vehicle.OneWheel.GearRatiosSet(setID, description, gearRatios);
+                Vehicle.GearRatiosSet gearRatiosSet = new Vehicle.GearRatiosSet(setID, description, gearRatios);
                 // Adds the object to the listbox and the combobox
                 oneWheelGearRatiosSetsListBox.Items.Add(gearRatiosSet);
             }
@@ -1272,13 +1560,13 @@ namespace InternshipTest
             if (oneWheelGearRatiosSetsListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.GearRatiosSet gearRatioSet = oneWheelGearRatiosSetsListBox.SelectedItem as Vehicle.OneWheel.GearRatiosSet;
+                Vehicle.GearRatiosSet gearRatioSet = oneWheelGearRatiosSetsListBox.SelectedItem as Vehicle.GearRatiosSet;
                 // Writes the properties in the UI
                 oneWheelGearRatiosSetIDTextBox.Text = gearRatioSet.ID;
                 oneWheelGearRatiosSetDescriptionTextBox.Text = gearRatioSet.Description;
                 // Clears and writes the list in the UI
                 oneWheelGearRatiosListBox.Items.Clear();
-                foreach (Vehicle.OneWheel.GearRatio gearRatio in gearRatioSet.GearRatios)
+                foreach (Vehicle.GearRatio gearRatio in gearRatioSet.GearRatios)
                 {
                     oneWheelGearRatiosListBox.Items.Add(gearRatio);
                 }
@@ -1298,19 +1586,19 @@ namespace InternshipTest
                 double ratio = double.Parse(oneWheelNewGearRatioTextBox.Text);
                 if (ratio < 0) ratio = -ratio;
                 // Initializes a new object
-                Vehicle.OneWheel.GearRatio gearRatio = new Vehicle.OneWheel.GearRatio(ratio);
+                Vehicle.GearRatio gearRatio = new Vehicle.GearRatio(ratio);
                 // Adds the object to the listbox and the combobox
                 oneWheelGearRatiosListBox.Items.Add(gearRatio);
                 // Reorders the gear ratios listbox items in descending order
-                List<Vehicle.OneWheel.GearRatio> gearRatios = new List<Vehicle.OneWheel.GearRatio>();
+                List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
                 foreach (var gearRatioItem in oneWheelGearRatiosListBox.Items)
                 {
-                    Vehicle.OneWheel.GearRatio currentGearRatio = gearRatioItem as Vehicle.OneWheel.GearRatio;
+                    Vehicle.GearRatio currentGearRatio = gearRatioItem as Vehicle.GearRatio;
                     gearRatios.Add(currentGearRatio);
                 }
                 gearRatios = gearRatios.OrderByDescending(currentGearRatio => currentGearRatio.Ratio).ToList();
                 oneWheelGearRatiosListBox.Items.Clear();
-                foreach (Vehicle.OneWheel.GearRatio currentGearRatio in gearRatios)
+                foreach (Vehicle.GearRatio currentGearRatio in gearRatios)
                 {
                     oneWheelGearRatiosListBox.Items.Add(currentGearRatio);
                 }
@@ -1355,11 +1643,11 @@ namespace InternshipTest
                 // Gets the object's data
                 string aerodynamicID = oneWheelAerodynamicsIDTextBox.Text;
                 string description = oneWheelAerodynamicsDescriptionTextBox.Text;
-                Vehicle.OneWheel.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapComboBox.SelectedItem as Vehicle.OneWheel.AerodynamicMap;
+                Vehicle.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapComboBox.SelectedItem as Vehicle.AerodynamicMap;
                 double frontalArea = double.Parse(oneWheelFrontalAreaTextBox.Text);
                 double airDensity = double.Parse(oneWheelAirDensityTextBox.Text);
                 // Initializes a new object
-                Vehicle.OneWheel.Aerodynamics aerodynamics = new Vehicle.OneWheel.Aerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
+                Vehicle.Aerodynamics aerodynamics = new Vehicle.Aerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
                 aerodynamics.GetAerodynamicMapParameters();
                 // Adds the object to the listbox and the combobox
                 oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
@@ -1398,7 +1686,7 @@ namespace InternshipTest
             if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Aerodynamics aerodynamics = oneWheelAerodynamicsListBox.SelectedItem as Vehicle.OneWheel.Aerodynamics;
+                Vehicle.Aerodynamics aerodynamics = oneWheelAerodynamicsListBox.SelectedItem as Vehicle.Aerodynamics;
                 // Writes the properties in the UI
                 oneWheelAerodynamicsIDTextBox.Text = aerodynamics.ID;
                 oneWheelAerodynamicsDescriptionTextBox.Text = aerodynamics.Description;
@@ -1425,14 +1713,14 @@ namespace InternshipTest
                 // Gets the object's properties values
                 string mapID = oneWheelAerodynamicMapIDTextBox.Text;
                 string description = oneWheelAerodynamicMapDescriptionTextBox.Text;
-                List<Vehicle.OneWheel.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheel.AerodynamicMapPoint>();
+                List<Vehicle.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.AerodynamicMapPoint>();
                 foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
                 {
-                    Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.OneWheel.AerodynamicMapPoint;
+                    Vehicle.AerodynamicMapPoint aerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.AerodynamicMapPoint;
                     aerodynamicMapPoints.Add(aerodynamicMapPoint);
                 }
                 // Initializes a new object
-                Vehicle.OneWheel.AerodynamicMap aerodynamicMap = new Vehicle.OneWheel.AerodynamicMap(mapID, description, aerodynamicMapPoints);
+                Vehicle.AerodynamicMap aerodynamicMap = new Vehicle.AerodynamicMap(mapID, description, aerodynamicMapPoints);
                 // Adds the object to the listbox and the combobox
                 oneWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
             }
@@ -1470,13 +1758,13 @@ namespace InternshipTest
             if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapsListBox.SelectedItem as Vehicle.OneWheel.AerodynamicMap;
+                Vehicle.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapsListBox.SelectedItem as Vehicle.AerodynamicMap;
                 // Writes the properties in the UI
                 oneWheelAerodynamicMapIDTextBox.Text = aerodynamicMap.ID;
                 oneWheelAerodynamicMapDescriptionTextBox.Text = aerodynamicMap.Description;
                 // Clears and writes the list in the UI
                 oneWheelAerodynamicMapPointsListBox.Items.Clear();
-                foreach (Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint in aerodynamicMap.MapPoints)
+                foreach (Vehicle.AerodynamicMapPoint aerodynamicMapPoint in aerodynamicMap.MapPoints)
                 {
                     oneWheelGearRatiosListBox.Items.Add(aerodynamicMapPoint);
                 }
@@ -1496,20 +1784,20 @@ namespace InternshipTest
             double dragCoefficient = double.Parse(oneWheelNewAerodynamicMapPointDragCoefficientTextBox.Text);
             double liftCoefficient = double.Parse(oneWheelNewAerodynamicMapPointLiftCoefficientTextBox.Text);
             // Initializes a new object
-            Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint = new Vehicle.OneWheel.AerodynamicMapPoint(speed, rideHeight, dragCoefficient, liftCoefficient);
+            Vehicle.AerodynamicMapPoint aerodynamicMapPoint = new Vehicle.AerodynamicMapPoint(speed, rideHeight, dragCoefficient, liftCoefficient);
             // Adds the object to the listbox and the combobox
             oneWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
             // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
-            List<Vehicle.OneWheel.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheel.AerodynamicMapPoint>();
+            List<Vehicle.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.AerodynamicMapPoint>();
             foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
             {
-                Vehicle.OneWheel.AerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.OneWheel.AerodynamicMapPoint;
+                Vehicle.AerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.AerodynamicMapPoint;
                 aerodynamicMapPoints.Add(currentAerodynamicMapPoint);
             }
             aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentGearRatio => currentGearRatio.RideHeight).ToList();
             aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentGearRatio => currentGearRatio.WindRelativeSpeed).ToList();
             oneWheelAerodynamicMapPointsListBox.Items.Clear();
-            foreach (Vehicle.OneWheel.AerodynamicMapPoint currentAerodynamicMapPoint in aerodynamicMapPoints)
+            foreach (Vehicle.AerodynamicMapPoint currentAerodynamicMapPoint in aerodynamicMapPoints)
             {
                 oneWheelAerodynamicMapPointsListBox.Items.Add(currentAerodynamicMapPoint);
             }
@@ -1548,11 +1836,11 @@ namespace InternshipTest
                 // Gets the object's data
                 string engineID = oneWheelEngineIDTextBox.Text;
                 string description = oneWheelEngineDescriptionTextBox.Text;
-                Vehicle.OneWheel.EngineCurves engineCurves = oneWheelEngineCurvesComboBox.SelectedItem as Vehicle.OneWheel.EngineCurves;
+                Vehicle.EngineCurves engineCurves = oneWheelEngineCurvesComboBox.SelectedItem as Vehicle.EngineCurves;
                 double maxThrottle = double.Parse(oneWheelMaxThrottleTextBox.Text) / 100;
                 double fuelDensity = double.Parse(oneWheelFuelDensityTextBox.Text);
                 // Initializes a new object
-                Vehicle.OneWheel.Engine engine = new Vehicle.OneWheel.Engine(engineID, description, engineCurves, maxThrottle, fuelDensity);
+                Vehicle.Engine engine = new Vehicle.Engine(engineID, description, engineCurves, maxThrottle, fuelDensity);
                 // Adds the object to the listbox and the combobox
                 oneWheelEngineListBox.Items.Add(engine);
             }
@@ -1592,7 +1880,7 @@ namespace InternshipTest
             if (oneWheelEngineListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.Engine engine = oneWheelEngineListBox.SelectedItem as Vehicle.OneWheel.Engine;
+                Vehicle.Engine engine = oneWheelEngineListBox.SelectedItem as Vehicle.Engine;
                 // Writes the properties in the UI
                 oneWheelEngineIDTextBox.Text = engine.ID;
                 oneWheelEngineDescriptionTextBox.Text = engine.Description;
@@ -1619,14 +1907,14 @@ namespace InternshipTest
                 // Gets the object's properties values
                 string curvesID = oneWheelEngineCurvesIDTextBox.Text;
                 string description = oneWheelEngineCurvesDescriptionTextBox.Text;
-                List<Vehicle.OneWheel.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.OneWheel.EngineCurvesPoint>();
+                List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
                 foreach (var engineCurvesPointItem in oneWheelEngineCurvesPointsListBox.Items)
                 {
-                    Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint = engineCurvesPointItem as Vehicle.OneWheel.EngineCurvesPoint;
+                    Vehicle.EngineCurvesPoint engineCurvesPoint = engineCurvesPointItem as Vehicle.EngineCurvesPoint;
                     engineCurvesPoints.Add(engineCurvesPoint);
                 }
                 // Initializes a new object
-                Vehicle.OneWheel.EngineCurves engineCurves = new Vehicle.OneWheel.EngineCurves(curvesID, description, engineCurvesPoints);
+                Vehicle.EngineCurves engineCurves = new Vehicle.EngineCurves(curvesID, description, engineCurvesPoints);
                 // Adds the object to the listbox and the combobox
                 oneWheelEngineCurvesListBox.Items.Add(engineCurves);
             }
@@ -1664,13 +1952,13 @@ namespace InternshipTest
             if (oneWheelEngineCurvesListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.OneWheel.EngineCurves engineCurves = oneWheelEngineCurvesListBox.SelectedItem as Vehicle.OneWheel.EngineCurves;
+                Vehicle.EngineCurves engineCurves = oneWheelEngineCurvesListBox.SelectedItem as Vehicle.EngineCurves;
                 // Writes the properties in the UI
                 oneWheelEngineCurvesIDTextBox.Text = engineCurves.ID;
                 oneWheelEngineCurvesDescriptionTextBox.Text = engineCurves.Description;
                 // Clears and writes the list in the UI
                 oneWheelEngineCurvesPointsListBox.Items.Clear();
-                foreach (Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint in engineCurves.CurvesPoints)
+                foreach (Vehicle.EngineCurvesPoint engineCurvesPoint in engineCurves.CurvesPoints)
                 {
                     oneWheelGearRatiosListBox.Items.Add(engineCurvesPoint);
                 }
@@ -1693,19 +1981,19 @@ namespace InternshipTest
                 double brakingTorque = double.Parse(oneWheelNewEngineCurvesPointBrakingTorqueTextBox.Text);
                 double specFuelCons = double.Parse(oneWheelNewEngineCurvesPointSpecFuelConsTextBox.Text);
                 // Initializes a new object
-                Vehicle.OneWheel.EngineCurvesPoint engineCurvesPoint = new Vehicle.OneWheel.EngineCurvesPoint(rpm, torque, brakingTorque, specFuelCons);
+                Vehicle.EngineCurvesPoint engineCurvesPoint = new Vehicle.EngineCurvesPoint(rpm, torque, brakingTorque, specFuelCons);
                 // Adds the object to the listbox and the combobox
                 oneWheelEngineCurvesPointsListBox.Items.Add(engineCurvesPoint);
                 // Reorders the engine curves points listbox items in ascending order of rpm
-                List<Vehicle.OneWheel.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.OneWheel.EngineCurvesPoint>();
+                List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
                 foreach (var engineCurvesPointItem in oneWheelEngineCurvesPointsListBox.Items)
                 {
-                    Vehicle.OneWheel.EngineCurvesPoint currentEngineCurvesPoint = engineCurvesPointItem as Vehicle.OneWheel.EngineCurvesPoint;
+                    Vehicle.EngineCurvesPoint currentEngineCurvesPoint = engineCurvesPointItem as Vehicle.EngineCurvesPoint;
                     engineCurvesPoints.Add(currentEngineCurvesPoint);
                 }
                 engineCurvesPoints = engineCurvesPoints.OrderBy(currentCurvePoint => currentCurvePoint.RotationalSpeed).ToList();
                 oneWheelEngineCurvesPointsListBox.Items.Clear();
-                foreach (Vehicle.OneWheel.EngineCurvesPoint currentEngineCurvesPoint in engineCurvesPoints)
+                foreach (Vehicle.EngineCurvesPoint currentEngineCurvesPoint in engineCurvesPoints)
                 {
                     oneWheelEngineCurvesPointsListBox.Items.Add(currentEngineCurvesPoint);
                 }
@@ -1732,6 +2020,8 @@ namespace InternshipTest
                 oneWheelEngineCurvesPointsListBox.Items.RemoveAt(oneWheelEngineCurvesPointsListBox.Items.IndexOf(oneWheelEngineCurvesPointsListBox.SelectedItem));
             }
         }
+
+        #endregion
 
         #endregion
 
@@ -2370,19 +2660,21 @@ namespace InternshipTest
             if (ggvDiagramIDTextBox.Text != "" &&
                 ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
                 int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 8 &&
+                int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text) >= 4 &&
                 int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
                 Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
             {
                 // Gets the object's data
                 string id = ggvDiagramIDTextBox.Text;
                 string description = ggvDiagramDescriptionTextBox.Text;
-                Vehicle.OneWheel.Car car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheel.Car;
+                Vehicle.Car car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.Car;
                 int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
+                int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
                 int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
                 double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
                 double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
                 // Initializes a new object
-                Simulation.GGVDiagram ggvDiagram = new Simulation.GGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed);
+                Simulation.GGVDiagram ggvDiagram = new Simulation.GGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed);
                 ggvDiagram.GenerateGGVDiagram();
                 // Adds the object to the listbox and the combobox
                 simulationGGVDiagramListBox.Items.Add(ggvDiagram);
@@ -2392,6 +2684,7 @@ namespace InternshipTest
                "    It should have an ID. \n" +
                "    A vehicle must be selected. \n" +
                "    The amount of points per speed should be at least 8. \n" +
+               "    The amount of directions should be at least 4. \n" +
                "    The amount of speeds can't be zero. \n" +
                "    The lowest speed should be smaller or equal to the highest speed. \n" +
                "    Note: Negative values are corrected to positive values.",
@@ -2432,6 +2725,7 @@ namespace InternshipTest
                 ggvDiagramDescriptionTextBox.Text = ggvDiagram.Description;
                 ggvDiagramVehicleSelectionComboBox.Text = ggvDiagram.Car.ToString();
                 ggvDiagramAmountOfPointsPerSpeedTextBox.Text = ggvDiagram.AmountOfPointsPerSpeed.ToString();
+                ggvDiagramAmountOfDirectionsTextBox.Text = ggvDiagram.AmountOfDirections.ToString();
                 ggvDiagramAmountOfSpeedsTextBox.Text = ggvDiagram.AmountOfSpeeds.ToString("F0");
                 ggvDiagramLowestSpeedTextBox.Text = (ggvDiagram.LowestSpeed * 3.6).ToString("F2");
                 ggvDiagramHighestSpeedTextBox.Text = (ggvDiagram.HighestSpeed * 3.6).ToString("F2");
@@ -2904,7 +3198,6 @@ namespace InternshipTest
             _ClearCurrentLapTimeSimulationAnalysisChart();
         }
 
-
         /// <summary>
         /// Clears the current lap time simulation analysis chart
         /// </summary>
@@ -2943,6 +3236,12 @@ namespace InternshipTest
             }
             else _ClearCurrentLapTimeSimulationAnalysisChart();
         }
+
+        /// <summary>
+        /// Updates the current lap time simulation analysis 2D chart when the curve type combobox item gets changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)

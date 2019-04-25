@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace InternshipTest.Vehicle.OneWheel
+namespace InternshipTest.Vehicle
 {
     /// <summary>
     /// Contains the information about a one wheel model's engie subsystem (torque, braking torque and specific fuel consumption as functions of the rotational speed).

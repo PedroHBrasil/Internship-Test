@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternshipTest.Vehicle.OneWheel
+namespace InternshipTest.Vehicle
 {
     /// <summary>
     /// Contains the engine curves of a one wheel model's engine subsystem (torque, braking torque and specific fuel consumption as functions of the rotational speed).

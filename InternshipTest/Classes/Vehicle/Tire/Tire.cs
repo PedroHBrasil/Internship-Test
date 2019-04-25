@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternshipTest.Vehicle.OneWheel
+namespace InternshipTest.Vehicle
 {
     /// <summary>
-    /// Contains the information about a one wheel model's tire subsystem.
+    /// Contains the information about a tire subsystem.
     /// </summary>
     public class Tire : GenericInfo
     {

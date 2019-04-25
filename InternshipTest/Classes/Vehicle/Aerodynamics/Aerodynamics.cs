@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternshipTest.Vehicle.OneWheel
+namespace InternshipTest.Vehicle
 {
     /// <summary>
     /// Contais the information about a one wheel model's vehicle aerodynamics.

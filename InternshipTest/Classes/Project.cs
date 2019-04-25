@@ -15,14 +15,14 @@ namespace InternshipTest
     {
         #region Properties
         // One Wheel Model Cars
-        public List<Vehicle.OneWheel.Car> OneWheelCars { get; set; }
-        public List<Vehicle.OneWheel.Inertia> OneWheelInertias { get; set; }
-        public List<Vehicle.OneWheel.Suspension> OneWheelSuspensions { get; set; }
-        public List<Vehicle.OneWheel.Brakes> OneWheelBrakes { get; set; }
-        public List<Vehicle.OneWheel.Tire> OneWheelTires { get; set; }
-        public List<Vehicle.OneWheel.Transmission> OneWheelTransmissions { get; set; }
-        public List<Vehicle.OneWheel.Aerodynamics> OneWheelAerodynamics { get; set; }
-        public List<Vehicle.OneWheel.Engine> OneWheelEngines { get; set; }
+        public List<Vehicle.Car> OneWheelCars { get; set; }
+        public List<Vehicle.Inertia> OneWheelInertias { get; set; }
+        public List<Vehicle.Suspension> OneWheelSuspensions { get; set; }
+        public List<Vehicle.Brakes> OneWheelBrakes { get; set; }
+        public List<Vehicle.Tire> OneWheelTires { get; set; }
+        public List<Vehicle.Transmission> OneWheelTransmissions { get; set; }
+        public List<Vehicle.Aerodynamics> OneWheelAerodynamics { get; set; }
+        public List<Vehicle.Engine> OneWheelEngines { get; set; }
         // Two Wheel Model Cars
         // Four Wheel Model Cars
         // Tabular Paths
@@ -37,10 +37,10 @@ namespace InternshipTest
         #region Constructors
         public Project() { }
         
-        public Project(List<Vehicle.OneWheel.Car> oneWheelCars, List<Vehicle.OneWheel.Inertia> oneWheelInertias,
-            List<Vehicle.OneWheel.Suspension> oneWheelSuspensions, List<Vehicle.OneWheel.Brakes> oneWheelBrakes,
-            List<Vehicle.OneWheel.Tire> oneWheelTires, List<Vehicle.OneWheel.Transmission> oneWheelTransmissions,
-            List<Vehicle.OneWheel.Aerodynamics> oneWheelAerodynamics, List<Vehicle.OneWheel.Engine> oneWheelEngines,
+        public Project(List<Vehicle.Car> oneWheelCars, List<Vehicle.Inertia> oneWheelInertias,
+            List<Vehicle.Suspension> oneWheelSuspensions, List<Vehicle.Brakes> oneWheelBrakes,
+            List<Vehicle.Tire> oneWheelTires, List<Vehicle.Transmission> oneWheelTransmissions,
+            List<Vehicle.Aerodynamics> oneWheelAerodynamics, List<Vehicle.Engine> oneWheelEngines,
             List<Path> tabularPaths, List<Simulation.GGVDiagram> ggvDiagrams,
             List<Simulation.LapTimeSimulation> lapTimeSimulations)
         {

@@ -72,7 +72,7 @@ namespace InternshipTest.Results
         /// </summary>
         public double LapTime
         {
-            get => double.Parse(lapTime.ToString("N3"));
+            get => double.Parse(lapTime.ToString("N4"));
             set => lapTime = value;
         }
         #endregion

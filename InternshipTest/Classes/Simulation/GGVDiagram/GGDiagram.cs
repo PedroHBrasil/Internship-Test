@@ -16,7 +16,7 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Aerodynamic properties obtained via interpolation of the car's aerodynamic map.
         /// </summary>
-        private Vehicle.OneWheel.AerodynamicMapPoint interpolatedAerodynamicMapPoint;
+        private Vehicle.AerodynamicMapPoint interpolatedAerodynamicMapPoint;
         /// <summary>
         /// Vertical load at the tire [N].
         /// </summary>
@@ -42,11 +42,15 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Car and setup for which the GG diagram is generated.
         /// </summary>
-        public Vehicle.OneWheel.Car Car { get; set; }
+        public Vehicle.Car Car { get; set; }
         /// <summary>
         /// Amount of points of the GG diagram.
         /// </summary>
         public int AmountOfPoints { get; set; }
+        /// <summary>
+        /// Amount of directions of the GG diagram accelerations.
+        /// </summary>
+        public int AmountOfDirections { get; set; }
         /// <summary>
         /// Longitudinal accelerations [m/s²].
         /// </summary>
@@ -63,7 +67,7 @@ namespace InternshipTest.Simulation
         #region Constructors
         public GGDiagram() { }
 
-        public GGDiagram(Vehicle.OneWheel.Car car)
+        public GGDiagram(Vehicle.Car car)
         {
             Car = car;
             LongitudinalAccelerations = new List<double>();
@@ -71,11 +75,12 @@ namespace InternshipTest.Simulation
             Curvatures = new List<double>();
         }
 
-        public GGDiagram(double speed, Vehicle.OneWheel.Car car, int amountOfPoints)
+        public GGDiagram(double speed, Vehicle.Car car, int amountOfPoints, int amountOfDirections)
         {
             Speed = speed;
             Car = car;
             AmountOfPoints = amountOfPoints;
+            AmountOfDirections = amountOfDirections;
 
             LongitudinalAccelerations = new List<double>();
             LateralAccelerations = new List<double>();
@@ -87,7 +92,7 @@ namespace InternshipTest.Simulation
         #endregion
         #region Methods
         /// <summary>
-        /// Genrates the GG Diagram.
+        /// Generates the GG Diagram.
         /// </summary>
         private void _GenerateGGDiagram()
         {
@@ -156,7 +161,82 @@ namespace InternshipTest.Simulation
                 LongitudinalAccelerations.Add(LongitudinalAccelerations[iAcceleration]);
                 LateralAccelerations.Add(-LateralAccelerations[iAcceleration]);
             }
+            // Filter the points by the directions
+            _FilterGGDiagramByDirections();
         }
+        /// <summary>
+        /// Filters the GG diagram so that there is one acceleration per direction.
+        /// </summary>
+        private void _FilterGGDiagramByDirections()
+        {
+            // Current accelerations arrays
+            double[] currentLongitudinalAccelerations = LongitudinalAccelerations.ToArray();
+            double[] currentLateralAccelerations = LateralAccelerations.ToArray();
+            // Current accelerations directions array
+            double[] currentAccelerationsDirections = new double[LongitudinalAccelerations.Count];
+            for (int i = 0; i < LongitudinalAccelerations.Count; i++)
+            {
+                currentAccelerationsDirections[i] = Math.Atan2(LongitudinalAccelerations[i], LateralAccelerations[i]);
+            }
+            // Target directions array
+            double[] targetDirections = Generate.LinearSpaced(LongitudinalAccelerations.Count + 1, -Math.PI, Math.PI);
+            // New accelerations arrays
+            double[] newLongitudinalAccelerations = new double[targetDirections.Length - 1];
+            double[] newLateralAccelerations = new double[targetDirections.Length - 1];
+            // New accelerations arrays determination
+            for (int iTargetDirection = 0; iTargetDirection < targetDirections.Length - 1; iTargetDirection++)
+            {
+                // Indexes of the current accelerations in range
+                List<int> indexesOfTheCurrentAccelerationsInRange = new List<int>();
+                List<double> magnitudesOfTheCurrentAccelerationsInRange = new List<double>();
+                for (int iCurrentAcceleration = 0; iCurrentAcceleration < currentAccelerationsDirections.Length; iCurrentAcceleration++)
+                {
+                    // Checks if te current acceleration's direction is in the current target direction interval
+                    if (currentAccelerationsDirections[iCurrentAcceleration] >= targetDirections[iTargetDirection] && currentAccelerationsDirections[iCurrentAcceleration] < targetDirections[iTargetDirection + 1])
+                    {
+                        indexesOfTheCurrentAccelerationsInRange.Add(iCurrentAcceleration);
+                        magnitudesOfTheCurrentAccelerationsInRange.Add(Math.Sqrt(Math.Pow(LongitudinalAccelerations[iCurrentAcceleration], 2) + Math.Pow(LateralAccelerations[iCurrentAcceleration], 2)));
+                    }
+                }
+                // Determination of the new acceleration
+                if (indexesOfTheCurrentAccelerationsInRange.Count > 0)
+                {
+                    int newAccelerationIndexInIndexesArray = magnitudesOfTheCurrentAccelerationsInRange.IndexOf(magnitudesOfTheCurrentAccelerationsInRange.Max());
+                    int newAccelerationIndex = indexesOfTheCurrentAccelerationsInRange[newAccelerationIndexInIndexesArray];
+                    newLongitudinalAccelerations[iTargetDirection] = LongitudinalAccelerations[newAccelerationIndex];
+                    newLateralAccelerations[iTargetDirection] = LateralAccelerations[newAccelerationIndex];
+                }
+            }
+            // Checks if there are any non assigned values in the accelerations array and fills them by interpolation
+            for (int iDirection = 0; iDirection < targetDirections.Length - 1; iDirection++)
+            {
+                if (newLongitudinalAccelerations[iDirection] == 0)
+                {
+                    // Previous acceleration index
+                    int iPreviousAccel;
+                    if (iDirection > 0) iPreviousAccel = iDirection - 1;
+                    else iPreviousAccel = targetDirections.Length - 1;
+                    // Next acceleration index
+                    int iNextAccel = iDirection;
+                    do
+                    {
+                        iNextAccel++;
+                        if (iNextAccel == targetDirections.Length)
+                        {
+                            iNextAccel = 0;
+                        }
+                    } while (newLongitudinalAccelerations[iNextAccel] == 0 && newLateralAccelerations[iNextAccel] == 0 && iNextAccel != targetDirections.Length);
+                    // Interpolates to get the accelerations in this direction
+                    double interpolationRatio = (iDirection - iPreviousAccel) / (double)(iNextAccel - iPreviousAccel);
+                    newLongitudinalAccelerations[iDirection] = newLongitudinalAccelerations[iPreviousAccel] + interpolationRatio * (newLongitudinalAccelerations[iNextAccel] - newLongitudinalAccelerations[iPreviousAccel]);
+                    newLateralAccelerations[iDirection] = newLateralAccelerations[iPreviousAccel] + interpolationRatio * (newLateralAccelerations[iNextAccel] - newLateralAccelerations[iPreviousAccel]);
+                }
+            }
+            // Writes the interpolated values to the lists
+            LongitudinalAccelerations = newLongitudinalAccelerations.ToList();
+            LateralAccelerations = newLateralAccelerations.ToList();
+        }
+
         /// <summary>
         /// Gets the longitudinal and lateral accelerations for a fixed and slip angle and minimum longitudinal force.
         /// </summary>
@@ -256,16 +336,18 @@ namespace InternshipTest.Simulation
             double epsx = 0;
             double diffstep = 1.0e-6;
             int maxits = 100;
-            double[] bndl = new double[] { -.2 };
-            double[] bndu = new double[] { .2 };
-
+            
+            double[] bndl = new double[] { Car.Tire.TireModel.KappaMin };
+            double[] bndu = new double[] { Car.Tire.TireModel.KappaMax };
+            
             double[] kappaAccel = new double[] { 0 };
-
+            
             alglib.minbleiccreatef(kappaAccel, diffstep, out alglib.minbleicstate state);
             alglib.minbleicsetbc(state, bndl, bndu);
             alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
             alglib.minbleicoptimize(state, _LongitudinalSlipForGivenWheelTorqueOptimization, null, null);
             alglib.minbleicresults(state, out kappaAccel, out alglib.minbleicreport rep);
+            
             return kappaAccel[0];
         }
         /// <summary>
@@ -280,27 +362,18 @@ namespace InternshipTest.Simulation
             double epsx = 0;
             double diffstep = 1.0e-6;
             int maxits = 100;
-            double[] bndl = new double[] { -1.5 };
-            double[] bndu = new double[] { 1.5 };
 
+            double[] bndl = new double[] { Car.Tire.TireModel.AlphaMin * Math.PI / 180 };
+            double[] bndu = new double[] { Car.Tire.TireModel.AlphaMax * Math.PI / 180 };
+            
             double[] alpha = new double[] { 0 };
-
+            
             alglib.minbleiccreatef(alpha, diffstep, out alglib.minbleicstate state);
             alglib.minbleicsetbc(state, bndl, bndu);
             alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
             alglib.minbleicoptimize(state, _SlipAngleForMinimumTireFY, null, null);
             alglib.minbleicresults(state, out alpha, out alglib.minbleicreport rep);
-
-            /*
-            alglib.mincgcreatef(alpha, diffstep, out alglib.mincgstate state);
-            alglib.mincgsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.mincgoptimize(state, SlipAngleForMinimumTireFY, null, null);
-            alglib.mincgresults(state, out alpha, out alglib.mincgreport rep);
-            alglib.minlbfgscreatef(1, alpha, diffstep, out alglib.minlbfgsstate state);
-            alglib.minlbfgssetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minlbfgsoptimize(state, SlipAngleForMinimumTireFY, null, null);
-            alglib.minlbfgsresults(state, out alpha, out alglib.minlbfgsreport rep);
-            */
+            
             return alpha[0];
         }
         /// <summary>
@@ -315,8 +388,9 @@ namespace InternshipTest.Simulation
             double epsx = 0;
             double diffstep = 1.0e-6;
             int maxits = 100;
-            double[] bndl = new double[] { -.2 };
-            double[] bndu = new double[] { 0 };
+
+            double[] bndl = new double[] { Car.Tire.TireModel.KappaMin };
+            double[] bndu = new double[] { Car.Tire.TireModel.KappaMax };
 
             double[] kappaBrake = new double[] { 0 };
 
@@ -325,12 +399,7 @@ namespace InternshipTest.Simulation
             alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
             alglib.minbleicoptimize(state, _LongitudinalSlipForMinimumTireFX, null, null);
             alglib.minbleicresults(state, out kappaBrake, out alglib.minbleicreport rep);
-            /*
-            alglib.minlbfgscreatef(1, kappaBrake, diffstep, out alglib.minlbfgsstate state);
-            alglib.minlbfgssetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minlbfgsoptimize(state, LongitudinalSlipForMinimumTireFX, null, null);
-            alglib.minlbfgsresults(state, out kappaBrake, out alglib.minlbfgsreport rep);
-            */
+
             return kappaBrake[0];
         }
         /// <summary>
@@ -345,8 +414,9 @@ namespace InternshipTest.Simulation
             double epsx = 0;
             double diffstep = 1.0e-6;
             int maxits = 100;
-            double[] bndl = new double[] { 0 };
-            double[] bndu = new double[] { .2 };
+
+            double[] bndl = new double[] { Car.Tire.TireModel.KappaMin };
+            double[] bndu = new double[] { Car.Tire.TireModel.KappaMax };
 
             double[] kappaAccel = new double[] { 0 };
 
@@ -355,12 +425,7 @@ namespace InternshipTest.Simulation
             alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
             alglib.minbleicoptimize(state, _LongitudinalSlipForMaximumTireFX, null, null);
             alglib.minbleicresults(state, out kappaAccel, out alglib.minbleicreport rep);
-            /*
-alglib.minlbfgscreatef(1, kappaAccel, diffstep, out alglib.minlbfgsstate state);
-alglib.minlbfgssetcond(state, epsg, epsf, epsx, maxits);
-alglib.minlbfgsoptimize(state, LongitudinalSlipForMaximumTireFX, null, null);
-alglib.minlbfgsresults(state, out kappaAccel, out alglib.minlbfgsreport rep);
-            */
+
             return kappaAccel[0];
         }
         /// <summary>
@@ -514,7 +579,7 @@ public class GGDiagram
     /// <summary>
     /// Car and setup for which the GG diagram is generated.
     /// </summary>
-    public Vehicle.OneWheel.Car Car { get; set; }
+    public Vehicle.Car Car { get; set; }
     /// <summary>
     /// Amount of points of the GG diagram.
     /// </summary>
@@ -532,12 +597,12 @@ public class GGDiagram
     #region Constructors
     public GGDiagram() { }
 
-    public GGDiagram(Vehicle.OneWheel.Car car)
+    public GGDiagram(Vehicle.Car car)
     {
         Car = car;
     }
 
-    public GGDiagram(double speed, Vehicle.OneWheel.Car car, int amountOfPoints)
+    public GGDiagram(double speed, Vehicle.Car car, int amountOfPoints)
     {
         Speed = speed;
         Car = car;
@@ -558,7 +623,7 @@ public class GGDiagram
         // Generates the directions vector
         double[] directions = Generate.LinearSpaced(AmountOfPoints, -Math.PI, Math.PI * (2 * Math.PI / AmountOfPoints));
         // Gets the aerodynamic forces and the tire's vertical load
-        Vehicle.OneWheel.AerodynamicMapPoint aerodynamicMapPoint = Car.GetAerodynamicCoefficients(Speed);
+        Vehicle.AerodynamicMapPoint aerodynamicMapPoint = Car.GetAerodynamicCoefficients(Speed);
         dragForce = aerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.AirDensity * Car.Aerodynamics.FrontalArea * Math.Pow(Speed, 2) / 2;
         liftForce = aerodynamicMapPoint.LiftCoefficient * Car.Aerodynamics.AirDensity * Car.Aerodynamics.FrontalArea * Math.Pow(Speed, 2) / 2;
         tireVerticalLoad = (Car.Inertia.TotalMass * Car.Inertia.Gravity - liftForce) / 4;

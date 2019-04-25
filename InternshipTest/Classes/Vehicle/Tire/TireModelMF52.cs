@@ -17,6 +17,11 @@ namespace InternshipTest.Vehicle
             epsilonx = Math.Pow(10, -3), epsilony = Math.Pow(10, -1), epsilonK = Math.Pow(10, -2), epsilonV = Math.Pow(10, -3);
         #endregion
         #region Properties
+        // Tire Model inputs boundaries (Slip Angle and Longitudinal Slip)
+        public double AlphaMin { get; set; }
+        public double AlphaMax { get; set; }
+        public double KappaMin { get; set; }
+        public double KappaMax { get; set; }
         // Tire Model Coefficents File
         public string FileLocation { get; set; }
         // Tire Model adimensionalization coefficients
@@ -80,11 +85,16 @@ namespace InternshipTest.Vehicle
             _SetUpNewTireModel();
         }
 
-        public TireModelMF52(string modelID, string description, string fileLocation, List<double> lambdaList)
+        public TireModelMF52(string modelID, string description, string fileLocation, List<double> lambdaList, double alphaMin, double alphaMax, double kappaMin, double kappaMax)
         {
             ID = modelID;
             Description = description;
             FileLocation = fileLocation;
+            // Inputs boundaries
+            AlphaMin = alphaMin;
+            AlphaMax = alphaMax;
+            KappaMin = kappaMin;
+            KappaMax = kappaMax;
             // Sets up a new tire model with all of the coefficients equal to zero
             _SetUpNewTireModel();
             // Loads the coefficients from the desired file
@@ -297,7 +307,7 @@ namespace InternshipTest.Vehicle
             double SHx = (pHx1 + pHx2 * dfz) * lambdaHx;
             double kappax = kappa + SHx;
             double mux = (pDx1 + pDx2 * dfz) * (1 - pDx3 * Math.Pow(gamma, 2)) * lambdaMuxStar;
-            double Ex = (pEx1 + pEx2 * dfz + pEx3 * Math.Pow(dfz, 2)) * (1 - pEx4 * Math.Sign(kappax)) * lambdaMuxStar;
+            double Ex = (pEx1 + pEx2 * dfz + pEx3 * Math.Pow(dfz, 2)) * (1 - pEx4 * Math.Sign(kappax)) * lambdaEx;
             double Dx = mux * Fz * ksi1;
             double Cx = pCx1 * lambdaCx;
             double KxKappa = Fz * (pKx1 + pKx2 * dfz) * Math.Exp(pKx3 * dfz) * lambdaKxk;

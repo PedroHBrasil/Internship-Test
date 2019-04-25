@@ -6,11 +6,16 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:sfSkinManager="clr-namespace:Syncfusion.SfSkinManager;assembly=Syncfusion.SfSkinManager.WPF"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
-		xmlns:oneWheel="clr-namespace:InternshipTest.Vehicle.OneWheel"
+		xmlns:vehicle="clr-namespace:InternshipTest.Vehicle"
 		xmlns:simulation="clr-namespace:InternshipTest.Simulation"
 		xmlns:results="clr-namespace:InternshipTest.Results"
 		xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
 		Title="MainWindow" Height="1080" Width="1920" WindowState="Maximized" Icon="App.ico">
+    <Window.Resources>
+        <ItemsPanelTemplate x:Key="chartsLegendsPanelTemplate">
+            <WrapPanel Orientation="Horizontal"/>
+        </ItemsPanelTemplate>
+    </Window.Resources>
     <!-- Main Window Grid -->
     <Grid>
         <Grid.RowDefinitions>
@@ -117,22 +122,29 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!-- Question textbox -->
-                <TextBlock Text="Choose a vehicle model:" VerticalAlignment="Center" Margin="10"/>
+                <TextBlock Text="Choose what you want to model:" VerticalAlignment="Center" Margin="10"/>
+                <!-- Tire button -->
+                <Button Name="tireButton" Content="Tire" Grid.Column="1"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold"
+                        Click="_TireButton_Click"/>
                 <!-- One Wheel Model button -->
-                <Button Name="oneWheelVehicleButton" Content="One Wheel" Grid.Column="1"
+                <Button Name="oneWheelVehicleButton" Content="One Wheel" Grid.Column="2"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_OneWheelVehicleButton_Click"/>
                 <!-- Two Wheel Model button -->
-                <Button Name="twoWheelVehicleButton" Content="Two Wheel" Grid.Column="2"
+                <Button Name="twoWheelVehicleButton" Content="Two Wheel" Grid.Column="3"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_TwoWheelVehicleButton_Click"/>
                 <!-- Four Wheel Model button -->
-                <Button Name="fourWheelVehicleButton" Content="Four Wheel" Grid.Column="3"
+                <Button Name="fourWheelVehicleButton" Content="Four Wheel" Grid.Column="4"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_FourWheelVehicleButton_Click"/>
@@ -248,9 +260,607 @@
                             syncfusion:DockingManager.SideInDockedMode="Top">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <!-- Main Work Environment Grid -->
-                    <Grid>
+                    <Grid Name="mainWorkGrid">
+                        <Grid.Resources>
+                            <!-- Template of the positioning of the charts legends so they wrap -->
+                            <ItemsPanelTemplate x:Key="chartsLegendsPanelTemplate">
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </Grid.Resources>
+                        <!-- Tire Docking Manager -->
+                        <syncfusion:DockingManager Name="tireInputDockingManager" Visibility="Collapsed">
+                            <!-- Tire Docking Window -->
+                            <ContentControl Name="tireDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Tire"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="AutoHidden">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Tire listbox-->
+                                    <ListBox Name="tireListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TireListBox_SelectionChanged"/>
+                                    <!-- Tire listbox add and delete buttons -->
+                                    <Button Name="addTireToListBox" Content="Add" Click="_AddTireToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteTireOfListBox" Content="Delete" Click="_DeleteTireOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Tire ID line -->
+                                    <TextBlock Text="Tire ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="tireIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="tireDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Tire vertical stiffness line -->
+                                    <TextBlock Text="Vert. Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Tire model file selection line -->
+                                    <TextBlock Text="Tire Model" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="tireModelComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=tireModelListBox, Path=Items, Mode=OneWay}"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Tire Model Docking Window -->
+                            <ContentControl Name="tireModelDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Tire Model"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="AutoHidden">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Tire Model listbox-->
+                                    <ListBox Name="tireModelListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TireModelListBox_SelectionChanged"/>
+                                    <!-- Tire Model listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddTireModelToListBox" Content="Add" Click="_AddTireModelToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteTireModelOfListBox" Content="Delete" Click="_DeleteTireModelOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Tire Model ID line -->
+                                    <TextBlock Text="Model ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                    <TextBox Name="tireModelIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="tireModelDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Tire model file selection line -->
+                                    <TextBlock Text="Tire Model File Selection:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="tireModelTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelTireModelButton" Content="Browse" Click="_TireModelButton_Click" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,2,5,2"/>
+                                    <!-- Scalling Factors textblock -->
+                                    <TextBlock Text="Scalling Factors:" Grid.Row="6" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <!-- lambdaFzO -->
+                                    <TextBlock HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"
+                                           Grid.Row="7" Grid.Column="0" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Fzo"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaFzOTextBox" Text="1" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="1" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMuV -->
+                                    <TextBlock Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="μV"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMuVTextBox" Text="0" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMux -->
+                                    <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="μx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMuxTextBox" Text=".66" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMuy -->
+                                    <TextBlock Grid.Row="8" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="μy"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMuyTextBox" Text=".66" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaKxk -->
+                                    <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="xκ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaKxkTextBox" Text="1" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaKya -->
+                                    <TextBlock Grid.Row="9" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="yα"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaKyaTextBox" Text="1" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaCx -->
+                                    <TextBlock Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="10" Text="Cx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaCxTextBox" Text="1" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaCy -->
+                                    <TextBlock Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Cy"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaCyTextBox" Text="1" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaEx -->
+                                    <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Ex"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaExTextBox" Text="1" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaEy -->
+                                    <TextBlock Grid.Row="11" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Ey"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaEyTextBox" Text="1" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaHx -->
+                                    <TextBlock Grid.Row="12" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Hx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaHxTextBox" Text="1" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaHy -->
+                                    <TextBlock Grid.Row="12" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Hy"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaHyTextBox" Text="1" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVx -->
+                                    <TextBlock Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Vx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVxTextBox" Text="1" Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVy -->
+                                    <TextBlock Grid.Row="13" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Vy"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVyTextBox" Text="1" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaKyg -->
+                                    <TextBlock Grid.Row="14" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Kyγ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaKygTextBox" Text="1" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaKzg -->
+                                    <TextBlock Grid.Row="14" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Kzγ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaKzgTextBox" Text="1" Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdat -->
+                                    <TextBlock Grid.Row="15" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="t"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdatTextBox" Text="1" Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMr -->
+                                    <TextBlock Grid.Row="15" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Mr"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMrTextBox" Text="1" Grid.Row="15" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaxa -->
+                                    <TextBlock Grid.Row="16" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="xα"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaxaTextBox" Text="1" Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdayk -->
+                                    <TextBlock Grid.Row="16" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="yκ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaykTextBox" Text="1" Grid.Row="16" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVyk -->
+                                    <TextBlock Grid.Row="17" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Vyκ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVykTextBox" Text="1" Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdas -->
+                                    <TextBlock Grid.Row="17" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="s"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdasTextBox" Text="1" Grid.Row="17" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaCz -->
+                                    <TextBlock Grid.Row="18" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Cz"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaCzTextBox" Text="1" Grid.Row="18" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMx -->
+                                    <TextBlock Grid.Row="18" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Mx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMxTextBox" Text="1" Grid.Row="18" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVMx -->
+                                    <TextBlock Grid.Row="19" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="VMx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVMxTextBox" Text="1" Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMy -->
+                                    <TextBlock Grid.Row="19" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="My"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMyTextBox" Text="1" Grid.Row="19" Grid.Column="4" Grid.ColumnSpan="2"
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- Reliabilty ranges -->
+                                    <TextBlock Text="Reliability Ranges (Min/Max):" Grid.Row="20" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <!-- Longitudinal Slip reliability range -->
+                                    <TextBlock Text="Long. Slip" Grid.Row="21" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMinLongitudinalSlipTextBox" Grid.Row="21" Grid.Column="2"
+                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMaxLongitudinalSlipTextBox" Grid.Row="21" Grid.Column="4"
+                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
+                                    <!-- Slip Angle reliability range -->
+                                    <TextBlock Text="Slip Angle" Grid.Row="22" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMinSlipAngleTextBox" Grid.Row="22" Grid.Column="2"
+                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="22" Grid.Column="3" VerticalAlignment="Center"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMaxSlipAngleTextBox" Grid.Row="22" Grid.Column="4"
+                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="22" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Tire Model Visualization Docking Window -->
+                            <ContentControl Name="tireModelVisualizationDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Tire Model Visualization"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="1250"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="1250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="60"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="1000"/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Tire Models checklistbox -->
+                                    <TextBlock Text="Select the tire models to be displayed:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,0,5,0" VerticalAlignment="Center" FontWeight="Bold"/>
+                                    <syncfusion:CheckListBox Name="tireModelDisplayCheckListBox" SelectionChanged="_TireModelDisplayCheckListBox_SelectionChanged" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5"/>
+                                    <!-- Input parameters checklistbox -->
+                                    <TextBlock Text="Select/create the parameters sets:" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,0,5,0" VerticalAlignment="Center" FontWeight="Bold"/>
+                                    <Grid Grid.Row="3" Grid.ColumnSpan="6" Margin="5,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Long. Slip" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Slip Angle (deg)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Vert. Load (N)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Incl. Angle (deg)" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Speed (km/h)" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    </Grid>
+                                    <syncfusion:CheckListBox Name="tireModelDisplayParameterSetsCheckListBox" SelectionChanged="_TireModelParameterSetsCheckListBox_SelectionChanged" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Margin="5">
+                                        <syncfusion:CheckListBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vehicle:TireModelMF52Point}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Path=LongitudinalSlip}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=SlipAngle}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=VerticalLoad}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=InclinationAngle}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=Speed}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </syncfusion:CheckListBox.ItemTemplate>
+                                    </syncfusion:CheckListBox>
+                                    <!-- Add/delete parameter sets buttons -->
+                                    <Button Name="addTireModelParameterSetToCheckListBox" Content="Add" Click="_AddTireModelParameterSetToCheckListBox_Click" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteTireModelParameterSetOfCheckListBox" Content="Delete" Click="_DeleteTireModelParameterSetOfCheckListBox_Click" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- New display longitudinal slip -->
+                                    <TextBlock Text="Long. Slip" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayParametersLongitudinalSlipTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                    <!-- New display slip angle -->
+                                    <TextBlock Text="Slip Angle" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayParametersSlipAngleTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New display vertical load -->
+                                    <TextBlock Text="Vertical Load" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayParametersVerticalLoadTextBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New display inclination angle -->
+                                    <TextBlock Text="Inclination" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayParametersInclinationAngleTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New display speed -->
+                                    <TextBlock Text="Speed" Grid.Row="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayParametersSpeedTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="km/h" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Chart's axis control -->
+                                    <TextBlock Text="Select the current chart's data:" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,0,5,0" VerticalAlignment="Center" FontWeight="Bold"/>
+                                    <!-- Chart's Y axis data -->
+                                    <TextBlock Text="Y Axis data" Grid.Row="12" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="tireModelDisplayChartYAxisDataComboBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_TireModelDisplayChartYAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                                        <ComboBoxItem Content="Longitudinal Force"/>
+                                        <ComboBoxItem Content="Lateral Force"/>
+                                        <ComboBoxItem Content="Overturning Moment"/>
+                                        <ComboBoxItem Content="Rolling Moment"/>
+                                        <ComboBoxItem Content="Self-Aligning Torque"/>
+                                    </ComboBox>
+                                    <!-- Chart's X axis data -->
+                                    <TextBlock Text="X Axis Data" Grid.Row="13" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="tireModelDisplayChartXAxisDataComboBox" Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_TireModelDisplayChartXAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                                        <ComboBoxItem Content="Longitudinal Slip"/>
+                                        <ComboBoxItem Content="Slip Angle"/>
+                                        <ComboBoxItem Content="Vertical Load"/>
+                                        <ComboBoxItem Content="Inclination Angle"/>
+                                        <ComboBoxItem Content="Speed"/>
+                                    </ComboBox>
+                                    <!-- Chart's X data range -->
+                                    <TextBlock Text="X Data Range" Grid.Row="14" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBlock Text="Min.:" Grid.Row="14" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayXAxisRangeMinTextBox" ValueChanged="_TireModelDisplayXAxisRangeMinTextBox_ValueChanged" Grid.Row="14" Grid.Column="3"
+                                                          HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
+                                    <TextBlock Text="Max.:" Grid.Row="14" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0,5,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayXAxisRangeMaxTextBox" ValueChanged="_TireModelDisplayXAxisRangeMaxTextBox_ValueChanged" Grid.Row="14" Grid.Column="5"
+                                                          HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
+                                    <!-- Amount of points -->
+                                    <TextBlock Text="Amount of Points" Grid.Row="15" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelDisplayDataAmountOfPointsTextBox" ValueChanged="_TireModelDisplayYAxisAmountOfPointsTextBox_ValueChanged" Grid.Row="15" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
+                                    <!-- Tire Model Display Charts Tab Control -->
+                                    <syncfusion:TabControlExt Name="tireModelDisplayChartTabControl" Grid.Column="6" Grid.RowSpan="17"
+                                                      EnableLabelEdit="True" ShowTabItemContextMenu="True" CloseButtonType="Both"
+                                                      TabItemSize="ShrinkToFit" TabItemLayout="MultiLineWithFullWidth"
+                                                      TabScrollStyle="Extended" TabScrollButtonVisibility="Visible"
+                                                      IsNewButtonEnabled="True" NewButtonAlignment="First" NewButtonBackground="Black"
+                                                      NewButtonClick="_TireModelDisplayChartTabControl_NewButtonClick"
+                                                      OnCloseButtonClick="_TireModelDisplayChartTabControl_OnCloseButtonClick">
+                                        <syncfusion:TabItemExt Header="Chart 1"/>
+                                    </syncfusion:TabControlExt>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
                         <!-- One Wheel Model Docking Manager -->
-                        <syncfusion:DockingManager Name="oneWheelVehicleInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="oneWheelVehicleInputDockingManager" Visibility="Collapsed">
                             <!-- Car and Setup Docking Window -->
                             <ContentControl Name="oneWheelCarAndSetupDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -307,7 +917,7 @@
                                     <!-- Tire selection line -->
                                     <TextBlock Text="Tire" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelTireCombobox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=oneWheelTireListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=tireListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Engine selection line -->
                                     <TextBlock Text="Engine" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelEngineCombobox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
@@ -481,428 +1091,6 @@
                                     <TextBlock Text="N.m" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
-                            <!-- Tire Docking Window -->
-                            <ContentControl Name="oneWheelTireDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Tire"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Tire listbox-->
-                                    <ListBox Name="oneWheelTireListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelTireListBox_SelectionChanged"/>
-                                    <!-- Tire listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddTireToListBox" Content="Add" Click="_OneWheelAddTireToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteTireOfListBox" Content="Delete" Click="_OneWheelDeleteTireOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Tire ID line -->
-                                    <TextBlock Text="Tire ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelTireIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelTireDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Tire vertical stiffness line -->
-                                    <TextBlock Text="Vert. Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelTireStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Tire model file selection line -->
-                                    <TextBlock Text="Tire Model" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="oneWheelTireModelComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelTireModelListBox, Path=Items, Mode=OneWay}"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Tire Model Docking Window -->
-                            <ContentControl Name="oneWheelTireModelDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Tire Model"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.SideInDockedMode="Left"
-                                        syncfusion:DockingManager.TargetNameInDockedMode="oneWheelTireDockingWindow"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Tire Model listbox-->
-                                    <ListBox Name="oneWheelTireModelListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelTireModelListBox_SelectionChanged"/>
-                                    <!-- Tire Model listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddTireModelToListBox" Content="Add" Click="_OneWheelAddTireModelToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteTireModelOfListBox" Content="Delete" Click="_OneWheelDeleteTireModelOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Tire Model ID line -->
-                                    <TextBlock Text="Model ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                    <TextBox Name="oneWheelTireModelIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelTireModelDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Tire model file selection line -->
-                                    <TextBox Name="oneWheelTireModelTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelTireModelButton" Content="Browse" Click="_OneWheelTireModelButton_Click" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,2,5,2"/>
-                                    <!-- Scalling Factors textblock -->
-                                    <TextBlock Text="Scalling Factors:" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <!-- lambdaFzO -->
-                                    <TextBlock HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"
-                                           Grid.Row="6" Grid.Column="0" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Fzo"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaFzOTextBox" Text="1" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="1" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMuV -->
-                                    <TextBlock Grid.Row="6" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="μV"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaMuVTextBox" Text="1" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMux -->
-                                    <TextBlock Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="μx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaMuxTextBox" Text="1" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMuy -->
-                                    <TextBlock Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="μy"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaMuyTextBox" Text="1" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaKxk -->
-                                    <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="xκ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaKxkTextBox" Text="1" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaKya -->
-                                    <TextBlock Grid.Row="8" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="yα"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheellambdaKyaTextBox" Text="1" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaCx -->
-                                    <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Cx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaCxTextBox" Text="1" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaCy -->
-                                    <TextBlock Grid.Row="9" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Cy"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaCyTextBox" Text="1" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaEx -->
-                                    <TextBlock Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Ex"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaExTextBox" Text="1" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaEy -->
-                                    <TextBlock Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Ey"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaEyTextBox" Text="1" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaHx -->
-                                    <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Hx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaHxTextBox" Text="1" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaHy -->
-                                    <TextBlock Grid.Row="11" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Hy"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaHyTextBox" Text="1" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVx -->
-                                    <TextBlock Grid.Row="12" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Vx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaVxTextBox" Text="1" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVy -->
-                                    <TextBlock Grid.Row="12" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Vy"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaVyTextBox" Text="1" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaKyg -->
-                                    <TextBlock Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Kyγ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaKygTextBox" Text="1" Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaKzg -->
-                                    <TextBlock Grid.Row="13" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Kzγ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaKzgTextBox" Text="1" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdat -->
-                                    <TextBlock Grid.Row="14" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="t"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdatTextBox" Text="1" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMr -->
-                                    <TextBlock Grid.Row="14" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Mr"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaMrTextBox" Text="1" Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaxa -->
-                                    <TextBlock Grid.Row="15" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="xα"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaxaTextBox" Text="1" Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdayk -->
-                                    <TextBlock Grid.Row="15" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="yκ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaykTextBox" Text="1" Grid.Row="15" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVyk -->
-                                    <TextBlock Grid.Row="16" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Vyκ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaVykTextBox" Text="1" Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdas -->
-                                    <TextBlock Grid.Row="16" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="s"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdasTextBox" Text="1" Grid.Row="16" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaCz -->
-                                    <TextBlock Grid.Row="17" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Cz"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaCzTextBox" Text="1" Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMx -->
-                                    <TextBlock Grid.Row="17" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Mx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaMxTextBox" Text="1" Grid.Row="17" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVMx -->
-                                    <TextBlock Grid.Row="18" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="VMx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaVMxTextBox" Text="1" Grid.Row="18" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMy -->
-                                    <TextBlock Grid.Row="18" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="My"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="oneWheelLambdaMyTextBox" Text="1" Grid.Row="18" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                </Grid>
-                            </ContentControl>
                             <!-- Transmission Docking Window -->
                             <ContentControl Name="oneWheelTransmissionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1023,7 +1211,7 @@
                                     <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ListBox Name="oneWheelGearRatiosListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type oneWheel:GearRatio}">
+                                            <DataTemplate DataType="{x:Type vehicle:GearRatio}">
                                                 <TextBlock Text="{Binding Path=Ratio}" HorizontalAlignment="Center"/>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -1155,7 +1343,7 @@
                                     </Grid>
                                     <ListBox Name="oneWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type oneWheel:AerodynamicMapPoint}">
+                                            <DataTemplate DataType="{x:Type vehicle:AerodynamicMapPoint}">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition/>
@@ -1314,7 +1502,7 @@
                                     </Grid>
                                     <ListBox Name="oneWheelEngineCurvesPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type oneWheel:EngineCurvesPoint}">
+                                            <DataTemplate DataType="{x:Type vehicle:EngineCurvesPoint}">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition/>
@@ -1359,10 +1547,10 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- NOT DONE Two Wheel Model Docking Manager-->
-                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Collapsed">
-
+                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Visible">
+                            
                         </syncfusion:DockingManager>
-                        <!-- NOT DONE Four Wheel Model Docking Manager-->
+                            <!-- NOT DONE Four Wheel Model Docking Manager-->
                         <syncfusion:DockingManager Name="fourWheelVehicleInputDockingManager" Visibility="Collapsed">
 
                         </syncfusion:DockingManager>
@@ -1645,6 +1833,7 @@
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -1673,23 +1862,29 @@
                                     <!-- Vehicle selection line -->
                                     <TextBlock Text="Vehicle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ComboBox Name="ggvDiagramVehicleSelectionComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                          ItemsSource="{Binding ElementName=oneWheelCarAndSetupListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=twoWheelCarAndSetupListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Amount of Points per Speed line -->
                                     <TextBlock Text="Amount of Points per Speed" Grid.Row="6" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfPointsPerSpeedTextBox" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
+                                    <!-- Amount of directions line -->
+                                    <TextBlock Text="Amount of Directions" Grid.Row="7" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfDirectionsTextBox" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Amount of Speeds line -->
-                                    <TextBlock Text="Amount of Speeds" Grid.Row="7" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfSpeedsTextBox" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Amount of Speeds" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfSpeedsTextBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Lowest Speed line -->
-                                    <TextBlock Text="Lowest Speed" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramLowestSpeedTextBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Lowest Speed" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramLowestSpeedTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
+                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Amount of Speeds line -->
-                                    <TextBlock Text="Highest Speed" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramHighestSpeedTextBox" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Highest Speed" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramHighestSpeedTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
+                                    <TextBlock Text="km/h" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Path Display Grid -->
                                     <Grid Name="ggvDiagramDisplayGrid" Grid.Column="6" Grid.RowSpan="10"/>
                                 </Grid>
@@ -2046,7 +2241,7 @@
                                                       EnableLabelEdit="True" ShowTabItemContextMenu="True" CloseButtonType="Both"
                                                       TabItemSize="ShrinkToFit" TabItemLayout="MultiLineWithFullWidth"
                                                       TabScrollStyle="Extended" TabScrollButtonVisibility="Visible"
-                                                      IsNewButtonEnabled="True" NewButtonAlignment="First"
+                                                      IsNewButtonEnabled="True" NewButtonAlignment="First" NewButtonBackground="Black"
                                                       NewButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_NewButtonClick"
                                                       CloseMode="Delete" OnCloseButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick">
                                 <syncfusion:TabItemExt Header="Chart 1"/>

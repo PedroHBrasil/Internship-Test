@@ -4,26 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InternshipTest.Vehicle.OneWheel
+namespace InternshipTest.Vehicle
 {
     /// <summary>
-    /// Contains the information of a one wheel model vehicle aerodynamic map.
+    /// Containsthe information about a one wheel model brakes subsystem.
     /// </summary>
-    public class AerodynamicMap : GenericInfo
+    public class Brakes : GenericInfo
     {
         #region Properties
         /// <summary>
-        /// Contains the aerodynamic map points.
+        /// Maximum appliable torque by the brakes subsystem [N*m].
         /// </summary>
-        public List<AerodynamicMapPoint> MapPoints { get; set; }
+        public double MaxTorque { get; set; }
         #endregion
         #region Constructors
-        public AerodynamicMap() { }
-        public AerodynamicMap(string mapID, string description, List<AerodynamicMapPoint> aerodynamicMapPoints)
+        public Brakes() { }
+
+        public Brakes(string brakesID, string description, double maxTorque)
         {
-            ID = mapID;
+            ID = brakesID;
             Description = description;
-            MapPoints = aerodynamicMapPoints;
+            MaxTorque = Math.Abs(maxTorque); // Nm
         }
         #endregion
         #region Methods

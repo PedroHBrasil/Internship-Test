@@ -17,11 +17,15 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Car and setup associated with the GGV diagram.
         /// </summary>
-        public Vehicle.OneWheel.Car Car { get; set; }
+        public Vehicle.Car Car { get; set; }
         /// <summary>
         /// Amount of points at each GG diagram.
         /// </summary>
         public int AmountOfPointsPerSpeed { get; set; }
+        /// <summary>
+        /// Amount of directions of the GGV diagram's accelerations.
+        /// </summary>
+        public int AmountOfDirections { get; set; }
         /// <summary>
         /// Amount of speeds of the GGV diagram.
         /// </summary>
@@ -47,12 +51,13 @@ namespace InternshipTest.Simulation
         #region Constructors
         public GGVDiagram() { }
 
-        public GGVDiagram(string id, string description, Vehicle.OneWheel.Car car, int amountOfPointsPerSpeed, int amountOfSpeeds, double lowestSpeed, double highestSpeed)
+        public GGVDiagram(string id, string description, Vehicle.Car car, int amountOfPointsPerSpeed, int amountOfDirections, int amountOfSpeeds, double lowestSpeed, double highestSpeed)
         {
             ID = id;
             Description = description;
             Car = car;
             AmountOfPointsPerSpeed = amountOfPointsPerSpeed;
+            AmountOfDirections = amountOfDirections;            
             AmountOfSpeeds = amountOfSpeeds;
             LowestSpeed = lowestSpeed;
             HighestSpeed = highestSpeed;
@@ -73,7 +78,7 @@ namespace InternshipTest.Simulation
             // GGV diagram generation
             foreach (double speed in Speeds)
             {
-                GGDiagrams.Add(new GGDiagram(speed, Car, AmountOfPointsPerSpeed));
+                GGDiagrams.Add(new GGDiagram(speed, Car, AmountOfPointsPerSpeed, AmountOfDirections));
             }
         }
         /// <summary>
@@ -82,7 +87,7 @@ namespace InternshipTest.Simulation
         /// <param name="speed"> Car speed [m/s]. </param>
         /// <param name="car"> Car and Setup object. </param>
         /// <returns> Interpolated GG diagram </returns>
-        public GGDiagram GetGGDiagramForASpeed(double speed, Vehicle.OneWheel.Car car)
+        public GGDiagram GetGGDiagramForASpeed(double speed, Vehicle.Car car)
         {
             // Checks if the speed is in the GGV diagram speed range
             if (speed < LowestSpeed || speed > HighestSpeed) return _GetGGDiagramByExtrapolationOfTheGGVDiagram(speed);
@@ -111,11 +116,11 @@ namespace InternshipTest.Simulation
         /// <param name="speed"> Car's speed [m/s]. </param>
         /// <param name="car"> Car and Setup object. </param>
         /// <returns> Interpolated GG diagram </returns>
-        private GGDiagram _GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.OneWheel.Car car)
+        private GGDiagram _GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.Car car)
         {
             // Result initialization
             GGDiagram interpolatedGGDiagram = new GGDiagram(car);
-            // Gets the index of the index of the immediately lower speed GG diagram
+            // Gets the index of the immediately lower speed GG diagram
             int iLowerSpeed;
             for (iLowerSpeed = 0; iLowerSpeed < AmountOfSpeeds - 1; iLowerSpeed++)
                 if (speed > Speeds[iLowerSpeed] && speed <= Speeds[iLowerSpeed + 1]) break;
