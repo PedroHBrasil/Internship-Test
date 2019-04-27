@@ -146,12 +146,12 @@ namespace InternshipTest
             gearRatiosSetIDTextBox.Text = "gearRatios1";
 
             // Transmission
-            transmissionIDTextBox.Text = "trans1";
-            transmissionTypeComboBox.Text = "2WD";
-            primaryRatioTextBox.Text = "2.111";
-            finalRatioTextBox.Text = "3.7143";
-            gearShiftTimeTextBox.Text = "0.2";
-            transmissionEfficiencyTextBox.Text = "87.5";
+            oneWheelTransmissionIDTextBox.Text = "trans1";
+            oneWheelTransmissionTypeComboBox.Text = "2WD";
+            oneWheelPrimaryRatioTextBox.Text = "2.111";
+            oneWheelFinalRatioTextBox.Text = "3.7143";
+            oneWheelGearShiftTimeTextBox.Text = "0.2";
+            oneWheelTransmissionEfficiencyTextBox.Text = "87.5";
 
             // Aerodynamic Map
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 30, 1, -2));
@@ -390,7 +390,7 @@ namespace InternshipTest
                 List<Vehicle.SimplifiedSuspension> oneWheelSuspensions = new List<Vehicle.SimplifiedSuspension>();
                 List<Vehicle.OneWheelBrakes> oneWheelBrakes = new List<Vehicle.OneWheelBrakes>();
                 List<Vehicle.Tire> oneWheelTires = new List<Vehicle.Tire>();
-                List<Vehicle.Transmission> oneWheelTransmissions = new List<Vehicle.Transmission>();
+                List<Vehicle.OneWheelTransmission> oneWheelTransmissions = new List<Vehicle.OneWheelTransmission>();
                 List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics = new List<Vehicle.OneWheelAerodynamics>();
                 List<Vehicle.Engine> oneWheelEngines = new List<Vehicle.Engine>();
                 // Two Wheel Model Cars
@@ -416,7 +416,7 @@ namespace InternshipTest
                     oneWheelBrakes.Add(brakes);
                 foreach (Vehicle.Tire tires in tireListBox.Items)
                     oneWheelTires.Add(tires);
-                foreach (Vehicle.Transmission transmission in transmissionListBox.Items)
+                foreach (Vehicle.OneWheelTransmission transmission in oneWheelTransmissionListBox.Items)
                     oneWheelTransmissions.Add(transmission);
                 foreach (Vehicle.OneWheelAerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
                     oneWheelAerodynamics.Add(aerodynamics);
@@ -478,8 +478,8 @@ namespace InternshipTest
                 oneWheelBrakesListBox.Items.Add(brakes);
             foreach (Vehicle.Tire tires in project.OneWheelTires)
                 tireListBox.Items.Add(tires);
-            foreach (Vehicle.Transmission transmission in project.OneWheelTransmissions)
-                transmissionListBox.Items.Add(transmission);
+            foreach (Vehicle.OneWheelTransmission transmission in project.OneWheelTransmissions)
+                oneWheelTransmissionListBox.Items.Add(transmission);
             foreach (Vehicle.OneWheelAerodynamics aerodynamics in project.OneWheelAerodynamics)
                 oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
             foreach (Vehicle.Engine engine in project.OneWheelEngines)
@@ -512,7 +512,7 @@ namespace InternshipTest
             simplifiedSuspensionListBox.Items.Clear();
             oneWheelBrakesListBox.Items.Clear();
             tireListBox.Items.Clear();
-            transmissionListBox.Items.Clear();
+            oneWheelTransmissionListBox.Items.Clear();
             oneWheelAerodynamicsListBox.Items.Clear();
             engineListBox.Items.Clear();
             // Two Wheel Model Cars
@@ -2300,34 +2300,32 @@ namespace InternshipTest
         #endregion
 
         #region Transmission
-        #region Transmission
+        #region One Wheel Transmission
 
         /// <summary>
-        /// Creates a transmission object and adds it to the one wheel model transmissions listbox.
+        /// Creates a one wheel model's transmission object and adds it to the one wheel model's transmissions listbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _AddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
+        private void _AddOneWheelTransmissionToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (transmissionIDTextBox.Text != "" &&
-                transmissionGearRatiosSetComboBox.SelectedItem != null)
+            if (oneWheelTransmissionIDTextBox.Text != "" &&
+                oneWheelTransmissionGearRatiosSetComboBox.SelectedItem != null)
             {
                 // Gets the object's data
-                string transmissionID = transmissionIDTextBox.Text;
-                string description = transmissionDescriptionTextBox.Text;
-                string transmissionType = transmissionTypeComboBox.Text;
-                int amountOfDrivenWheels = 2;
-                if (transmissionType == "4WD") amountOfDrivenWheels = 4;
-                Vehicle.GearRatiosSet gearRatiosSet = transmissionGearRatiosSetComboBox.SelectedItem as Vehicle.GearRatiosSet;
-                double primaryRatio = double.Parse(primaryRatioTextBox.Text);
-                double finalRatio = double.Parse(finalRatioTextBox.Text);
-                double gearShiftTime = double.Parse(gearShiftTimeTextBox.Text);
-                double efficiency = double.Parse(transmissionEfficiencyTextBox.Text) / 100;
+                string transmissionID = oneWheelTransmissionIDTextBox.Text;
+                string description = oneWheelTransmissionDescriptionTextBox.Text;
+                string type = oneWheelTransmissionTypeComboBox.Text;
+                Vehicle.GearRatiosSet gearRatiosSet = oneWheelTransmissionGearRatiosSetComboBox.SelectedItem as Vehicle.GearRatiosSet;
+                double primaryRatio = double.Parse(oneWheelPrimaryRatioTextBox.Text);
+                double finalRatio = double.Parse(oneWheelFinalRatioTextBox.Text);
+                double gearShiftTime = double.Parse(oneWheelGearShiftTimeTextBox.Text);
+                double efficiency = double.Parse(oneWheelTransmissionEfficiencyTextBox.Text) / 100;
                 // Initializes a new object
-                Vehicle.Transmission transmission = new Vehicle.Transmission(
-                    transmissionID, description, amountOfDrivenWheels, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
+                Vehicle.OneWheelTransmission transmission = new Vehicle.OneWheelTransmission(
+                    transmissionID, description, type, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
                 // Adds the object to the listbox and the combobox
-                transmissionListBox.Items.Add(transmission);
+                oneWheelTransmissionListBox.Items.Add(transmission);
             }
             else System.Windows.MessageBox.Show(
                 "Could not create Transmission. \n " +
@@ -2339,44 +2337,124 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Deletes a transmission from the one wheel model transmissions listbox.
+        /// Deletes a one wheel model's transmission from the one wheel model's transmissions listbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _DeleteTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
+        private void _DeleteOneWheelTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (transmissionListBox.SelectedItems.Count == 1)
+            if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
             {
-                transmissionListBox.Items.RemoveAt(transmissionListBox.Items.IndexOf(transmissionListBox.SelectedItem));
+                oneWheelTransmissionListBox.Items.RemoveAt(oneWheelTransmissionListBox.Items.IndexOf(oneWheelTransmissionListBox.SelectedItem));
             }
         }
 
         /// <summary>
-        /// Loads the properties of the one wheel model transmissions listbox's transmission and displays it in the UI fields.
+        /// Loads the properties of the one wheel model's transmissions listbox's transmission and displays it in the UI fields.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _TransmissionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _OneWheelTransmissionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
-            if (transmissionListBox.SelectedItems.Count == 1)
+            if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.Transmission transmission = transmissionListBox.SelectedItem as Vehicle.Transmission;
+                Vehicle.OneWheelTransmission transmission = oneWheelTransmissionListBox.SelectedItem as Vehicle.OneWheelTransmission;
                 // Writes the properties in the UI
-                transmissionIDTextBox.Text = transmission.ID;
-                transmissionDescriptionTextBox.Text = transmission.Description;
-                transmissionTypeComboBox.Text = transmission.Type;
-                transmissionGearRatiosSetComboBox.Text = transmission.GearRatiosSet.ToString();
-                primaryRatioTextBox.Text = transmission.PrimaryRatio.ToString("F3");
-                finalRatioTextBox.Text = transmission.FinalRatio.ToString("F3");
-                gearShiftTimeTextBox.Text = transmission.GearShiftTime.ToString("F3");
-                transmissionEfficiencyTextBox.Text = (transmission.Efficiency * 100).ToString("F3");
+                oneWheelTransmissionIDTextBox.Text = transmission.ID;
+                oneWheelTransmissionDescriptionTextBox.Text = transmission.Description;
+                oneWheelTransmissionTypeComboBox.Text = transmission.Type;
+                oneWheelTransmissionGearRatiosSetComboBox.Text = transmission.GearRatiosSet.ToString();
+                oneWheelPrimaryRatioTextBox.Text = transmission.PrimaryRatio.ToString("F3");
+                oneWheelFinalRatioTextBox.Text = transmission.FinalRatio.ToString("F3");
+                oneWheelGearShiftTimeTextBox.Text = transmission.GearShiftTime.ToString("F3");
+                oneWheelTransmissionEfficiencyTextBox.Text = (transmission.Efficiency * 100).ToString("F3");
             }
         }
 
         #endregion
+
+        #region Two Wheel Transmission
+
+        /// <summary>
+        /// Creates a two wheel model's transmission object and adds it to the two wheel model's transmissions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (twoWheelTransmissionIDTextBox.Text != "" &&
+                double.Parse(twoWheelTransmissionTorqueBiasTextBox.Text) >=0 &&
+                double.Parse(twoWheelTransmissionTorqueBiasTextBox.Text) <= 100 &&
+                twoWheelTransmissionGearRatiosSetComboBox.SelectedItem != null)
+            {
+                // Gets the object's data
+                string transmissionID = twoWheelTransmissionIDTextBox.Text;
+                string description = twoWheelTransmissionDescriptionTextBox.Text;
+                Vehicle.GearRatiosSet gearRatiosSet = twoWheelTransmissionGearRatiosSetComboBox.SelectedItem as Vehicle.GearRatiosSet;
+                double primaryRatio = double.Parse(twoWheelPrimaryRatioTextBox.Text);
+                double finalRatio = double.Parse(twoWheelFinalRatioTextBox.Text);
+                double gearShiftTime = double.Parse(twoWheelGearShiftTimeTextBox.Text);
+                double efficiency = double.Parse(twoWheelTransmissionEfficiencyTextBox.Text) / 100;
+                double torqueBias = double.Parse(twoWheelTransmissionTorqueBiasTextBox.Text) / 100;
+                // Initializes a new object
+                Vehicle.TwoWheelTransmission transmission = new Vehicle.TwoWheelTransmission(
+                    transmissionID, description, torqueBias, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
+                // Adds the object to the listbox and the combobox
+                twoWheelTransmissionListBox.Items.Add(transmission);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Transmission. \n " +
+                "   It should have an ID. \n" +
+                "   A gear ratios set must be selected. \n" +
+                "   The torque bias must be between 0 and 100.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a two wheel model's transmission from the two wheel model's transmissions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelDeleteTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelTransmissionListBox.SelectedItems.Count == 1)
+            {
+                twoWheelTransmissionListBox.Items.RemoveAt(twoWheelTransmissionListBox.Items.IndexOf(twoWheelTransmissionListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the two wheel model's transmissions listbox's transmission and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelTransmissionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (twoWheelTransmissionListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TwoWheelTransmission transmission = twoWheelTransmissionListBox.SelectedItem as Vehicle.TwoWheelTransmission;
+                // Writes the properties in the UI
+                twoWheelTransmissionIDTextBox.Text = transmission.ID;
+                twoWheelTransmissionDescriptionTextBox.Text = transmission.Description;
+                twoWheelTransmissionGearRatiosSetComboBox.Text = transmission.GearRatiosSet.ToString();
+                twoWheelPrimaryRatioTextBox.Text = transmission.PrimaryRatio.ToString("F3");
+                twoWheelFinalRatioTextBox.Text = transmission.FinalRatio.ToString("F3");
+                twoWheelGearShiftTimeTextBox.Text = transmission.GearShiftTime.ToString("F3");
+                twoWheelTransmissionEfficiencyTextBox.Text = (transmission.Efficiency * 100).ToString("F3");
+                twoWheelTransmissionTorqueBiasTextBox.Text = (transmission.TorqueBias * 100).ToString("F3");
+            }
+        }
+
+        #endregion
+
         #region Gear Ratios
 
         /// <summary>
@@ -2533,7 +2611,7 @@ namespace InternshipTest
                 Vehicle.OneWheelInertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.OneWheelInertia;
                 Vehicle.Tire tire = oneWheelTireCombobox.SelectedItem as Vehicle.Tire;
                 Vehicle.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.Engine;
-                Vehicle.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.Transmission;
+                Vehicle.OneWheelTransmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.OneWheelTransmission;
                 Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheelAerodynamics;
                 Vehicle.SimplifiedSuspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.SimplifiedSuspension;
                 Vehicle.OneWheelBrakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.OneWheelBrakes;
@@ -3559,115 +3637,7 @@ namespace InternshipTest
                 lapTimeSimulationNewSectorIndexComboBox.ItemsSource = path.SectorsSet.Sectors;
             }
         }
-
-
-        private void AddLapTimeSimulationToListboxButton_Click(object sender, RoutedEventArgs e)
-        {/*
-            if (LapTimeSimulationModeCombobox.Text!=null && 
-                LapTimeSimulationPathCombobox.Text!=null)
-            {
-                // Gets the sfdatagrid data
-                SfDataGrid sfDataGrid = lapTimeSimulationPathSectorsSetupGrid.Children[0] as SfDataGrid;
-                Simulation.LapTimeSimulationSectorsSetupViewModel lapTimeSimulationSectorsSetupViewModel = new Simulation.LapTimeSimulationSectorsSetupViewModel();
-                lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups = sfDataGrid.ItemsSource as NoteervableCollection<Simulation.LapTimeSimulationSectorsSetup>;
-                List<Simulation.LapTimeSimulationSectorsSetup> sectorsSetup = lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.ToList();
-                // Gets the object's properties values
-                Path path = LapTimeSimulationPathCombobox.SelectedItem as Path;
-                string simulationMode = LapTimeSimulationModeCombobox.Text;
-                bool isFirstLap = false;
-                if (simulationMode == "First Lap") isFirstLap = true;
-                // Initializes a new object
-                Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(path, sectorsSetup, isFirstLap);
-                // Runs the lap time simulation
-                lapTimeSimulation.RunLapTimeSimulation();
-                // Adds the object to the listbox
-                lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
-            }*/
-        }
-
-        private void DeleteLapTimeSimulationOfListboxButton_Click(object sender, RoutedEventArgs e)
-        {/*
-            // Checks if there's a listbox item selected and then removes it
-            if (lapTimeSimulationListBox.SelectedItems.Count == 1)
-            {
-                lapTimeSimulationListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
-            }*/
-        }
-
-        private void LapTimeSimulationListBox_SelectionChanged_(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            /*
-            if (lapTimeSimulationListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Simulation.LapTimeSimulation lapTimeSimulation = lapTimeSimulationListBox.SelectedItem as Simulation.LapTimeSimulation;
-                // Get and writes the tabular data in the UI
-                Simulation.LapTimeSimulationSectorsSetupViewModel lapTimeSimulationSectorsSetupViewModel = new Simulation.LapTimeSimulationSectorsSetupViewModel();
-                lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.Clear();
-                for (int iSector = 0; iSector < lapTimeSimulation.GGVDiagramsPerSector.Count; iSector++)
-                {
-                    lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.Add(new Simulation.LapTimeSimulationSectorsSetup(lapTimeSimulation.Path.Sectors[iSector], lapTimeSimulation.GGVDiagramsPerSector[iSector].SectorGGVDiagram));
-                }
-                SetLapTimeSimulationSectorsSetupSfDataGrid(lapTimeSimulationSectorsSetupViewModel);
-                // Writes the properties in the UI
-                LapTimeSimulationPathCombobox.Text = lapTimeSimulation.Path.ToString();
-                if (lapTimeSimulation.IsFirstLap) LapTimeSimulationModeCombobox.Text = "First Lap";
-                else LapTimeSimulationModeCombobox.Text = "Normal Lap";
-            }*/
-        }
-
-        private void LapTimeSimulationPathCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {/*
-            if (LapTimeSimulationPathCombobox.Text != null &&
-                ggvDiagramListBox.HasItems)
-            {
-                // Gets the selected object
-                Path path = LapTimeSimulationPathCombobox.SelectedItem as Path;
-                // Initializes a new sectors setup object
-                Simulation.LapTimeSimulationSectorsSetupViewModel lapTimeSimulationSectorsSetupViewModel = new Simulation.LapTimeSimulationSectorsSetupViewModel();
-                // Fills the object with data
-                foreach (PathSector sector in path.Sectors)
-                {
-                    lapTimeSimulationSectorsSetupViewModel.LapTimeSimulationSectorsSetups.Add(new Simulation.LapTimeSimulationSectorsSetup(sector, ggvDiagramListBox.Items[0] as Simulation.GGVDiagram));
-                }
-                // Clears the data grid content
-                lapTimeSimulationPathSectorsSetupGrid.Children.Clear();
-                // Sets up the datagrid
-                SetLapTimeSimulationSectorsSetupSfDataGrid(lapTimeSimulationSectorsSetupViewModel);
-            }*/
-        }
-
-        private void SetLapTimeSimulationSectorsSetupSfDataGrid()
-        {/*
-            // Clears the input grid
-            lapTimeSimulationPathSectorsSetupGrid.Children.Clear();
-            // Initializes the input data grid
-            SfDataGrid sfDataGrid = new SfDataGrid()
-            {
-                DataContext = viewModel,
-                HeaderRowHeight = 30,
-                LiveDataUpdateMode = Syncfusion.Data.LiveDataUpdateMode.AllowDataShaping,
-                AllowEditing = true,
-                AllowSorting = true
-            };
-            // Adds the data grid's columns
-            GridNumericColumn sectorColumn = new GridNumericColumn()
-            {
-                HeaderText = "Sector",
-                MappingName = "Sector.Index",
-                NumberDecimalDigits = 0
-            };
-            GridComboBoxColumn ggvColumn = new GridComboBoxColumn()
-            {
-                HeaderText = "Sector",
-                MappingName = "SectorGGVDiagram"
-            };
-            sfDataGrid.Columns.Add(sectorColumn);
-            sfDataGrid.Columns.Add(ggvColumn);
-            // Adds the SfDataGrid to the grid
-            tabularPathSectorsGrid.Children.Add(sfDataGrid);*/
-        }
-
+        
         #endregion
 
         #endregion

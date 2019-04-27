@@ -758,7 +758,7 @@
                                     <!-- Engine Curves selection line -->
                                     <TextBlock Text="Engine Curves" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ComboBox Name="engineCurvesComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelEngineCurvesListBox, Path=Items, Mode=OneWay}"/>
+                                              ItemsSource="{Binding ElementName=engineCurvesListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Maximum throttle line -->
                                     <TextBlock Text="Max. Throttle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
                                     <syncfusion:DoubleTextBox Name="maxThrottleTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
@@ -1027,7 +1027,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Suspension And Steering Docking Manager-->
-                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Collapsed">
                             <!-- Simplified Suspension Docking Window -->
                             <ContentControl Name="simplifiedSuspensionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1722,13 +1722,13 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Transmission Docking Manager-->
-                        <syncfusion:DockingManager Name="transmissionInputDockingManager" Visibility="Collapsed">
-                            <!-- Transmission Docking Window -->
-                            <ContentControl Name="transmissionDockingWindow"
+                        <syncfusion:DockingManager Name="transmissionInputDockingManager" Visibility="Visible">
+                            <!-- One Wheel Transmission Docking Window -->
+                            <ContentControl Name="oneWheelTransmissionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Transmission"
+                                        syncfusion:DockingManager.Header="One Wheel Model's Transmission"
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="250"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
                                         syncfusion:DockingManager.State="Dock">
@@ -1753,46 +1753,117 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <!-- Transmission listbox -->
-                                    <ListBox Name="transmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TransmissionListBox_SelectionChanged"/>
-                                    <!-- Transmission listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddTransmissionToListBox" Content="Add" Click="_AddTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteTransmissionOfListBox" Content="Delete" Click="_DeleteTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Transmission ID line -->
-                                    <TextBlock Text="Transmission ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="transmissionIDTextBox" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- One Wheel Transmission listbox -->
+                                    <ListBox Name="oneWheelTransmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelTransmissionListBox_SelectionChanged"/>
+                                    <!-- One Wheel Transmission listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddTransmissionToListBox" Content="Add" Click="_AddOneWheelTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteTransmissionOfListBox" Content="Delete" Click="_DeleteOneWheelTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- One Wheel Transmission ID line -->
+                                    <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="oneWheelTransmissionIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Description line -->
                                     <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="transmissionDescriptionTextBox" 
+                                    <TextBox Name="oneWheelTransmissionDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Transmission type selection line -->
                                     <TextBlock Text="Type" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="transmissionTypeComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="oneWheelTransmissionTypeComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="2WD"/>
                                         <ComboBoxItem Content="4WD"/>
                                     </ComboBox>
                                     <!-- Gear Ratios Set line -->
                                     <TextBlock Text="Gear Ratios" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="transmissionGearRatiosSetComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelGearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
+                                    <ComboBox Name="oneWheelTransmissionGearRatiosSetComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=gearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Primary ratio line -->
                                     <TextBlock Text="Primary Ratio" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="primaryRatioTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <syncfusion:DoubleTextBox Name="oneWheelPrimaryRatioTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <!-- Final ratio line -->
                                     <TextBlock Text="Final Ratio" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="finalRatioTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <syncfusion:DoubleTextBox Name="oneWheelFinalRatioTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <!-- Gear shift time line -->
                                     <TextBlock Text="Shift Time" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="gearShiftTimeTextBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <syncfusion:DoubleTextBox Name="oneWheelGearShiftTimeTextBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="s" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Efficiency line -->
                                     <TextBlock Text="Efficiency" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="transmissionEfficiencyTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <syncfusion:DoubleTextBox Name="oneWheelTransmissionEfficiencyTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="%" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- One Wheel Transmission Docking Window -->
+                            <ContentControl Name="twoWheelTransmissionDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Two Wheel Model's Transmission"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- One Wheel Transmission listbox -->
+                                    <ListBox Name="twoWheelTransmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelTransmissionListBox_SelectionChanged"/>
+                                    <!-- One Wheel Transmission listbox add and delete buttons -->
+                                    <Button Name="twoWheelAddTransmissionToListBox" Content="Add" Click="_TwoWheelAddTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteTransmissionOfListBox" Content="Delete" Click="_TwoWheelDeleteTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- One Wheel Transmission ID line -->
+                                    <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="twoWheelTransmissionIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelTransmissionDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Gear Ratios Set line -->
+                                    <TextBlock Text="Gear Ratios" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="twoWheelTransmissionGearRatiosSetComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=oneWheelGearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Primary ratio line -->
+                                    <TextBlock Text="Primary Ratio" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelPrimaryRatioTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- Final ratio line -->
+                                    <TextBlock Text="Final Ratio" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelFinalRatioTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- Gear shift time line -->
+                                    <TextBlock Text="Shift Time" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelGearShiftTimeTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="s" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Efficiency line -->
+                                    <TextBlock Text="Efficiency" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelTransmissionEfficiencyTextBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="%" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Torque bias selection line -->
+                                    <TextBlock Text="Torque Bias" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelTransmissionTorqueBiasTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="% front" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
                             <!-- Gear Ratios Docking Window -->
@@ -1919,7 +1990,7 @@
                                     <!-- Engine selection line -->
                                     <TextBlock Text="Engine" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelEngineCombobox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=oneWheelEngineListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Transmission selection line -->
                                     <TextBlock Text="Transmission" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelTransmissionCombobox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
@@ -1931,7 +2002,7 @@
                                     <!-- Suspension selection line -->
                                     <TextBlock Text="Suspension" Grid.Row="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelSuspensionCombobox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=oneWheelSuspensionListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=simplifiedSuspensionListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Brakes selection line -->
                                     <TextBlock Text="Brakes" Grid.Row="11" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelBrakesCombobox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"

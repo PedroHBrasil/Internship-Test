@@ -151,10 +151,12 @@
     <Compile Include="Classes\Vehicle\Transmission\GearRatio.cs" />
     <Compile Include="Classes\Vehicle\Suspension\SimplifiedSuspension.cs" />
     <Compile Include="Classes\Vehicle\Tire\Tire.cs" />
-    <Compile Include="Classes\Vehicle\Transmission\Transmission.cs" />
+    <Compile Include="Classes\Vehicle\Transmission\OneWheelTransmission.cs" />
     <Compile Include="Classes\Vehicle\Tire\TireModelMF52.cs" />
     <Compile Include="Classes\Vehicle\Tire\TireModelMF52Point.cs" />
     <Compile Include="Classes\Vehicle\Tire\TireModelMF52ViewModel.cs" />
+    <Compile Include="Classes\Vehicle\Transmission\Transmission.cs" />
+    <Compile Include="Classes\Vehicle\Transmission\TwoWheelTransmission.cs" />
     <Compile Include="Classes\Vehicle\TwoWheelCar.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

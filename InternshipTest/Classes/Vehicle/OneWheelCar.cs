@@ -41,7 +41,7 @@ namespace InternshipTest.Vehicle
         /// <summary>
         /// Car's transmission subsystem.
         /// </summary>
-        public Transmission Transmission { get; set; }
+        public OneWheelTransmission Transmission { get; set; }
         /// <summary>
         /// Car's aerodynamics subsystem.
         /// </summary>
@@ -92,7 +92,7 @@ namespace InternshipTest.Vehicle
         #region Constructors
         public OneWheelCar() { }
         public OneWheelCar(string carID, string setupID, string description, OneWheelInertia inertia, Tire tire,
-            Engine engine, Transmission transmission, OneWheelAerodynamics aerodynamics,
+            Engine engine, OneWheelTransmission transmission, OneWheelAerodynamics aerodynamics,
             SimplifiedSuspension suspension, OneWheelBrakes brakes)
         {
             ID = carID;

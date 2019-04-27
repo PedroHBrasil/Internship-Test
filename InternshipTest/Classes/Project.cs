@@ -20,7 +20,7 @@ namespace InternshipTest
         public List<Vehicle.SimplifiedSuspension> OneWheelSuspensions { get; set; }
         public List<Vehicle.OneWheelBrakes> OneWheelBrakes { get; set; }
         public List<Vehicle.Tire> OneWheelTires { get; set; }
-        public List<Vehicle.Transmission> OneWheelTransmissions { get; set; }
+        public List<Vehicle.OneWheelTransmission> OneWheelTransmissions { get; set; }
         public List<Vehicle.OneWheelAerodynamics> OneWheelAerodynamics { get; set; }
         public List<Vehicle.Engine> OneWheelEngines { get; set; }
         // Two Wheel Model Cars
@@ -39,7 +39,7 @@ namespace InternshipTest
         
         public Project(List<Vehicle.OneWheelCar> oneWheelCars, List<Vehicle.OneWheelInertia> oneWheelInertias,
             List<Vehicle.SimplifiedSuspension> oneWheelSuspensions, List<Vehicle.OneWheelBrakes> oneWheelBrakes,
-            List<Vehicle.Tire> oneWheelTires, List<Vehicle.Transmission> oneWheelTransmissions,
+            List<Vehicle.Tire> oneWheelTires, List<Vehicle.OneWheelTransmission> oneWheelTransmissions,
             List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics, List<Vehicle.Engine> oneWheelEngines,
             List<Path> tabularPaths, List<Simulation.GGVDiagram> ggvDiagrams,
             List<Simulation.LapTimeSimulation> lapTimeSimulations)
