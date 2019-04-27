@@ -16,7 +16,7 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Aerodynamic properties obtained via interpolation of the car's aerodynamic map.
         /// </summary>
-        private Vehicle.AerodynamicMapPoint interpolatedAerodynamicMapPoint;
+        private Vehicle.OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint;
         /// <summary>
         /// Vertical load at the tire [N].
         /// </summary>
@@ -42,7 +42,7 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Car and setup for which the GG diagram is generated.
         /// </summary>
-        public Vehicle.Car Car { get; set; }
+        public Vehicle.OneWheelCar Car { get; set; }
         /// <summary>
         /// Amount of points of the GG diagram.
         /// </summary>
@@ -67,7 +67,7 @@ namespace InternshipTest.Simulation
         #region Constructors
         public GGDiagram() { }
 
-        public GGDiagram(Vehicle.Car car)
+        public GGDiagram(Vehicle.OneWheelCar car)
         {
             Car = car;
             LongitudinalAccelerations = new List<double>();
@@ -75,7 +75,7 @@ namespace InternshipTest.Simulation
             Curvatures = new List<double>();
         }
 
-        public GGDiagram(double speed, Vehicle.Car car, int amountOfPoints, int amountOfDirections)
+        public GGDiagram(double speed, Vehicle.OneWheelCar car, int amountOfPoints, int amountOfDirections)
         {
             Speed = speed;
             Car = car;

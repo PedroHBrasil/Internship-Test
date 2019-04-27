@@ -96,18 +96,18 @@ namespace InternshipTest
             // Inertia
             oneWheelInertiaIDTextBox.Text = "inertia1";
             oneWheelTotalMassTextBox.Text = "300";
-            oneWheelUnsprungMassTextbox.Text = "50";
-            oneWheelRotPartsMITextbox.Text = "5";
-            oneWheelGravityAccelTextbox.Text = "9.81";
+            oneWheelUnsprungMassTextBox.Text = "50";
+            oneWheelRotPartsMITextBox.Text = "5";
+            oneWheelGravityAccelTextBox.Text = "9.81";
 
             // Suspension
-            oneWheelSuspensionIDTextBox.Text = "susp1";
-            oneWheelHeaveStiffnessTextBox.Text = "100";
-            oneWheelRideHeightTextbox.Text = "50";
+            suspensionIDTextBox.Text = "susp1";
+            heaveStiffnessTextBox.Text = "100";
+            rideHeightTextBox.Text = "50";
 
             // Brakes
-            oneWheelBrakesIDTextBox.Text = "brk1";
-            oneWheelBrakesMaxTorqueTextBox.Text = "2000";
+            brakesIDTextBox.Text = "brk1";
+            brakesMaxTorqueTextBox.Text = "2000";
 
             // Tire
             tireIDTextBox.Text = "tire1";
@@ -137,63 +137,63 @@ namespace InternshipTest
             tireModelDisplayDataAmountOfPointsTextBox.Text = "100";
 
             // Gear Ratios
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(2.75));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.938));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.556));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.348));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.208));
-            oneWheelGearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.095));
-            oneWheelGearRatiosSetIDTextBox.Text = "gearRatios1";
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(2.75));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.938));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.556));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.348));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.208));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.095));
+            gearRatiosSetIDTextBox.Text = "gearRatios1";
 
             // Transmission
-            oneWheelTransmissionIDTextBox.Text = "trans1";
-            oneWheelTransmissionTypeComboBox.Text = "2WD";
-            oneWheelPrimaryRatioTextBox.Text = "2.111";
-            oneWheelFinalRatioTextBox.Text = "3.7143";
-            oneWheelGearShiftTimeTextBox.Text = "0.2";
-            oneWheelTransmissionEfficiencyTextBox.Text = "87.5";
+            transmissionIDTextBox.Text = "trans1";
+            transmissionTypeComboBox.Text = "2WD";
+            primaryRatioTextBox.Text = "2.111";
+            finalRatioTextBox.Text = "3.7143";
+            gearShiftTimeTextBox.Text = "0.2";
+            transmissionEfficiencyTextBox.Text = "87.5";
 
             // Aerodynamic Map
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(40, 30, 1, -2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(40, 40, 1.1, -1.9));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(40, 50, 1.2, -1.8));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(70, 30, 1.1, -2.1));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(70, 40, 1.2, -2.2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(70, 50, 1.3, -2.3));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(100, 30, 1.1, -2.3));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(100, 40, 1, -2.2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.AerodynamicMapPoint(100, 50, 0.9, -2.1));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 30, 1, -2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 40, 1.1, -1.9));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 50, 1.2, -1.8));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(70, 30, 1.1, -2.1));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(70, 40, 1.2, -2.2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(70, 50, 1.3, -2.3));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(100, 30, 1.1, -2.3));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(100, 40, 1, -2.2));
+            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(100, 50, 0.9, -2.1));
             oneWheelAerodynamicMapIDTextBox.Text = "aeroMap1";
 
             // Aerodynamics
-            oneWheelAerodynamicsIDTextBox.Text = "aero1";
-            oneWheelFrontalAreaTextBox.Text = "1.2";
-            oneWheelAirDensityTextBox.Text = "1.3";
+            aerodynamicsIDTextBox.Text = "aero1";
+            frontalAreaTextBox.Text = "1.2";
+            airDensityTextBox.Text = "1.3";
 
             // Engine Curves
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3000, 55.77, 3.0, 390.45));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3500, 52.50, 3.5, 381.50));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4000, 54.71, 4.0, 381.80));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4500, 57.77, 4.5, 379.02));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5000, 70.67, 5.0, 367.21));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5500, 79.63, 5.5, 366.58));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6000, 83.18, 6.0, 361.44));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6500, 83.82, 6.5, 362.35));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7000, 83.86, 7.0, 364.99));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7500, 84.50, 7.5, 369.16));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8000, 82.56, 8.0, 372.97));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8500, 77.88, 8.5, 375.73));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9000, 72.16, 9.0, 378.86));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9500, 66.65, 9.5, 383.92));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10000, 61.16, 10.0, 391.00));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10500, 55.94, 10.5, 398.92));
-            oneWheelEngineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(11000, 50.23, 11.0, 407.68));
-            oneWheelEngineCurvesIDTextBox.Text = "engineCurves1";
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3000, 55.77, 3.0, 390.45));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3500, 52.50, 3.5, 381.50));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4000, 54.71, 4.0, 381.80));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4500, 57.77, 4.5, 379.02));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5000, 70.67, 5.0, 367.21));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5500, 79.63, 5.5, 366.58));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6000, 83.18, 6.0, 361.44));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6500, 83.82, 6.5, 362.35));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7000, 83.86, 7.0, 364.99));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7500, 84.50, 7.5, 369.16));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8000, 82.56, 8.0, 372.97));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8500, 77.88, 8.5, 375.73));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9000, 72.16, 9.0, 378.86));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9500, 66.65, 9.5, 383.92));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10000, 61.16, 10.0, 391.00));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10500, 55.94, 10.5, 398.92));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(11000, 50.23, 11.0, 407.68));
+            engineCurvesIDTextBox.Text = "engineCurves1";
 
             // Engine
-            oneWheelEngineIDTextBox.Text = "engine1";
-            oneWheelMaxThrottleTextBox.Text = "100";
-            oneWheelFuelDensityTextBox.Text = "870";
+            engineIDTextBox.Text = "engine1";
+            maxThrottleTextBox.Text = "100";
+            fuelDensityTextBox.Text = "870";
 
             // Car and setup fields
             oneWheelCarIDTextBox.Text = "car1";
@@ -328,7 +328,13 @@ namespace InternshipTest
         /// <param name="dockingManager"></param>
         private void _CollapseMainDockingManagerContent()
         {
+            aerodynamicsInputDockingManager.Visibility = Visibility.Collapsed;
+            brakesInputDockingManager.Visibility = Visibility.Collapsed;
+            engineInputDockingManager.Visibility = Visibility.Collapsed;
+            inertiaAndDimensionsInputDockingManager.Visibility = Visibility.Collapsed;
+            suspensionAndSteeringInputDockingManager.Visibility = Visibility.Collapsed;
             tireInputDockingManager.Visibility = Visibility.Collapsed;
+            transmissionInputDockingManager.Visibility = Visibility.Collapsed;
             oneWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
             twoWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
             fourWheelVehicleInputDockingManager.Visibility = Visibility.Collapsed;
@@ -379,13 +385,13 @@ namespace InternshipTest
             {
                 // Initializes the project object's lists
                 // One Wheel Model Cars
-                List<Vehicle.Car> oneWheelCars = new List<Vehicle.Car>();
-                List<Vehicle.Inertia> oneWheelInertias = new List<Vehicle.Inertia>();
+                List<Vehicle.OneWheelCar> oneWheelCars = new List<Vehicle.OneWheelCar>();
+                List<Vehicle.OneWheelInertia> oneWheelInertias = new List<Vehicle.OneWheelInertia>();
                 List<Vehicle.Suspension> oneWheelSuspensions = new List<Vehicle.Suspension>();
                 List<Vehicle.Brakes> oneWheelBrakes = new List<Vehicle.Brakes>();
                 List<Vehicle.Tire> oneWheelTires = new List<Vehicle.Tire>();
                 List<Vehicle.Transmission> oneWheelTransmissions = new List<Vehicle.Transmission>();
-                List<Vehicle.Aerodynamics> oneWheelAerodynamics = new List<Vehicle.Aerodynamics>();
+                List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics = new List<Vehicle.OneWheelAerodynamics>();
                 List<Vehicle.Engine> oneWheelEngines = new List<Vehicle.Engine>();
                 // Two Wheel Model Cars
                 // Four Wheel Model Cars
@@ -400,21 +406,21 @@ namespace InternshipTest
 
                 // Fills the lists with the UI elements
                 // One Wheel Model Cars
-                foreach (Vehicle.Car car in oneWheelCarAndSetupListBox.Items)
+                foreach (Vehicle.OneWheelCar car in oneWheelCarAndSetupListBox.Items)
                     oneWheelCars.Add(car);
-                foreach (Vehicle.Inertia inertia in oneWheelInertiaListBox.Items)
+                foreach (Vehicle.OneWheelInertia inertia in oneWheelInertiaListBox.Items)
                     oneWheelInertias.Add(inertia);
-                foreach (Vehicle.Suspension suspension in oneWheelSuspensionListBox.Items)
+                foreach (Vehicle.Suspension suspension in suspensionListBox.Items)
                     oneWheelSuspensions.Add(suspension);
-                foreach (Vehicle.Brakes brakes in oneWheelBrakesListBox.Items)
+                foreach (Vehicle.Brakes brakes in brakesListBox.Items)
                     oneWheelBrakes.Add(brakes);
                 foreach (Vehicle.Tire tires in tireListBox.Items)
                     oneWheelTires.Add(tires);
-                foreach (Vehicle.Transmission transmission in oneWheelTransmissionListBox.Items)
+                foreach (Vehicle.Transmission transmission in transmissionListBox.Items)
                     oneWheelTransmissions.Add(transmission);
-                foreach (Vehicle.Aerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
+                foreach (Vehicle.OneWheelAerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
                     oneWheelAerodynamics.Add(aerodynamics);
-                foreach (Vehicle.Engine engine in oneWheelEngineListBox.Items)
+                foreach (Vehicle.Engine engine in engineListBox.Items)
                     oneWheelEngines.Add(engine);
                 // Two Wheel Model Cars
                 // Four Wheel Model Cars
@@ -462,22 +468,22 @@ namespace InternshipTest
             // Clears the UI lists and loads the file's objects
             _ClearUILists();
             // One Wheel Model Cars
-            foreach (Vehicle.Car car in project.OneWheelCars)
+            foreach (Vehicle.OneWheelCar car in project.OneWheelCars)
                 oneWheelCarAndSetupListBox.Items.Add(car);
-            foreach (Vehicle.Inertia inertia in project.OneWheelInertias)
+            foreach (Vehicle.OneWheelInertia inertia in project.OneWheelInertias)
                 oneWheelInertiaListBox.Items.Add(inertia);
             foreach (Vehicle.Suspension suspension in project.OneWheelSuspensions)
-                oneWheelSuspensionListBox.Items.Add(suspension);
+                suspensionListBox.Items.Add(suspension);
             foreach (Vehicle.Brakes brakes in project.OneWheelBrakes)
-                oneWheelBrakesListBox.Items.Add(brakes);
+                brakesListBox.Items.Add(brakes);
             foreach (Vehicle.Tire tires in project.OneWheelTires)
                 tireListBox.Items.Add(tires);
             foreach (Vehicle.Transmission transmission in project.OneWheelTransmissions)
-                oneWheelTransmissionListBox.Items.Add(transmission);
-            foreach (Vehicle.Aerodynamics aerodynamics in project.OneWheelAerodynamics)
+                transmissionListBox.Items.Add(transmission);
+            foreach (Vehicle.OneWheelAerodynamics aerodynamics in project.OneWheelAerodynamics)
                 oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
             foreach (Vehicle.Engine engine in project.OneWheelEngines)
-                oneWheelEngineListBox.Items.Add(engine);
+                engineListBox.Items.Add(engine);
             // Two Wheel Model Cars
             // Four Wheel Model Cars
             // Tabular Paths
@@ -503,12 +509,12 @@ namespace InternshipTest
             // One Wheel Model Cars
             oneWheelCarAndSetupListBox.Items.Clear();
             oneWheelInertiaListBox.Items.Clear();
-            oneWheelSuspensionListBox.Items.Clear();
-            oneWheelBrakesListBox.Items.Clear();
+            suspensionListBox.Items.Clear();
+            brakesListBox.Items.Clear();
             tireListBox.Items.Clear();
-            oneWheelTransmissionListBox.Items.Clear();
+            transmissionListBox.Items.Clear();
             oneWheelAerodynamicsListBox.Items.Clear();
-            oneWheelEngineListBox.Items.Clear();
+            engineListBox.Items.Clear();
             // Two Wheel Model Cars
             // Four Wheel Model Cars
             // Tabular Paths
@@ -523,6 +529,62 @@ namespace InternshipTest
 
         #endregion
         #region Vehicle Button Options Methods
+
+        /// <summary>
+        /// Changes the work environment to the aerodynamics input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AerodynamicsButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            aerodynamicsInputDockingManager.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Changes the work environment to the brakes input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _BrakesButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            brakesInputDockingManager.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Changes the work environment to the engine input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _EngineButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            engineInputDockingManager.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Changes the work environment to the inertia model input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _InertiaButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            inertiaAndDimensionsInputDockingManager.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Changes the work environment to the suspension and steering input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SuspensionAndSteeringButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            suspensionAndSteeringInputDockingManager.Visibility = Visibility.Visible;
+        }
+
         /// <summary>
         /// Changes the work environment to the tire model input environment.
         /// </summary>
@@ -532,6 +594,17 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             tireInputDockingManager.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Changes the work environment to the transmission model input environment.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TransmissionButton_Click(object sender, RoutedEventArgs e)
+        {
+            _CollapseMainDockingManagerContent();
+            transmissionInputDockingManager.Visibility = Visibility.Visible;
         }
         /// <summary>
         /// Changes the work environment to the One Wheel vehicle model input environment.
@@ -645,8 +718,964 @@ namespace InternshipTest
 
         #region Vehicle Input Methods
 
-        #region Tires
+        #region Aerodynamics
+        #region Aerodynamics
 
+        /// <summary>
+        /// Creates an aerodynamics object and adds it to the aerodynamics listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddAerodynamicsToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+            {
+                case "One Wheel":
+                    _AddOneWheelAerodynamicsToListBox();
+                    break;
+                case "Two Wheel":
+                    _AddTwoWheelAerodynamicsToListBox();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Deletes an aerodynamics from the aerodynamics listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteAerodynamicsOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+            {
+                case "One Wheel":
+                    _DeleteOneWheelAerodynamicsOfListBox();
+                    break;
+                case "Two Wheel":
+                    _DeleteTwoWheelAerodynamicsOfListBox();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Updates the aerodynamic maps combobox items an displays changes the aerodynamics listbox to match the selection in the vehicle model selction combobox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AerodynamicsVehicleModelComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+            {
+                case "One Wheel":
+                    _CollapseAerodynamicListBoxes();
+                    oneWheelAerodynamicsListBox.Visibility = Visibility.Visible;
+                    aerodynamicMapComboBox.ItemsSource = oneWheelAerodynamicMapsListBox.Items;
+                    break;
+                case "Two Wheel":
+                    _CollapseAerodynamicListBoxes();
+                    twoWheelAerodynamicsListBox.Visibility = Visibility.Visible;
+                    aerodynamicMapComboBox.ItemsSource = twoWheelAerodynamicMapsListBox.Items;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Collapses the aerodynamics listboxes.
+        /// </summary>
+        private void _CollapseAerodynamicListBoxes()
+        {
+            oneWheelAerodynamicsListBox.Visibility = Visibility.Collapsed;
+            twoWheelAerodynamicsListBox.Visibility = Visibility.Collapsed;
+        }
+
+        #region One Wheel Model
+        /// <summary>
+        /// Creates an aerodynamics object and adds it to the one wheel model aerodynamics listbox.
+        /// </summary>
+        private void _AddOneWheelAerodynamicsToListBox()
+        {
+            if (aerodynamicsIDTextBox.Text != "" &&
+                aerodynamicMapComboBox.SelectedItem != null)
+            {
+                // Gets the object's data
+                string aerodynamicID = aerodynamicsIDTextBox.Text;
+                string description = aerodynamicsDescriptionTextBox.Text;
+                Vehicle.OneWheelAerodynamicMap aerodynamicMap = aerodynamicMapComboBox.SelectedItem as Vehicle.OneWheelAerodynamicMap;
+                double frontalArea = double.Parse(frontalAreaTextBox.Text);
+                double airDensity = double.Parse(airDensityTextBox.Text);
+                // Initializes a new object
+                Vehicle.OneWheelAerodynamics aerodynamics = new Vehicle.OneWheelAerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
+                aerodynamics.GetAerodynamicMapParameters();
+                // Adds the object to the listbox and the combobox
+                oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Aerodynamics. \n " +
+                "   It should have an ID. \n" +
+                "   An aerodynamic map must be selected.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an aerodynamics from the one wheel model aerodynamics listbox.
+        /// </summary>
+        private void _DeleteOneWheelAerodynamicsOfListBox()
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelAerodynamicsListBox.Items.RemoveAt(oneWheelAerodynamicsListBox.Items.IndexOf(oneWheelAerodynamicsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model aerodynamics listbox's aerodynamics and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAerodynamicsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsListBox.SelectedItem as Vehicle.OneWheelAerodynamics;
+                // Writes the properties in the UI
+                aerodynamicsIDTextBox.Text = aerodynamics.ID;
+                aerodynamicsDescriptionTextBox.Text = aerodynamics.Description;
+                aerodynamicMapComboBox.Text = aerodynamics.AerodynamicMap.ToString();
+                frontalAreaTextBox.Text = aerodynamics.FrontalArea.ToString("F3");
+                airDensityTextBox.Text = aerodynamics.AirDensity.ToString("F3");
+            }
+        }
+        #endregion
+
+        #region Two Wheel Model
+        /// <summary>
+        /// Creates an aerodynamics object and adds it to the two wheel model aerodynamics listbox.
+        /// </summary>
+        private void _AddTwoWheelAerodynamicsToListBox()
+        {
+            if (aerodynamicsIDTextBox.Text != "" &&
+                aerodynamicMapComboBox.SelectedItem != null)
+            {
+                // Gets the object's data
+                string aerodynamicID = aerodynamicsIDTextBox.Text;
+                string description = aerodynamicsDescriptionTextBox.Text;
+                Vehicle.TwoWheelAerodynamicMap aerodynamicMap = aerodynamicMapComboBox.SelectedItem as Vehicle.TwoWheelAerodynamicMap;
+                double frontalArea = double.Parse(frontalAreaTextBox.Text);
+                double airDensity = double.Parse(airDensityTextBox.Text);
+                // Initializes a new object
+                Vehicle.TwoWheelAerodynamics aerodynamics = new Vehicle.TwoWheelAerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
+                aerodynamics.GetAerodynamicMapParameters();
+                // Adds the object to the listbox and the combobox
+                twoWheelAerodynamicsListBox.Items.Add(aerodynamics);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Aerodynamics. \n " +
+                "   It should have an ID. \n" +
+                "   An aerodynamic map must be selected.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an aerodynamics from the two wheel model aerodynamics listbox.
+        /// </summary>
+        private void _DeleteTwoWheelAerodynamicsOfListBox()
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelAerodynamicsListBox.SelectedItems.Count == 1)
+            {
+                twoWheelAerodynamicsListBox.Items.RemoveAt(twoWheelAerodynamicsListBox.Items.IndexOf(twoWheelAerodynamicsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the two wheel model aerodynamics listbox's aerodynamics and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAerodynamicsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (twoWheelAerodynamicsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TwoWheelAerodynamics aerodynamics = twoWheelAerodynamicsListBox.SelectedItem as Vehicle.TwoWheelAerodynamics;
+                // Writes the properties in the UI
+                aerodynamicsIDTextBox.Text = aerodynamics.ID;
+                aerodynamicsDescriptionTextBox.Text = aerodynamics.Description;
+                aerodynamicMapComboBox.Text = aerodynamics.AerodynamicMap.ToString();
+                frontalAreaTextBox.Text = aerodynamics.FrontalArea.ToString("F3");
+                airDensityTextBox.Text = aerodynamics.AirDensity.ToString("F3");
+            }
+        }
+
+        #endregion
+        #endregion
+        #region Aerodynamic Map
+
+        #region One Wheel Model
+        /// <summary>
+        /// Creates an aerodynamic map object and adds it to the one wheel model aerodynamic maps listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddOneWheelAerodynamicMapToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelAerodynamicMapIDTextBox.Text != "" &&
+                oneWheelAerodynamicMapPointsListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string mapID = oneWheelAerodynamicMapIDTextBox.Text;
+                string description = oneWheelAerodynamicMapDescriptionTextBox.Text;
+                List<Vehicle.OneWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheelAerodynamicMapPoint>();
+                foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
+                {
+                    Vehicle.OneWheelAerodynamicMapPoint aerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.OneWheelAerodynamicMapPoint;
+                    aerodynamicMapPoints.Add(aerodynamicMapPoint);
+                }
+                // Initializes a new object
+                Vehicle.OneWheelAerodynamicMap aerodynamicMap = new Vehicle.OneWheelAerodynamicMap(mapID, description, aerodynamicMapPoints);
+                // Adds the object to the listbox and the combobox
+                oneWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Aerodynamic Map. \n " +
+                "   It should have an ID. \n" +
+                "   The aerodynamic map points list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an aerodynamic map from the one wheel model aerodynamic maps listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteOneWheelAerodynamicMapOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelAerodynamicMapsListBox.Items.RemoveAt(oneWheelAerodynamicMapsListBox.Items.IndexOf(oneWheelAerodynamicMapsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model aerodynamic maps listbox's aerodynamic map and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelAerodynamicMapsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheelAerodynamicMap aerodynamicMap = oneWheelAerodynamicMapsListBox.SelectedItem as Vehicle.OneWheelAerodynamicMap;
+                // Writes the properties in the UI
+                oneWheelAerodynamicMapIDTextBox.Text = aerodynamicMap.ID;
+                oneWheelAerodynamicMapDescriptionTextBox.Text = aerodynamicMap.Description;
+                // Clears and writes the list in the UI
+                oneWheelAerodynamicMapPointsListBox.Items.Clear();
+                foreach (Vehicle.OneWheelAerodynamicMapPoint aerodynamicMapPoint in aerodynamicMap.MapPoints)
+                {
+                    oneWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates an aerodynamic map point object and adds it to the one wheel model aerodynamic map points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddOneWheelAerodynamicMapPointToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Gets the object's properties values
+            double speed = double.Parse(newOneWheelAerodynamicMapPointSpeedTextBox.Text);
+            double rideHeight = double.Parse(newOneWheelAerodynamicMapPointRideHeightTextBox.Text);
+            double dragCoefficient = double.Parse(newOneWheelAerodynamicMapPointDragCoefficientTextBox.Text);
+            double liftCoefficient = double.Parse(newOneWheelAerodynamicMapPointLiftCoefficientTextBox.Text);
+            // Initializes a new object
+            Vehicle.OneWheelAerodynamicMapPoint aerodynamicMapPoint = new Vehicle.OneWheelAerodynamicMapPoint(speed, rideHeight, dragCoefficient, liftCoefficient);
+            // Adds the object to the listbox and the combobox
+            oneWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
+            // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
+            List<Vehicle.OneWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheelAerodynamicMapPoint>();
+            foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
+            {
+                Vehicle.OneWheelAerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.OneWheelAerodynamicMapPoint;
+                aerodynamicMapPoints.Add(currentAerodynamicMapPoint);
+            }
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentAerodynamicMapPoint => currentAerodynamicMapPoint.RideHeight).ToList();
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentAerodynamicMapPoint => currentAerodynamicMapPoint.WindRelativeSpeed).ToList();
+            oneWheelAerodynamicMapPointsListBox.Items.Clear();
+            foreach (Vehicle.OneWheelAerodynamicMapPoint currentAerodynamicMapPoint in aerodynamicMapPoints)
+            {
+                oneWheelAerodynamicMapPointsListBox.Items.Add(currentAerodynamicMapPoint);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a aerodynamic map point from the one wheel model aerodynamic map points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteOneWheelAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelAerodynamicMapPointsListBox.SelectedItems.Count == 1)
+            {
+                oneWheelAerodynamicMapPointsListBox.Items.RemoveAt(oneWheelAerodynamicMapPointsListBox.Items.IndexOf(oneWheelAerodynamicMapPointsListBox.SelectedItem));
+            }
+        }
+        #endregion
+
+        #region Two Wheel Model
+        /// <summary>
+        /// Creates an aerodynamic map object and adds it to the two wheel model aerodynamic maps listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAddAerodynamicMapToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (twoWheelAerodynamicMapIDTextBox.Text != "" &&
+                twoWheelAerodynamicMapPointsListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string mapID = twoWheelAerodynamicMapIDTextBox.Text;
+                string description = twoWheelAerodynamicMapDescriptionTextBox.Text;
+                List<Vehicle.TwoWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.TwoWheelAerodynamicMapPoint>();
+                foreach (var aerodynamicMapPointItem in twoWheelAerodynamicMapPointsListBox.Items)
+                {
+                    Vehicle.TwoWheelAerodynamicMapPoint aerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.TwoWheelAerodynamicMapPoint;
+                    aerodynamicMapPoints.Add(aerodynamicMapPoint);
+                }
+                // Initializes a new object
+                Vehicle.TwoWheelAerodynamicMap aerodynamicMap = new Vehicle.TwoWheelAerodynamicMap(mapID, description, aerodynamicMapPoints);
+                // Adds the object to the listbox and the combobox
+                twoWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Aerodynamic Map. \n " +
+                "   It should have an ID. \n" +
+                "   The aerodynamic map points list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an aerodynamic map from the two wheel model aerodynamic maps listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelDeleteAerodynamicMapOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
+            {
+                twoWheelAerodynamicMapsListBox.Items.RemoveAt(twoWheelAerodynamicMapsListBox.Items.IndexOf(twoWheelAerodynamicMapsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the two wheel model aerodynamic maps listbox's aerodynamic map and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAerodynamicMapsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (twoWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TwoWheelAerodynamicMap aerodynamicMap = twoWheelAerodynamicMapsListBox.SelectedItem as Vehicle.TwoWheelAerodynamicMap;
+                // Writes the properties in the UI
+                twoWheelAerodynamicMapIDTextBox.Text = aerodynamicMap.ID;
+                twoWheelAerodynamicMapDescriptionTextBox.Text = aerodynamicMap.Description;
+                // Clears and writes the list in the UI
+                twoWheelAerodynamicMapPointsListBox.Items.Clear();
+                foreach (Vehicle.TwoWheelAerodynamicMapPoint aerodynamicMapPoint in aerodynamicMap.MapPoints)
+                {
+                    twoWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates an aerodynamic map point object and adds it to the two wheel model aerodynamic map points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAddAerodynamicMapPointToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Gets the object's properties values
+            double speed = double.Parse(newTwoWheelAerodynamicMapPointSpeedTextBox.Text);
+            double frontRideHeight = double.Parse(newTwoWheelAerodynamicMapPointFrontRideHeightTextBox.Text);
+            double rearRideHeight = double.Parse(newTwoWheelAerodynamicMapPointRearRideHeightTextBox.Text);
+            double carSlipAngle = double.Parse(newTwoWheelAerodynamicMapPointCarSlipAngleTextBox.Text);
+            double dragCoefficient = double.Parse(newTwoWheelAerodynamicMapPointDragCoefficientTextBox.Text);
+            double sideForceCoefficient = double.Parse(newTwoWheelAerodynamicMapPointSideForceCoefficientTextBox.Text);
+            double liftCoefficient = double.Parse(newTwoWheelAerodynamicMapPointLiftCoefficientTextBox.Text);
+            double pitchMomentCoefficient = double.Parse(newTwoWheelAerodynamicMapPointPitchMomentCoefficientTextBox.Text);
+            double yawMomentCoefficient = double.Parse(newTwoWheelAerodynamicMapPointYawMomentCoefficientTextBox.Text);
+            // Initializes a new object
+            Vehicle.TwoWheelAerodynamicMapPoint aerodynamicMapPoint = new Vehicle.TwoWheelAerodynamicMapPoint(speed, frontRideHeight, rearRideHeight, carSlipAngle, dragCoefficient, sideForceCoefficient, liftCoefficient, pitchMomentCoefficient, yawMomentCoefficient);
+            // Adds the object to the listbox and the combobox
+            twoWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
+            // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
+            List<Vehicle.TwoWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.TwoWheelAerodynamicMapPoint>();
+            foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
+            {
+                Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.TwoWheelAerodynamicMapPoint;
+                aerodynamicMapPoints.Add(currentAerodynamicMapPoint);
+            }
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentAerodynamicMapPoint => currentAerodynamicMapPoint.CarSlipAngle).ToList();
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentAerodynamicMapPoint => currentAerodynamicMapPoint.RearRideHeight).ToList();
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentAerodynamicMapPoint => currentAerodynamicMapPoint.FrontRideHeight).ToList();
+            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentAerodynamicMapPoint => currentAerodynamicMapPoint.WindRelativeSpeed).ToList();
+            twoWheelAerodynamicMapPointsListBox.Items.Clear();
+            foreach (Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicMapPoint in aerodynamicMapPoints)
+            {
+                twoWheelAerodynamicMapPointsListBox.Items.Add(currentAerodynamicMapPoint);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a aerodynamic map point from the two wheel model aerodynamic map points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelDeleteAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelAerodynamicMapPointsListBox.SelectedItems.Count == 1)
+            {
+                twoWheelAerodynamicMapPointsListBox.Items.RemoveAt(twoWheelAerodynamicMapPointsListBox.Items.IndexOf(twoWheelAerodynamicMapPointsListBox.SelectedItem));
+            }
+        }
+        #endregion
+        #endregion
+        #endregion
+
+        #region Brakes
+
+        /// <summary>
+        /// Creates a one wheel model brakes object and adds it to the one wheel model brakes listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddBrakesToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (brakesIDTextBox.Text != "" &&
+                double.Parse(brakesMaxTorqueTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string brakesID = brakesIDTextBox.Text;
+                string description = oneWheelBrakesDescriptionTextBox.Text;
+                double maxTorque = double.Parse(brakesMaxTorqueTextBox.Text);
+                // Initializes a new object
+                Vehicle.Brakes brakes = new Vehicle.Brakes(brakesID, description, maxTorque);
+                // Adds the object to the listbox and the combobox
+                brakesListBox.Items.Add(brakes);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Brakes. \n " +
+                "   It should have an ID. \n" +
+                "   The maximum torque can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a one wheel model brakes from the one wheel model brakes listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteBrakesOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (brakesListBox.SelectedItems.Count == 1)
+            {
+                brakesListBox.Items.RemoveAt(brakesListBox.Items.IndexOf(brakesListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model brakes and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _BrakesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (brakesListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.Brakes brakes = brakesListBox.SelectedItem as Vehicle.Brakes;
+                // Writes the properties in the UI
+                brakesIDTextBox.Text = brakes.ID;
+                oneWheelBrakesDescriptionTextBox.Text = brakes.Description;
+                brakesMaxTorqueTextBox.Text = brakes.MaxTorque.ToString("F3");
+            }
+        }
+
+        #endregion
+
+        #region Engine
+        #region Engine
+
+        /// <summary>
+        /// Creates an engine object and adds it to the one wheel model engines listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddEngineToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (engineIDTextBox.Text != "" &&
+                engineCurvesComboBox.SelectedItem != null &&
+                double.Parse(maxThrottleTextBox.Text) != 0 &&
+                double.Parse(fuelDensityTextBox.Text) != 0)
+            {
+                // Gets the object's data
+                string engineID = engineIDTextBox.Text;
+                string description = engineDescriptionTextBox.Text;
+                Vehicle.EngineCurves engineCurves = engineCurvesComboBox.SelectedItem as Vehicle.EngineCurves;
+                double maxThrottle = double.Parse(maxThrottleTextBox.Text) / 100;
+                double fuelDensity = double.Parse(fuelDensityTextBox.Text);
+                // Initializes a new object
+                Vehicle.Engine engine = new Vehicle.Engine(engineID, description, engineCurves, maxThrottle, fuelDensity);
+                // Adds the object to the listbox and the combobox
+                engineListBox.Items.Add(engine);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Engine. \n " +
+                "   It should have an ID. \n" +
+                "   An engine curves set must be selected. \n" +
+                "   The maximum throttle can't be zero. \n" +
+                "   The fuel density can't be zero.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an engine from the one wheel model engines listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteEngineOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (engineListBox.SelectedItems.Count == 1)
+            {
+                engineListBox.Items.RemoveAt(engineListBox.Items.IndexOf(engineListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model engines listbox's engine and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _EngineListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (engineListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.Engine engine = engineListBox.SelectedItem as Vehicle.Engine;
+                // Writes the properties in the UI
+                engineIDTextBox.Text = engine.ID;
+                engineDescriptionTextBox.Text = engine.Description;
+                engineCurvesComboBox.Text = engine.EngineCurves.ToString();
+                maxThrottleTextBox.Text = (engine.MaxThrottle * 100).ToString("F3");
+                fuelDensityTextBox.Text = engine.FuelDensity.ToString("F3");
+            }
+        }
+
+        #endregion
+        #region Engine Curves
+
+        /// <summary>
+        /// Creates an engine curves object and adds it to the one wheel model engine curves listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddEngineCurvesToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (engineCurvesIDTextBox.Text != "" &&
+                engineCurvesPointsListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string curvesID = engineCurvesIDTextBox.Text;
+                string description = engineCurvesDescriptionTextBox.Text;
+                List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
+                foreach (var engineCurvesPointItem in engineCurvesPointsListBox.Items)
+                {
+                    Vehicle.EngineCurvesPoint engineCurvesPoint = engineCurvesPointItem as Vehicle.EngineCurvesPoint;
+                    engineCurvesPoints.Add(engineCurvesPoint);
+                }
+                // Initializes a new object
+                Vehicle.EngineCurves engineCurves = new Vehicle.EngineCurves(curvesID, description, engineCurvesPoints);
+                // Adds the object to the listbox and the combobox
+                engineCurvesListBox.Items.Add(engineCurves);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Engine Curves. \n " +
+                "   It should have an ID. \n" +
+                "   The engines curves points list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an engine curves from the one wheel model engine curves listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteEngineCurvesOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (engineCurvesListBox.SelectedItems.Count == 1)
+            {
+                engineCurvesListBox.Items.RemoveAt(engineCurvesListBox.Items.IndexOf(engineCurvesListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model engine curves listbox's engine curves and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _EngineCurvesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (engineCurvesListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.EngineCurves engineCurves = engineCurvesListBox.SelectedItem as Vehicle.EngineCurves;
+                // Writes the properties in the UI
+                engineCurvesIDTextBox.Text = engineCurves.ID;
+                engineCurvesDescriptionTextBox.Text = engineCurves.Description;
+                // Clears and writes the list in the UI
+                engineCurvesPointsListBox.Items.Clear();
+                foreach (Vehicle.EngineCurvesPoint engineCurvesPoint in engineCurves.CurvesPoints)
+                {
+                    gearRatiosListBox.Items.Add(engineCurvesPoint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates an engine curves point object and adds it to the one wheel model engine curves points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddEngineCurvesPointToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (double.Parse(newEngineCurvesPointTorqueTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                double rpm = double.Parse(newEngineCurvesPointRPMTextBox.Text);
+                if (rpm < 0) rpm = -rpm;
+                double torque = double.Parse(newEngineCurvesPointTorqueTextBox.Text);
+                double brakingTorque = double.Parse(newEngineCurvesPointBrakingTorqueTextBox.Text);
+                double specFuelCons = double.Parse(newEngineCurvesPointSpecFuelConsTextBox.Text);
+                // Initializes a new object
+                Vehicle.EngineCurvesPoint engineCurvesPoint = new Vehicle.EngineCurvesPoint(rpm, torque, brakingTorque, specFuelCons);
+                // Adds the object to the listbox and the combobox
+                engineCurvesPointsListBox.Items.Add(engineCurvesPoint);
+                // Reorders the engine curves points listbox items in ascending order of rpm
+                List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
+                foreach (var engineCurvesPointItem in engineCurvesPointsListBox.Items)
+                {
+                    Vehicle.EngineCurvesPoint currentEngineCurvesPoint = engineCurvesPointItem as Vehicle.EngineCurvesPoint;
+                    engineCurvesPoints.Add(currentEngineCurvesPoint);
+                }
+                engineCurvesPoints = engineCurvesPoints.OrderBy(currentCurvePoint => currentCurvePoint.RotationalSpeed).ToList();
+                engineCurvesPointsListBox.Items.Clear();
+                foreach (Vehicle.EngineCurvesPoint currentEngineCurvesPoint in engineCurvesPoints)
+                {
+                    engineCurvesPointsListBox.Items.Add(currentEngineCurvesPoint);
+                }
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Engine Curves Point. \n " +
+                "   The torque can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes an engine curves points from the one wheel model engine curves points listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteEngineCurvesPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (engineCurvesPointsListBox.SelectedItems.Count == 1)
+            {
+                engineCurvesPointsListBox.Items.RemoveAt(engineCurvesPointsListBox.Items.IndexOf(engineCurvesPointsListBox.SelectedItem));
+            }
+        }
+
+        #endregion
+        #endregion
+
+        #region Inertia And Dimensions
+
+        #region One Wheel Inertia
+        /// <summary>
+        /// Creates a one wheel model inertia object and adds it to the one wheel model inertia listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddOneWheelInertiaToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (oneWheelInertiaIDTextBox.Text != "" &&
+                double.Parse(oneWheelTotalMassTextBox.Text) != 0 &&
+                double.Parse(oneWheelGravityAccelTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string inertiaID = oneWheelInertiaIDTextBox.Text;
+                string description = oneWheelInertiaDescriptionTextBox.Text;
+                double totalMass = double.Parse(oneWheelTotalMassTextBox.Text);
+                double unsprungMass = double.Parse(oneWheelUnsprungMassTextBox.Text);
+                double rotPartsMI = double.Parse(oneWheelRotPartsMITextBox.Text);
+                double gravity = double.Parse(oneWheelGravityAccelTextBox.Text);
+                // Initializes a new object
+                Vehicle.OneWheelInertia inertia = new Vehicle.OneWheelInertia(inertiaID, description, totalMass, unsprungMass, rotPartsMI, gravity);
+                // Adds the object to the listbox
+                oneWheelInertiaListBox.Items.Add(inertia);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Inertia. \n" +
+                "   It should have an ID. \n" +
+                "   The total mass can't be zero. \n" +
+                "   Gravity can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a one wheel model inertia from the one wheel model inertia listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteOneWheelInertiaOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (oneWheelInertiaListBox.SelectedItems.Count == 1)
+            {
+                oneWheelInertiaListBox.Items.RemoveAt(oneWheelInertiaListBox.Items.IndexOf(oneWheelInertiaListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model inertia and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelInertiaListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (oneWheelInertiaListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.OneWheelInertia inertia = oneWheelInertiaListBox.SelectedItem as Vehicle.OneWheelInertia;
+                // Writes the properties in the UI
+                oneWheelInertiaIDTextBox.Text = inertia.ID;
+                oneWheelInertiaDescriptionTextBox.Text = inertia.Description;
+                oneWheelTotalMassTextBox.Text = inertia.TotalMass.ToString("F3");
+                oneWheelUnsprungMassTextBox.Text = inertia.UnsprungMass.ToString("F3");
+                oneWheelRotPartsMITextBox.Text = inertia.RotPartsMI.ToString("F3");
+                oneWheelGravityAccelTextBox.Text = inertia.Gravity.ToString("F3");
+            }
+        }
+        #endregion
+
+        #region Two Wheel Inertia And Dimensions
+        /// <summary>
+        /// Creates a two wheel model inertia and dimensions object and adds it to the two wheel model inertia and dimensions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddTwoWheelInertiaAndDimensionsToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (twoWheelInertiaAndDimensionsIDTextBox.Text != "" &&
+                double.Parse(twoWheelTotalMassDistributionTextBox.Text) > 0 &&
+                double.Parse(twoWheelTotalMassDistributionTextBox.Text) < 100 &&
+                double.Parse(twoWheelTotalMassTextBox.Text) != 0 &&
+                double.Parse(twoWheelWheelbaseTextBox.Text) != 0 &&
+                double.Parse(twoWheelGravityAccelTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string inertiaID = twoWheelInertiaAndDimensionsIDTextBox.Text;
+                string description = twoWheelInertiaAndDimensionsDescriptionTextBox.Text;
+                double totalMass = double.Parse(twoWheelTotalMassTextBox.Text);
+                double totalMassDistribution = double.Parse(twoWheelTotalMassDistributionTextBox.Text) / 100;
+                double totalMassCGHeight = double.Parse(twoWheelTotalMassCGHeightTextBox.Text) / 1000;
+                double frontUnsprungMass = double.Parse(twoWheelFrontUnsprungMassTextBox.Text);
+                double frontUnsprungMassCGHeight = double.Parse(twoWheelFrontUnsprungMassCGHeightTextBox.Text) / 1000;
+                double rearUnsprungMass = double.Parse(twoWheelRearUnsprungMassTextBox.Text);
+                double rearUnsprungMassCGHeight = double.Parse(twoWheelRearUnsprungMassCGHeightTextBox.Text) / 1000;
+                double wheelbase = double.Parse(twoWheelWheelbaseTextBox.Text);
+                double rotPartsMI = double.Parse(twoWheelRotPartsMITextBox.Text);
+                double gravity = double.Parse(twoWheelGravityAccelTextBox.Text);
+                // Initializes a new object
+                Vehicle.TwoWheelInertiaAndDimensions inertiaAndDimensions = new Vehicle.TwoWheelInertiaAndDimensions(inertiaID, description, totalMass, totalMassDistribution, totalMassCGHeight, frontUnsprungMass, frontUnsprungMassCGHeight, rearUnsprungMass, rearUnsprungMassCGHeight, wheelbase, rotPartsMI, gravity);
+                // Adds the object to the listbox
+                twoWheelInertiaAndDimensionsListBox.Items.Add(inertiaAndDimensions);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Inertia. \n" +
+                "   It should have an ID. \n" +
+                "   The total mass can't be zero. \n" +
+                "   The total mass distribution must be between 0% and 100%. \n" +
+                "   The wheelbase can't be zero. \n" +
+                "   Gravity can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a two wheel model inertia and dimensions from the two wheel model inertia and dimensions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteTwoWheelInertiaAndDimensionsOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelInertiaAndDimensionsListBox.SelectedItems.Count == 1)
+            {
+                twoWheelInertiaAndDimensionsListBox.Items.RemoveAt(twoWheelInertiaAndDimensionsListBox.Items.IndexOf(twoWheelInertiaAndDimensionsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's two wheel model inertia and dimensions and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelInertiaAndDimensionsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (twoWheelInertiaAndDimensionsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TwoWheelInertiaAndDimensions inertiaAndDimensions = twoWheelInertiaAndDimensionsListBox.SelectedItem as Vehicle.TwoWheelInertiaAndDimensions;
+                // Writes the properties in the UI
+                twoWheelInertiaAndDimensionsIDTextBox.Text = inertiaAndDimensions.ID;
+                twoWheelInertiaAndDimensionsDescriptionTextBox.Text = inertiaAndDimensions.Description;
+                twoWheelTotalMassTextBox.Text = inertiaAndDimensions.TotalMass.ToString("F3");
+                twoWheelTotalMassDistributionTextBox.Text = (inertiaAndDimensions.TotalMassDistribution * 100).ToString("F3");
+                twoWheelTotalMassCGHeightTextBox.Text = (inertiaAndDimensions.TotalMassCGHeight * 1000).ToString("F3");
+                twoWheelFrontUnsprungMassTextBox.Text = inertiaAndDimensions.FrontUnsprungMass.ToString("F3");
+                twoWheelFrontUnsprungMassCGHeightTextBox.Text = (inertiaAndDimensions.FrontUnsprungMassCGHeight * 1000).ToString("F3");
+                twoWheelRearUnsprungMassTextBox.Text = inertiaAndDimensions.RearUnsprungMass.ToString("F3");
+                twoWheelRearUnsprungMassCGHeightTextBox.Text = (inertiaAndDimensions.RearUnsprungMassCGHeight * 1000).ToString("F3");
+                twoWheelWheelbaseTextBox.Text = (inertiaAndDimensions.Wheelbase * 1000).ToString("F3");
+                twoWheelRotPartsMITextBox.Text = inertiaAndDimensions.RotPartsMI.ToString("F3");
+                twoWheelGravityAccelTextBox.Text = inertiaAndDimensions.Gravity.ToString("F3");
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Suspension
+
+        /// <summary>
+        /// Creates a one wheel model suspension object and adds it to the one wheel model suspension listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddSuspensionToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (suspensionIDTextBox.Text != "" &&
+                double.Parse(heaveStiffnessTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string suspensionID = suspensionIDTextBox.Text;
+                string description = suspensionDescriptionTextBox.Text;
+                double heaveStiffness = double.Parse(heaveStiffnessTextBox.Text) * 1000;
+                double rideHeight = double.Parse(rideHeightTextBox.Text) / 1000;
+                // Initializes a new object
+                Vehicle.Suspension suspension = new Vehicle.Suspension(suspensionID, description, heaveStiffness, rideHeight);
+                // Adds the object to the listbox
+                suspensionListBox.Items.Add(suspension);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Suspension. \n " +
+                "   It should have an ID. \n" +
+                "   The heave stiffness can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a one wheel model suspension from the one wheel model suspension listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteSuspensionOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (suspensionListBox.SelectedItems.Count == 1)
+            {
+                suspensionListBox.Items.RemoveAt(suspensionListBox.Items.IndexOf(suspensionListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's one wheel model suspension and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SuspensionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (suspensionListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.Suspension suspension = suspensionListBox.SelectedItem as Vehicle.Suspension;
+                // Writes the properties in the UI
+                suspensionIDTextBox.Text = suspension.ID;
+                suspensionDescriptionTextBox.Text = suspension.Description;
+                heaveStiffnessTextBox.Text = (suspension.HeaveStiffness / 1000).ToString("F3");
+                rideHeightTextBox.Text = (suspension.RideHeight * 1000).ToString("F3");
+            }
+        }
+
+        #endregion
+
+        #region Tires
         #region Tire
 
         /// <summary>
@@ -713,7 +1742,6 @@ namespace InternshipTest
         }
 
         #endregion
-
         #region Tire Model
 
         /// <summary>
@@ -983,6 +2011,9 @@ namespace InternshipTest
             _UpdateCurrentTireModelDisplayChart();
         }
 
+        /// <summary>
+        /// Updates the current tab's tire model display chart.
+        /// </summary>
         private void _UpdateCurrentTireModelDisplayChart()
         {
             // Checks if all of the information needed to generate the chart is ok.
@@ -1121,7 +2152,213 @@ namespace InternshipTest
 
         #endregion
         #endregion
+        #endregion
 
+        #region Transmission
+        #region Transmission
+
+        /// <summary>
+        /// Creates a transmission object and adds it to the one wheel model transmissions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (transmissionIDTextBox.Text != "" &&
+                transmissionGearRatiosSetComboBox.SelectedItem != null)
+            {
+                // Gets the object's data
+                string transmissionID = transmissionIDTextBox.Text;
+                string description = transmissionDescriptionTextBox.Text;
+                string transmissionType = transmissionTypeComboBox.Text;
+                int amountOfDrivenWheels = 2;
+                if (transmissionType == "4WD") amountOfDrivenWheels = 4;
+                Vehicle.GearRatiosSet gearRatiosSet = transmissionGearRatiosSetComboBox.SelectedItem as Vehicle.GearRatiosSet;
+                double primaryRatio = double.Parse(primaryRatioTextBox.Text);
+                double finalRatio = double.Parse(finalRatioTextBox.Text);
+                double gearShiftTime = double.Parse(gearShiftTimeTextBox.Text);
+                double efficiency = double.Parse(transmissionEfficiencyTextBox.Text) / 100;
+                // Initializes a new object
+                Vehicle.Transmission transmission = new Vehicle.Transmission(
+                    transmissionID, description, amountOfDrivenWheels, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
+                // Adds the object to the listbox and the combobox
+                transmissionListBox.Items.Add(transmission);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Transmission. \n " +
+                "   It should have an ID. \n" +
+                "   A gear ratios set must be selected.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a transmission from the one wheel model transmissions listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (transmissionListBox.SelectedItems.Count == 1)
+            {
+                transmissionListBox.Items.RemoveAt(transmissionListBox.Items.IndexOf(transmissionListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model transmissions listbox's transmission and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TransmissionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (transmissionListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.Transmission transmission = transmissionListBox.SelectedItem as Vehicle.Transmission;
+                // Writes the properties in the UI
+                transmissionIDTextBox.Text = transmission.ID;
+                transmissionDescriptionTextBox.Text = transmission.Description;
+                transmissionTypeComboBox.Text = transmission.Type;
+                transmissionGearRatiosSetComboBox.Text = transmission.GearRatiosSet.ToString();
+                primaryRatioTextBox.Text = transmission.PrimaryRatio.ToString("F3");
+                finalRatioTextBox.Text = transmission.FinalRatio.ToString("F3");
+                gearShiftTimeTextBox.Text = transmission.GearShiftTime.ToString("F3");
+                transmissionEfficiencyTextBox.Text = (transmission.Efficiency * 100).ToString("F3");
+            }
+        }
+
+        #endregion
+        #region Gear Ratios
+
+        /// <summary>
+        /// Creates a gear ratios set object and adds it to the one wheel model gear ratios sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddGearRatioSetToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (gearRatiosSetIDTextBox.Text != "" &&
+                gearRatiosListBox.Items.Count != 0)
+            {
+                // Gets the object's properties values
+                string setID = gearRatiosSetIDTextBox.Text;
+                string description = gearRatiosSetDescriptionTextBox.Text;
+                List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
+                foreach (var gearRatioItem in gearRatiosListBox.Items)
+                {
+                    Vehicle.GearRatio gearRatio = gearRatioItem as Vehicle.GearRatio;
+                    gearRatios.Add(gearRatio);
+                }
+                // Initializes a new object
+                Vehicle.GearRatiosSet gearRatiosSet = new Vehicle.GearRatiosSet(setID, description, gearRatios);
+                // Adds the object to the listbox and the combobox
+                gearRatiosSetsListBox.Items.Add(gearRatiosSet);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Gear Ratios Set. \n " +
+                "   It should have an ID. \n" +
+                "   The gear ratios list can't be empty.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a gear ratios set from the one wheel model gear ratios sets listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteGearRatioSetOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (gearRatiosSetsListBox.SelectedItems.Count == 1)
+            {
+                gearRatiosSetsListBox.Items.RemoveAt(gearRatiosSetsListBox.Items.IndexOf(gearRatiosSetsListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of the one wheel model gear ratio sets listbox's gear ratio set and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GearRatioSetListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (gearRatiosSetsListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.GearRatiosSet gearRatioSet = gearRatiosSetsListBox.SelectedItem as Vehicle.GearRatiosSet;
+                // Writes the properties in the UI
+                gearRatiosSetIDTextBox.Text = gearRatioSet.ID;
+                gearRatiosSetDescriptionTextBox.Text = gearRatioSet.Description;
+                // Clears and writes the list in the UI
+                gearRatiosListBox.Items.Clear();
+                foreach (Vehicle.GearRatio gearRatio in gearRatioSet.GearRatios)
+                {
+                    gearRatiosListBox.Items.Add(gearRatio);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a gear ratio object and adds it to the one wheel model gear ratios listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddGearRatioToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (double.Parse(newGearRatioTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                double ratio = double.Parse(newGearRatioTextBox.Text);
+                if (ratio < 0) ratio = -ratio;
+                // Initializes a new object
+                Vehicle.GearRatio gearRatio = new Vehicle.GearRatio(ratio);
+                // Adds the object to the listbox and the combobox
+                gearRatiosListBox.Items.Add(gearRatio);
+                // Reorders the gear ratios listbox items in descending order
+                List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
+                foreach (var gearRatioItem in gearRatiosListBox.Items)
+                {
+                    Vehicle.GearRatio currentGearRatio = gearRatioItem as Vehicle.GearRatio;
+                    gearRatios.Add(currentGearRatio);
+                }
+                gearRatios = gearRatios.OrderByDescending(currentGearRatio => currentGearRatio.Ratio).ToList();
+                gearRatiosListBox.Items.Clear();
+                foreach (Vehicle.GearRatio currentGearRatio in gearRatios)
+                {
+                    gearRatiosListBox.Items.Add(currentGearRatio);
+                }
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Gear Ratio. \n " +
+                "   The ratio can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a gear ratio from the one wheel model gear ratios listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteGearRatioOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (gearRatiosListBox.SelectedItems.Count == 1)
+            {
+                gearRatiosListBox.Items.RemoveAt(gearRatiosListBox.Items.IndexOf(gearRatiosListBox.SelectedItem));
+            }
+        }
+
+        #endregion
         #endregion
 
         #region One Wheel Car Input Methods
@@ -1148,15 +2385,15 @@ namespace InternshipTest
                 string carID = oneWheelCarIDTextBox.Text;
                 string setupID = oneWheelSetupIDTextBox.Text;
                 string description = oneWheelCarAndSetupDescriptionTextBox.Text;
-                Vehicle.Inertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.Inertia;
+                Vehicle.OneWheelInertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.OneWheelInertia;
                 Vehicle.Tire tire = oneWheelTireCombobox.SelectedItem as Vehicle.Tire;
                 Vehicle.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.Engine;
                 Vehicle.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.Transmission;
-                Vehicle.Aerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.Aerodynamics;
+                Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheelAerodynamics;
                 Vehicle.Suspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.Suspension;
                 Vehicle.Brakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.Brakes;
                 // Initializes a new object
-                Vehicle.Car car = new Vehicle.Car(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
+                Vehicle.OneWheelCar car = new Vehicle.OneWheelCar(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
                 // Gets additional parameters
                 car.GetEquivalentHeaveStiffness();
                 car.GetLinearAccelerationParameters();
@@ -1199,7 +2436,7 @@ namespace InternshipTest
             if (oneWheelCarAndSetupListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.Car car = oneWheelCarAndSetupListBox.SelectedItem as Vehicle.Car;
+                Vehicle.OneWheelCar car = oneWheelCarAndSetupListBox.SelectedItem as Vehicle.OneWheelCar;
                 // Writes the properties in the UI
                 oneWheelCarIDTextBox.Text = car.ID;
                 oneWheelSetupIDTextBox.Text = car.SetupID;
@@ -1211,813 +2448,6 @@ namespace InternshipTest
                 oneWheelAerodynamicsCombobox.Text = car.Aerodynamics.ID;
                 oneWheelSuspensionCombobox.Text = car.Suspension.ID;
                 oneWheelBrakesCombobox.Text = car.Brakes.ID;
-            }
-        }
-
-        #endregion
-
-        #region Inertia
-
-        /// <summary>
-        /// Creates a one wheel model inertia object and adds it to the one wheel model inertia listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddInertiaToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelInertiaIDTextBox.Text != "" &&
-                double.Parse(oneWheelTotalMassTextBox.Text) != 0 &&
-                double.Parse(oneWheelGravityAccelTextbox.Text) != 0)
-            {
-                // Gets the object's properties values
-                string inertiaID = oneWheelInertiaIDTextBox.Text;
-                string description = oneWheelInertiaDescriptionTextBox.Text;
-                double totalMass = double.Parse(oneWheelTotalMassTextBox.Text);
-                double unsprungMass = double.Parse(oneWheelUnsprungMassTextbox.Text);
-                double rotPartsMI = double.Parse(oneWheelRotPartsMITextbox.Text);
-                double gravity = double.Parse(oneWheelGravityAccelTextbox.Text);
-                // Initializes a new object
-                Vehicle.Inertia inertia = new Vehicle.Inertia(inertiaID, description, totalMass, unsprungMass, rotPartsMI, gravity);
-                // Adds the object to the listbox
-                oneWheelInertiaListBox.Items.Add(inertia);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Inertia. \n" +
-                "   It should have an ID. \n" +
-                "   The total mass can't be zero. \n" +
-                "   Gravity can't be zero. \n" +
-                "   Note: Negative values are corrected to positive values.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a one wheel model inertia from the one wheel model inertia listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteInertiaOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelInertiaListBox.SelectedItems.Count == 1)
-            {
-                oneWheelInertiaListBox.Items.RemoveAt(oneWheelInertiaListBox.Items.IndexOf(oneWheelInertiaListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of a listbox's one wheel model inertia and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelInertiaListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelInertiaListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.Inertia inertia = oneWheelInertiaListBox.SelectedItem as Vehicle.Inertia;
-                // Writes the properties in the UI
-                oneWheelInertiaIDTextBox.Text = inertia.ID;
-                oneWheelInertiaDescriptionTextBox.Text = inertia.Description;
-                oneWheelTotalMassTextBox.Text = inertia.TotalMass.ToString("F3");
-                oneWheelUnsprungMassTextbox.Text = inertia.UnsprungMass.ToString("F3");
-                oneWheelRotPartsMITextbox.Text = inertia.RotPartsMI.ToString("F3");
-                oneWheelGravityAccelTextbox.Text = inertia.Gravity.ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Suspension
-
-        /// <summary>
-        /// Creates a one wheel model suspension object and adds it to the one wheel model suspension listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddSuspensionToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelSuspensionIDTextBox.Text != "" &&
-                double.Parse(oneWheelHeaveStiffnessTextBox.Text) != 0)
-            {
-                // Gets the object's properties values
-                string suspensionID = oneWheelSuspensionIDTextBox.Text;
-                string description = oneWheelSuspensionDescriptionTextBox.Text;
-                double heaveStiffness = double.Parse(oneWheelHeaveStiffnessTextBox.Text) * 1000;
-                double rideHeight = double.Parse(oneWheelRideHeightTextbox.Text) / 1000;
-                // Initializes a new object
-                Vehicle.Suspension suspension = new Vehicle.Suspension(suspensionID, description, heaveStiffness, rideHeight);
-                // Adds the object to the listbox
-                oneWheelSuspensionListBox.Items.Add(suspension);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Suspension. \n " +
-                "   It should have an ID. \n" +
-                "   The heave stiffness can't be zero. \n" +
-                "   Note: Negative values are corrected to positive values.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a one wheel model suspension from the one wheel model suspension listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteSuspensionOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelInertiaListBox.SelectedItems.Count == 1)
-            {
-                oneWheelSuspensionListBox.Items.RemoveAt(oneWheelSuspensionListBox.Items.IndexOf(oneWheelSuspensionListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of a listbox's one wheel model suspension and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelSuspensionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (oneWheelInertiaListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.Suspension suspension = oneWheelSuspensionListBox.SelectedItem as Vehicle.Suspension;
-                // Writes the properties in the UI
-                oneWheelSuspensionIDTextBox.Text = suspension.ID;
-                oneWheelSuspensionDescriptionTextBox.Text = suspension.Description;
-                oneWheelHeaveStiffnessTextBox.Text = (suspension.HeaveStiffness / 1000).ToString("F3");
-                oneWheelRideHeightTextbox.Text = (suspension.RideHeight * 1000).ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Brakes
-
-        /// <summary>
-        /// Creates a one wheel model brakes object and adds it to the one wheel model brakes listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddBrakesToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelBrakesIDTextBox.Text != "" &&
-                double.Parse(oneWheelBrakesMaxTorqueTextBox.Text) != 0)
-            {
-                // Gets the object's properties values
-                string brakesID = oneWheelBrakesIDTextBox.Text;
-                string description = oneWheelBrakesDescriptionTextBox.Text;
-                double maxTorque = double.Parse(oneWheelBrakesMaxTorqueTextBox.Text);
-                // Initializes a new object
-                Vehicle.Brakes brakes = new Vehicle.Brakes(brakesID, description, maxTorque);
-                // Adds the object to the listbox and the combobox
-                oneWheelBrakesListBox.Items.Add(brakes);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Brakes. \n " +
-                "   It should have an ID. \n" +
-                "   The maximum torque can't be zero. \n" +
-                "   Note: Negative values are corrected to positive values.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a one wheel model brakes from the one wheel model brakes listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteBrakesOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelBrakesListBox.SelectedItems.Count == 1)
-            {
-                oneWheelBrakesListBox.Items.RemoveAt(oneWheelBrakesListBox.Items.IndexOf(oneWheelBrakesListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of a listbox's one wheel model brakes and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelBrakesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (oneWheelBrakesListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.Brakes brakes = oneWheelBrakesListBox.SelectedItem as Vehicle.Brakes;
-                // Writes the properties in the UI
-                oneWheelBrakesIDTextBox.Text = brakes.ID;
-                oneWheelBrakesDescriptionTextBox.Text = brakes.Description;
-                oneWheelBrakesMaxTorqueTextBox.Text = brakes.MaxTorque.ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Transmission
-
-        /// <summary>
-        /// Creates a transmission object and adds it to the one wheel model transmissions listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelTransmissionIDTextBox.Text != "" &&
-                oneWheelTransmissionGearRatiosSetComboBox.SelectedItem != null)
-            {
-                // Gets the object's data
-                string transmissionID = oneWheelTransmissionIDTextBox.Text;
-                string description = oneWheelTransmissionDescriptionTextBox.Text;
-                string transmissionType = oneWheelTransmissionTypeComboBox.Text;
-                int amountOfDrivenWheels = 2;
-                if (transmissionType == "4WD") amountOfDrivenWheels = 4;
-                Vehicle.GearRatiosSet gearRatiosSet = oneWheelTransmissionGearRatiosSetComboBox.SelectedItem as Vehicle.GearRatiosSet;
-                double primaryRatio = double.Parse(oneWheelPrimaryRatioTextBox.Text);
-                double finalRatio = double.Parse(oneWheelFinalRatioTextBox.Text);
-                double gearShiftTime = double.Parse(oneWheelGearShiftTimeTextBox.Text);
-                double efficiency = double.Parse(oneWheelTransmissionEfficiencyTextBox.Text) / 100;
-                // Initializes a new object
-                Vehicle.Transmission transmission = new Vehicle.Transmission(
-                    transmissionID, description, amountOfDrivenWheels, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
-                // Adds the object to the listbox and the combobox
-                oneWheelTransmissionListBox.Items.Add(transmission);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Transmission. \n " +
-                "   It should have an ID. \n" +
-                "   A gear ratios set must be selected.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a transmission from the one wheel model transmissions listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteTransmissionOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
-            {
-                oneWheelTransmissionListBox.Items.RemoveAt(oneWheelTransmissionListBox.Items.IndexOf(oneWheelTransmissionListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model transmissions listbox's transmission and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelTransmissionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelTransmissionListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.Transmission transmission = oneWheelTransmissionListBox.SelectedItem as Vehicle.Transmission;
-                // Writes the properties in the UI
-                oneWheelTransmissionIDTextBox.Text = transmission.ID;
-                oneWheelTransmissionDescriptionTextBox.Text = transmission.Description;
-                oneWheelTransmissionTypeComboBox.Text = transmission.Type;
-                oneWheelTransmissionGearRatiosSetComboBox.Text = transmission.GearRatiosSet.ToString();
-                oneWheelPrimaryRatioTextBox.Text = transmission.PrimaryRatio.ToString("F3");
-                oneWheelFinalRatioTextBox.Text = transmission.FinalRatio.ToString("F3");
-                oneWheelGearShiftTimeTextBox.Text = transmission.GearShiftTime.ToString("F3");
-                oneWheelTransmissionEfficiencyTextBox.Text = (transmission.Efficiency * 100).ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Gear Ratios
-
-        /// <summary>
-        /// Creates a gear ratios set object and adds it to the one wheel model gear ratios sets listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddGearRatioSetToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelGearRatiosSetIDTextBox.Text != "" &&
-                oneWheelGearRatiosListBox.Items.Count != 0)
-            {
-                // Gets the object's properties values
-                string setID = oneWheelGearRatiosSetIDTextBox.Text;
-                string description = oneWheelGearRatiosSetDescriptionTextBox.Text;
-                List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
-                foreach (var gearRatioItem in oneWheelGearRatiosListBox.Items)
-                {
-                    Vehicle.GearRatio gearRatio = gearRatioItem as Vehicle.GearRatio;
-                    gearRatios.Add(gearRatio);
-                }
-                // Initializes a new object
-                Vehicle.GearRatiosSet gearRatiosSet = new Vehicle.GearRatiosSet(setID, description, gearRatios);
-                // Adds the object to the listbox and the combobox
-                oneWheelGearRatiosSetsListBox.Items.Add(gearRatiosSet);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Gear Ratios Set. \n " +
-                "   It should have an ID. \n" +
-                "   The gear ratios list can't be empty.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a gear ratios set from the one wheel model gear ratios sets listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteGearRatioSetOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelGearRatiosSetsListBox.SelectedItems.Count == 1)
-            {
-                oneWheelGearRatiosSetsListBox.Items.RemoveAt(oneWheelGearRatiosSetsListBox.Items.IndexOf(oneWheelGearRatiosSetsListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model gear ratio sets listbox's gear ratio set and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelGearRatioSetListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelGearRatiosSetsListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.GearRatiosSet gearRatioSet = oneWheelGearRatiosSetsListBox.SelectedItem as Vehicle.GearRatiosSet;
-                // Writes the properties in the UI
-                oneWheelGearRatiosSetIDTextBox.Text = gearRatioSet.ID;
-                oneWheelGearRatiosSetDescriptionTextBox.Text = gearRatioSet.Description;
-                // Clears and writes the list in the UI
-                oneWheelGearRatiosListBox.Items.Clear();
-                foreach (Vehicle.GearRatio gearRatio in gearRatioSet.GearRatios)
-                {
-                    oneWheelGearRatiosListBox.Items.Add(gearRatio);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates a gear ratio object and adds it to the one wheel model gear ratios listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddGearRatioToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (double.Parse(oneWheelNewGearRatioTextBox.Text) != 0)
-            {
-                // Gets the object's properties values
-                double ratio = double.Parse(oneWheelNewGearRatioTextBox.Text);
-                if (ratio < 0) ratio = -ratio;
-                // Initializes a new object
-                Vehicle.GearRatio gearRatio = new Vehicle.GearRatio(ratio);
-                // Adds the object to the listbox and the combobox
-                oneWheelGearRatiosListBox.Items.Add(gearRatio);
-                // Reorders the gear ratios listbox items in descending order
-                List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
-                foreach (var gearRatioItem in oneWheelGearRatiosListBox.Items)
-                {
-                    Vehicle.GearRatio currentGearRatio = gearRatioItem as Vehicle.GearRatio;
-                    gearRatios.Add(currentGearRatio);
-                }
-                gearRatios = gearRatios.OrderByDescending(currentGearRatio => currentGearRatio.Ratio).ToList();
-                oneWheelGearRatiosListBox.Items.Clear();
-                foreach (Vehicle.GearRatio currentGearRatio in gearRatios)
-                {
-                    oneWheelGearRatiosListBox.Items.Add(currentGearRatio);
-                }
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Gear Ratio. \n " +
-                "   The ratio can't be zero. \n" +
-                "   Note: Negative values are corrected to positive values.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes a gear ratio from the one wheel model gear ratios listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteGearRatioOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelGearRatiosListBox.SelectedItems.Count == 1)
-            {
-                oneWheelGearRatiosListBox.Items.RemoveAt(oneWheelGearRatiosListBox.Items.IndexOf(oneWheelGearRatiosListBox.SelectedItem));
-            }
-        }
-
-        #endregion
-
-        #region Aerodynamics
-
-        /// <summary>
-        /// Creates an aerodynamics object and adds it to the one wheel model aerodynamics listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddAerodynamicsToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelAerodynamicsIDTextBox.Text != "" &&
-                oneWheelAerodynamicMapComboBox.SelectedItem != null)
-            {
-                // Gets the object's data
-                string aerodynamicID = oneWheelAerodynamicsIDTextBox.Text;
-                string description = oneWheelAerodynamicsDescriptionTextBox.Text;
-                Vehicle.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapComboBox.SelectedItem as Vehicle.AerodynamicMap;
-                double frontalArea = double.Parse(oneWheelFrontalAreaTextBox.Text);
-                double airDensity = double.Parse(oneWheelAirDensityTextBox.Text);
-                // Initializes a new object
-                Vehicle.Aerodynamics aerodynamics = new Vehicle.Aerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
-                aerodynamics.GetAerodynamicMapParameters();
-                // Adds the object to the listbox and the combobox
-                oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Aerodynamics. \n " +
-                "   It should have an ID. \n" +
-                "   An aerodynamic map must be selected.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes an aerodynamics from the one wheel model aerodynamics listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteAerodynamicsOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
-            {
-                oneWheelAerodynamicsListBox.Items.RemoveAt(oneWheelAerodynamicsListBox.Items.IndexOf(oneWheelAerodynamicsListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model aerodynamics listbox's aerodynamics and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAerodynamicsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelAerodynamicsListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.Aerodynamics aerodynamics = oneWheelAerodynamicsListBox.SelectedItem as Vehicle.Aerodynamics;
-                // Writes the properties in the UI
-                oneWheelAerodynamicsIDTextBox.Text = aerodynamics.ID;
-                oneWheelAerodynamicsDescriptionTextBox.Text = aerodynamics.Description;
-                oneWheelAerodynamicMapComboBox.Text = aerodynamics.AerodynamicMap.ToString();
-                oneWheelFrontalAreaTextBox.Text = aerodynamics.FrontalArea.ToString("F3");
-                oneWheelAirDensityTextBox.Text = aerodynamics.AirDensity.ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Aerodynamic Map
-
-        /// <summary>
-        /// Creates an aerodynamic map object and adds it to the one wheel model aerodynamic maps listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddAerodynamicMapToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelAerodynamicMapIDTextBox.Text != "" &&
-                oneWheelAerodynamicMapPointsListBox.Items.Count != 0)
-            {
-                // Gets the object's properties values
-                string mapID = oneWheelAerodynamicMapIDTextBox.Text;
-                string description = oneWheelAerodynamicMapDescriptionTextBox.Text;
-                List<Vehicle.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.AerodynamicMapPoint>();
-                foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
-                {
-                    Vehicle.AerodynamicMapPoint aerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.AerodynamicMapPoint;
-                    aerodynamicMapPoints.Add(aerodynamicMapPoint);
-                }
-                // Initializes a new object
-                Vehicle.AerodynamicMap aerodynamicMap = new Vehicle.AerodynamicMap(mapID, description, aerodynamicMapPoints);
-                // Adds the object to the listbox and the combobox
-                oneWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Aerodynamic Map. \n " +
-                "   It should have an ID. \n" +
-                "   The aerodynamic map points list can't be empty.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes an aerodynamic map from the one wheel model aerodynamic maps listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteAerodynamicMapOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
-            {
-                oneWheelAerodynamicMapsListBox.Items.RemoveAt(oneWheelAerodynamicMapsListBox.Items.IndexOf(oneWheelAerodynamicMapsListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model aerodynamic maps listbox's aerodynamic map and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAerodynamicMapsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelAerodynamicMapsListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.AerodynamicMap aerodynamicMap = oneWheelAerodynamicMapsListBox.SelectedItem as Vehicle.AerodynamicMap;
-                // Writes the properties in the UI
-                oneWheelAerodynamicMapIDTextBox.Text = aerodynamicMap.ID;
-                oneWheelAerodynamicMapDescriptionTextBox.Text = aerodynamicMap.Description;
-                // Clears and writes the list in the UI
-                oneWheelAerodynamicMapPointsListBox.Items.Clear();
-                foreach (Vehicle.AerodynamicMapPoint aerodynamicMapPoint in aerodynamicMap.MapPoints)
-                {
-                    oneWheelGearRatiosListBox.Items.Add(aerodynamicMapPoint);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates an aerodynamic map point object and adds it to the one wheel model aerodynamic map points listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddAerodynamicMapPointToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Gets the object's properties values
-            double speed = double.Parse(oneWheelNewAerodynamicMapPointSpeedTextBox.Text);
-            double rideHeight = double.Parse(oneWheelNewAerodynamicMapPointRideHeightTextBox.Text);
-            double dragCoefficient = double.Parse(oneWheelNewAerodynamicMapPointDragCoefficientTextBox.Text);
-            double liftCoefficient = double.Parse(oneWheelNewAerodynamicMapPointLiftCoefficientTextBox.Text);
-            // Initializes a new object
-            Vehicle.AerodynamicMapPoint aerodynamicMapPoint = new Vehicle.AerodynamicMapPoint(speed, rideHeight, dragCoefficient, liftCoefficient);
-            // Adds the object to the listbox and the combobox
-            oneWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
-            // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
-            List<Vehicle.AerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.AerodynamicMapPoint>();
-            foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
-            {
-                Vehicle.AerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.AerodynamicMapPoint;
-                aerodynamicMapPoints.Add(currentAerodynamicMapPoint);
-            }
-            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentGearRatio => currentGearRatio.RideHeight).ToList();
-            aerodynamicMapPoints = aerodynamicMapPoints.OrderBy(currentGearRatio => currentGearRatio.WindRelativeSpeed).ToList();
-            oneWheelAerodynamicMapPointsListBox.Items.Clear();
-            foreach (Vehicle.AerodynamicMapPoint currentAerodynamicMapPoint in aerodynamicMapPoints)
-            {
-                oneWheelAerodynamicMapPointsListBox.Items.Add(currentAerodynamicMapPoint);
-            }
-        }
-
-        /// <summary>
-        /// Deletes a aerodynamic map point from the one wheel model aerodynamic map points listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelAerodynamicMapPointsListBox.SelectedItems.Count == 1)
-            {
-                oneWheelAerodynamicMapPointsListBox.Items.RemoveAt(oneWheelAerodynamicMapPointsListBox.Items.IndexOf(oneWheelAerodynamicMapPointsListBox.SelectedItem));
-            }
-        }
-
-        #endregion
-
-        #region Engine
-
-        /// <summary>
-        /// Creates an engine object and adds it to the one wheel model engines listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddEngineToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelEngineIDTextBox.Text != "" &&
-                oneWheelEngineCurvesComboBox.SelectedItem != null &&
-                double.Parse(oneWheelMaxThrottleTextBox.Text) != 0 &&
-                double.Parse(oneWheelFuelDensityTextBox.Text) != 0)
-            {
-                // Gets the object's data
-                string engineID = oneWheelEngineIDTextBox.Text;
-                string description = oneWheelEngineDescriptionTextBox.Text;
-                Vehicle.EngineCurves engineCurves = oneWheelEngineCurvesComboBox.SelectedItem as Vehicle.EngineCurves;
-                double maxThrottle = double.Parse(oneWheelMaxThrottleTextBox.Text) / 100;
-                double fuelDensity = double.Parse(oneWheelFuelDensityTextBox.Text);
-                // Initializes a new object
-                Vehicle.Engine engine = new Vehicle.Engine(engineID, description, engineCurves, maxThrottle, fuelDensity);
-                // Adds the object to the listbox and the combobox
-                oneWheelEngineListBox.Items.Add(engine);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Engine. \n " +
-                "   It should have an ID. \n" +
-                "   An engine curves set must be selected. \n" +
-                "   The maximum throttle can't be zero. \n" +
-                "   The fuel density can't be zero.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes an engine from the one wheel model engines listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteEngineOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelEngineListBox.SelectedItems.Count == 1)
-            {
-                oneWheelEngineListBox.Items.RemoveAt(oneWheelEngineListBox.Items.IndexOf(oneWheelEngineListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model engines listbox's engine and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelEngineListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelEngineListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.Engine engine = oneWheelEngineListBox.SelectedItem as Vehicle.Engine;
-                // Writes the properties in the UI
-                oneWheelEngineIDTextBox.Text = engine.ID;
-                oneWheelEngineDescriptionTextBox.Text = engine.Description;
-                oneWheelEngineCurvesComboBox.Text = engine.EngineCurves.ToString();
-                oneWheelMaxThrottleTextBox.Text = (engine.MaxThrottle * 100).ToString("F3");
-                oneWheelFuelDensityTextBox.Text = engine.FuelDensity.ToString("F3");
-            }
-        }
-
-        #endregion
-
-        #region Engine Curves
-
-        /// <summary>
-        /// Creates an engine curves object and adds it to the one wheel model engine curves listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddEngineCurvesToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (oneWheelEngineCurvesIDTextBox.Text != "" &&
-                oneWheelEngineCurvesPointsListBox.Items.Count != 0)
-            {
-                // Gets the object's properties values
-                string curvesID = oneWheelEngineCurvesIDTextBox.Text;
-                string description = oneWheelEngineCurvesDescriptionTextBox.Text;
-                List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
-                foreach (var engineCurvesPointItem in oneWheelEngineCurvesPointsListBox.Items)
-                {
-                    Vehicle.EngineCurvesPoint engineCurvesPoint = engineCurvesPointItem as Vehicle.EngineCurvesPoint;
-                    engineCurvesPoints.Add(engineCurvesPoint);
-                }
-                // Initializes a new object
-                Vehicle.EngineCurves engineCurves = new Vehicle.EngineCurves(curvesID, description, engineCurvesPoints);
-                // Adds the object to the listbox and the combobox
-                oneWheelEngineCurvesListBox.Items.Add(engineCurves);
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Engine Curves. \n " +
-                "   It should have an ID. \n" +
-                "   The engines curves points list can't be empty.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes an engine curves from the one wheel model engine curves listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteEngineCurvesOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelEngineCurvesListBox.SelectedItems.Count == 1)
-            {
-                oneWheelEngineCurvesListBox.Items.RemoveAt(oneWheelEngineCurvesListBox.Items.IndexOf(oneWheelEngineCurvesListBox.SelectedItem));
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the one wheel model engine curves listbox's engine curves and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelEngineCurvesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (oneWheelEngineCurvesListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Vehicle.EngineCurves engineCurves = oneWheelEngineCurvesListBox.SelectedItem as Vehicle.EngineCurves;
-                // Writes the properties in the UI
-                oneWheelEngineCurvesIDTextBox.Text = engineCurves.ID;
-                oneWheelEngineCurvesDescriptionTextBox.Text = engineCurves.Description;
-                // Clears and writes the list in the UI
-                oneWheelEngineCurvesPointsListBox.Items.Clear();
-                foreach (Vehicle.EngineCurvesPoint engineCurvesPoint in engineCurves.CurvesPoints)
-                {
-                    oneWheelGearRatiosListBox.Items.Add(engineCurvesPoint);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates an engine curves point object and adds it to the one wheel model engine curves points listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelAddEngineCurvesPointToListBox_Click(object sender, RoutedEventArgs e)
-        {
-            if (double.Parse(oneWheelNewEngineCurvesPointTorqueTextBox.Text) != 0)
-            {
-                // Gets the object's properties values
-                double rpm = double.Parse(oneWheelNewEngineCurvesPointRPMTextBox.Text);
-                if (rpm < 0) rpm = -rpm;
-                double torque = double.Parse(oneWheelNewEngineCurvesPointTorqueTextBox.Text);
-                double brakingTorque = double.Parse(oneWheelNewEngineCurvesPointBrakingTorqueTextBox.Text);
-                double specFuelCons = double.Parse(oneWheelNewEngineCurvesPointSpecFuelConsTextBox.Text);
-                // Initializes a new object
-                Vehicle.EngineCurvesPoint engineCurvesPoint = new Vehicle.EngineCurvesPoint(rpm, torque, brakingTorque, specFuelCons);
-                // Adds the object to the listbox and the combobox
-                oneWheelEngineCurvesPointsListBox.Items.Add(engineCurvesPoint);
-                // Reorders the engine curves points listbox items in ascending order of rpm
-                List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
-                foreach (var engineCurvesPointItem in oneWheelEngineCurvesPointsListBox.Items)
-                {
-                    Vehicle.EngineCurvesPoint currentEngineCurvesPoint = engineCurvesPointItem as Vehicle.EngineCurvesPoint;
-                    engineCurvesPoints.Add(currentEngineCurvesPoint);
-                }
-                engineCurvesPoints = engineCurvesPoints.OrderBy(currentCurvePoint => currentCurvePoint.RotationalSpeed).ToList();
-                oneWheelEngineCurvesPointsListBox.Items.Clear();
-                foreach (Vehicle.EngineCurvesPoint currentEngineCurvesPoint in engineCurvesPoints)
-                {
-                    oneWheelEngineCurvesPointsListBox.Items.Add(currentEngineCurvesPoint);
-                }
-            }
-            else System.Windows.MessageBox.Show(
-                "Could not create Engine Curves Point. \n " +
-                "   The torque can't be zero. \n" +
-                "   Note: Negative values are corrected to positive values.",
-                "Error",
-                MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-
-        /// <summary>
-        /// Deletes an engine curves points from the one wheel model engine curves points listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _OneWheelDeleteEngineCurvesPointOfListBox_Click(object sender, RoutedEventArgs e)
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (oneWheelEngineCurvesPointsListBox.SelectedItems.Count == 1)
-            {
-                oneWheelEngineCurvesPointsListBox.Items.RemoveAt(oneWheelEngineCurvesPointsListBox.Items.IndexOf(oneWheelEngineCurvesPointsListBox.SelectedItem));
             }
         }
 
@@ -2667,7 +3097,7 @@ namespace InternshipTest
                 // Gets the object's data
                 string id = ggvDiagramIDTextBox.Text;
                 string description = ggvDiagramDescriptionTextBox.Text;
-                Vehicle.Car car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.Car;
+                Vehicle.OneWheelCar car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
                 int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
                 int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
                 int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
@@ -3393,6 +3823,7 @@ namespace InternshipTest
             TabItemExt currentChartTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
             currentChartTab.Content = grid;
         }
+
 
         #endregion
 

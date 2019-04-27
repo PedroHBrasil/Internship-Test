@@ -97,7 +97,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Question textbox -->
+                <!-- Question TextBox -->
                 <TextBlock Text="What would you like to do?" VerticalAlignment="Center" Margin="10"/>
                 <!-- New project button -->
                 <Button Name="newProjectButton" Content="New" Grid.Column="1"
@@ -124,27 +124,56 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Question textbox -->
+                <!-- Question TextBox -->
                 <TextBlock Text="Choose what you want to model:" VerticalAlignment="Center" Margin="10"/>
+                <!-- Aerodynamics button -->
+                <Button Name="aerodynamicsButton" Content="Aerodynamics" Grid.Column="1"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold" Click="_AerodynamicsButton_Click"/>
+                <!-- Brakes button -->
+                <Button Name="brakesButton" Content="Brakes" Grid.Column="2"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold" Click="_BrakesButton_Click"/>
+                <!-- Engine button -->
+                <Button Name="engineButton" Content="Engine" Grid.Column="3"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold" Click="_EngineButton_Click"/>
+                <!-- Inertia button -->
+                <Button Name="inertiaButton" Content="Inertia" Grid.Column="4"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold" Click="_InertiaButton_Click"/>
+                <!-- Suspension button -->
+                <Button Name="suspensionAndSteeringButton" Content="Suspension And Steering" Grid.Column="5"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold" Click="_SuspensionAndSteeringButton_Click"/>
                 <!-- Tire button -->
-                <Button Name="tireButton" Content="Tire" Grid.Column="1"
+                <Button Name="tireButton" Content="Tire" Grid.Column="6"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_TireButton_Click"/>
+                <!-- Transmission button -->
+                <Button Name="transmissionButton" Content="Transmission" Grid.Column="7"
+                        Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
+                        FontWeight="Bold" Click="_TransmissionButton_Click"/>
                 <!-- One Wheel Model button -->
-                <Button Name="oneWheelVehicleButton" Content="One Wheel" Grid.Column="2"
+                <Button Name="oneWheelVehicleButton" Content="One Wheel Model Car" Grid.Column="8"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_OneWheelVehicleButton_Click"/>
                 <!-- Two Wheel Model button -->
-                <Button Name="twoWheelVehicleButton" Content="Two Wheel" Grid.Column="3"
+                <Button Name="twoWheelVehicleButton" Content="Two Wheel Model Car" Grid.Column="9"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_TwoWheelVehicleButton_Click"/>
                 <!-- Four Wheel Model button -->
-                <Button Name="fourWheelVehicleButton" Content="Four Wheel" Grid.Column="4"
+                <Button Name="fourWheelVehicleButton" Content="Four Wheel Model Car" Grid.Column="10"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
                         Click="_FourWheelVehicleButton_Click"/>
@@ -158,7 +187,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Question textbox -->
+                <!-- Question TextBox -->
                 <TextBlock Text="Choose an input method:" VerticalAlignment="Center" Margin="10"/>
                 <!-- Tabular Path button -->
                 <Button Name="tabularPathButton" Content="Tabular" Grid.Column="1"
@@ -184,7 +213,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Question textbox -->
+                <!-- Question TextBox -->
                 <TextBlock Text="Choose a simulation type:" VerticalAlignment="Center" Margin="10"/>
                 <!-- GGV Diagram button -->
                 <Button Name="ggvDiagramButton" Content="GGV Diagram" Grid.Column="1"
@@ -208,7 +237,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Question textbox -->
+                <!-- Question TextBox -->
                 <TextBlock Text="Choose a simulation type:" VerticalAlignment="Center" Margin="10"/>
                 <!-- GGV Diagram button -->
                 <Button Name="ggvDiagramResultsAnalysisButton" Content="GGV Diagram" Grid.Column="1"
@@ -267,6 +296,736 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </Grid.Resources>
+                        <!-- Aerodynamics Docking Manager-->
+                        <syncfusion:DockingManager Name="aerodynamicsInputDockingManager" Visibility="Visible">
+                            <!-- One Wheel Aerodynamics Docking Window -->
+                            <ContentControl Name="aerodynamicsDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Aerodynamics"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Aerodynamics listbox -->
+                                    <ListBox Name="oneWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
+                                    <ListBox Name="twoWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
+                                    <!-- Aerodynamics listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddAerodynamicsToListBox" Content="Add" Click="_AddAerodynamicsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteAerodynamicsOfListBox" Content="Delete" Click="_DeleteAerodynamicsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Aerodynamics ID line -->
+                                    <TextBlock Text="Aero ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="aerodynamicsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="aerodynamicsDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Vehicle model selection line -->
+                                    <TextBlock Text="Vehicle Model" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="aerodynamicsVehicleModelComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_AerodynamicsVehicleModelComboBox_SelectionChanged">
+                                        <ComboBoxItem Content="One Wheel"/>
+                                        <ComboBoxItem Content="Two Wheel"/>
+                                    </ComboBox>
+                                    <!-- Aerodynamic Map selection line -->
+                                    <TextBlock Text="Aero. Map" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="aerodynamicMapComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Frontal area line -->
+                                    <TextBlock Text="Frontal Area" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="frontalAreaTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="m²" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Air density line -->
+                                    <TextBlock Text="Air Density" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="airDensityTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg/m³" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- One Wheel Aerodynamic Map Docking Window -->
+                            <ContentControl Name="oneWheelAerodynamicMapDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="One Wheel Model's Aerodynamic Map"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Aerodynamic Map listbox -->
+                                    <ListBox Name="oneWheelAerodynamicMapsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicMapsListBox_SelectionChanged"/>
+                                    <!-- Aerodynamic Map listbox add and delete buttons -->
+                                    <Button Name="addAerodynamicMapToListBox" Content="Add" Click="_AddOneWheelAerodynamicMapToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteAerodynamicMapOfListBox" Content="Delete" Click="_DeleteOneWheelAerodynamicMapOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Aerodynamic Map ID line -->
+                                    <TextBlock Text="Aero. Map ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="oneWheelAerodynamicMapIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="oneWheelAerodynamicMapDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Aerodynamic Map Points list line -->
+                                    <TextBlock Text="Aerodynamic Map Points:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Speed (km/h)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Ride Height (mm)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CD" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CL" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    </Grid>
+                                    <ListBox Name="oneWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vehicle:OneWheelAerodynamicMapPoint}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Path=WindRelativeSpeedDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=RideHeightDisplay}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <!-- Aerodynamic Map Points list buttons -->
+                                    <Button Name="oneWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_AddOneWheelAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_DeleteOneWheelAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- New Point line -->
+                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <!-- New point's speed line -->
+                                    <TextBlock Text="Speed" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointSpeedTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's ride height line -->
+                                    <TextBlock Text="Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointRideHeightTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's drag coefficient line -->
+                                    <TextBlock Text="Drag Coef." Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- New point's lift coefficient line -->
+                                    <TextBlock Text="Lift Coef." Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Two Wheel Aerodynamic Map Docking Window -->
+                            <ContentControl Name="twoWheelAerodynamicMapDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Two Wheel Model's Aerodynamic Map"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="500"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="500"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="70"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Aerodynamic Map listbox -->
+                                    <ListBox Name="twoWheelAerodynamicMapsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" SelectionChanged="_TwoWheelAerodynamicMapsListBox_SelectionChanged"/>
+                                    <!-- Aerodynamic Map listbox add and delete buttons -->
+                                    <Button Name="twoWheelAddAerodynamicMapToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteAerodynamicMapOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapOfListBox_Click" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <!-- Aerodynamic Map ID line -->
+                                    <TextBlock Text="Aero. Map ID" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="twoWheelAerodynamicMapIDTextBox" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelAerodynamicMapDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Aerodynamic Map Points list line -->
+                                    <TextBlock Text="Aerodynamic Map Points:" Grid.Row="4" Grid.ColumnSpan="12" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <Grid Grid.Row="5" Grid.ColumnSpan="12" Margin="5,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Speed (km/h)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Front Ride Height (mm)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Rear Ride Height (mm)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Car Slip Angle (deg)" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CD" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CS" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CL" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CPM" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CYM" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    </Grid>
+                                    <ListBox Name="twoWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vehicle:TwoWheelAerodynamicMapPoint}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Path=WindRelativeSpeedDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=FrontRideHeightDisplay}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=RearRideHeightDisplay}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=CarSlipAngleDisplay}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=SideForceCoefficient}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=PitchMomentCoefficient}" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=YawMomentCoefficient}" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <!-- Aerodynamic Map Points list buttons -->
+                                    <Button Name="twoWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="6" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <!-- New Point line -->
+                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <!-- New point's speed line -->
+                                    <TextBlock Text="Speed" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointSpeedTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's front ride height line -->
+                                    <TextBlock Text="Front Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointFrontRideHeightTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's rear ride height line -->
+                                    <TextBlock Text="Rear Ride Height" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointRearRideHeightTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's car slip angle line -->
+                                    <TextBlock Text="Car Slip Angle" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointCarSlipAngleTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's drag coefficient line -->
+                                    <TextBlock Text="Drag Coefficient" Grid.Row="8" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="8" Grid.Column="9" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- New point's side force coefficient line -->
+                                    <TextBlock Text="Side Force Coefficient" Grid.Row="9" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointSideForceCoefficientTextBox" Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- New point's lift coefficient line -->
+                                    <TextBlock Text="Lift Coefficient" Grid.Row="10" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="10" Grid.Column="9" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- New point's pitch moment coefficient line -->
+                                    <TextBlock Text="Pitch Coefficient" Grid.Row="11" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointPitchMomentCoefficientTextBox" Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- New point's yaw moment coefficient line -->
+                                    <TextBlock Text="Yaw Coefficient" Grid.Row="12" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointYawMomentCoefficientTextBox" Grid.Row="12" Grid.Column="9" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
+                        <!-- Brakes Docking Manager-->
+                        <syncfusion:DockingManager Name="brakesInputDockingManager" Visibility="Collapsed">
+                            <!-- Brakes Docking Window -->
+                            <ContentControl Name="brakesDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Brakes"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Brakes listbox -->
+                                    <ListBox Name="brakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_BrakesListBox_SelectionChanged"/>
+                                    <!-- Brakes listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddBrakesToListBox" Content="Add" Click="_AddBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteBrakesOfListBox" Content="Delete" Click="_DeleteBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Brakes ID line -->
+                                    <TextBlock Text="Brakes ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="brakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="oneWheelBrakesDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Maximum torque line -->
+                                    <TextBlock Text="Max. Torque" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="brakesMaxTorqueTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N.m" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
+                        <!-- Engine Docking Manager-->
+                        <syncfusion:DockingManager Name="engineInputDockingManager" Visibility="Collapsed">
+                            <!-- Engine Docking Window -->
+                            <ContentControl Name="engineDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Engine"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Engine listbox -->
+                                    <ListBox Name="engineListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="2" SelectionChanged="_EngineListBox_SelectionChanged"/>
+                                    <!-- Engine listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddEngineToListBox" Content="Add" Click="_AddEngineToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteEngineOfListBox" Content="Delete" Click="_DeleteEngineOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Engine ID line -->
+                                    <TextBlock Text="Engine ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                    <TextBox Name="engineIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="engineDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Engine Curves selection line -->
+                                    <TextBlock Text="Engine Curves" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="engineCurvesComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=oneWheelEngineCurvesListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Maximum throttle line -->
+                                    <TextBlock Text="Max. Throttle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                    <syncfusion:DoubleTextBox Name="maxThrottleTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" VerticalAlignment="Center" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="%" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Fuel density line -->
+                                    <TextBlock Text="Fuel Density" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                    <syncfusion:DoubleTextBox Name="fuelDensityTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg/m³" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Engine Curves Docking Window -->
+                            <ContentControl Name="engineCurvesDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Engine Curves"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Transmission listbox -->
+                                    <ListBox Name="engineCurvesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_EngineCurvesListBox_SelectionChanged"/>
+                                    <!-- Transmission listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddEngineCurvesToListBox" Content="Add" Click="_AddEngineCurvesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteEngineCurvesOfListBox" Content="Delete" Click="_DeleteEngineCurvesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Transmission ID line -->
+                                    <TextBlock Text="Curves ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="engineCurvesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="engineCurvesDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Engine Curves Points list line -->
+                                    <TextBlock Text="Engine Curves Points:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="RPM" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Torque (N.m)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Braking Torque (N.m)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Spec. Fuel Cons. (g/kW)" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                    </Grid>
+                                    <ListBox Name="engineCurvesPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vehicle:EngineCurvesPoint}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{Binding Path=RPM}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=Torque}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=BrakingTorque}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=SpecFuelConsDisplay}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <!-- Engine Curves Points list buttons -->
+                                    <Button Name="oneWheelAddEngineCurvesPointToListBox" Content="Add" Click="_AddEngineCurvesPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteEngineCurvesPointOfListBox" Content="Delete" Click="_DeleteEngineCurvesPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- New Point line -->
+                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <!-- New point's RPM line -->
+                                    <TextBlock Text="RPM" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newEngineCurvesPointRPMTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="rpm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's torque line -->
+                                    <TextBlock Text="Torque" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newEngineCurvesPointTorqueTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N.m" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's braking torque line -->
+                                    <TextBlock Text="Braking Torque" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newEngineCurvesPointBrakingTorqueTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N.m" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's specific fuel consumption line -->
+                                    <TextBlock Text="Spec. Fuel Cons." Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newEngineCurvesPointSpecFuelConsTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="g/kW" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
+                        <!-- Inertia Docking Manager-->
+                        <syncfusion:DockingManager Name="inertiaAndDimensionsInputDockingManager" Visibility="Collapsed">
+                            <!-- One Wheel Inertia Docking Window -->
+                            <ContentControl Name="oneWheelInertiaDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="One Wheel Model's Inertia"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Inertia listbox -->
+                                    <ListBox Name="oneWheelInertiaListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelInertiaListBox_SelectionChanged"/>
+                                    <!-- Inertia listbox add and delete buttons-->
+                                    <Button Name="addOneWheelInertiaToListBox" Content="Add" Click="_AddOneWheelInertiaToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteOneWheelInertiaOfListBox" Content="Delete" Click="_DeleteOneWheelInertiaOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Inertia ID line -->
+                                    <TextBlock Text="Inertia ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="oneWheelInertiaIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="oneWheelInertiaDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Total mass line -->
+                                    <TextBlock Text="Total Mass" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="oneWheelTotalMassTextBox" Grid.Row="4" Grid.Column="2" Margin="5,0,5,0" Grid.ColumnSpan="3" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Unsprung mass line -->
+                                    <TextBlock Text="Uns. Mass" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="oneWheelUnsprungMassTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Rotational parts moment of inertia line -->
+                                    <TextBlock Text="Rot. Parts M.I." Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="oneWheelRotPartsMITextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg.m²" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Gravity acceleration line -->
+                                    <TextBlock Text="Gravity Accel." Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="oneWheelGravityAccelTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="m/s²" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Two Wheel Inertia and Dimensions Docking Window -->
+                            <ContentControl Name="twoWheelInertiaAndDimensionsDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Two Wheel Model's Inertia And Dimensions"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="300"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="300"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Inertia listbox -->
+                                    <ListBox Name="twoWheelInertiaAndDimensionsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelInertiaAndDimensionsListBox_SelectionChanged"/>
+                                    <!-- Inertia listbox add and delete buttons-->
+                                    <Button Name="addTwoWheelInertiaAndDimensionsToListBox" Content="Add" Click="_AddTwoWheelInertiaAndDimensionsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteTwoWheelInertiaAndDimensionsOfListBox" Content="Delete" Click="_DeleteTwoWheelInertiaAndDimensionsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Inertia ID line -->
+                                    <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="twoWheelInertiaAndDimensionsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelInertiaAndDimensionsDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Total mass line -->
+                                    <TextBlock Text="Total Mass" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelTotalMassTextBox" Grid.Row="4" Grid.Column="3" Margin="5,0,5,0" Grid.ColumnSpan="2" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Total mass distribution line -->
+                                    <TextBlock Text="Total Mass Distribution" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelTotalMassDistributionTextBox" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="% (front)" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Total mass CG Height line -->
+                                    <TextBlock Text="Total Mass CG Height" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelTotalMassCGHeightTextBox" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Front unsprung mass line -->
+                                    <TextBlock Text="Front Uns. Mass" Grid.Row="7" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelFrontUnsprungMassTextBox" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Front Unsprung mass CG Height line -->
+                                    <TextBlock Text="Front Uns. Mass CG Height" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelFrontUnsprungMassCGHeightTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Rear unsprung mass line -->
+                                    <TextBlock Text="Rear Uns. Mass" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelRearUnsprungMassTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Rear Unsprung mass CG Height line -->
+                                    <TextBlock Text="Rear Uns. Mass CG Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelRearUnsprungMassCGHeightTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Wheelbase line -->
+                                    <TextBlock Text="Wheelbase" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelWheelbaseTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Rotational parts moment of inertia line -->
+                                    <TextBlock Text="Rot. Parts M.I." Grid.Row="12" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelRotPartsMITextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg.m²" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Gravity acceleration line -->
+                                    <TextBlock Text="Gravity Accel." Grid.Row="13" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelGravityAccelTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="m/s²" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
+                        <!-- Suspension And Steering Docking Manager-->
+                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Collapsed">
+                            <!-- Suspension Docking Window -->
+                            <ContentControl Name="suspensionDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Suspension"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Suspension Listbox -->
+                                    <ListBox Name="suspensionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SuspensionListBox_SelectionChanged"/>
+                                    <!-- Suspension listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddSuspensionToListBox" Content="Add" Click="_AddSuspensionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteSuspensionOfListBox" Content="Delete" Click="_DeleteSuspensionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Suspension ID line -->
+                                    <TextBlock Text="Suspension ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="suspensionIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="suspensionDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Heave stiffness line -->
+                                    <TextBlock Text="Heave Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="heaveStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Ride height line-->
+                                    <TextBlock Text="Ride Height" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="rideHeightTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
                         <!-- Tire Docking Manager -->
                         <syncfusion:DockingManager Name="tireInputDockingManager" Visibility="Collapsed">
                             <!-- Tire Docking Window -->
@@ -859,6 +1618,142 @@
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
+                        <!-- Transmission Docking Manager-->
+                        <syncfusion:DockingManager Name="transmissionInputDockingManager" Visibility="Collapsed">
+                            <!-- Transmission Docking Window -->
+                            <ContentControl Name="transmissionDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Transmission"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Transmission listbox -->
+                                    <ListBox Name="transmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TransmissionListBox_SelectionChanged"/>
+                                    <!-- Transmission listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddTransmissionToListBox" Content="Add" Click="_AddTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteTransmissionOfListBox" Content="Delete" Click="_DeleteTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Transmission ID line -->
+                                    <TextBlock Text="Transmission ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="transmissionIDTextBox" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="transmissionDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Transmission type selection line -->
+                                    <TextBlock Text="Type" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="transmissionTypeComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                        <ComboBoxItem Content="2WD"/>
+                                        <ComboBoxItem Content="4WD"/>
+                                    </ComboBox>
+                                    <!-- Gear Ratios Set line -->
+                                    <TextBlock Text="Gear Ratios" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="transmissionGearRatiosSetComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=oneWheelGearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Primary ratio line -->
+                                    <TextBlock Text="Primary Ratio" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="primaryRatioTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- Final ratio line -->
+                                    <TextBlock Text="Final Ratio" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="finalRatioTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <!-- Gear shift time line -->
+                                    <TextBlock Text="Shift Time" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="gearShiftTimeTextBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="s" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Efficiency line -->
+                                    <TextBlock Text="Efficiency" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="transmissionEfficiencyTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="%" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Gear Ratios Docking Window -->
+                            <ContentControl Name="gearRatiosDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Gear Ratios"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Transmission listbox -->
+                                    <ListBox Name="gearRatiosSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_GearRatioSetListBox_SelectionChanged"/>
+                                    <!-- Transmission listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddGearRatioSetToListBox" Content="Add" Click="_AddGearRatioSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteGearRatioSetOfListBox" Content="Delete" Click="_DeleteGearRatioSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Transmission ID line -->
+                                    <TextBlock Text="Gear Ratios ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="gearRatiosSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="gearRatiosSetDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Gear Ratios list line -->
+                                    <TextBlock Text="Gear Ratios:" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ListBox Name="gearRatiosListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vehicle:GearRatio}">
+                                                <TextBlock Text="{Binding Path=Ratio}" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <!-- Gear ratios list buttons -->
+                                    <Button Name="oneWheelAddGearRatioToListBox" Content="Add" Click="_AddGearRatioToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteGearRatioOfListBox" Content="Delete" Click="_DeleteGearRatioOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- New Gear Ratio line -->
+                                    <TextBlock Text="Gear Ratio to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newGearRatioTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                </Grid>
+                            </ContentControl>
+                        </syncfusion:DockingManager>
                         <!-- One Wheel Model Docking Manager -->
                         <syncfusion:DockingManager Name="oneWheelVehicleInputDockingManager" Visibility="Collapsed">
                             <!-- Car and Setup Docking Window -->
@@ -940,614 +1835,9 @@
                                           ItemsSource="{Binding ElementName=oneWheelBrakesListBox, Path=Items, Mode=OneWay}"/>
                                 </Grid>
                             </ContentControl>
-                            <!-- Inertia Docking Window -->
-                            <ContentControl Name="oneWheelInertiaDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Inertia"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Inertia listbox -->
-                                    <ListBox Name="oneWheelInertiaListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelInertiaListBox_SelectionChanged"/>
-                                    <!-- Inertia listbox add and delete buttons-->
-                                    <Button Name="oneWheelAddInertiaToListBox" Content="Add" Click="_OneWheelAddInertiaToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteInertiaOfListBox" Content="Delete" Click="_OneWheelDeleteInertiaOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Inertia ID line -->
-                                    <TextBlock Text="Inertia ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelInertiaIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelInertiaDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Total mass line -->
-                                    <TextBlock Text="Total Mass" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelTotalMassTextBox" Grid.Row="4" Grid.Column="2" Margin="5,0,5,0" Grid.ColumnSpan="3" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="kg" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Unsprung mass line -->
-                                    <TextBlock Text="Uns. Mass" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelUnsprungMassTextbox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="kg" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Rotational parts moment of inertia line -->
-                                    <TextBlock Text="Rot. Parts M.I." Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelRotPartsMITextbox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="kg.m²" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Gravity acceleration line -->
-                                    <TextBlock Text="Gravity Accel." Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelGravityAccelTextbox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="m/s²" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Suspension Docking Window -->
-                            <ContentControl Name="oneWheelSuspensionDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Suspension"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Suspension Listbox -->
-                                    <ListBox Name="oneWheelSuspensionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelSuspensionListBox_SelectionChanged"/>
-                                    <!-- Suspension listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddSuspensionToListBox" Content="Add" Click="_OneWheelAddSuspensionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteSuspensionOfListBox" Content="Delete" Click="_OneWheelDeleteSuspensionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Suspension ID line -->
-                                    <TextBlock Text="Suspension ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelSuspensionIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelSuspensionDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Heave stiffness line -->
-                                    <TextBlock Text="Heave Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelHeaveStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Ride height line-->
-                                    <TextBlock Text="Ride Height" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelRideHeightTextbox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="mm" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Brakes Docking Window -->
-                            <ContentControl Name="oneWheelBrakesDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Brakes"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Brakes listbox -->
-                                    <ListBox Name="oneWheelBrakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelBrakesListBox_SelectionChanged"/>
-                                    <!-- Brakes listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddBrakesToListBox" Content="Add" Click="_OneWheelAddBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteBrakesOfListBox" Content="Delete" Click="_OneWheelDeleteBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Brakes ID line -->
-                                    <TextBlock Text="Brakes ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelBrakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelBrakesDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Maximum torque line -->
-                                    <TextBlock Text="Max. Torque" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelBrakesMaxTorqueTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="N.m" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Transmission Docking Window -->
-                            <ContentControl Name="oneWheelTransmissionDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Transmission"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Transmission listbox -->
-                                    <ListBox Name="oneWheelTransmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelTransmissionListBox_SelectionChanged"/>
-                                    <!-- Transmission listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddTransmissionToListBox" Content="Add" Click="_OneWheelAddTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteTransmissionOfListBox" Content="Delete" Click="_OneWheelDeleteTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Transmission ID line -->
-                                    <TextBlock Text="Transmission ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelTransmissionIDTextBox" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelTransmissionDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Transmission type selection line -->
-                                    <TextBlock Text="Type" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="oneWheelTransmissionTypeComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="2WD"/>
-                                        <ComboBoxItem Content="4WD"/>
-                                    </ComboBox>
-                                    <!-- Gear Ratios Set line -->
-                                    <TextBlock Text="Gear Ratios" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="oneWheelTransmissionGearRatiosSetComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelGearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Primary ratio line -->
-                                    <TextBlock Text="Primary Ratio" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelPrimaryRatioTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <!-- Final ratio line -->
-                                    <TextBlock Text="Final Ratio" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelFinalRatioTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <!-- Gear shift time line -->
-                                    <TextBlock Text="Shift Time" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelGearShiftTimeTextBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="s" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Efficiency line -->
-                                    <TextBlock Text="Efficiency" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelTransmissionEfficiencyTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="%" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Gear Ratios Docking Window -->
-                            <ContentControl Name="oneWheelGearRatiosDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Gear Ratios"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.SideInDockedMode="Tabbed"
-                                        syncfusion:DockingManager.TargetNameInDockedMode="oneWheelTransmissionDockingWindow"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Transmission listbox -->
-                                    <ListBox Name="oneWheelGearRatiosSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelGearRatioSetListBox_SelectionChanged"/>
-                                    <!-- Transmission listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddGearRatioSetToListBox" Content="Add" Click="_OneWheelAddGearRatioSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteGearRatioSetOfListBox" Content="Delete" Click="_OneWheelDeleteGearRatioSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Transmission ID line -->
-                                    <TextBlock Text="Gear Ratios ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelGearRatiosSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelGearRatiosSetDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Gear Ratios list line -->
-                                    <TextBlock Text="Gear Ratios:" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                    <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ListBox Name="oneWheelGearRatiosListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type vehicle:GearRatio}">
-                                                <TextBlock Text="{Binding Path=Ratio}" HorizontalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                    <!-- Gear ratios list buttons -->
-                                    <Button Name="oneWheelAddGearRatioToListBox" Content="Add" Click="_OneWheelAddGearRatioToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteGearRatioOfListBox" Content="Delete" Click="_OneWheelDeleteGearRatioOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- New Gear Ratio line -->
-                                    <TextBlock Text="Gear Ratio to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewGearRatioTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Aerodynamics Docking Window -->
-                            <ContentControl Name="oneWheelAerodynamicsDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Aerodynamics"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Aerodynamics listbox -->
-                                    <ListBox Name="oneWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicsListBox_SelectionChanged"/>
-                                    <!-- Aerodynamics listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddAerodynamicsToListBox" Content="Add" Click="_OneWheelAddAerodynamicsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteAerodynamicsOfListBox" Content="Delete" Click="_OneWheelDeleteAerodynamicsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Aerodynamics ID line -->
-                                    <TextBlock Text="Aero ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelAerodynamicsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelAerodynamicsDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Aerodynamic Map selection line -->
-                                    <TextBlock Text="Aero. Map" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="oneWheelAerodynamicMapComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelAerodynamicMapsListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Frontal area line -->
-                                    <TextBlock Text="Frontal Area" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelFrontalAreaTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="m²" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Air density line -->
-                                    <TextBlock Text="Air Density" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelAirDensityTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="kg/m³" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Aerodynamic Map Docking Window -->
-                            <ContentControl Name="oneWheelAerodynamicMapDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Aerodynamic Map"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.SideInDockedMode="Left"
-                                        syncfusion:DockingManager.TargetNameInDockedMode="oneWheelAerodynamicsDockingWindow"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Aerodynamic Map listbox -->
-                                    <ListBox Name="oneWheelAerodynamicMapsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicMapsListBox_SelectionChanged"/>
-                                    <!-- Aerodynamic Map listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddAerodynamicMapToListBox" Content="Add" Click="_OneWheelAddAerodynamicMapToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteAerodynamicMapOfListBox" Content="Delete" Click="_OneWheelDeleteAerodynamicMapOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Aerodynamic Map ID line -->
-                                    <TextBlock Text="Aero. Map ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelAerodynamicMapIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelAerodynamicMapDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Aerodynamic Map Points list line -->
-                                    <TextBlock Text="Aerodynamic Map Points:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                    <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="Speed (km/h)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Ride Height (mm)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CD" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CL" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                    </Grid>
-                                    <ListBox Name="oneWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type vehicle:AerodynamicMapPoint}">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Path=WindRelativeSpeedDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=RideHeightDisplay}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                    <!-- Aerodynamic Map Points list buttons -->
-                                    <Button Name="oneWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_OneWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_OneWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- New Point line -->
-                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <!-- New point's speed line -->
-                                    <TextBlock Text="Speed" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewAerodynamicMapPointSpeedTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's car height line -->
-                                    <TextBlock Text="Car Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewAerodynamicMapPointRideHeightTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's drag coefficient line -->
-                                    <TextBlock Text="CD" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewAerodynamicMapPointDragCoefficientTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <!-- New point's lift coefficient line -->
-                                    <TextBlock Text="CL" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Engine Docking Window -->
-                            <ContentControl Name="oneWheelEngineDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Engine"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Engine listbox -->
-                                    <ListBox Name="oneWheelEngineListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="2" SelectionChanged="_OneWheelEngineListBox_SelectionChanged"/>
-                                    <!-- Engine listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddEngineToListBox" Content="Add" Click="_OneWheelAddEngineToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteEngineOfListBox" Content="Delete" Click="_OneWheelDeleteEngineOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Engine ID line -->
-                                    <TextBlock Text="Engine ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                    <TextBox Name="oneWheelEngineIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelEngineDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Engine Curves selection line -->
-                                    <TextBlock Text="Engine Curves" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="oneWheelEngineCurvesComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelEngineCurvesListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Maximum throttle line -->
-                                    <TextBlock Text="Max. Throttle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelMaxThrottleTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" VerticalAlignment="Center" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="%" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Fuel density line -->
-                                    <TextBlock Text="Fuel Density" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelFuelDensityTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="kg/m³" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Engine Curves Docking Window -->
-                            <ContentControl Name="oneWheelEngineCurvesDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Engine Curves"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.SideInDockedMode="Left"
-                                        syncfusion:DockingManager.TargetNameInDockedMode="oneWheelEngineDockingWindow"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Transmission listbox -->
-                                    <ListBox Name="oneWheelEngineCurvesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelEngineCurvesListBox_SelectionChanged"/>
-                                    <!-- Transmission listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddEngineCurvesToListBox" Content="Add" Click="_OneWheelAddEngineCurvesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteEngineCurvesOfListBox" Content="Delete" Click="_OneWheelDeleteEngineCurvesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Transmission ID line -->
-                                    <TextBlock Text="Curves ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="oneWheelEngineCurvesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="oneWheelEngineCurvesDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Engine Curves Points list line -->
-                                    <TextBlock Text="Engine Curves Points:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                    <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="RPM" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Torque (N.m)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Braking Torque (N.m)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Spec. Fuel Cons. (g/kW)" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                    </Grid>
-                                    <ListBox Name="oneWheelEngineCurvesPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type vehicle:EngineCurvesPoint}">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Path=RPM}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=Torque}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=BrakingTorque}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=SpecFuelConsDisplay}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Grid>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                    <!-- Engine Curves Points list buttons -->
-                                    <Button Name="oneWheelAddEngineCurvesPointToListBox" Content="Add" Click="_OneWheelAddEngineCurvesPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteEngineCurvesPointOfListBox" Content="Delete" Click="_OneWheelDeleteEngineCurvesPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- New Point line -->
-                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <!-- New point's RPM line -->
-                                    <TextBlock Text="RPM" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewEngineCurvesPointRPMTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="rpm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's torque line -->
-                                    <TextBlock Text="Torque" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewEngineCurvesPointTorqueTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="N.m" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's braking torque line -->
-                                    <TextBlock Text="Braking Torque" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewEngineCurvesPointBrakingTorqueTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="N.m" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's specific fuel consumption line -->
-                                    <TextBlock Text="Spec. Fuel Cons." Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="oneWheelNewEngineCurvesPointSpecFuelConsTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="g/kW" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- NOT DONE Two Wheel Model Docking Manager-->
-                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Collapsed">
                             
                         </syncfusion:DockingManager>
                             <!-- NOT DONE Four Wheel Model Docking Manager-->

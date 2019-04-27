@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace InternshipTest.Vehicle
 {
     /// <summary>
-    /// Contains a one heel model's car subsystems information.
+    /// Contains a one wheel model's car subsystems information.
     /// </summary>
     [Serializable]
-    public class Car
+    public class OneWheelCar
     {
         #region Properties
         /// <summary>
@@ -29,7 +29,7 @@ namespace InternshipTest.Vehicle
         /// <summary>
         /// Car's inertia information.
         /// </summary>
-        public Inertia Inertia { get; set; }
+        public OneWheelInertia Inertia { get; set; }
         /// <summary>
         /// Car's tire subsystem.
         /// </summary>
@@ -45,7 +45,7 @@ namespace InternshipTest.Vehicle
         /// <summary>
         /// Car's aerodynamics subsystem.
         /// </summary>
-        public Aerodynamics Aerodynamics { get; set; }
+        public OneWheelAerodynamics Aerodynamics { get; set; }
         /// <summary>
         /// Car's suspension subsystem.
         /// </summary>
@@ -90,9 +90,9 @@ namespace InternshipTest.Vehicle
         public List<double> WheelSpecFuelConsCurve { get; set; }
         #endregion
         #region Constructors
-        public Car() { }
-        public Car(string carID, string setupID, string description, Inertia inertia, Tire tire,
-            Engine engine, Transmission transmission, Aerodynamics aerodynamics,
+        public OneWheelCar() { }
+        public OneWheelCar(string carID, string setupID, string description, OneWheelInertia inertia, Tire tire,
+            Engine engine, Transmission transmission, OneWheelAerodynamics aerodynamics,
             Suspension suspension, Brakes brakes)
         {
             ID = carID;
@@ -132,7 +132,7 @@ namespace InternshipTest.Vehicle
         public int GetGearNumberFromCarSpeed(double speed)
         {
             // Gets the aerodynamic coefficients
-            AerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
+            OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
             // Lift force [N]
             double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
             // Tire resultant Fz [N]
@@ -151,19 +151,19 @@ namespace InternshipTest.Vehicle
         /// </summary>
         /// <param name="speed"> Car's speed [m/s] </param>
         /// <returns> Interpolated aerodynamic map point </returns>
-        public AerodynamicMapPoint GetAerodynamicCoefficients(double speed)
+        public OneWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed)
         {
             double tol = 1e-6;
             double error;
             double rideHeight = Suspension.RideHeight;
             double liftForce;
-            AerodynamicMapPoint interpolatedAerodynamicMapPoint;
+            OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint;
             int iter = 0;
             do
             {
                 iter++;
                 // Aerodynamic map interpolation
-                interpolatedAerodynamicMapPoint = Aerodynamics.InterpolateAerodynamicMap(speed, rideHeight);
+                interpolatedAerodynamicMapPoint = Aerodynamics.GetAerodynamicMapPointFromParameters(speed, rideHeight);
                 // Calculates the lift force
                 liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // New car height [m]
@@ -470,7 +470,7 @@ namespace InternshipTest.Vehicle
                 speed = (Engine.EngineCurves.CurvesPoints[iRPM].RotationalSpeed * wheelRadius /
                     (Transmission.GearRatiosSet.GearRatios[gearNumber - 1].Ratio * Transmission.PrimaryRatio * Transmission.FinalRatio));
                 // Gets the aerodynamic coefficients
-                AerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
+                OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
                 // Updates the lift force
                 double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // Updates the tire vertical load
@@ -486,28 +486,5 @@ namespace InternshipTest.Vehicle
         }
         #endregion
         #endregion
-    }
-    public class CarMethods
-    {
-        /// <summary>
-        /// Gets the tire's vertical load
-        /// </summary>
-        /// <param name="liftForce"> Aerodynamic lift force [N] </param>
-        /// <param name="inertia"> Car's inertia properties. </param>
-        /// <returns> Tire's vertical load [N] </returns>
-        public static double GetTireVerticalLoad(Inertia inertia, double liftForce)
-        {
-            return (liftForce + inertia.TotalMass * inertia.Gravity) / 4;
-        }
-        /// <summary>
-        /// Gets the wheel radius [m].
-        /// </summary>
-        /// <param name="tire"> Tire's properties. </param>
-        /// <param name="verticalLoad"> Tire's vertical load [N] </param>
-        /// <returns> Wheel radius [m] </returns>
-        public static double GetWheelRadius(Tire tire, double verticalLoad)
-        {
-            return tire.TireModel.RO - verticalLoad / tire.VerticalStiffness;
-        }
     }
 }

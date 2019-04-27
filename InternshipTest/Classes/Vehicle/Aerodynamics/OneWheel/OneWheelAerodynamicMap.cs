@@ -9,27 +9,21 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information of a one wheel model vehicle aerodynamic map.
     /// </summary>
-    public class AerodynamicMap : GenericInfo
+    public class OneWheelAerodynamicMap : GenericInfo
     {
         #region Properties
         /// <summary>
         /// Contains the aerodynamic map points.
         /// </summary>
-        public List<AerodynamicMapPoint> MapPoints { get; set; }
+        public List<OneWheelAerodynamicMapPoint> MapPoints { get; set; }
         #endregion
         #region Constructors
-        public AerodynamicMap() { }
-        public AerodynamicMap(string mapID, string description, List<AerodynamicMapPoint> aerodynamicMapPoints)
+        public OneWheelAerodynamicMap() { }
+        public OneWheelAerodynamicMap(string mapID, string description, List<OneWheelAerodynamicMapPoint> aerodynamicMapPoints)
         {
             ID = mapID;
             Description = description;
             MapPoints = aerodynamicMapPoints;
-        }
-        #endregion
-        #region Methods
-        public override string ToString()
-        {
-            return ID;
         }
         #endregion
     }

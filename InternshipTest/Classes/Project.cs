@@ -15,13 +15,13 @@ namespace InternshipTest
     {
         #region Properties
         // One Wheel Model Cars
-        public List<Vehicle.Car> OneWheelCars { get; set; }
-        public List<Vehicle.Inertia> OneWheelInertias { get; set; }
+        public List<Vehicle.OneWheelCar> OneWheelCars { get; set; }
+        public List<Vehicle.OneWheelInertia> OneWheelInertias { get; set; }
         public List<Vehicle.Suspension> OneWheelSuspensions { get; set; }
         public List<Vehicle.Brakes> OneWheelBrakes { get; set; }
         public List<Vehicle.Tire> OneWheelTires { get; set; }
         public List<Vehicle.Transmission> OneWheelTransmissions { get; set; }
-        public List<Vehicle.Aerodynamics> OneWheelAerodynamics { get; set; }
+        public List<Vehicle.OneWheelAerodynamics> OneWheelAerodynamics { get; set; }
         public List<Vehicle.Engine> OneWheelEngines { get; set; }
         // Two Wheel Model Cars
         // Four Wheel Model Cars
@@ -37,10 +37,10 @@ namespace InternshipTest
         #region Constructors
         public Project() { }
         
-        public Project(List<Vehicle.Car> oneWheelCars, List<Vehicle.Inertia> oneWheelInertias,
+        public Project(List<Vehicle.OneWheelCar> oneWheelCars, List<Vehicle.OneWheelInertia> oneWheelInertias,
             List<Vehicle.Suspension> oneWheelSuspensions, List<Vehicle.Brakes> oneWheelBrakes,
             List<Vehicle.Tire> oneWheelTires, List<Vehicle.Transmission> oneWheelTransmissions,
-            List<Vehicle.Aerodynamics> oneWheelAerodynamics, List<Vehicle.Engine> oneWheelEngines,
+            List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics, List<Vehicle.Engine> oneWheelEngines,
             List<Path> tabularPaths, List<Simulation.GGVDiagram> ggvDiagrams,
             List<Simulation.LapTimeSimulation> lapTimeSimulations)
         {

@@ -17,7 +17,7 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Car and setup associated with the GGV diagram.
         /// </summary>
-        public Vehicle.Car Car { get; set; }
+        public Vehicle.OneWheelCar Car { get; set; }
         /// <summary>
         /// Amount of points at each GG diagram.
         /// </summary>
@@ -51,7 +51,7 @@ namespace InternshipTest.Simulation
         #region Constructors
         public GGVDiagram() { }
 
-        public GGVDiagram(string id, string description, Vehicle.Car car, int amountOfPointsPerSpeed, int amountOfDirections, int amountOfSpeeds, double lowestSpeed, double highestSpeed)
+        public GGVDiagram(string id, string description, Vehicle.OneWheelCar car, int amountOfPointsPerSpeed, int amountOfDirections, int amountOfSpeeds, double lowestSpeed, double highestSpeed)
         {
             ID = id;
             Description = description;
@@ -87,7 +87,7 @@ namespace InternshipTest.Simulation
         /// <param name="speed"> Car speed [m/s]. </param>
         /// <param name="car"> Car and Setup object. </param>
         /// <returns> Interpolated GG diagram </returns>
-        public GGDiagram GetGGDiagramForASpeed(double speed, Vehicle.Car car)
+        public GGDiagram GetGGDiagramForASpeed(double speed, Vehicle.OneWheelCar car)
         {
             // Checks if the speed is in the GGV diagram speed range
             if (speed < LowestSpeed || speed > HighestSpeed) return _GetGGDiagramByExtrapolationOfTheGGVDiagram(speed);
@@ -116,7 +116,7 @@ namespace InternshipTest.Simulation
         /// <param name="speed"> Car's speed [m/s]. </param>
         /// <param name="car"> Car and Setup object. </param>
         /// <returns> Interpolated GG diagram </returns>
-        private GGDiagram _GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.Car car)
+        private GGDiagram _GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.OneWheelCar car)
         {
             // Result initialization
             GGDiagram interpolatedGGDiagram = new GGDiagram(car);
