@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
+    /// <summary>
+    /// Contains the inertia and dimensions parameters of a two wheel vehicle model's.
+    /// </summary>
     class TwoWheelInertiaAndDimensions : Inertia
     {
         #region Properties
@@ -43,20 +46,17 @@ namespace InternshipTest.Vehicle
         {
             ID = id;
             Description = desciption;
-            TotalMass = totalMass;
-            TotalMassDistribution = totalMassDistribution;
-            TotalMassCGHeight = totalMassCGHeight;
-            FrontUnsprungMass = frontUnsprungMass;
-            FrontUnsprungMassCGHeight = frontUnsprungMassCGHeight;
-            RearUnsprungMass = rearUnsprungMass;
-            RearUnsprungMassCGHeight = rearUnsprungMassCGHeight;
-            Wheelbase = wheelbase;
-            RotPartsMI = rotPartsMI;
-            Gravity = gravity;
+            TotalMass = Math.Abs(totalMass);
+            TotalMassDistribution = Math.Abs(totalMassDistribution);
+            TotalMassCGHeight = Math.Abs(totalMassCGHeight);
+            FrontUnsprungMass = Math.Abs(frontUnsprungMass);
+            FrontUnsprungMassCGHeight = Math.Abs(frontUnsprungMassCGHeight);
+            RearUnsprungMass = Math.Abs(rearUnsprungMass);
+            RearUnsprungMassCGHeight = Math.Abs(rearUnsprungMassCGHeight);
+            Wheelbase = Math.Abs(wheelbase);
+            RotPartsMI = Math.Abs(rotPartsMI);
+            Gravity = Math.Abs(gravity);
         }
-        #endregion
-        #region Methods
-
         #endregion
     }
 }

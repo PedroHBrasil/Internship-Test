@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
+    /// <summary>
+    /// Contains the aerodynamic map of a two wheel vehicle model.
+    /// </summary>
+    [Serializable]
     public class TwoWheelAerodynamicMap : GenericInfo
     {
         #region Properties

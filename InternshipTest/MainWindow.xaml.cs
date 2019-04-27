@@ -106,8 +106,8 @@ namespace InternshipTest
             rideHeightTextBox.Text = "50";
 
             // Brakes
-            brakesIDTextBox.Text = "brk1";
-            brakesMaxTorqueTextBox.Text = "2000";
+            oneWheelBrakesIDTextBox.Text = "brk1";
+            oneWheelBrakesMaximumTorqueTextBox.Text = "2000";
 
             // Tire
             tireIDTextBox.Text = "tire1";
@@ -388,7 +388,7 @@ namespace InternshipTest
                 List<Vehicle.OneWheelCar> oneWheelCars = new List<Vehicle.OneWheelCar>();
                 List<Vehicle.OneWheelInertia> oneWheelInertias = new List<Vehicle.OneWheelInertia>();
                 List<Vehicle.Suspension> oneWheelSuspensions = new List<Vehicle.Suspension>();
-                List<Vehicle.Brakes> oneWheelBrakes = new List<Vehicle.Brakes>();
+                List<Vehicle.OneWheelBrakes> oneWheelBrakes = new List<Vehicle.OneWheelBrakes>();
                 List<Vehicle.Tire> oneWheelTires = new List<Vehicle.Tire>();
                 List<Vehicle.Transmission> oneWheelTransmissions = new List<Vehicle.Transmission>();
                 List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics = new List<Vehicle.OneWheelAerodynamics>();
@@ -412,7 +412,7 @@ namespace InternshipTest
                     oneWheelInertias.Add(inertia);
                 foreach (Vehicle.Suspension suspension in suspensionListBox.Items)
                     oneWheelSuspensions.Add(suspension);
-                foreach (Vehicle.Brakes brakes in brakesListBox.Items)
+                foreach (Vehicle.OneWheelBrakes brakes in oneWheelBrakesListBox.Items)
                     oneWheelBrakes.Add(brakes);
                 foreach (Vehicle.Tire tires in tireListBox.Items)
                     oneWheelTires.Add(tires);
@@ -474,8 +474,8 @@ namespace InternshipTest
                 oneWheelInertiaListBox.Items.Add(inertia);
             foreach (Vehicle.Suspension suspension in project.OneWheelSuspensions)
                 suspensionListBox.Items.Add(suspension);
-            foreach (Vehicle.Brakes brakes in project.OneWheelBrakes)
-                brakesListBox.Items.Add(brakes);
+            foreach (Vehicle.OneWheelBrakes brakes in project.OneWheelBrakes)
+                oneWheelBrakesListBox.Items.Add(brakes);
             foreach (Vehicle.Tire tires in project.OneWheelTires)
                 tireListBox.Items.Add(tires);
             foreach (Vehicle.Transmission transmission in project.OneWheelTransmissions)
@@ -510,7 +510,7 @@ namespace InternshipTest
             oneWheelCarAndSetupListBox.Items.Clear();
             oneWheelInertiaListBox.Items.Clear();
             suspensionListBox.Items.Clear();
-            brakesListBox.Items.Clear();
+            oneWheelBrakesListBox.Items.Clear();
             tireListBox.Items.Clear();
             transmissionListBox.Items.Clear();
             oneWheelAerodynamicsListBox.Items.Clear();
@@ -926,6 +926,7 @@ namespace InternshipTest
         #region Aerodynamic Map
 
         #region One Wheel Model
+
         /// <summary>
         /// Creates an aerodynamic map object and adds it to the one wheel model aerodynamic maps listbox.
         /// </summary>
@@ -1045,6 +1046,7 @@ namespace InternshipTest
         #endregion
 
         #region Two Wheel Model
+
         /// <summary>
         /// Creates an aerodynamic map object and adds it to the two wheel model aerodynamic maps listbox.
         /// </summary>
@@ -1168,30 +1170,32 @@ namespace InternshipTest
                 twoWheelAerodynamicMapPointsListBox.Items.RemoveAt(twoWheelAerodynamicMapPointsListBox.Items.IndexOf(twoWheelAerodynamicMapPointsListBox.SelectedItem));
             }
         }
+
         #endregion
         #endregion
         #endregion
 
         #region Brakes
 
+        #region One Wheel Model
         /// <summary>
         /// Creates a one wheel model brakes object and adds it to the one wheel model brakes listbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _AddBrakesToListBox_Click(object sender, RoutedEventArgs e)
+        private void _AddOneWheelBrakesToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (brakesIDTextBox.Text != "" &&
-                double.Parse(brakesMaxTorqueTextBox.Text) != 0)
+            if (oneWheelBrakesIDTextBox.Text != "" &&
+                double.Parse(oneWheelBrakesMaximumTorqueTextBox.Text) != 0)
             {
                 // Gets the object's properties values
-                string brakesID = brakesIDTextBox.Text;
+                string brakesID = oneWheelBrakesIDTextBox.Text;
                 string description = oneWheelBrakesDescriptionTextBox.Text;
-                double maxTorque = double.Parse(brakesMaxTorqueTextBox.Text);
+                double maxTorque = double.Parse(oneWheelBrakesMaximumTorqueTextBox.Text);
                 // Initializes a new object
-                Vehicle.Brakes brakes = new Vehicle.Brakes(brakesID, description, maxTorque);
+                Vehicle.OneWheelBrakes brakes = new Vehicle.OneWheelBrakes(brakesID, description, maxTorque);
                 // Adds the object to the listbox and the combobox
-                brakesListBox.Items.Add(brakes);
+                oneWheelBrakesListBox.Items.Add(brakes);
             }
             else System.Windows.MessageBox.Show(
                 "Could not create Brakes. \n " +
@@ -1208,12 +1212,12 @@ namespace InternshipTest
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _DeleteBrakesOfListBox_Click(object sender, RoutedEventArgs e)
+        private void _DeleteOneWheelBrakesOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (brakesListBox.SelectedItems.Count == 1)
+            if (oneWheelBrakesListBox.SelectedItems.Count == 1)
             {
-                brakesListBox.Items.RemoveAt(brakesListBox.Items.IndexOf(brakesListBox.SelectedItem));
+                oneWheelBrakesListBox.Items.RemoveAt(oneWheelBrakesListBox.Items.IndexOf(oneWheelBrakesListBox.SelectedItem));
             }
         }
 
@@ -1222,18 +1226,91 @@ namespace InternshipTest
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _BrakesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _OneWheelBrakesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (brakesListBox.SelectedItems.Count == 1)
+            if (oneWheelBrakesListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.Brakes brakes = brakesListBox.SelectedItem as Vehicle.Brakes;
+                Vehicle.OneWheelBrakes brakes = oneWheelBrakesListBox.SelectedItem as Vehicle.OneWheelBrakes;
                 // Writes the properties in the UI
-                brakesIDTextBox.Text = brakes.ID;
+                oneWheelBrakesIDTextBox.Text = brakes.ID;
                 oneWheelBrakesDescriptionTextBox.Text = brakes.Description;
-                brakesMaxTorqueTextBox.Text = brakes.MaxTorque.ToString("F3");
+                oneWheelBrakesMaximumTorqueTextBox.Text = brakes.MaximumTorque.ToString("F3");
             }
         }
+        #endregion
+
+        #region Two Wheel Model
+        /// <summary>
+        /// Creates a two wheel model brakes object and adds it to the two wheel model brakes listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAddBrakesToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (twoWheelBrakesIDTextBox.Text != "" &&
+                double.Parse(twoWheelBrakesBrakeBiasTextBox.Text) >= 0 &&
+                double.Parse(twoWheelBrakesBrakeBiasTextBox.Text) <= 100 &&
+                double.Parse(twoWheelBrakesFrontMaximumTorqueTextBox.Text) != 0 &&
+                double.Parse(twoWheelBrakesRearMaximumTorqueTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string brakesID = twoWheelBrakesIDTextBox.Text;
+                string description = twoWheelBrakesDescriptionTextBox.Text;
+                double brakeBias = double.Parse(twoWheelBrakesBrakeBiasTextBox.Text);
+                double frontMaxTorque = double.Parse(twoWheelBrakesFrontMaximumTorqueTextBox.Text);
+                double rearMaxTorque = double.Parse(twoWheelBrakesRearMaximumTorqueTextBox.Text);
+                // Initializes a new object
+                Vehicle.TwoWheelBrakes brakes = new Vehicle.TwoWheelBrakes(brakesID, description, brakeBias, frontMaxTorque, rearMaxTorque);
+                // Adds the object to the listbox and the combobox
+                twoWheelBrakesListBox.Items.Add(brakes);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Brakes. \n " +
+                "   It should have an ID. \n" +
+                "   The brake bias must be between 0 and 100. \n" +
+                "   The front/rear maximum torque can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a two wheel model brakes from the two wheel model brakes listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelDeleteBrakesOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelBrakesListBox.SelectedItems.Count == 1)
+            {
+                twoWheelBrakesListBox.Items.RemoveAt(twoWheelBrakesListBox.Items.IndexOf(twoWheelBrakesListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's two wheel model brakes and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelBrakesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (twoWheelBrakesListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TwoWheelBrakes brakes = twoWheelBrakesListBox.SelectedItem as Vehicle.TwoWheelBrakes;
+                // Writes the properties in the UI
+                twoWheelBrakesIDTextBox.Text = brakes.ID;
+                twoWheelBrakesDescriptionTextBox.Text = brakes.Description;
+                twoWheelBrakesBrakeBiasTextBox.Text = brakes.BrakeBias.ToString("F3");
+                twoWheelBrakesFrontMaximumTorqueTextBox.Text = brakes.FrontMaximumTorque.ToString("F3");
+                twoWheelBrakesRearMaximumTorqueTextBox.Text = brakes.RearMaximumTorque.ToString("F3");
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -2391,7 +2468,7 @@ namespace InternshipTest
                 Vehicle.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.Transmission;
                 Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheelAerodynamics;
                 Vehicle.Suspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.Suspension;
-                Vehicle.Brakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.Brakes;
+                Vehicle.OneWheelBrakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.OneWheelBrakes;
                 // Initializes a new object
                 Vehicle.OneWheelCar car = new Vehicle.OneWheelCar(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
                 // Gets additional parameters

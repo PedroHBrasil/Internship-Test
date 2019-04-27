@@ -254,7 +254,7 @@ namespace InternshipTest.Simulation
             alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelBrakingTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelBrakingTorqueInterp);
             double powertrainBrakingTorque = alglib.spline1dcalc(wheelBrakingTorqueInterp, wheelCenterAngularSpeed) + tireMy * Car.Transmission.AmountOfDrivenWheels;
             // Limit torque due to brakes 
-            double limitTorqueDueToBrakes = -Car.Brakes.MaxTorque + powertrainBrakingTorque + tireMy * 4;
+            double limitTorqueDueToBrakes = -Car.Brakes.MaximumTorque + powertrainBrakingTorque + tireMy * 4;
             // Is the torque limited by the brakes or by the tire grip?
             if (limitTorqueDueToGrip < limitTorqueDueToBrakes)
             {

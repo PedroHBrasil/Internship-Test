@@ -297,8 +297,8 @@
                             </ItemsPanelTemplate>
                         </Grid.Resources>
                         <!-- Aerodynamics Docking Manager-->
-                        <syncfusion:DockingManager Name="aerodynamicsInputDockingManager" Visibility="Visible">
-                            <!-- One Wheel Aerodynamics Docking Window -->
+                        <syncfusion:DockingManager Name="aerodynamicsInputDockingManager" Visibility="Collapsed">
+                            <!-- Aerodynamics Docking Window -->
                             <ContentControl Name="aerodynamicsDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
                                         syncfusion:DockingManager.CanClose="False"
@@ -616,13 +616,13 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Brakes Docking Manager-->
-                        <syncfusion:DockingManager Name="brakesInputDockingManager" Visibility="Collapsed">
-                            <!-- Brakes Docking Window -->
-                            <ContentControl Name="brakesDockingWindow"
+                        <syncfusion:DockingManager Name="brakesInputDockingManager" Visibility="Visible">
+                            <!-- One Wheel Brakes Docking Window -->
+                            <ContentControl Name="oneWheelBrakesDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Brakes"
+                                        syncfusion:DockingManager.Header="One Wheel Model's Brakes"
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="250"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
                                         syncfusion:DockingManager.State="Dock">
@@ -643,21 +643,74 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Brakes listbox -->
-                                    <ListBox Name="brakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_BrakesListBox_SelectionChanged"/>
+                                    <ListBox Name="oneWheelBrakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelBrakesListBox_SelectionChanged"/>
                                     <!-- Brakes listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddBrakesToListBox" Content="Add" Click="_AddBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteBrakesOfListBox" Content="Delete" Click="_DeleteBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelAddBrakesToListBox" Content="Add" Click="_AddOneWheelBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteBrakesOfListBox" Content="Delete" Click="_DeleteOneWheelBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Brakes ID line -->
                                     <TextBlock Text="Brakes ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="brakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <TextBox Name="oneWheelBrakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Description line -->
                                     <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="oneWheelBrakesDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Maximum torque line -->
                                     <TextBlock Text="Max. Torque" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="brakesMaxTorqueTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <syncfusion:DoubleTextBox Name="oneWheelBrakesMaximumTorqueTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="N.m" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- One Wheel Brakes Docking Window -->
+                            <ContentControl Name="twoWheelBrakesDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Two Wheel Model's Brakes"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Brakes listbox -->
+                                    <ListBox Name="twoWheelBrakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelBrakesListBox_SelectionChanged"/>
+                                    <!-- Brakes listbox add and delete buttons -->
+                                    <Button Name="twoWheelAddBrakesToListBox" Content="Add" Click="_TwoWheelAddBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteBrakesOfListBox" Content="Delete" Click="_TwoWheelDeleteBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Brakes ID line -->
+                                    <TextBlock Text="Brakes ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="twoWheelBrakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelBrakesDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Brake bias line -->
+                                    <TextBlock Text="Brake Bias" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelBrakesBrakeBiasTextBox" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="%" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Front maximum torque line -->
+                                    <TextBlock Text="Front Max. Torque" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelBrakesFrontMaximumTorqueTextBox" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N.m" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Rear maximum torque line -->
+                                    <TextBlock Text="Rear Max. Torque" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="twoWheelBrakesRearMaximumTorqueTextBox" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="N.m" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>

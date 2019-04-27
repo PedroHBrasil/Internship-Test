@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
+    /// <summary>
+    /// Contains the information of a two wheel vehicle model's aerodynamic map point.
+    /// </summary>
     public class TwoWheelAerodynamicMapPoint : AerodynamicMapPoint
     {
         #region Properties

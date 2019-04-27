@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace InternshipTest.Vehicle
 {
     /// <summary>
-    /// Contains a one wheel model's car subsystems information.
+    /// Contains a one wheel model's car information.
     /// </summary>
     [Serializable]
     public class OneWheelCar
@@ -53,7 +53,7 @@ namespace InternshipTest.Vehicle
         /// <summary>
         /// Car's brakes susbsystem.
         /// </summary>
-        public Brakes Brakes { get; set; }
+        public OneWheelBrakes Brakes { get; set; }
         
         /// <summary>
         /// Car's suspension equivalent heave stiffness (considers the tire stiffness) [N/m].
@@ -93,7 +93,7 @@ namespace InternshipTest.Vehicle
         public OneWheelCar() { }
         public OneWheelCar(string carID, string setupID, string description, OneWheelInertia inertia, Tire tire,
             Engine engine, Transmission transmission, OneWheelAerodynamics aerodynamics,
-            Suspension suspension, Brakes brakes)
+            Suspension suspension, OneWheelBrakes brakes)
         {
             ID = carID;
             SetupID = setupID;

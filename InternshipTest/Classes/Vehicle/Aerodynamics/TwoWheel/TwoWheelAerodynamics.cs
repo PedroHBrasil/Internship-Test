@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
+    /// <summary>
+    /// Contains the aerodynamics information of a two wheel vehicle model object.
+    /// </summary>
     public class TwoWheelAerodynamics : Aerodynamics
     {
         #region Fields

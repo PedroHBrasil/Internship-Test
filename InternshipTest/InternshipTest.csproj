@@ -136,7 +136,8 @@
     <Compile Include="Classes\Vehicle\Aerodynamics\TwoWheel\TwoWheelAerodynamicMap.cs" />
     <Compile Include="Classes\Vehicle\Aerodynamics\TwoWheel\TwoWheelAerodynamicMapPoint.cs" />
     <Compile Include="Classes\Vehicle\Aerodynamics\TwoWheel\TwoWheelAerodynamics.cs" />
-    <Compile Include="Classes\Vehicle\Brakes\Brakes.cs" />
+    <Compile Include="Classes\Vehicle\Brakes\OneWheelBrakes.cs" />
+    <Compile Include="Classes\Vehicle\Brakes\TwoWheelBrakes.cs" />
     <Compile Include="Classes\Vehicle\Inertia\Inertia.cs" />
     <Compile Include="Classes\Vehicle\Inertia\TwoWheelInertiaAndDimensions.cs" />
     <Compile Include="Classes\Vehicle\OneWheelCar.cs" />
@@ -186,9 +187,7 @@
   <ItemGroup>
     <Resource Include="App.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Reference Files\MathNet.Numerics.dll" />
     <Content Include="Reference Files\Microsoft.CSharp.dll" />
