@@ -616,7 +616,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Brakes Docking Manager-->
-                        <syncfusion:DockingManager Name="brakesInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="brakesInputDockingManager" Visibility="Collapsed">
                             <!-- One Wheel Brakes Docking Window -->
                             <ContentControl Name="oneWheelBrakesDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1027,13 +1027,13 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Suspension And Steering Docking Manager-->
-                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Collapsed">
-                            <!-- Suspension Docking Window -->
-                            <ContentControl Name="suspensionDockingWindow"
+                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Visible">
+                            <!-- Simplified Suspension Docking Window -->
+                            <ContentControl Name="simplifiedSuspensionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Suspension"
+                                        syncfusion:DockingManager.Header="Simplified Suspension"
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="250"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
                                         syncfusion:DockingManager.State="Dock">
@@ -1055,27 +1055,77 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Suspension Listbox -->
-                                    <ListBox Name="suspensionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SuspensionListBox_SelectionChanged"/>
+                                    <ListBox Name="simplifiedSuspensionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SimplifiedSuspensionListBox_SelectionChanged"/>
                                     <!-- Suspension listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddSuspensionToListBox" Content="Add" Click="_AddSuspensionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteSuspensionOfListBox" Content="Delete" Click="_DeleteSuspensionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="addSimplifiedSuspensionToListBox" Content="Add" Click="_AddSimplifiedSuspensionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteSimplifiedSuspensionOfListBox" Content="Delete" Click="_DeleteSimplifiedSuspensionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Suspension ID line -->
                                     <TextBlock Text="Suspension ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="suspensionIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <TextBox Name="simplifiedSuspensionIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Description line -->
                                     <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="suspensionDescriptionTextBox" 
+                                    <TextBox Name="simplifiedSuspensionDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Heave stiffness line -->
                                     <TextBlock Text="Heave Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="heaveStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
+                                    <syncfusion:DoubleTextBox Name="simplifiedSuspensionHeaveStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Ride height line-->
                                     <TextBlock Text="Ride Height" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="rideHeightTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
+                                    <syncfusion:DoubleTextBox Name="simplifiedSuspensionRideHeightTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="mm" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Steering Docking Window -->
+                            <ContentControl Name="steeringSystemDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Steering System"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="300"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="300"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Steering system Listbox -->
+                                    <ListBox Name="steeringSystemListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SteeringSystemListBox_SelectionChanged"/>
+                                    <!-- Steering system listbox add and delete buttons -->
+                                    <Button Name="addSteeringSystemToListBox" Content="Add" Click="_AddSteeringSystemToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="deleteSteeringSystemOfListBox" Content="Delete" Click="_DeleteSteeringSystemOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- ID line -->
+                                    <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="steeringSystemIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="steeringSystemDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Steering Ratio line -->
+                                    <TextBlock Text="Steering Ratio" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="steeringSystemSteeringRatioTextBox" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="[W]/[SW]" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Maximum steering wheel angle line-->
+                                    <TextBlock Text="Max. Steering Wheel Angle" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="steeringSystemMaximumSteeringWheelAngleTextBox" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>

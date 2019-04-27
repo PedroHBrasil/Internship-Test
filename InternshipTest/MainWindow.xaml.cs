@@ -101,9 +101,9 @@ namespace InternshipTest
             oneWheelGravityAccelTextBox.Text = "9.81";
 
             // Suspension
-            suspensionIDTextBox.Text = "susp1";
-            heaveStiffnessTextBox.Text = "100";
-            rideHeightTextBox.Text = "50";
+            simplifiedSuspensionIDTextBox.Text = "susp1";
+            simplifiedSuspensionHeaveStiffnessTextBox.Text = "100";
+            simplifiedSuspensionRideHeightTextBox.Text = "50";
 
             // Brakes
             oneWheelBrakesIDTextBox.Text = "brk1";
@@ -387,7 +387,7 @@ namespace InternshipTest
                 // One Wheel Model Cars
                 List<Vehicle.OneWheelCar> oneWheelCars = new List<Vehicle.OneWheelCar>();
                 List<Vehicle.OneWheelInertia> oneWheelInertias = new List<Vehicle.OneWheelInertia>();
-                List<Vehicle.Suspension> oneWheelSuspensions = new List<Vehicle.Suspension>();
+                List<Vehicle.SimplifiedSuspension> oneWheelSuspensions = new List<Vehicle.SimplifiedSuspension>();
                 List<Vehicle.OneWheelBrakes> oneWheelBrakes = new List<Vehicle.OneWheelBrakes>();
                 List<Vehicle.Tire> oneWheelTires = new List<Vehicle.Tire>();
                 List<Vehicle.Transmission> oneWheelTransmissions = new List<Vehicle.Transmission>();
@@ -410,7 +410,7 @@ namespace InternshipTest
                     oneWheelCars.Add(car);
                 foreach (Vehicle.OneWheelInertia inertia in oneWheelInertiaListBox.Items)
                     oneWheelInertias.Add(inertia);
-                foreach (Vehicle.Suspension suspension in suspensionListBox.Items)
+                foreach (Vehicle.SimplifiedSuspension suspension in simplifiedSuspensionListBox.Items)
                     oneWheelSuspensions.Add(suspension);
                 foreach (Vehicle.OneWheelBrakes brakes in oneWheelBrakesListBox.Items)
                     oneWheelBrakes.Add(brakes);
@@ -472,8 +472,8 @@ namespace InternshipTest
                 oneWheelCarAndSetupListBox.Items.Add(car);
             foreach (Vehicle.OneWheelInertia inertia in project.OneWheelInertias)
                 oneWheelInertiaListBox.Items.Add(inertia);
-            foreach (Vehicle.Suspension suspension in project.OneWheelSuspensions)
-                suspensionListBox.Items.Add(suspension);
+            foreach (Vehicle.SimplifiedSuspension suspension in project.OneWheelSuspensions)
+                simplifiedSuspensionListBox.Items.Add(suspension);
             foreach (Vehicle.OneWheelBrakes brakes in project.OneWheelBrakes)
                 oneWheelBrakesListBox.Items.Add(brakes);
             foreach (Vehicle.Tire tires in project.OneWheelTires)
@@ -509,7 +509,7 @@ namespace InternshipTest
             // One Wheel Model Cars
             oneWheelCarAndSetupListBox.Items.Clear();
             oneWheelInertiaListBox.Items.Clear();
-            suspensionListBox.Items.Clear();
+            simplifiedSuspensionListBox.Items.Clear();
             oneWheelBrakesListBox.Items.Clear();
             tireListBox.Items.Clear();
             transmissionListBox.Items.Clear();
@@ -1685,27 +1685,28 @@ namespace InternshipTest
 
         #endregion
 
-        #region Suspension
+        #region Suspension And Steering
 
+        #region Simplified Suspension
         /// <summary>
-        /// Creates a one wheel model suspension object and adds it to the one wheel model suspension listbox.
+        /// Creates a simplified suspension object and adds it to the simplified suspension listbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _AddSuspensionToListBox_Click(object sender, RoutedEventArgs e)
+        private void _AddSimplifiedSuspensionToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (suspensionIDTextBox.Text != "" &&
-                double.Parse(heaveStiffnessTextBox.Text) != 0)
+            if (simplifiedSuspensionIDTextBox.Text != "" &&
+                double.Parse(simplifiedSuspensionHeaveStiffnessTextBox.Text) != 0)
             {
                 // Gets the object's properties values
-                string suspensionID = suspensionIDTextBox.Text;
-                string description = suspensionDescriptionTextBox.Text;
-                double heaveStiffness = double.Parse(heaveStiffnessTextBox.Text) * 1000;
-                double rideHeight = double.Parse(rideHeightTextBox.Text) / 1000;
+                string suspensionID = simplifiedSuspensionIDTextBox.Text;
+                string description = simplifiedSuspensionDescriptionTextBox.Text;
+                double heaveStiffness = double.Parse(simplifiedSuspensionHeaveStiffnessTextBox.Text) * 1000;
+                double rideHeight = double.Parse(simplifiedSuspensionRideHeightTextBox.Text) / 1000;
                 // Initializes a new object
-                Vehicle.Suspension suspension = new Vehicle.Suspension(suspensionID, description, heaveStiffness, rideHeight);
+                Vehicle.SimplifiedSuspension suspension = new Vehicle.SimplifiedSuspension(suspensionID, description, heaveStiffness, rideHeight);
                 // Adds the object to the listbox
-                suspensionListBox.Items.Add(suspension);
+                simplifiedSuspensionListBox.Items.Add(suspension);
             }
             else System.Windows.MessageBox.Show(
                 "Could not create Suspension. \n " +
@@ -1718,37 +1719,104 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Deletes a one wheel model suspension from the one wheel model suspension listbox.
+        /// Deletes a simplified suspension from the simplified suspension listbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _DeleteSuspensionOfListBox_Click(object sender, RoutedEventArgs e)
+        private void _DeleteSimplifiedSuspensionOfListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (suspensionListBox.SelectedItems.Count == 1)
+            if (simplifiedSuspensionListBox.SelectedItems.Count == 1)
             {
-                suspensionListBox.Items.RemoveAt(suspensionListBox.Items.IndexOf(suspensionListBox.SelectedItem));
+                simplifiedSuspensionListBox.Items.RemoveAt(simplifiedSuspensionListBox.Items.IndexOf(simplifiedSuspensionListBox.SelectedItem));
             }
         }
 
         /// <summary>
-        /// Loads the properties of a listbox's one wheel model suspension and displays it in the UI fields.
+        /// Loads the properties of a listbox's simplified suspension and displays it in the UI fields.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _SuspensionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _SimplifiedSuspensionListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (suspensionListBox.SelectedItems.Count == 1)
+            if (simplifiedSuspensionListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Vehicle.Suspension suspension = suspensionListBox.SelectedItem as Vehicle.Suspension;
+                Vehicle.SimplifiedSuspension suspension = simplifiedSuspensionListBox.SelectedItem as Vehicle.SimplifiedSuspension;
                 // Writes the properties in the UI
-                suspensionIDTextBox.Text = suspension.ID;
-                suspensionDescriptionTextBox.Text = suspension.Description;
-                heaveStiffnessTextBox.Text = (suspension.HeaveStiffness / 1000).ToString("F3");
-                rideHeightTextBox.Text = (suspension.RideHeight * 1000).ToString("F3");
+                simplifiedSuspensionIDTextBox.Text = suspension.ID;
+                simplifiedSuspensionDescriptionTextBox.Text = suspension.Description;
+                simplifiedSuspensionHeaveStiffnessTextBox.Text = (suspension.HeaveStiffness / 1000).ToString("F3");
+                simplifiedSuspensionRideHeightTextBox.Text = (suspension.RideHeight * 1000).ToString("F3");
             }
         }
+        #endregion
+
+        #region Steering System
+
+        /// <summary>
+        /// Creates a steering system object and adds it to the steering system listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _AddSteeringSystemToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (steeringSystemIDTextBox.Text != "" &&
+                double.Parse(steeringSystemMaximumSteeringWheelAngleTextBox.Text) != 0)
+            {
+                // Gets the object's properties values
+                string id = steeringSystemIDTextBox.Text;
+                string description = steeringSystemDescriptionTextBox.Text;
+                double steeringRatio = double.Parse(steeringSystemSteeringRatioTextBox.Text);
+                double maximumSteeringWheelAngle = double.Parse(steeringSystemMaximumSteeringWheelAngleTextBox.Text) * Math.PI / 180;
+                // Initializes a new object
+                Vehicle.SteeringSystem steeringSystem = new Vehicle.SteeringSystem(id, description, steeringRatio, maximumSteeringWheelAngle);
+                // Adds the object to the listbox
+                steeringSystemListBox.Items.Add(steeringSystem);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Steering System. \n " +
+                "   It should have an ID. \n" +
+                "   The maximum steering wheel angle can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a steering system from the steering system listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _DeleteSteeringSystemOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (steeringSystemListBox.SelectedItems.Count == 1)
+            {
+                steeringSystemListBox.Items.RemoveAt(steeringSystemListBox.Items.IndexOf(steeringSystemListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's steering system and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _SteeringSystemListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (steeringSystemListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.SteeringSystem steeringSystem = steeringSystemListBox.SelectedItem as Vehicle.SteeringSystem;
+                // Writes the properties in the UI
+                steeringSystemIDTextBox.Text = steeringSystem.ID;
+                steeringSystemDescriptionTextBox.Text = steeringSystem.Description;
+                steeringSystemSteeringRatioTextBox.Text = (steeringSystem.SteeringRatio).ToString("F3");
+                steeringSystemMaximumSteeringWheelAngleTextBox.Text = (steeringSystem.MaximumSteeringWheelAngle * 180 / Math.PI).ToString("F3");
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -2467,7 +2535,7 @@ namespace InternshipTest
                 Vehicle.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.Engine;
                 Vehicle.Transmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.Transmission;
                 Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheelAerodynamics;
-                Vehicle.Suspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.Suspension;
+                Vehicle.SimplifiedSuspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.SimplifiedSuspension;
                 Vehicle.OneWheelBrakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.OneWheelBrakes;
                 // Initializes a new object
                 Vehicle.OneWheelCar car = new Vehicle.OneWheelCar(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);

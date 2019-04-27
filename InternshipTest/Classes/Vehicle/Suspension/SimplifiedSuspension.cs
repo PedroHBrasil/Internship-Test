@@ -7,35 +7,29 @@ using System.Threading.Tasks;
 namespace InternshipTest.Vehicle
 {
     /// <summary>
-    /// Contains the information about a one wheel model's suspension subsystem.
+    /// Contains the information about a simplified suspension subsystem (single, front or rear).
     /// </summary>
-    public class Suspension : GenericInfo
+    public class SimplifiedSuspension : GenericInfo
     {
         #region Properties
         /// <summary>
-        /// Equivalent stiffness in heave of the car [N/m].
+        /// Equivalent stiffness in heave of the car/axis [N/m].
         /// </summary>
         public double HeaveStiffness { get; set; }
         /// <summary>
-        /// Distance between the ground and the car (reference for the aerodynamic map) [m].
+        /// Distance between the ground and the car/axis (reference for the aerodynamic map) [m].
         /// </summary>
         public double RideHeight { get; set; }
         #endregion
         #region Constructors
-        public Suspension() { }
+        public SimplifiedSuspension() { }
 
-        public Suspension(string suspensionID, string description, double heaveStiffness, double rideHeight)
+        public SimplifiedSuspension(string suspensionID, string description, double heaveStiffness, double rideHeight)
         {
             ID = suspensionID;
             Description = description;
             HeaveStiffness = Math.Abs(heaveStiffness);
             RideHeight = Math.Abs(rideHeight);
-        }
-        #endregion
-        #region Methods
-        public override string ToString()
-        {
-            return ID;
         }
         #endregion
     }

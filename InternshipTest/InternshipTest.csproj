@@ -143,12 +143,13 @@
     <Compile Include="Classes\Vehicle\OneWheelCar.cs" />
     <Compile Include="Classes\Vehicle\Engine\Engine.cs" />
     <Compile Include="Classes\Vehicle\Engine\EngineCurves.cs" />
+    <Compile Include="Classes\Vehicle\Suspension\SteeringSystem.cs" />
     <Compile Include="Classes\Vehicle\Transmission\GearRatiosSet.cs" />
     <Compile Include="Classes\Vehicle\Inertia\OneWheelInertia.cs" />
     <Compile Include="Classes\Vehicle\Engine\EngineCurvesPoint.cs" />
     <Compile Include="Classes\Vehicle\Aerodynamics\OneWheel\OneWheelAerodynamicMapPoint.cs" />
     <Compile Include="Classes\Vehicle\Transmission\GearRatio.cs" />
-    <Compile Include="Classes\Vehicle\Suspension\Suspension.cs" />
+    <Compile Include="Classes\Vehicle\Suspension\SimplifiedSuspension.cs" />
     <Compile Include="Classes\Vehicle\Tire\Tire.cs" />
     <Compile Include="Classes\Vehicle\Transmission\Transmission.cs" />
     <Compile Include="Classes\Vehicle\Tire\TireModelMF52.cs" />
