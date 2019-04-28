@@ -1813,7 +1813,8 @@ namespace InternshipTest
                 // Writes the properties in the UI
                 steeringSystemIDTextBox.Text = steeringSystem.ID;
                 steeringSystemDescriptionTextBox.Text = steeringSystem.Description;
-                steeringSystemFrontSteeringRatioTextBox.Text = (steeringSystem.SteeringRatio).ToString("F3");
+                steeringSystemFrontSteeringRatioTextBox.Text = (steeringSystem.FrontSteeringRatio).ToString("F3");
+                steeringSystemRearSteeringRatioTextBox.Text = (steeringSystem.RearSteeringRatio).ToString("F3");
                 steeringSystemMaximumSteeringWheelAngleTextBox.Text = (steeringSystem.MaximumSteeringWheelAngle * 180 / Math.PI).ToString("F3");
             }
         }
