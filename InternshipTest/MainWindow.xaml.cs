@@ -3332,7 +3332,7 @@ namespace InternshipTest
             TabularPathSectionsSet sectionsSet = new TabularPathSectionsSet("", "", pathSections);
             // Initializes a new path with the path sections information
             PathSectorsSet sectorsSet = new PathSectorsSet("", "", new List<PathSector>() { new PathSector(0, 0) });
-            Path path = new Path("", "", sectorsSet, sectionsSet, 100);
+            Path path = new Path("", "", sectorsSet, sectionsSet, 0.1);
             path.GeneratePathPointsParametersFromTabular();
             PathViewModel pathViewModel = new PathViewModel(path);
             // Initializes a new chart
