@@ -297,13 +297,13 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Changes the application theme according o the combobox selection.
+        /// Changes the application theme according o the ComboBox selection.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _ThemeSelectionCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _ThemeSelectionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            ComboBoxItem themeItem = themeSelectionCombobox.SelectedItem as ComboBoxItem;
+            ComboBoxItem themeItem = themeSelectionComboBox.SelectedItem as ComboBoxItem;
             CurrentVisualStyle = themeItem.Content.ToString();
         }
 
@@ -762,7 +762,7 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Updates the aerodynamic maps combobox items an displays changes the aerodynamics listbox to match the selection in the vehicle model selction combobox.
+        /// Updates the aerodynamic maps ComboBox items an displays changes the aerodynamics listbox to match the selection in the vehicle model selction ComboBox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -812,7 +812,7 @@ namespace InternshipTest
                 // Initializes a new object
                 Vehicle.OneWheelAerodynamics aerodynamics = new Vehicle.OneWheelAerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
                 aerodynamics.GetAerodynamicMapParameters();
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
             }
             else System.Windows.MessageBox.Show(
@@ -876,7 +876,7 @@ namespace InternshipTest
                 // Initializes a new object
                 Vehicle.TwoWheelAerodynamics aerodynamics = new Vehicle.TwoWheelAerodynamics(aerodynamicID, description, aerodynamicMap, frontalArea, airDensity);
                 aerodynamics.GetAerodynamicMapParameters();
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 twoWheelAerodynamicsListBox.Items.Add(aerodynamics);
             }
             else System.Windows.MessageBox.Show(
@@ -948,7 +948,7 @@ namespace InternshipTest
                 }
                 // Initializes a new object
                 Vehicle.OneWheelAerodynamicMap aerodynamicMap = new Vehicle.OneWheelAerodynamicMap(mapID, description, aerodynamicMapPoints);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 oneWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
             }
             else System.Windows.MessageBox.Show(
@@ -1012,7 +1012,7 @@ namespace InternshipTest
             double liftCoefficient = double.Parse(newOneWheelAerodynamicMapPointLiftCoefficientTextBox.Text);
             // Initializes a new object
             Vehicle.OneWheelAerodynamicMapPoint aerodynamicMapPoint = new Vehicle.OneWheelAerodynamicMapPoint(speed, rideHeight, dragCoefficient, liftCoefficient);
-            // Adds the object to the listbox and the combobox
+            // Adds the object to the listbox and the ComboBox
             oneWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
             // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
             List<Vehicle.OneWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.OneWheelAerodynamicMapPoint>();
@@ -1068,7 +1068,7 @@ namespace InternshipTest
                 }
                 // Initializes a new object
                 Vehicle.TwoWheelAerodynamicMap aerodynamicMap = new Vehicle.TwoWheelAerodynamicMap(mapID, description, aerodynamicMapPoints);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 twoWheelAerodynamicMapsListBox.Items.Add(aerodynamicMap);
             }
             else System.Windows.MessageBox.Show(
@@ -1137,7 +1137,7 @@ namespace InternshipTest
             double yawMomentCoefficient = double.Parse(newTwoWheelAerodynamicMapPointYawMomentCoefficientTextBox.Text);
             // Initializes a new object
             Vehicle.TwoWheelAerodynamicMapPoint aerodynamicMapPoint = new Vehicle.TwoWheelAerodynamicMapPoint(speed, frontRideHeight, rearRideHeight, carSlipAngle, dragCoefficient, sideForceCoefficient, liftCoefficient, pitchMomentCoefficient, yawMomentCoefficient);
-            // Adds the object to the listbox and the combobox
+            // Adds the object to the listbox and the ComboBox
             twoWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
             // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
             List<Vehicle.TwoWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.TwoWheelAerodynamicMapPoint>();
@@ -1194,7 +1194,7 @@ namespace InternshipTest
                 double maxTorque = double.Parse(oneWheelBrakesMaximumTorqueTextBox.Text);
                 // Initializes a new object
                 Vehicle.OneWheelBrakes brakes = new Vehicle.OneWheelBrakes(brakesID, description, maxTorque);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 oneWheelBrakesListBox.Items.Add(brakes);
             }
             else System.Windows.MessageBox.Show(
@@ -1262,7 +1262,7 @@ namespace InternshipTest
                 double rearMaxTorque = double.Parse(twoWheelBrakesRearMaximumTorqueTextBox.Text);
                 // Initializes a new object
                 Vehicle.TwoWheelBrakes brakes = new Vehicle.TwoWheelBrakes(brakesID, description, brakeBias, frontMaxTorque, rearMaxTorque);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 twoWheelBrakesListBox.Items.Add(brakes);
             }
             else System.Windows.MessageBox.Show(
@@ -1337,7 +1337,7 @@ namespace InternshipTest
                 double fuelDensity = double.Parse(fuelDensityTextBox.Text);
                 // Initializes a new object
                 Vehicle.Engine engine = new Vehicle.Engine(engineID, description, engineCurves, maxThrottle, fuelDensity);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 engineListBox.Items.Add(engine);
             }
             else System.Windows.MessageBox.Show(
@@ -1410,7 +1410,7 @@ namespace InternshipTest
                 }
                 // Initializes a new object
                 Vehicle.EngineCurves engineCurves = new Vehicle.EngineCurves(curvesID, description, engineCurvesPoints);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 engineCurvesListBox.Items.Add(engineCurves);
             }
             else System.Windows.MessageBox.Show(
@@ -1477,7 +1477,7 @@ namespace InternshipTest
                 double specFuelCons = double.Parse(newEngineCurvesPointSpecFuelConsTextBox.Text);
                 // Initializes a new object
                 Vehicle.EngineCurvesPoint engineCurvesPoint = new Vehicle.EngineCurvesPoint(rpm, torque, brakingTorque, specFuelCons);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 engineCurvesPointsListBox.Items.Add(engineCurvesPoint);
                 // Reorders the engine curves points listbox items in ascending order of rpm
                 List<Vehicle.EngineCurvesPoint> engineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
@@ -1767,10 +1767,11 @@ namespace InternshipTest
                 // Gets the object's properties values
                 string id = steeringSystemIDTextBox.Text;
                 string description = steeringSystemDescriptionTextBox.Text;
-                double steeringRatio = double.Parse(steeringSystemSteeringRatioTextBox.Text);
+                double frontSteeringRatio = double.Parse(steeringSystemFrontSteeringRatioTextBox.Text);
+                double rearSteeringRatio = double.Parse(steeringSystemRearSteeringRatioTextBox.Text);
                 double maximumSteeringWheelAngle = double.Parse(steeringSystemMaximumSteeringWheelAngleTextBox.Text) * Math.PI / 180;
                 // Initializes a new object
-                Vehicle.SteeringSystem steeringSystem = new Vehicle.SteeringSystem(id, description, steeringRatio, maximumSteeringWheelAngle);
+                Vehicle.SteeringSystem steeringSystem = new Vehicle.SteeringSystem(id, description, frontSteeringRatio, rearSteeringRatio, maximumSteeringWheelAngle);
                 // Adds the object to the listbox
                 steeringSystemListBox.Items.Add(steeringSystem);
             }
@@ -1812,7 +1813,7 @@ namespace InternshipTest
                 // Writes the properties in the UI
                 steeringSystemIDTextBox.Text = steeringSystem.ID;
                 steeringSystemDescriptionTextBox.Text = steeringSystem.Description;
-                steeringSystemSteeringRatioTextBox.Text = (steeringSystem.SteeringRatio).ToString("F3");
+                steeringSystemFrontSteeringRatioTextBox.Text = (steeringSystem.SteeringRatio).ToString("F3");
                 steeringSystemMaximumSteeringWheelAngleTextBox.Text = (steeringSystem.MaximumSteeringWheelAngle * 180 / Math.PI).ToString("F3");
             }
         }
@@ -1841,7 +1842,7 @@ namespace InternshipTest
                 Vehicle.TireModelMF52 tireModelMF52 = tireModelComboBox.SelectedItem as Vehicle.TireModelMF52;
                 // Initializes a new object
                 Vehicle.Tire tire = new Vehicle.Tire(tireID, description, tireModelMF52, verticalStiffness);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tireListBox.Items.Add(tire);
             }
             else System.Windows.MessageBox.Show(
@@ -1949,7 +1950,7 @@ namespace InternshipTest
                 };
                 // Creates the Tire Model object
                 Vehicle.TireModelMF52 tireModelMF52 = new Vehicle.TireModelMF52(modelID, description, tireModelFile, lambdaList, alphaMin, alphaMax, kappaMin, kappaMax);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tireModelListBox.Items.Add(tireModelMF52);
                 tireModelDisplayCheckListBox.Items.Add(tireModelMF52);
             }
@@ -2324,7 +2325,7 @@ namespace InternshipTest
                 // Initializes a new object
                 Vehicle.OneWheelTransmission transmission = new Vehicle.OneWheelTransmission(
                     transmissionID, description, type, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 oneWheelTransmissionListBox.Items.Add(transmission);
             }
             else System.Windows.MessageBox.Show(
@@ -2402,7 +2403,7 @@ namespace InternshipTest
                 // Initializes a new object
                 Vehicle.TwoWheelTransmission transmission = new Vehicle.TwoWheelTransmission(
                     transmissionID, description, torqueBias, primaryRatio, finalRatio, gearShiftTime, efficiency, gearRatiosSet);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 twoWheelTransmissionListBox.Items.Add(transmission);
             }
             else System.Windows.MessageBox.Show(
@@ -2478,7 +2479,7 @@ namespace InternshipTest
                 }
                 // Initializes a new object
                 Vehicle.GearRatiosSet gearRatiosSet = new Vehicle.GearRatiosSet(setID, description, gearRatios);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 gearRatiosSetsListBox.Items.Add(gearRatiosSet);
             }
             else System.Windows.MessageBox.Show(
@@ -2542,7 +2543,7 @@ namespace InternshipTest
                 if (ratio < 0) ratio = -ratio;
                 // Initializes a new object
                 Vehicle.GearRatio gearRatio = new Vehicle.GearRatio(ratio);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 gearRatiosListBox.Items.Add(gearRatio);
                 // Reorders the gear ratios listbox items in descending order
                 List<Vehicle.GearRatio> gearRatios = new List<Vehicle.GearRatio>();
@@ -2586,10 +2587,10 @@ namespace InternshipTest
 
         #region One Wheel Car Input Methods
 
-        #region CarAndSetup
+        #region Single Car And Setup
 
         /// <summary>
-        /// Creates a one wheel model car/setup object and adds it to the one wheel mmodel car/setup listbox.
+        /// Creates a one wheel model car/setup object and adds it to the one wheel model car/setup listbox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -2597,28 +2598,28 @@ namespace InternshipTest
         {
             if (oneWheelCarIDTextBox.Text != "" &&
                 oneWheelSetupIDTextBox.Text != "" &&
-                oneWheelInertiaCombobox.Text != "" &&
-                oneWheelEngineCombobox.Text != "" &&
-                oneWheelTransmissionCombobox.Text != "" &&
-                oneWheelAerodynamicsCombobox.Text != "" &&
-                oneWheelSuspensionCombobox.Text != "" &&
-                oneWheelBrakesCombobox.Text != "")
+                oneWheelAerodynamicsComboBox.Text != "" &&
+                oneWheelBrakesComboBox.Text != "" &&
+                oneWheelEngineComboBox.Text != "" &&
+                oneWheelInertiaComboBox.Text != "" &&
+                oneWheelSuspensionComboBox.Text != "" &&
+                oneWheelTireComboBox.Text != "" &&
+                oneWheelTransmissionComboBox.Text != "")
             {
                 // Gets the object's properties values
                 string carID = oneWheelCarIDTextBox.Text;
                 string setupID = oneWheelSetupIDTextBox.Text;
                 string description = oneWheelCarAndSetupDescriptionTextBox.Text;
-                Vehicle.OneWheelInertia inertia = oneWheelInertiaCombobox.SelectedItem as Vehicle.OneWheelInertia;
-                Vehicle.Tire tire = oneWheelTireCombobox.SelectedItem as Vehicle.Tire;
-                Vehicle.Engine engine = oneWheelEngineCombobox.SelectedItem as Vehicle.Engine;
-                Vehicle.OneWheelTransmission transmission = oneWheelTransmissionCombobox.SelectedItem as Vehicle.OneWheelTransmission;
-                Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsCombobox.SelectedItem as Vehicle.OneWheelAerodynamics;
-                Vehicle.SimplifiedSuspension suspension = oneWheelSuspensionCombobox.SelectedItem as Vehicle.SimplifiedSuspension;
-                Vehicle.OneWheelBrakes brakes = oneWheelBrakesCombobox.SelectedItem as Vehicle.OneWheelBrakes;
+                Vehicle.OneWheelAerodynamics aerodynamics = oneWheelAerodynamicsComboBox.SelectedItem as Vehicle.OneWheelAerodynamics;
+                Vehicle.OneWheelBrakes brakes = oneWheelBrakesComboBox.SelectedItem as Vehicle.OneWheelBrakes;
+                Vehicle.Engine engine = oneWheelEngineComboBox.SelectedItem as Vehicle.Engine;
+                Vehicle.OneWheelInertia inertia = oneWheelInertiaComboBox.SelectedItem as Vehicle.OneWheelInertia;
+                Vehicle.SimplifiedSuspension suspension = oneWheelSuspensionComboBox.SelectedItem as Vehicle.SimplifiedSuspension;
+                Vehicle.Tire tire = oneWheelTireComboBox.SelectedItem as Vehicle.Tire;
+                Vehicle.OneWheelTransmission transmission = oneWheelTransmissionComboBox.SelectedItem as Vehicle.OneWheelTransmission;
                 // Initializes a new object
-                Vehicle.OneWheelCar car = new Vehicle.OneWheelCar(carID, setupID, description, inertia, tire, engine, transmission, aerodynamics, suspension, brakes);
+                Vehicle.OneWheelCar car = new Vehicle.OneWheelCar(carID, setupID, description, aerodynamics, brakes, engine, inertia, suspension, tire, transmission);
                 // Gets additional parameters
-                car.GetEquivalentHeaveStiffness();
                 car.GetLinearAccelerationParameters();
                 car.GetCarOperationSpeedRange();
                 // Adds the object to the listbox
@@ -2664,16 +2665,117 @@ namespace InternshipTest
                 oneWheelCarIDTextBox.Text = car.ID;
                 oneWheelSetupIDTextBox.Text = car.SetupID;
                 oneWheelCarAndSetupDescriptionTextBox.Text = car.Description;
-                oneWheelInertiaCombobox.Text = car.Inertia.ID;
-                oneWheelTireCombobox.Text = car.Tire.ID;
-                oneWheelEngineCombobox.Text = car.Engine.ID;
-                oneWheelTransmissionCombobox.Text = car.Transmission.ID;
-                oneWheelAerodynamicsCombobox.Text = car.Aerodynamics.ID;
-                oneWheelSuspensionCombobox.Text = car.Suspension.ID;
-                oneWheelBrakesCombobox.Text = car.Brakes.ID;
+                oneWheelAerodynamicsComboBox.Text = car.Aerodynamics.ID;
+                oneWheelBrakesComboBox.Text = car.Brakes.ID;
+                oneWheelEngineComboBox.Text = car.Engine.ID;
+                oneWheelInertiaComboBox.Text = car.Inertia.ID;
+                oneWheelSuspensionComboBox.Text = car.Suspension.ID;
+                oneWheelTireComboBox.Text = car.Tire.ID;
+                oneWheelTransmissionComboBox.Text = car.Transmission.ID;
             }
         }
 
+        #endregion
+
+        #endregion
+
+        #region Two Wheel Car Input Methods
+
+        #region Single Car And Setup
+
+        /// <summary>
+        /// Creates a two wheel model car/setup object and adds it to the two wheel model car/setup listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelAddCarAndSetupToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (twoWheelCarIDTextBox.Text != "" &&
+                   twoWheelSetupIDTextBox.Text != "" &&
+                   twoWheelAerodynamicsComboBox.Text != "" &&
+                   twoWheelBrakesComboBox.Text != "" &&
+                   twoWheelEngineComboBox.Text != "" &&
+                   twoWheelInertiaAndDimensionsComboBox.Text != "" &&
+                   twoWheelFrontSuspensionComboBox.Text != "" &&
+                   twoWheelRearSuspensionComboBox.Text != "" &&
+                   twoWheelSteeringSystemComboBox.Text != "" &&
+                   twoWheelFrontTireComboBox.Text != "" &&
+                   twoWheelRearTireComboBox.Text != "" &&
+                   twoWheelTransmissionComboBox.Text != "")
+            {
+                // Gets the object's properties values
+                string carID = twoWheelCarIDTextBox.Text;
+                string setupID = twoWheelSetupIDTextBox.Text;
+                string description = twoWheelCarAndSetupDescriptionTextBox.Text;
+                Vehicle.TwoWheelAerodynamics aerodynamics = twoWheelAerodynamicsComboBox.SelectedItem as Vehicle.TwoWheelAerodynamics;
+                Vehicle.TwoWheelBrakes brakes = twoWheelBrakesComboBox.SelectedItem as Vehicle.TwoWheelBrakes;
+                Vehicle.Engine engine = twoWheelEngineComboBox.SelectedItem as Vehicle.Engine;
+                Vehicle.TwoWheelInertiaAndDimensions inertiaAndDimensions = twoWheelInertiaAndDimensionsComboBox.SelectedItem as Vehicle.TwoWheelInertiaAndDimensions;
+                Vehicle.SimplifiedSuspension frontSuspension = twoWheelFrontSuspensionComboBox.SelectedItem as Vehicle.SimplifiedSuspension;
+                Vehicle.SimplifiedSuspension rearSuspension = twoWheelRearSuspensionComboBox.SelectedItem as Vehicle.SimplifiedSuspension;
+                Vehicle.SteeringSystem steering = twoWheelSteeringSystemComboBox.SelectedItem as Vehicle.SteeringSystem;
+                Vehicle.Tire frontTire = twoWheelFrontTireComboBox.SelectedItem as Vehicle.Tire;
+                Vehicle.Tire rearTire = twoWheelRearTireComboBox.SelectedItem as Vehicle.Tire;
+                Vehicle.TwoWheelTransmission transmission = twoWheelTransmissionComboBox.SelectedItem as Vehicle.TwoWheelTransmission;
+                // Initializes a new object
+                Vehicle.TwoWheelCar car = new Vehicle.TwoWheelCar(carID, setupID, description, aerodynamics, brakes, engine, inertiaAndDimensions, frontSuspension, rearSuspension, steering, frontTire, rearTire, transmission);
+                // Gets additional parameters
+
+                // Adds the object to the listbox
+                twoWheelCarAndSetupListBox.Items.Add(car);
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Car/Setup. \n" +
+                "   It should have a car ID. \n" +
+                "   It should have a setup ID. \n" +
+                "   All of the components boxes must be filled.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        /// <summary>
+        /// Deletes a two wheel model car/setup from the two wheel model car/setup listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelDeleteCarAndSetupOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (twoWheelCarAndSetupListBox.SelectedItems.Count == 1)
+            {
+                twoWheelCarAndSetupListBox.Items.RemoveAt(twoWheelCarAndSetupListBox.Items.IndexOf(twoWheelCarAndSetupListBox.SelectedItem));
+            }
+        }
+
+        /// <summary>
+        /// Loads the properties of a listbox's two wheel model car/setup and displays it in the UI fields.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelCarAndSetupListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (twoWheelCarAndSetupListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                Vehicle.TwoWheelCar car = twoWheelCarAndSetupListBox.SelectedItem as Vehicle.TwoWheelCar;
+                // Writes the properties in the UI
+                twoWheelCarIDTextBox.Text = car.ID;
+                twoWheelSetupIDTextBox.Text = car.SetupID;
+                twoWheelCarAndSetupDescriptionTextBox.Text = car.Description;
+                twoWheelAerodynamicsComboBox.Text = car.Aerodynamics.ID;
+                twoWheelBrakesComboBox.Text = car.Brakes.ID;
+                twoWheelEngineComboBox.Text = car.Engine.ID;
+                twoWheelInertiaAndDimensionsComboBox.Text = car.InertiaAndDimensions.ID;
+                twoWheelFrontSuspensionComboBox.Text = car.FrontSuspension.ID;
+                twoWheelRearSuspensionComboBox.Text = car.RearSuspension.ID;
+                twoWheelSteeringSystemComboBox.Text = car.Steering.ID;
+                twoWheelFrontTireComboBox.Text = car.FrontTire.ID;
+                twoWheelRearTireComboBox.Text = car.RearTire.ID;
+                twoWheelTransmissionComboBox.Text = car.Transmission.ID;
+            }
+        }
         #endregion
 
         #endregion
@@ -2734,7 +2836,7 @@ namespace InternshipTest
                 // Initializes a new object
                 Path path = new Path(pathID, description, pathSectorsSet, pathSectionsSet, resolution);
                 path.GeneratePathPointsParametersFromTabular();
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tabularPathsListBox.Items.Add(path);
             }
             else System.Windows.MessageBox.Show(
@@ -2931,7 +3033,7 @@ namespace InternshipTest
                 }
                 // Initializes a new object
                 PathSectorsSet pathSectorsSet = new PathSectorsSet(id, description, pathSectorsStartDistances);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tabularPathSectorsSetsListBox.Items.Add(pathSectorsSet);
             }
             else System.Windows.MessageBox.Show(
@@ -2995,7 +3097,7 @@ namespace InternshipTest
                 if (startDistance < 0) startDistance = -startDistance;
                 // Initializes a new object
                 PathSector pathSector = new PathSector(0, startDistance);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tabularPathSectorsStartDistancesListBox.Items.Add(pathSector);
                 _ReorderAndResetListboxSectorsIndexes();
             }
@@ -3074,7 +3176,7 @@ namespace InternshipTest
                 }
                 // Initializes a new object
                 TabularPathSectionsSet pathSectionsSet = new TabularPathSectionsSet(id, description, pathSections);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tabularPathSectionsSetsListBox.Items.Add(pathSectionsSet);
             }
             else System.Windows.MessageBox.Show(
@@ -3161,7 +3263,7 @@ namespace InternshipTest
                 if (finalRadius < 0) finalRadius = -finalRadius;
                 // Initializes a new object
                 TabularPathSection pathSection = new TabularPathSection(sectionType, length, initialRadius, finalRadius);
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 tabularPathSectionsListBox.Items.Add(pathSection);
                 // Updates the path preview chart
                 if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked) _UpdateTabularPathSectionsPreviewChart();
@@ -3329,7 +3431,7 @@ namespace InternshipTest
                 // Initializes a new object
                 Simulation.GGVDiagram ggvDiagram = new Simulation.GGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed);
                 ggvDiagram.GenerateGGVDiagram();
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 simulationGGVDiagramListBox.Items.Add(ggvDiagram);
             }
             else System.Windows.MessageBox.Show(
@@ -3529,7 +3631,7 @@ namespace InternshipTest
                 Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(id, description, path, ggvDiagrams, isFirstLap);
                 Results.LapTimeSimulationResults results = lapTimeSimulation.RunLapTimeSimulation();
                 results.GetElapsedTimeAndLapTime();
-                // Adds the object to the listbox and the combobox
+                // Adds the object to the listbox and the ComboBox
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
                 lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(results);
             }
@@ -3624,7 +3726,7 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Changes the items of the new sector index combobox to match the selected path.
+        /// Changes the items of the new sector index ComboBox to match the selected path.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -3721,13 +3823,13 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Updates the current lap time simulation analysis chart accordingly to the specified type in the combobox.
+        /// Updates the current lap time simulation analysis chart accordingly to the specified type in the ComboBox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisChartTypeCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _LapTimeSimulationResultsAnalysisChartTypeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            switch (lapTimeSimulationResultsAnalysisChartTypeCombobox.SelectedItem.ToString())
+            switch (lapTimeSimulationResultsAnalysisChartTypeComboBox.SelectedItem.ToString())
             {
                 case "2D Chart":
                     lapTimeSimulationResultsAnalysis2DChartMenuGrid.Visibility = Visibility.Visible;
@@ -3755,13 +3857,13 @@ namespace InternshipTest
         #region 2D Chart
 
         /// <summary>
-        /// Updates the current lap time simulation analysis 2D chart when the x axis combobox item gets changed.
+        /// Updates the current lap time simulation analysis 2D chart when the x axis ComboBox item gets changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _LapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
@@ -3769,13 +3871,13 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Updates the current lap time simulation analysis 2D chart when the y axis combobox item gets changed.
+        /// Updates the current lap time simulation analysis 2D chart when the y axis ComboBox item gets changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _LapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
@@ -3783,13 +3885,13 @@ namespace InternshipTest
         }
 
         /// <summary>
-        /// Updates the current lap time simulation analysis 2D chart when the curve type combobox item gets changed.
+        /// Updates the current lap time simulation analysis 2D chart when the curve type ComboBox item gets changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
@@ -3832,8 +3934,8 @@ namespace InternshipTest
                 Results.LapTimeSimulationResultsViewModel resultsViewModel = new Results.LapTimeSimulationResultsViewModel(results);
                 fastLineSeries = new FastLineSeries() { ItemsSource = resultsViewModel.ResultsDisplayCollection };
                 fastScatterSeries = new FastScatterBitmapSeries() { ItemsSource = resultsViewModel.ResultsDisplayCollection };
-                // Adds the x axis to the chart with the x axis combobox selected item's type of data.
-                switch (lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox.SelectedValue.ToString())
+                // Adds the x axis to the chart with the x axis ComboBox selected item's type of data.
+                switch (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedValue.ToString())
                 {
                     case "Time":
                         chart.PrimaryAxis.Header = "Time [s]";
@@ -3874,8 +3976,8 @@ namespace InternshipTest
                     default:
                         break;
                 }
-                // Adds the y axis to the chart with the y axis combobox selected item's type of data.
-                switch (lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox.SelectedValue.ToString())
+                // Adds the y axis to the chart with the y axis ComboBox selected item's type of data.
+                switch (lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedValue.ToString())
                 {
                     case "Time":
                         chart.SecondaryAxis.Header = "Time [s]";
@@ -3917,7 +4019,7 @@ namespace InternshipTest
                         break;
                 }
                 // Adds the series to the chart
-                switch (lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox.SelectedValue.ToString())
+                switch (lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedValue.ToString())
                 {
                     case "Line":
                         chart.Series.Add(fastLineSeries);

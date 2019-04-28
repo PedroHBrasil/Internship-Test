@@ -13,9 +13,13 @@ namespace InternshipTest.Vehicle
     {
         #region Properties
         /// <summary>
-        /// Ratio between the steering wheel angle and the wheel steer angle [(wheel steer angle)/(steering wheel angle)].
+        /// Ratio between the steering wheel angle and the front wheel steer angle [(wheel steer angle)/(steering wheel angle)].
         /// </summary>
-        public double SteeringRatio { get; set; }
+        public double FrontSteeringRatio { get; set; }
+        /// <summary>
+        /// Ratio between the steering wheel angle and the rear wheel steer angle [(wheel steer angle)/(steering wheel angle)].
+        /// </summary>
+        public double RearSteeringRatio { get; set; }
         /// <summary>
         /// Maximum steering wheel angle [rad].
         /// </summary>
@@ -23,11 +27,12 @@ namespace InternshipTest.Vehicle
         #endregion
         #region Constructors
         public SteeringSystem() { }
-        public SteeringSystem(string suspensionID, string description, double steeringRatio, double maximumSteeringWheelAngle)
+        public SteeringSystem(string suspensionID, string description, double frontSteeringRatio, double rearSteeringRatio, double maximumSteeringWheelAngle)
         {
             ID = suspensionID;
             Description = description;
-            SteeringRatio = steeringRatio;
+            FrontSteeringRatio = frontSteeringRatio;
+            RearSteeringRatio = rearSteeringRatio;
             MaximumSteeringWheelAngle = Math.Abs(maximumSteeringWheelAngle);
         }
         #endregion

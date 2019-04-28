@@ -9,7 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the inertia and dimensions parameters of a two wheel vehicle model's.
     /// </summary>
-    class TwoWheelInertiaAndDimensions : Inertia
+    public class TwoWheelInertiaAndDimensions : Inertia
     {
         #region Properties
         /// <summary>

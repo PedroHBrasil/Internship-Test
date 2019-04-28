@@ -11,21 +11,9 @@ namespace InternshipTest.Vehicle
     /// Contains a one wheel model's car information.
     /// </summary>
     [Serializable]
-    public class OneWheelCar
+    public class OneWheelCar : Car
     {
         #region Properties
-        /// <summary>
-        /// Car's identification.
-        /// </summary>
-        public string ID { get; set; }
-        /// <summary>
-        /// Car's setup identification.
-        /// </summary>
-        public string SetupID { get; set; }
-        /// <summary>
-        /// Car's main information.
-        /// </summary>
-        public string Description { get; set; }
         /// <summary>
         /// Car's inertia information.
         /// </summary>
@@ -34,10 +22,6 @@ namespace InternshipTest.Vehicle
         /// Car's tire subsystem.
         /// </summary>
         public Tire Tire { get; set; }
-        /// <summary>
-        /// Car's engine subsystem.
-        /// </summary>
-        public Engine Engine { get; set; }
         /// <summary>
         /// Car's transmission subsystem.
         /// </summary>
@@ -54,91 +38,33 @@ namespace InternshipTest.Vehicle
         /// Car's brakes susbsystem.
         /// </summary>
         public OneWheelBrakes Brakes { get; set; }
-        
-        /// <summary>
-        /// Car's suspension equivalent heave stiffness (considers the tire stiffness) [N/m].
-        /// </summary>
-        private double EquivalentHeaveStiffness { get; set; }
-        /// <summary>
-        /// Car's lowest operation speed [m/s].
-        /// </summary>
-        public double LowestSpeed { get; set; }
-        /// <summary>
-        /// Car's highest operation speed [m/s].
-        /// </summary>
-        public double HighestSpeed { get; set; }
-
-        /// <summary>
-        /// Wheel's rotational speed vector [rad/s].
-        /// </summary>
-        public List<double> WheelRotationalSpeedCurve { get; set; }
-        /// <summary>
-        /// Wheel's equivalent engine torque vector [N*m]
-        /// </summary>
-        public List<double> WheelTorqueCurve { get; set; }
-        /// <summary>
-        /// Wheel's gear number vector.
-        /// </summary>
-        public List<double> WheelGearCurve { get; set; }
-        /// <summary>
-        /// Wheel's equivalent engine braking torque vector [N*m]
-        /// </summary>
-        public List<double> WheelBrakingTorqueCurve { get; set; }
-        /// <summary>
-        /// Wheel's engine specific fuel consumption vector [kg/W]
-        /// </summary>
-        public List<double> WheelSpecFuelConsCurve { get; set; }
         #endregion
         #region Constructors
         public OneWheelCar() { }
-        public OneWheelCar(string carID, string setupID, string description, OneWheelInertia inertia, Tire tire,
-            Engine engine, OneWheelTransmission transmission, OneWheelAerodynamics aerodynamics,
-            SimplifiedSuspension suspension, OneWheelBrakes brakes)
+        public OneWheelCar(string carID, string setupID, string description, OneWheelAerodynamics aerodynamics, OneWheelBrakes brakes, Engine engine, OneWheelInertia inertia, SimplifiedSuspension suspension, Tire tire, OneWheelTransmission transmission)
         {
             ID = carID;
             SetupID = setupID;
             Description = description;
-            Inertia = inertia;
-            Tire = tire;
-            Engine = engine;
-            Transmission = transmission;
             Aerodynamics = aerodynamics;
-            Suspension = suspension;
             Brakes = brakes;
+            Engine = engine;
+            Inertia = inertia;
+            Suspension = suspension;
+            Tire = tire;
+            Transmission = transmission;
         }
         #endregion
         #region Methods
         #region General Public Methods
-        /// <summary>
-        /// Sets up what is displayed at the UI's listbox.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return "C: " + ID + " - S: " + SetupID;
-        }
-        /// <summary>
-        /// Gets the equivalent heave stiffness of the car, given the tire and suspension stiffnesses.
-        /// </summary>
-        public void GetEquivalentHeaveStiffness()
-        {
-            EquivalentHeaveStiffness = (Suspension.HeaveStiffness * Tire.VerticalStiffness * 4) / (Suspension.HeaveStiffness + Tire.VerticalStiffness * 4);
-        }
-        /// <summary>
         /// Gets the current gear number based on the car's speed.
         /// </summary>
         /// <param name="speed"> Car's speed [m/s] </param>
         /// <returns> Gear number </returns>
         public int GetGearNumberFromCarSpeed(double speed)
         {
-            // Gets the aerodynamic coefficients
-            OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
-            // Lift force [N]
-            double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
-            // Tire resultant Fz [N]
-            double tireFz = (liftForce + Inertia.TotalMass * Inertia.Gravity) / 4;
             // Calculates the wheel radius [m]
-            double wheelRadius = Tire.TireModel.RO - tireFz / Tire.VerticalStiffness;
+            double wheelRadius = _GetWheelRadius(speed);
             // Wheel rotational speed [rad/s]
             double wheelCenterAngularSpeed = speed / wheelRadius;
             // Gear interpolation object
@@ -153,6 +79,9 @@ namespace InternshipTest.Vehicle
         /// <returns> Interpolated aerodynamic map point </returns>
         public OneWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed)
         {
+            // Equivalent heave stiffness
+            double equivalentHeaveStiffness = (Suspension.HeaveStiffness * Tire.VerticalStiffness * 4) / (Suspension.HeaveStiffness + Tire.VerticalStiffness * 4);
+            // Optimization parameters
             double tol = 1e-6;
             double error;
             double rideHeight = Suspension.RideHeight;
@@ -168,11 +97,30 @@ namespace InternshipTest.Vehicle
                 liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // New car height [m]
                 double oldrideHeight = rideHeight;
-                rideHeight = Suspension.RideHeight - liftForce / EquivalentHeaveStiffness;
+                rideHeight = Suspension.RideHeight - liftForce / equivalentHeaveStiffness;
                 // Error update
                 error = Math.Abs(rideHeight - oldrideHeight) * 1000;
             } while (error > tol && iter<100);
             return interpolatedAerodynamicMapPoint;
+        }
+
+        /// <summary>
+        /// Gets the wheel radius fo a given speed.
+        /// </summary>
+        /// <param name="speed"> Car's speed [m/s]. </param>
+        /// <returns> The car's wheel radius [m] </returns>
+        private double _GetWheelRadius(double speed)
+        {
+            // Gets the aerodynamic coefficients
+            OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
+            // Lift force [N]
+            double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
+            // Tire resultant Fz [N]
+            double tireFz = (liftForce + Inertia.TotalMass * Inertia.Gravity) / 4;
+            // Calculates the wheel radius [m]
+            double wheelRadius = Tire.TireModel.RO - tireFz / Tire.VerticalStiffness;
+
+            return wheelRadius;
         }
         #endregion
         #region Get Linear Acceleration Parameters Methods
@@ -203,7 +151,7 @@ namespace InternshipTest.Vehicle
             double[,,] resultantEngineCurvesAtWheelsPerGearArray =
                 _GetResultantEngineCurvesAtWheelPerGear(engineInterpolatedCurvesArray, resultantGearRatiosAtWheel);
             // Gets the gears rpm ranges (first and last rpms indexes based on the gear shifting)
-            int[,] gearsRPMRanges = _GetGearsRPMRanges(resultantEngineCurvesAtWheelsPerGearArray, resultantGearRatiosAtWheel);
+            int[,] gearsRPMRanges = _GetGearsRPMRanges(resultantEngineCurvesAtWheelsPerGearArray);
             // Resultant engine curves at wheel
             _GetResultantEngineCurves(resultantEngineCurvesAtWheelsPerGearArray, gearsRPMRanges);
         }
@@ -331,7 +279,7 @@ namespace InternshipTest.Vehicle
         /// </summary>
         /// <param name="resultantEngineCurvesAtWheelsPerGearDictionary"> Array which contains the resultant engine cuves at the wheel per gear. </param>
         /// <returns> Array which contains the starting and ending rpms of each gear on each column. </returns>
-        private int[,] _GetGearsRPMRanges(double[,,] resultantEngineCurvesAtWheelsPerGearArray, double[] resultantGearRatiosAtWheel)
+        private int[,] _GetGearsRPMRanges(double[,,] resultantEngineCurvesAtWheelsPerGearArray)
         {
             int amountOfGears = Transmission.GearRatiosSet.GearRatios.Count;
             int[,] gearsRPMRanges = new int[2, amountOfGears];
@@ -340,48 +288,6 @@ namespace InternshipTest.Vehicle
             // Gears sweep "for" loop
             for (int iGear = 0; iGear < amountOfGears - 1; iGear++)
             {
-                /*// Index variables of the current and next gear curves
-                int iCurrentGearCurves = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear).Count();
-                int iNextGearCurves = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear + 1).Count();
-                // Current scalling factors
-                double speedCurveScallingFactor = 1 / (ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear).Max());
-                double torqueCurveScallingFactor = 1 / (ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear + 1).Max());
-                // Current gear rpm sweep "do while" loop error criteria initialization
-                double currentDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve = Math.Pow(10, 10);
-                double previousDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve;
-                // Current gear rpm sweep "do while" loop
-                do
-                {
-                    // Current gear curve index update
-                    iCurrentGearCurves--;
-                    // Next gear rpm sweep "do while" loop error criteria initialization
-                    double currentDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints = Math.Pow(10, 10);
-                    double previousDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints;
-                    // Next gear rpm sweep "do while" loop
-                    do
-                    {
-                        // Next gear curve index update
-                        iNextGearCurves--;
-                        // Error criteria update
-                        previousDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints = currentDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints;
-                        currentDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints = Math.Sqrt(
-                            Math.Pow(
-                                resultantEngineCurvesAtWheelsPerGearArray[0, iCurrentGearCurves, iGear] -
-                                resultantEngineCurvesAtWheelsPerGearArray[0, iNextGearCurves, iGear + 1], 2) * speedCurveScallingFactor +
-                            Math.Pow(
-                                resultantEngineCurvesAtWheelsPerGearArray[1, iCurrentGearCurves, iGear] -
-                                resultantEngineCurvesAtWheelsPerGearArray[1, iNextGearCurves, iGear + 1], 2) * torqueCurveScallingFactor);
-                    } while (previousDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints > currentDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints);
-                    // Error criteria update
-                    previousDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve = currentDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve;
-                    currentDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve = currentDistanceBetweenCurrentAndNextGearTorqueVsRPMPoints;
-                } while (previousDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve > currentDistanceBetweenCurrentGearPointAndNextGearTorqueVsRPMCurve);*/
-                /*
-                double[] currentGearSpeeds = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear);
-                double[] currentGearTorques = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear);
-                double[] nextGearSpeeds = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear + 1);
-                double[] nextGearTorques = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear + 1);
-                double intersectionSpeed = _GetCurvesIntersectionXCoordinate(currentGearSpeeds, currentGearTorques, nextGearSpeeds, nextGearTorques);*/
                 double[,] currentGearCurve = ArrayManipulation.JoinArraysIn2DArray(ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear), ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear));
                 double[,] nextGearCurve = ArrayManipulation.JoinArraysIn2DArray(ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear + 1), ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear + 1));
                 int[] rpmIndexes = ArrayManipulation.GetCurvesMinimumDistancePointsIndexes(currentGearCurve, nextGearCurve);
@@ -405,12 +311,6 @@ namespace InternshipTest.Vehicle
         {
             for (int iGear = 0; iGear < Transmission.GearRatiosSet.GearRatios.Count; iGear++)
             {
-                /*
-                // Converts from rpm to rad/s
-                for (int i = 0; i < resultantEngineCurvesAtWheelsPerGearArray.GetLength(1); i++)
-                {
-                    resultantEngineCurvesAtWheelsPerGearArray[0, i, iGear] *= ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear)[i] * (2 * Math.PI / 60);
-                }*/
                 // Gets the wished array segments
                 ArraySegment<double> resultantWheelEngineRPMs = new ArraySegment<double>(
                     ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear),
@@ -467,17 +367,11 @@ namespace InternshipTest.Vehicle
             {
                 iter++;
                 // Speed for current wheel radius
-                speed = (Engine.EngineCurves.CurvesPoints[iRPM].RotationalSpeed * wheelRadius /
-                    (Transmission.GearRatiosSet.GearRatios[gearNumber - 1].Ratio * Transmission.PrimaryRatio * Transmission.FinalRatio));
-                // Gets the aerodynamic coefficients
-                OneWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed);
-                // Updates the lift force
-                double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
-                // Updates the tire vertical load
-                double tireFz = (liftForce + Inertia.TotalMass * Inertia.Gravity) / 4;
+                speed = Engine.EngineCurves.CurvesPoints[iRPM].RotationalSpeed * wheelRadius /
+                    (Transmission.GearRatiosSet.GearRatios[gearNumber - 1].Ratio * Transmission.PrimaryRatio * Transmission.FinalRatio);
                 // Updates the wheel radius
                 double oldWheelRadius = wheelRadius;
-                wheelRadius = Tire.TireModel.RO - tireFz / Tire.VerticalStiffness;
+                wheelRadius = _GetWheelRadius(speed);
                 // Updates the error (optimization criteria)
                 error = Math.Abs(wheelRadius - oldWheelRadius);
             } while (error > tol);

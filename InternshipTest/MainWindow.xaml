@@ -67,10 +67,10 @@
                         Click="_HelpEnvironmentButton_Click"/>
                 <TextBlock Text="Theme:" Grid.Column="6" VerticalAlignment="Center" 
                            FontSize="15" FontWeight="Bold"/>
-                <ComboBox Name="themeSelectionCombobox" Grid.Column="7"
+                <ComboBox Name="themeSelectionComboBox" Grid.Column="7"
                           Height="30" Width="150" Margin="10" HorizontalAlignment="Right"
                           VerticalContentAlignment="Center"
-                          SelectionChanged="_ThemeSelectionCombobox_SelectionChanged">
+                          SelectionChanged="_ThemeSelectionComboBox_SelectionChanged">
                     <ComboBoxItem Content="Blend"/>
                     <ComboBoxItem Content="Metro"/>
                     <ComboBoxItem Content="SystemTheme"/>
@@ -1095,6 +1095,7 @@
                                         <RowDefinition Height="100"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -1117,15 +1118,20 @@
                                     <TextBox Name="steeringSystemDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Steering Ratio line -->
-                                    <TextBlock Text="Steering Ratio" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="steeringSystemSteeringRatioTextBox" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Front Wheel Steering Ratio" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="steeringSystemFrontSteeringRatioTextBox" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2"
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="[W]/[SW]" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Maximum steering wheel angle line-->
-                                    <TextBlock Text="Max. Steering Wheel Angle" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="steeringSystemMaximumSteeringWheelAngleTextBox" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2"
+                                    <!-- Steering Ratio line -->
+                                    <TextBlock Text="Rear Wheel Steering Ratio" Grid.Row="5" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="steeringSystemRearSteeringRatioTextBox" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2"
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="deg" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="[W]/[SW]" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Maximum steering wheel angle line-->
+                                    <TextBlock Text="Max. Steering Wheel Angle" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="steeringSystemMaximumSteeringWheelAngleTextBox" Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
@@ -1722,7 +1728,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Transmission Docking Manager-->
-                        <syncfusion:DockingManager Name="transmissionInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="transmissionInputDockingManager" Visibility="Collapsed">
                             <!-- One Wheel Transmission Docking Window -->
                             <ContentControl Name="oneWheelTransmissionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1979,40 +1985,137 @@
                                     <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="oneWheelCarAndSetupDescriptionTextBox" 
                                          Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Inertia selection line -->
-                                    <TextBlock Text="Inertia" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="oneWheelInertiaCombobox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                          ItemsSource="{Binding ElementName=oneWheelInertiaListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Tire selection line -->
-                                    <TextBlock Text="Tire" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="oneWheelTireCombobox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=tireListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Engine selection line -->
-                                    <TextBlock Text="Engine" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="oneWheelEngineCombobox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Transmission selection line -->
-                                    <TextBlock Text="Transmission" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="oneWheelTransmissionCombobox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=oneWheelTransmissionListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Aerodynamics selection line -->
-                                    <TextBlock Text="Aerodynamics" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,0,2"/>
-                                    <ComboBox Name="oneWheelAerodynamicsCombobox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                    <TextBlock Text="Aerodynamics" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,0,2"/>
+                                    <ComboBox Name="oneWheelAerodynamicsComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
                                           ItemsSource="{Binding ElementName=oneWheelAerodynamicsListBox, Path=Items, Mode=OneWay}"/>
-                                    <!-- Suspension selection line -->
-                                    <TextBlock Text="Suspension" Grid.Row="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="oneWheelSuspensionCombobox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=simplifiedSuspensionListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Brakes selection line -->
-                                    <TextBlock Text="Brakes" Grid.Row="11" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="oneWheelBrakesCombobox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                    <TextBlock Text="Brakes" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="oneWheelBrakesComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
                                           ItemsSource="{Binding ElementName=oneWheelBrakesListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Inertia selection line -->
+                                    <TextBlock Text="Inertia" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="oneWheelInertiaComboBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
+                                          ItemsSource="{Binding ElementName=oneWheelInertiaListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Engine selection line -->
+                                    <TextBlock Text="Engine" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="oneWheelEngineComboBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Suspension selection line -->
+                                    <TextBlock Text="Suspension" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="oneWheelSuspensionComboBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=simplifiedSuspensionListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Tire selection line -->
+                                    <TextBlock Text="Tire" Grid.Row="10" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="oneWheelTireComboBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=tireListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Transmission selection line -->
+                                    <TextBlock Text="Transmission" Grid.Row="11" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="oneWheelTransmissionComboBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=oneWheelTransmissionListBox, Path=Items, Mode=OneWay}"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
-                        <!-- NOT DONE Two Wheel Model Docking Manager-->
-                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Collapsed">
-                            
+                        <!-- Two Wheel Model Docking Manager-->
+                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Visible">
+                            <!-- Car and Setup Docking Window -->
+                            <ContentControl Name="twoWheelCarAndSetupDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Car And Setup"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="400"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="400"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Car and Setup Listbox -->
+                                    <ListBox Name="twoWheelCarAndSetupListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" SelectionChanged="_TwoWheelCarAndSetupListBox_SelectionChanged"/>
+                                    <!-- Car and Setup Listbox add and delete buttons -->
+                                    <Button Name="twoWheelAddCarAndSetupToListBox" Content="Add" Click="_TwoWheelAddCarAndSetupToListBox_Click" 
+                                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteCarAndSetupOfListBox" Content="Delete" Click="_TwoWheelDeleteCarAndSetupOfListBox_Click"
+                                        Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <!-- Car ID line -->
+                                    <TextBlock Text="Car ID" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelCarIDTextBox" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"/>
+                                    <!-- Setup ID line -->
+                                    <TextBlock Text="Setup ID" Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelSetupIDTextBox" Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="twoWheelCarAndSetupDescriptionTextBox" 
+                                         Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Aerodynamics selection line -->
+                                    <TextBlock Text="Aerodynamics" Grid.Row="5" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,0,2"/>
+                                    <ComboBox Name="twoWheelAerodynamicsComboBox" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=twoWheelAerodynamicsListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Brakes selection line -->
+                                    <TextBlock Text="Brakes" Grid.Row="6" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelBrakesComboBox" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=twoWheelBrakesListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Inertia selection line -->
+                                    <TextBlock Text="Inertia And Dimensions" Grid.Row="7" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,0,2"/>
+                                    <ComboBox Name="twoWheelInertiaAndDimensionsComboBox" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2" 
+                                          ItemsSource="{Binding ElementName=twoWheelInertiaAndDimensionsListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Engine selection line -->
+                                    <TextBlock Text="Engine" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelEngineComboBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Suspension selection line -->
+                                    <TextBlock Text="Suspension" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Front" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelFrontSuspensionComboBox" Grid.Row="9" Grid.Column="5" Grid.ColumnSpan="3" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=simplifiedSuspensionListBox, Path=Items, Mode=OneWay}"/>
+                                    <TextBlock Text="Rear" Grid.Row="9" Grid.Column="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelRearSuspensionComboBox" Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="3" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=simplifiedSuspensionListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Steering System selection line -->
+                                    <TextBlock Text="Steering System" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelSteeringSystemComboBox" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=simplifiedSteeringSystemListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Tire selection line -->
+                                    <TextBlock Text="Tire" Grid.Row="11" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Front" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelFrontTireComboBox" Grid.Row="11" Grid.Column="5" Grid.ColumnSpan="3" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=tireListBox, Path=Items, Mode=OneWay}"/>
+                                    <TextBlock Text="Rear" Grid.Row="11" Grid.Column="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelRearTireComboBox" Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="3" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=tireListBox, Path=Items, Mode=OneWay}"/>
+                                    <!-- Transmission selection line -->
+                                    <TextBlock Text="Transmission" Grid.Row="12" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="twoWheelTransmissionComboBox" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
+                                          ItemsSource="{Binding ElementName=twoWheelTransmissionListBox, Path=Items, Mode=OneWay}"/>
+                                </Grid>
+                            </ContentControl>
                         </syncfusion:DockingManager>
                             <!-- NOT DONE Four Wheel Model Docking Manager-->
                         <syncfusion:DockingManager Name="fourWheelVehicleInputDockingManager" Visibility="Collapsed">
@@ -2529,9 +2632,9 @@
                                 <!-- Add Chart Button -->
                                 <Button Name="ggvDiagramResultsAnalysisAddNewChartToTabControl" Content="Add New Chart" 
                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
-                                <!-- Chart type combobox -->
+                                <!-- Chart type ComboBox -->
                                 <TextBlock Text="Chart Type:" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="ggvDiagramResultsAnalysisChartTypeCombobox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                <ComboBox Name="ggvDiagramResultsAnalysisChartTypeComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                     <ComboBoxItem Content="2D Chart"/>
                                     <ComboBoxItem Content="Surface"/>
                                 </ComboBox>
@@ -2555,7 +2658,7 @@
                                     <TextBlock Text="Axis Data:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                     <!-- X axis line -->
                                     <TextBlock Text="X Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysis2DChartXAxisDataCombobox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="ggvDiagramResultsAnalysis2DChartXAxisDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="Speed"/>
                                         <ComboBoxItem Content="Longitudinal Acceleration"/>
                                         <ComboBoxItem Content="Lateral Acceleration"/>
@@ -2563,7 +2666,7 @@
                                     </ComboBox>
                                     <!-- Y axis line -->
                                     <TextBlock Text="Y Data" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysis2DChartYAxisDataCombobox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="ggvDiagramResultsAnalysis2DChartYAxisDataComboBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="Speed"/>
                                         <ComboBoxItem Content="Longitudinal Acceleration"/>
                                         <ComboBoxItem Content="Lateral Acceleration"/>
@@ -2611,7 +2714,7 @@
                                     <TextBlock Text="Axis Data:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                     <!-- X axis line -->
                                     <TextBlock Text="X Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceXAxisDataCombobox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceXAxisDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="Speed"/>
                                         <ComboBoxItem Content="Longitudinal Acceleration"/>
                                         <ComboBoxItem Content="Lateral Acceleration"/>
@@ -2619,7 +2722,7 @@
                                     </ComboBox>
                                     <!-- Y axis line -->
                                     <TextBlock Text="Y Data" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceYAxisDataCombobox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceYAxisDataComboBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="Speed"/>
                                         <ComboBoxItem Content="Longitudinal Acceleration"/>
                                         <ComboBoxItem Content="Lateral Acceleration"/>
@@ -2627,7 +2730,7 @@
                                     </ComboBox>
                                     <!-- Y axis line -->
                                     <TextBlock Text="Z Data" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceZAxisDataCombobox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceZAxisDataComboBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="Speed"/>
                                         <ComboBoxItem Content="Longitudinal Acceleration"/>
                                         <ComboBoxItem Content="Lateral Acceleration"/>
@@ -2730,9 +2833,9 @@
                                 <!-- Add Chart Button -->
                                 <Button Name="lapTimeSimulationResultsAnalysisAddNewChartToTabControl" Content="Add New Chart" 
                                         Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
-                                <!-- Chart type combobox -->
+                                <!-- Chart type ComboBox -->
                                 <TextBlock Text="Chart Type:" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="lapTimeSimulationResultsAnalysisChartTypeCombobox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysisChartTypeCombobox_SelectionChanged" SelectedValuePath="Content">
+                                <ComboBox Name="lapTimeSimulationResultsAnalysisChartTypeComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysisChartTypeComboBox_SelectionChanged" SelectedValuePath="Content">
                                     <ComboBoxItem Content="2D Chart"/>
                                     <ComboBoxItem Content="Track Map"/>
                                 </ComboBox>
@@ -2758,7 +2861,7 @@
                                     <TextBlock Text="Axis Data:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                     <!-- X axis line -->
                                     <TextBlock Text="X Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartXAxisDataCombobox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                         <ComboBoxItem Content="Time"/>
                                         <ComboBoxItem Content="Distance"/>
                                         <ComboBoxItem Content="Speed"/>
@@ -2768,7 +2871,7 @@
                                     </ComboBox>
                                     <!-- Y axis line -->
                                     <TextBlock Text="Y Data" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartYAxisDataCombobox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                         <ComboBoxItem Content="Time"/>
                                         <ComboBoxItem Content="Distance"/>
                                         <ComboBoxItem Content="Speed"/>
@@ -2780,7 +2883,7 @@
                                     <TextBlock Text="Customization:" Grid.Row="3" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                     <!-- Curves type line -->
                                     <TextBlock Text="Curves type" Grid.Row="4" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataCombobox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                         <ComboBoxItem Content="Line"/>
                                         <ComboBoxItem Content="Scatter"/>
                                     </ComboBox>
@@ -2802,7 +2905,7 @@
                                     </Grid.ColumnDefinitions>
                                     <!-- Color parameter line -->
                                     <TextBlock Text="Parameter" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysisTrackMapParameterDataCombobox" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="lapTimeSimulationResultsAnalysisTrackMapParameterDataComboBox" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="Time"/>
                                         <ComboBoxItem Content="Distance"/>
                                         <ComboBoxItem Content="Speed"/>
