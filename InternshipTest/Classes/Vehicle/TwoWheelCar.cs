@@ -117,13 +117,13 @@ namespace InternshipTest.Vehicle
                 // Calculates the aerodynamic pitch moment
                 double aerodynamicPitchMoment = -interpolatedAerodynamicMapPoint.PitchMomentCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // Resultant front and rear forces
-                double frontAerodynamicVerticalForce = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase - longitudinalLoadTransfer) / 2;
-                double rearAerodynamicVerticalForce = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + longitudinalLoadTransfer) / 2;
+                double frontRideHeightChangingVerticalForce = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase - longitudinalLoadTransfer) / 2;
+                double rearRideHeightChangingVerticalForce = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + longitudinalLoadTransfer) / 2;
                 // New car height [m]
                 double oldFrontRideHeight = frontRideHeight;
-                frontRideHeight = FrontSuspension.RideHeight - frontAerodynamicVerticalForce / equivalentFrontHeaveStiffness;
+                frontRideHeight = FrontSuspension.RideHeight - frontRideHeightChangingVerticalForce / equivalentFrontHeaveStiffness;
                 double oldRearRideHeight = rearRideHeight;
-                rearRideHeight = RearSuspension.RideHeight - rearAerodynamicVerticalForce / equivalentRearHeaveStiffness;
+                rearRideHeight = RearSuspension.RideHeight - rearRideHeightChangingVerticalForce / equivalentRearHeaveStiffness;
                 // Error update
                 errorFront = Math.Abs(frontRideHeight - oldFrontRideHeight) * 1000;
                 errorRear = Math.Abs(rearRideHeight - oldRearRideHeight) * 1000;
