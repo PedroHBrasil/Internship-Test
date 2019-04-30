@@ -30,7 +30,7 @@ namespace InternshipTest
         // Drawn Paths
         // Optimization Paths
         // GGV Diagrams
-        public List<Simulation.GGVDiagram> GGVDiagrams { get; set; }
+        public List<Simulation.OneWheelGGVDiagram> GGVDiagrams { get; set; }
         // Lap Time Simulations
         public List<Simulation.LapTimeSimulation> LapTimeSimulations { get; set; }
         #endregion
@@ -41,7 +41,7 @@ namespace InternshipTest
             List<Vehicle.SimplifiedSuspension> oneWheelSuspensions, List<Vehicle.OneWheelBrakes> oneWheelBrakes,
             List<Vehicle.Tire> oneWheelTires, List<Vehicle.OneWheelTransmission> oneWheelTransmissions,
             List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics, List<Vehicle.Engine> oneWheelEngines,
-            List<Path> tabularPaths, List<Simulation.GGVDiagram> ggvDiagrams,
+            List<Path> tabularPaths, List<Simulation.OneWheelGGVDiagram> ggvDiagrams,
             List<Simulation.LapTimeSimulation> lapTimeSimulations)
         {
             OneWheelCars = oneWheelCars;

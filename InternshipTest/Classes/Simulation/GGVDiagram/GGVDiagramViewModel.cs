@@ -27,7 +27,7 @@ namespace InternshipTest.Simulation
         public int ColumnSize { get; set; }
         #endregion
         #region Construtor
-        public GGVDiagramViewModel(GGVDiagram diagram)
+        public GGVDiagramViewModel(OneWheelGGVDiagram diagram)
         {
             RowSize = diagram.Speeds.Length;
             ColumnSize = diagram.GGDiagrams[0].LongitudinalAccelerations.Count + 1;

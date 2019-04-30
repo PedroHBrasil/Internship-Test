@@ -80,7 +80,7 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="ggvDiagram"> Current sector's GGV diagram. </param>
         /// <returns> A dictionary which contains the intrpolation curves. </returns>
-        private Dictionary<string, double[]> _GetInterpolationCurvesFromGGVDiagram(GGVDiagram ggvDiagram)
+        private Dictionary<string, double[]> _GetInterpolationCurvesFromGGVDiagram(OneWheelGGVDiagram ggvDiagram)
         {
             // Initializes the arrays to use in the determination of the maximum speeds profile
             double[] GGVLongitudinalAccelerationAtMinimumLateralAccelerationPerSpeed = new double[ggvDiagram.Speeds.Count()];
@@ -133,7 +133,7 @@ namespace InternshipTest.Simulation
                 // Evaluates if the local curvature is in the GGV diagram range or not
                 bool isCurvatureInRange = _CheckIfCurvatureIsInGGVRange(currentCurvature, currentInterpolationCurves);
                 // Selects the current GGV diagram
-                GGVDiagram currentGGVDiagram = GGVDiagramsPerSector[Path.LocalSectorIndex[iPathPoint] - 1].SectorGGVDiagram;
+                OneWheelGGVDiagram currentGGVDiagram = GGVDiagramsPerSector[Path.LocalSectorIndex[iPathPoint] - 1].SectorGGVDiagram;
                 // Gets the current point maximum speed and associated parameters
                 Results.LapTimeSimulationResults resultsForCurrentPoint;
                 if (isCurvatureInRange) resultsForCurrentPoint = _GetPathDynamicStatesForMaximumPossibleSpeedsByInterpolation(currentCurvature, currentInterpolationCurves, currentGGVDiagram);
@@ -171,7 +171,7 @@ namespace InternshipTest.Simulation
         /// <param name="interpolationCurves"> Curves to be used in the interpolation. </param>
         /// <param name="ggvDiagram"> GGV diagram used in the interpolation </param>
         /// <returns> The lap time simulaton results initial guess. </returns>
-        private Results.LapTimeSimulationResults _GetPathDynamicStatesForMaximumPossibleSpeedsByInterpolation(double curvature, Dictionary<string, double[]> interpolationCurves, GGVDiagram ggvDiagram)
+        private Results.LapTimeSimulationResults _GetPathDynamicStatesForMaximumPossibleSpeedsByInterpolation(double curvature, Dictionary<string, double[]> interpolationCurves, OneWheelGGVDiagram ggvDiagram)
         {
             // Current accelerations initialization
             double currentLongitudinalAcceleration;
@@ -226,7 +226,7 @@ namespace InternshipTest.Simulation
         /// <param name="interpolationCurves"> Curves to be used in the interpolation. </param>
         /// <param name="ggvDiagram"> GGV diagram used in the interpolation </param>
         /// <returns> The lap time simulaton results initial guess. </returns>
-        private Results.LapTimeSimulationResults _GetPathDynamicStatesForMaximumPossibleSpeedsByExtrapolation(double curvature, Dictionary<string, double[]> interpolationCurves, GGVDiagram ggvDiagram)
+        private Results.LapTimeSimulationResults _GetPathDynamicStatesForMaximumPossibleSpeedsByExtrapolation(double curvature, Dictionary<string, double[]> interpolationCurves, OneWheelGGVDiagram ggvDiagram)
         {
             // Current accelerations initialization
             double currentLongitudinalAcceleration;
@@ -479,9 +479,9 @@ namespace InternshipTest.Simulation
             if (currentSpeed > results.MaximumPossibleSpeeds[iPoint]) currentSpeed = results.MaximumPossibleSpeeds[iPoint];
             // Selects the GGV diagram to be used in the interpolation (DRS?)
             int iSectorCurrentPoint = Path.LocalSectorIndex[iPoint] - 1;
-            GGVDiagram ggvDiagram = GGVDiagramsPerSector[iSectorCurrentPoint].SectorGGVDiagram;
+            OneWheelGGVDiagram ggvDiagram = GGVDiagramsPerSector[iSectorCurrentPoint].SectorGGVDiagram;
             // Gets the current GG diagram based on interpolation by the speed
-            GGDiagram interpolatedGGDiagram = ggvDiagram.GetGGDiagramForASpeed(currentSpeed, ggvDiagram.Car);
+            OneWheelGGDiagram interpolatedGGDiagram = ggvDiagram.GetGGDiagramForASpeed(currentSpeed, ggvDiagram.Car);
             // Current point's local curvature
             double currentCurvature = Path.LocalCurvatures[iPoint];
             // Current point's lateral acceleration

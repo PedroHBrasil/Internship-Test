@@ -124,9 +124,13 @@
     <Compile Include="Classes\Results\GGDiagramResults.cs" />
     <Compile Include="Classes\Results\LapTimeSimulationResults.cs" />
     <Compile Include="Classes\Results\LapTimeSimulationResultsViewModel.cs" />
-    <Compile Include="Classes\Simulation\GGVDiagram\GGDiagram.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\GGDiagram\GGDiagram.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\GGDiagram\OneWheelGGDiagram.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\GGDiagram\TwoWheelGGDiagram.cs" />
     <Compile Include="Classes\Simulation\GGVDiagram\GGVDiagram.cs" />
     <Compile Include="Classes\Simulation\GGVDiagram\GGVDiagramViewModel.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\OneWheelGGVDiagram.cs" />
+    <Compile Include="Classes\Simulation\GGVDiagram\TwoWheelGGVDiagram.cs" />
     <Compile Include="Classes\Simulation\LapTimeSimulation\LapTimeSimulation.cs" />
     <Compile Include="Classes\Simulation\LapTimeSimulation\LapTimeSimulationSectorSetup.cs" />
     <Compile Include="Classes\Vehicle\Aerodynamics\AerodynamicMapPoint.cs" />
