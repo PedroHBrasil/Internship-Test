@@ -40,6 +40,23 @@ namespace InternshipTest.Vehicle
         /// Vehicle's wheelbase [m].
         /// </summary>
         public double Wheelbase { get; set; }
+        // Extra Parameters
+        /// <summary>
+        /// Car's weight which is supported at the front axis [N].
+        /// </summary>
+        public double FrontWeight { get; set; }
+        /// <summary>
+        /// Car's weight which is supported at the rear axis [N].
+        /// </summary>
+        public double RearWeight { get; set; }
+        /// <summary>
+        /// Car's front axis unsprung mass weight [N].
+        /// </summary>
+        public double FrontUnsprungWeight { get; set; }
+        /// <summary>
+        /// Car's rear axis unsprung mass weight [N].
+        /// </summary>
+        public double RearUnsprungWeight { get; set; }
         #endregion
         #region Constructors
         public TwoWheelInertiaAndDimensions(string id, string desciption, double totalMass,double totalMassDistribution, double totalMassCGHeight, double frontUnsprungMass, double frontUnsprungMassCGHeight, double rearUnsprungMass, double rearUnsprungMassCGHeight, double wheelbase, double rotPartsMI, double gravity)
@@ -56,6 +73,18 @@ namespace InternshipTest.Vehicle
             Wheelbase = Math.Abs(wheelbase);
             RotPartsMI = Math.Abs(rotPartsMI);
             Gravity = Math.Abs(gravity);
+        }
+        #endregion
+        #region Methods
+        /// <summary>
+        /// Gets some extra inertia parameters which are useful for the calculations.
+        /// </summary>
+        public void GetExtraInertiaParameters()
+        {
+            FrontWeight = TotalMass * TotalMassDistribution * Gravity;
+            RearWeight = TotalMass * (1 - TotalMassDistribution) * Gravity;
+            FrontUnsprungWeight = FrontUnsprungMass * Gravity;
+            RearUnsprungWeight = RearUnsprungMass * Gravity;
         }
         #endregion
     }

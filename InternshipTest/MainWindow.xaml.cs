@@ -1625,6 +1625,7 @@ namespace InternshipTest
                 double gravity = double.Parse(twoWheelGravityAccelTextBox.Text);
                 // Initializes a new object
                 Vehicle.TwoWheelInertiaAndDimensions inertiaAndDimensions = new Vehicle.TwoWheelInertiaAndDimensions(inertiaID, description, totalMass, totalMassDistribution, totalMassCGHeight, frontUnsprungMass, frontUnsprungMassCGHeight, rearUnsprungMass, rearUnsprungMassCGHeight, wheelbase, rotPartsMI, gravity);
+                inertiaAndDimensions.GetExtraInertiaParameters();
                 // Adds the object to the listbox
                 twoWheelInertiaAndDimensionsListBox.Items.Add(inertiaAndDimensions);
             }
