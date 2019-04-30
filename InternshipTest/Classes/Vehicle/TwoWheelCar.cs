@@ -94,7 +94,7 @@ namespace InternshipTest.Vehicle
         /// <param name="speed"> Car's speed [m/s] </param>
         /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
         /// <returns> Interpolated aerodynamic map point </returns>
-        public TwoWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed, double carSlipAngle)
+        public TwoWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed, double carSlipAngle, double longitudinalLoadTransfer)
         {
             // Equivalent heave stiffnesses
             double equivalentFrontHeaveStiffness = (FrontSuspension.HeaveStiffness * FrontTire.VerticalStiffness * 2) / (FrontSuspension.HeaveStiffness + FrontTire.VerticalStiffness * 2);
@@ -117,8 +117,8 @@ namespace InternshipTest.Vehicle
                 // Calculates the aerodynamic pitch moment
                 double aerodynamicPitchMoment = -interpolatedAerodynamicMapPoint.PitchMomentCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // Resultant front and rear forces
-                double frontAerodynamicVerticalForce = liftForce / 2 - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase;
-                double rearAerodynamicVerticalForce = liftForce / 2 + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase;
+                double frontAerodynamicVerticalForce = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase - longitudinalLoadTransfer) / 2;
+                double rearAerodynamicVerticalForce = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + longitudinalLoadTransfer) / 2;
                 // New car height [m]
                 double oldFrontRideHeight = frontRideHeight;
                 frontRideHeight = FrontSuspension.RideHeight - frontAerodynamicVerticalForce / equivalentFrontHeaveStiffness;
