@@ -2017,7 +2017,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Two Wheel Model Docking Manager-->
-                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="twoWheelVehicleInputDockingManager" Visibility="Collapsed">
                             <!-- Car and Setup Docking Window -->
                             <ContentControl Name="twoWheelCarAndSetupDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2379,7 +2379,7 @@
 
                         </syncfusion:DockingManager>
                         <!-- GGV Diagram Docking Manager -->
-                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Collapsed">
+                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Visible">
                             <!-- GGV Diagram Input Dockig Window -->
                             <ContentControl Name="ggvDiagramDefinitionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2401,6 +2401,7 @@
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -2412,7 +2413,8 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- GGV Diagram listbox-->
-                                    <ListBox Name="simulationGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
+                                    <ListBox Name="simulationOneWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
+                                    <ListBox Name="simulationTwoWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
                                     <!-- GGV Diagram listbox add and delete buttons -->
                                     <Button Name="simulationAddGGVDiagramToListBox" Content="Add" Click="_SimulationAddGGVDiagramToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="simulationDeleteGGVDiagramOfListBox" Content="Delete" Click="_SimulationDeleteGGVDiagramOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
@@ -2426,34 +2428,39 @@
                                     <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="ggvDiagramDescriptionTextBox" 
                                          Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Vehicle type selection line -->
+                                    <TextBlock Text="Vehicle Type" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="ggvDiagramVehicleTypeSelectionComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_GGVDiagramVehicleTypeSelectionComboBox_SelectionChanged">
+                                        <ComboBoxItem Content="One Wheel"/>
+                                        <ComboBoxItem Content="Two Wheel"/>
+                                    </ComboBox>
                                     <!-- Vehicle selection line -->
-                                    <TextBlock Text="Vehicle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="ggvDiagramVehicleSelectionComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                          ItemsSource="{Binding ElementName=twoWheelCarAndSetupListBox, Path=Items, Mode=OneWay}"/>
+                                    <TextBlock Text="Vehicle" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="ggvDiagramVehicleSelectionComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Amount of Points per Speed line -->
-                                    <TextBlock Text="Amount of Points per Speed" Grid.Row="6" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfPointsPerSpeedTextBox" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Amount of Points per Speed" Grid.Row="7" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfPointsPerSpeedTextBox" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Amount of directions line -->
-                                    <TextBlock Text="Amount of Directions" Grid.Row="7" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfDirectionsTextBox" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Amount of Directions" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfDirectionsTextBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Amount of Speeds line -->
-                                    <TextBlock Text="Amount of Speeds" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfSpeedsTextBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Amount of Speeds" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfSpeedsTextBox" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Lowest Speed line -->
-                                    <TextBlock Text="Lowest Speed" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramLowestSpeedTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2"
-                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
-                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Amount of Speeds line -->
-                                    <TextBlock Text="Highest Speed" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramHighestSpeedTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Lowest Speed" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramLowestSpeedTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
                                     <TextBlock Text="km/h" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Amount of Speeds line -->
+                                    <TextBlock Text="Highest Speed" Grid.Row="11" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramHighestSpeedTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
+                                    <TextBlock Text="km/h" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Path Display Grid -->
-                                    <Grid Name="ggvDiagramDisplayGrid" Grid.Column="6" Grid.RowSpan="10"/>
+                                    <Grid Name="ggvDiagramDisplayGrid" Grid.Column="6" Grid.RowSpan="11"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
