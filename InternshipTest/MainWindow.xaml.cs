@@ -1908,8 +1908,8 @@ namespace InternshipTest
                 string modelID = tireModelIDTextBox.Text;
                 string description = tireModelDescriptionTextBox.Text;
                 string tireModelFile = tireModelTextBox.Text;
-                double alphaMin = double.Parse(tireModelMinSlipAngleTextBox.Text);
-                double alphaMax = double.Parse(tireModelMaxSlipAngleTextBox.Text);
+                double alphaMin = double.Parse(tireModelMinSlipAngleTextBox.Text) * Math.PI / 180;
+                double alphaMax = double.Parse(tireModelMaxSlipAngleTextBox.Text) * Math.PI / 180;
                 double kappaMin = double.Parse(tireModelMinLongitudinalSlipTextBox.Text);
                 double kappaMax = double.Parse(tireModelMaxLongitudinalSlipTextBox.Text);
                 double lambdaFzO = double.Parse(lambdaFzOTextBox.Text);
@@ -1998,8 +1998,8 @@ namespace InternshipTest
                 tireModelIDTextBox.Text = tireModel.ID;
                 tireModelDescriptionTextBox.Text = tireModel.Description;
                 tireModelTextBox.Text = tireModel.FileLocation;
-                tireModelMinSlipAngleTextBox.Text = tireModel.AlphaMin.ToString("F3");
-                tireModelMaxSlipAngleTextBox.Text = tireModel.AlphaMax.ToString("F3");
+                tireModelMinSlipAngleTextBox.Text = (tireModel.AlphaMin * Math.PI / 180).ToString("F3");
+                tireModelMaxSlipAngleTextBox.Text = (tireModel.AlphaMax * Math.PI / 180).ToString("F3");
                 tireModelMinLongitudinalSlipTextBox.Text = tireModel.KappaMin.ToString("F3");
                 tireModelMinLongitudinalSlipTextBox.Text = tireModel.KappaMax.ToString("F3");
                 lambdaFzOTextBox.Text = tireModel.lambdaFzO.ToString("F3");
@@ -2167,10 +2167,10 @@ namespace InternshipTest
         private void _UpdateCurrentTireModelDisplayChart()
         {
             // Checks if all of the information needed to generate the chart is ok.
-            if (tireModelDisplayCheckListBox.SelectedItems.Count==0 || tireModelDisplayParameterSetsCheckListBox.SelectedItems.Count==0 || tireModelDisplayChartYAxisDataComboBox.SelectedValue == null || tireModelDisplayChartXAxisDataComboBox.SelectedValue == null || !double.TryParse(tireModelDisplayXAxisRangeMinTextBox.Text, out double rangeMin) || !double.TryParse(tireModelDisplayXAxisRangeMaxTextBox.Text, out double rangeMax) || rangeMin >= rangeMax || !int.TryParse(tireModelDisplayDataAmountOfPointsTextBox.Text, out int amountOfPoints) || amountOfPoints <= 0)
+            if (tireModelDisplayCheckListBox.SelectedItems.Count == 0 || tireModelDisplayParameterSetsCheckListBox.SelectedItems.Count == 0 || tireModelDisplayChartYAxisDataComboBox.SelectedValue == null || tireModelDisplayChartXAxisDataComboBox.SelectedValue == null || !double.TryParse(tireModelDisplayXAxisRangeMinTextBox.Text, out double rangeMin) || !double.TryParse(tireModelDisplayXAxisRangeMaxTextBox.Text, out double rangeMax) || rangeMin >= rangeMax || !int.TryParse(tireModelDisplayDataAmountOfPointsTextBox.Text, out int amountOfPoints) || amountOfPoints <= 0)
             {
                 TabItemExt currentTab = tireModelDisplayChartTabControl.SelectedItem as TabItemExt;
-                if (currentTab!=null) currentTab.Content = new Grid();
+                if (currentTab != null) currentTab.Content = new Grid();
                 return;
             }
             // Initializes the new chart
@@ -2184,7 +2184,7 @@ namespace InternshipTest
                 {
                     ItemsPanel = mainWorkGrid.Resources["chartsLegendsPanelTemplate"] as ItemsPanelTemplate,
                     DockPosition = ChartDock.Right,
-                    MaxWidth = 200
+                    MaxWidth = 300
                 },
                 PrimaryAxis = new NumericalAxis(),
                 SecondaryAxis = new NumericalAxis()
@@ -2210,7 +2210,7 @@ namespace InternshipTest
                 {
                     // Current data set list
                     Vehicle.TireModelMF52ViewModel tireModelViewModel = new Vehicle.TireModelMF52ViewModel();
-                    FastLineSeries fastLineSeries = new FastLineSeries();                        
+                    FastLineSeries fastLineSeries = new FastLineSeries();
                     for (int iPoint = 0; iPoint < int.Parse(tireModelDisplayDataAmountOfPointsTextBox.Text); iPoint++)
                     {
                         // Current point's parameters set
@@ -2286,11 +2286,11 @@ namespace InternshipTest
                         // Adds the current point to the current list
                         tireModelViewModel.TireModelMF52Points.Add(currentPoint);
                     }
-                    string seriesLabel = "TM: " + tireModel.ID + " - LS: " + tireModelMF52ParametersSet.LongitudinalSlip.ToString("F2") + " - SA: " + tireModelMF52ParametersSet.SlipAngle.ToString("F2") + " - VL: " + tireModelMF52ParametersSet.VerticalLoad.ToString("F0") + " - IA: " + tireModelMF52ParametersSet.InclinationAngle.ToString("F2") + " - S:" + tireModelMF52ParametersSet.Speed.ToString("F1");
+                    string seriesLabel = "TM: " + tireModel.ID + "\n - Long. Slip: " + tireModelMF52ParametersSet.LongitudinalSlip.ToString("F2") + "\n - Slip Angle: " + tireModelMF52ParametersSet.SlipAngle.ToString("F2") + "\n - Vert. Load: " + tireModelMF52ParametersSet.VerticalLoad.ToString("F0") + "\n - Incl. Angle: " + tireModelMF52ParametersSet.InclinationAngle.ToString("F2") + "\n - Speed:" + tireModelMF52ParametersSet.Speed.ToString("F1");
                     fastLineSeries.ItemsSource = tireModelViewModel.TireModelMF52Points;
                     fastLineSeries.Label = seriesLabel;
                     // Adds the current series to the chart.
-                    chart.Series.Add(fastLineSeries);                    
+                    chart.Series.Add(fastLineSeries);
                 }
             }
             // Adds the chart to the current chart tab
@@ -2391,7 +2391,7 @@ namespace InternshipTest
         private void _TwoWheelAddTransmissionToListBox_Click(object sender, RoutedEventArgs e)
         {
             if (twoWheelTransmissionIDTextBox.Text != "" &&
-                double.Parse(twoWheelTransmissionTorqueBiasTextBox.Text) >=0 &&
+                double.Parse(twoWheelTransmissionTorqueBiasTextBox.Text) >= 0 &&
                 double.Parse(twoWheelTransmissionTorqueBiasTextBox.Text) <= 100 &&
                 twoWheelTransmissionGearRatiosSetComboBox.SelectedItem != null)
             {
@@ -3652,17 +3652,20 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationGGVDiagramAllowPathDisplayCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
+            if (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue != null)
             {
-                case "One Wheel":
-                    if (simulationOneWheelGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
-                    break;
-                case "Two Wheel":
-                    if (simulationTwoWheelGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
-                    break;
-                default:
-                    break;
-            };            
+                switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
+                {
+                    case "One Wheel":
+                        if (simulationOneWheelGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
+                        break;
+                    case "Two Wheel":
+                        if (simulationTwoWheelGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
+                        break;
+                    default:
+                        break;
+                };
+            }
         }
 
         /// <summary>
@@ -3916,7 +3919,7 @@ namespace InternshipTest
                 lapTimeSimulationNewSectorIndexComboBox.ItemsSource = path.SectorsSet.Sectors;
             }
         }
-        
+
         #endregion
 
         #endregion

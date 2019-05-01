@@ -15,6 +15,7 @@ namespace InternshipTest.Vehicle
         #region Fields
         private readonly double ksi0 = 1, ksi1 = 1, ksi2 = 1, ksi3 = 1, ksi4 = 1, ksi5 = 1, ksi6 = 1, ksi7 = 1, ksi8 = 1,
             epsilonx = Math.Pow(10, -3), epsilony = Math.Pow(10, -1), epsilonK = Math.Pow(10, -2), epsilonV = Math.Pow(10, -3);
+        private double currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed, currentOptimizationTarget;
         #endregion
         #region Properties
         // Tire Model inputs boundaries (Slip Angle and Longitudinal Slip)
@@ -112,10 +113,7 @@ namespace InternshipTest.Vehicle
         }
         #endregion
         #region Methods
-        public override string ToString()
-        {
-            return ID;
-        }
+        #region Constructor Methods
         /// <summary>
         /// Sets up the tire model coefficients so that thay are all zero.
         /// </summary>
@@ -277,6 +275,8 @@ namespace InternshipTest.Vehicle
                 }
             }
         }
+        #endregion
+        #region Get Forces and Moments Methods
         /// <summary>
         /// Uses the MF52 equations to calculate the tire's longitudinal force.
         /// </summary>
@@ -563,6 +563,233 @@ namespace InternshipTest.Vehicle
 
             return Mz;
         }
+        #endregion
+        #region Longitudinal Slip Optimization Methods
+        /// <summary>
+        /// Gets the longitudinal slip associated with the minimum tire longitudinal force for the given parameters.
+        /// </summary>
+        /// <param name="alpha"> Slip Angle [rad] </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Longitudinal Slip for minimum Tire Longitudinal Force. </returns>
+        public double GetLongitudinalSlipForMinimumTireFx(double alpha, double Fz, double gamma, double Vc)
+        {
+            currentAlpha = alpha;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { KappaMin };
+            double[] bndu = new double[] { KappaMax };
+
+            double[] kappa = new double[] { 0 };
+
+            alglib.minbleiccreatef(kappa, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeLongitudinalSlipForMinimumTireFx, null, null);
+            alglib.minbleicresults(state, out kappa, out alglib.minbleicreport rep);
+
+            return kappa[0];
+        }
+        /// <summary>
+        /// Optimization function to get the longitudinal slip for minimum longitudinal force.
+        /// </summary>
+        /// <param name="kappa"> Longitudinal Slip </param>
+        /// <param name="tireFx"> Longitudinal Force </param>
+        /// <param name="obj"></param>
+        private void _OptimizeLongitudinalSlipForMinimumTireFx(double[] kappa, ref double tireFx, object obj)
+        {
+            tireFx = GetTireFx(kappa[0], currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed);
+        }
+        /// <summary>
+        /// Gets the longitudinal slip associated with the maximum tire longitudinal force for the given parameters.
+        /// </summary>
+        /// <param name="alpha"> Slip Angle [rad] </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Longitudinal Slip for maximum Tire Longitudinal Force. </returns>
+        public double GetLongitudinalSlipForMaximumTireFx(double alpha, double Fz, double gamma, double Vc)
+        {
+            currentAlpha = alpha;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { KappaMin };
+            double[] bndu = new double[] { KappaMax };
+
+            double[] kappa = new double[] { 0 };
+
+            alglib.minbleiccreatef(kappa, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeLongitudinalSlipForMaximumTireFx, null, null);
+            alglib.minbleicresults(state, out kappa, out alglib.minbleicreport rep);
+
+            return kappa[0];
+        }
+        /// <summary>
+        /// Optimization function to get the longitudinal slip for maximum longitudinal force.
+        /// </summary>
+        /// <param name="kappa"> Longitudinal Slip </param>
+        /// <param name="tireFx"> Longitudinal Force </param>
+        /// <param name="obj"></param>
+        private void _OptimizeLongitudinalSlipForMaximumTireFx(double[] kappa, ref double tireFx, object obj)
+        {
+            tireFx = -GetTireFx(kappa[0], currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed);
+        }
+        /// <summary>
+        /// Gets the longitudinal slip associated with the given wheel torque for the given parameters.
+        /// </summary>
+        /// <param name="alpha"> Slip Angle [rad] </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Longitudinal Slip for given Wheel Torque. </returns>
+        public double GetLongitudinalSlipForGivenTireMy(double alpha, double Fz, double gamma, double Vc, double targetWheelTorque)
+        {
+            currentAlpha = alpha;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            currentOptimizationTarget = targetWheelTorque;
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { KappaMin };
+            double[] bndu = new double[] { KappaMax };
+
+            double[] kappa = new double[] { 0 };
+
+            alglib.minbleiccreatef(kappa, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeLongitudinalSlipForGivenTireMy, null, null);
+            alglib.minbleicresults(state, out kappa, out alglib.minbleicreport rep);
+
+            return kappa[0];
+        }
+        /// <summary>
+        /// Optimization function to get the longitudinal slip for given wheel torque.
+        /// </summary>
+        /// <param name="kappa"> Longitudinal Slip </param>
+        /// <param name="errorTireMy"> Wheel Torque Difference [N] </param>
+        /// <param name="obj"></param>
+        private void _OptimizeLongitudinalSlipForGivenTireMy(double[] kappa, ref double errorTireMy, object obj)
+        {
+            errorTireMy = Math.Abs(GetTireMy(kappa[0], currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed) - currentOptimizationTarget);
+        }
+        #endregion
+        #region Slip Angle Optimization Methods
+        /// <summary>
+        /// Gets the slip angle associated with the minimum lateral force, with the given parameters.
+        /// </summary>
+        /// <param name="kappa"> Longitudinal Slip </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Slip Angle for minimum Lateral Force. </returns>
+        public double GetSlipAngleForMinimumTireFy(double kappa, double Fz, double gamma, double Vc)
+        {
+            currentKappa = kappa;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { AlphaMin };
+            double[] bndu = new double[] { AlphaMax };
+
+            double[] alpha = new double[] { 0 };
+
+            alglib.minbleiccreatef(alpha, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeSlipAngleForMinimumTireFy, null, null);
+            alglib.minbleicresults(state, out alpha, out alglib.minbleicreport rep);
+
+            return alpha[0];
+        }
+        /// <summary>
+        /// Optimization function to get the slip angle for minimum lateral force.
+        /// </summary>
+        /// <param name="alpha"> Slip Angle [rad] </param>
+        /// <param name="tireFy"> Longitudinal Force </param>
+        /// <param name="obj"></param>
+        private void _OptimizeSlipAngleForMinimumTireFy(double[] alpha, ref double tireFy, object obj)
+        {
+            tireFy = GetTireFy(currentKappa, alpha[0], currentVerticalLoad, currentInclinationAngle, currentSpeed);
+        }
+        /// <summary>
+        /// Gets the slip angle associated with the maximum lateral force, with the given parameters.
+        /// </summary>
+        /// <param name="kappa"> Longitudinal Slip </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Slip Angle for maximum Lateral Force. </returns>
+        public double GetSlipAngleForMaximumTireFy(double kappa, double Fz, double gamma, double Vc)
+        {
+            currentKappa = kappa;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { AlphaMin };
+            double[] bndu = new double[] { AlphaMax };
+
+            double[] alpha = new double[] { 0 };
+
+            alglib.minbleiccreatef(alpha, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeSlipAngleForMaximumTireFy, null, null);
+            alglib.minbleicresults(state, out alpha, out alglib.minbleicreport rep);
+
+            return alpha[0];
+        }
+        /// <summary>
+        /// Optimization function to get the slip angle for minimum lateral force.
+        /// </summary>
+        /// <param name="alpha"> Slip Angle [rad] </param>
+        /// <param name="tireFy"> Longitudinal Force </param>
+        /// <param name="obj"></param>
+        private void _OptimizeSlipAngleForMaximumTireFy(double[] alpha, ref double tireFy, object obj)
+        {
+            tireFy = -GetTireFy(currentKappa, alpha[0], currentVerticalLoad, currentInclinationAngle, currentSpeed);
+        }
+        #endregion
+
         #endregion
     }
 }

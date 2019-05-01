@@ -92,10 +92,10 @@ namespace InternshipTest.Simulation
         private OneWheelGGDiagram _GetGGDiagramByInterpolationOfTheGGVDiagram(double speed, Vehicle.OneWheelCar car)
         {
             // Result initialization
-            OneWheelGGDiagram interpolatedGGDiagram = new OneWheelGGDiagram(car);
+            OneWheelGGDiagram interpolatedGGDiagram = new OneWheelGGDiagram(car) { Speed = speed };
             // Gets the index of the immediately lower speed GG diagram
             int iLowerSpeed;
-            for (iLowerSpeed = 0; iLowerSpeed < AmountOfSpeeds - 1; iLowerSpeed++)
+            for (iLowerSpeed = 0; iLowerSpeed < AmountOfSpeeds - 2; iLowerSpeed++)
                 if (speed > Speeds[iLowerSpeed] && speed <= Speeds[iLowerSpeed + 1]) break;
             // Gets the GG diagrams to be interpolated
             OneWheelGGDiagram lowerSpeedGGDiagram = GGDiagrams[iLowerSpeed];

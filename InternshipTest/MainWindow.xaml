@@ -13,7 +13,7 @@
 		Title="MainWindow" Height="1080" Width="1920" WindowState="Maximized" Icon="App.ico">
     <Window.Resources>
         <ItemsPanelTemplate x:Key="chartsLegendsPanelTemplate">
-            <WrapPanel Orientation="Horizontal"/>
+            <WrapPanel Orientation="Vertical"/>
         </ItemsPanelTemplate>
     </Window.Resources>
     <!-- Main Window Grid -->
@@ -146,7 +146,7 @@
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold" Click="_EngineButton_Click"/>
                 <!-- Inertia button -->
-                <Button Name="inertiaButton" Content="Inertia" Grid.Column="4"
+                <Button Name="inertiaAndDimensionsButton" Content="Inertia And Dimensions" Grid.Column="4"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold" Click="_InertiaButton_Click"/>
                 <!-- Suspension button -->
@@ -2413,8 +2413,8 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- GGV Diagram listbox-->
-                                    <ListBox Name="simulationOneWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
-                                    <ListBox Name="simulationTwoWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
+                                    <ListBox Name="simulationOneWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationOneWheelGGVDiagramListBox_SelectionChanged"/>
+                                    <ListBox Name="simulationTwoWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationTwoWheelGGVDiagramListBox_SelectionChanged"/>
                                     <!-- GGV Diagram listbox add and delete buttons -->
                                     <Button Name="simulationAddGGVDiagramToListBox" Content="Add" Click="_SimulationAddGGVDiagramToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="simulationDeleteGGVDiagramOfListBox" Content="Delete" Click="_SimulationDeleteGGVDiagramOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
@@ -2522,7 +2522,7 @@
                                     <!-- GGV Diagram selection line -->
                                     <TextBlock Text="GGV Diagram" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ComboBox Name="lapTimeSimulationGGVDiagramComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                              ItemsSource="{Binding ElementName=simulationGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
+                                              ItemsSource="{Binding ElementName=simulationOneWheelGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Sectors specific GGV Diagram selection -->
                                     <TextBlock Text="GGV Diagram Specific Selection per Sector:" Grid.Row="7" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ListBox Name="lapTimeSimulationGGVDiagramPerSectorListBox" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">

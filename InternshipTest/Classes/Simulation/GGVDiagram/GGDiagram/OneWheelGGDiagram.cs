@@ -32,7 +32,7 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Reference longitudinal force used in the optimization algorithms to find the longitudinal slip associated with a given force [N].
         /// </summary>
-        private double referenceFx;
+        private double referenceMy;
         #endregion
         #region Properties
         /// <summary>
@@ -78,11 +78,11 @@ namespace InternshipTest.Simulation
             // Tire resultant Fz
             tireFz = (liftForce + Car.Inertia.TotalMass * Car.Inertia.Gravity) / 4;
             // Slip angle optimization for minimum tire Fy in pureslip
-            double alphaMin = _SlipAngleForFYMinimizationInPureSlip();
+            double alphaMin = Car.Tire.TireModel.GetSlipAngleForMinimumTireFy(0, tireFz, 0, Speed);
             // Longitudinal Slip optimization for minimum tire Fx in pureslip
-            double kappaBrake = _LongitudinalSlipForFXMinimizationInPureSlip();
+            double kappaBrake = Car.Tire.TireModel.GetLongitudinalSlipForMinimumTireFx(0, tireFz, 0, Speed);
             // Longitudinal Slip optimization for maximum tire Fx in pureslip
-            double kappaAccel = _LongitudinalSlipForFXMaximizationInPureSlip();
+            double kappaAccel = Car.Tire.TireModel.GetLongitudinalSlipForMaximumTireFx(0, tireFz, 0, Speed);
             // Generates the vectors of longitudinal slip and slip angle
             double[] kappas = Generate.LinearSpaced(AmountOfPoints / 4, kappaBrake, kappaAccel);
             double[] alphas = Generate.LinearSpaced(AmountOfPoints / 8, 0, alphaMin);
@@ -100,31 +100,25 @@ namespace InternshipTest.Simulation
             // Extreme left cornering + braking region
             foreach (double currentAlpha in alphas)
             {
-                // Slip angle update
-                alpha = currentAlpha;
                 // Longitudinal Slip for minimum longitudinal force
-                kappa = _LongitudinalSlipForFXMinimizationInPureSlip();
+                kappa = Car.Tire.TireModel.GetLongitudinalSlipForMinimumTireFx(currentAlpha, tireFz, 0, Speed);
                 // Accelerations determination
                 _GetAccelerationsForMinimumLongitudinalAndFixedSlipAngle();
             }
             // Extreme left cornering region
             foreach (double currentKappa in kappas)
             {
-                // Longitudinal Slip update
-                kappa = currentKappa;
                 // Slip Angle for minimum lateral force
-                alpha = _SlipAngleForFYMinimizationInPureSlip();
+                alpha = Car.Tire.TireModel.GetSlipAngleForMinimumTireFy(currentKappa, tireFz, 0, Speed);
                 // Which is the sign of the longitudinal slip?
-                if (kappa >= 0) _GetAccelerationsForMaximumLongitudinalAndFixedSlipAngle();
+                if (currentKappa >= 0) _GetAccelerationsForMaximumLongitudinalAndFixedSlipAngle();
                 else _GetAccelerationsForMinimumLongitudinalAndFixedSlipAngle();
             }
             // Extreme left cornering + accelerating region
             foreach (double currentAlpha in alphas.Reverse())
             {
-                // Slip angle update
-                alpha = currentAlpha;
                 // Longitudinal Slip for maximum longitudinal force
-                kappa = _LongitudinalSlipForFXMaximizationInPureSlip();
+                kappa = Car.Tire.TireModel.GetLongitudinalSlipForMaximumTireFx(currentAlpha, tireFz, 0, Speed);
                 // Accelerations determination
                 _GetAccelerationsForMaximumLongitudinalAndFixedSlipAngle();
             }
@@ -152,7 +146,7 @@ namespace InternshipTest.Simulation
                 currentAccelerationsDirections[i] = Math.Atan2(LongitudinalAccelerations[i], LateralAccelerations[i]);
             }
             // Target directions array
-            double[] targetDirections = Generate.LinearSpaced(LongitudinalAccelerations.Count + 1, -Math.PI, Math.PI);
+            double[] targetDirections = Generate.LinearSpaced(AmountOfDirections + 1, -Math.PI, Math.PI);           
             // New accelerations arrays
             double[] newLongitudinalAccelerations = new double[targetDirections.Length - 1];
             double[] newLateralAccelerations = new double[targetDirections.Length - 1];
@@ -164,7 +158,7 @@ namespace InternshipTest.Simulation
                 List<double> magnitudesOfTheCurrentAccelerationsInRange = new List<double>();
                 for (int iCurrentAcceleration = 0; iCurrentAcceleration < currentAccelerationsDirections.Length; iCurrentAcceleration++)
                 {
-                    // Checks if te current acceleration's direction is in the current target direction interval
+                    // Checks if the current acceleration's direction is in the current target direction interval
                     if (currentAccelerationsDirections[iCurrentAcceleration] >= targetDirections[iTargetDirection] && currentAccelerationsDirections[iCurrentAcceleration] < targetDirections[iTargetDirection + 1])
                     {
                         indexesOfTheCurrentAccelerationsInRange.Add(iCurrentAcceleration);
@@ -181,24 +175,24 @@ namespace InternshipTest.Simulation
                 }
             }
             // Checks if there are any non assigned values in the accelerations array and fills them by interpolation
-            for (int iDirection = 0; iDirection < targetDirections.Length - 1; iDirection++)
+            for (int iDirection = 0; iDirection < newLongitudinalAccelerations.Length; iDirection++)
             {
                 if (newLongitudinalAccelerations[iDirection] == 0)
                 {
                     // Previous acceleration index
                     int iPreviousAccel;
                     if (iDirection > 0) iPreviousAccel = iDirection - 1;
-                    else iPreviousAccel = targetDirections.Length - 1;
+                    else iPreviousAccel = newLongitudinalAccelerations.Length - 1;
                     // Next acceleration index
                     int iNextAccel = iDirection;
                     do
                     {
                         iNextAccel++;
-                        if (iNextAccel == targetDirections.Length)
+                        if (iNextAccel == newLongitudinalAccelerations.Length)
                         {
                             iNextAccel = 0;
                         }
-                    } while (newLongitudinalAccelerations[iNextAccel] == 0 && newLateralAccelerations[iNextAccel] == 0 && iNextAccel != targetDirections.Length);
+                    } while (newLongitudinalAccelerations[iNextAccel] == 0 && newLateralAccelerations[iNextAccel] == 0);
                     // Interpolates to get the accelerations in this direction
                     double interpolationRatio = (iDirection - iPreviousAccel) / (double)(iNextAccel - iPreviousAccel);
                     newLongitudinalAccelerations[iDirection] = newLongitudinalAccelerations[iPreviousAccel] + interpolationRatio * (newLongitudinalAccelerations[iNextAccel] - newLongitudinalAccelerations[iPreviousAccel]);
@@ -231,8 +225,8 @@ namespace InternshipTest.Simulation
             // Is the torque limited by the brakes or by the tire grip?
             if (limitTorqueDueToGrip < limitTorqueDueToBrakes)
             {
-                referenceFx = limitTorqueDueToBrakes / wheelRadius / 4;
-                kappa = _GetLongitudinalSlipForGivenWheelTorque();
+                referenceMy = limitTorqueDueToBrakes / 4;
+                kappa = Car.Tire.TireModel.GetLongitudinalSlipForGivenTireMy(alpha, tireFz, 0, Speed, referenceMy);
             }
             // Aerodynamic drag force [N]
             double dragForce = -interpolatedAerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
@@ -270,8 +264,8 @@ namespace InternshipTest.Simulation
             // Is the torque limited by the engine or by the tire grip?
             if (limitTorqueDueToGrip > limitTorqueDueToPowertrain)
             {
-                referenceFx = limitTorqueDueToPowertrain / wheelRadius / Car.Transmission.AmountOfDrivenWheels;
-                kappa = _GetLongitudinalSlipForGivenWheelTorque();
+                referenceMy = limitTorqueDueToPowertrain / Car.Transmission.AmountOfDrivenWheels;
+                kappa = Car.Tire.TireModel.GetLongitudinalSlipForGivenTireMy(alpha, tireFz, 0, Speed, referenceMy);
             }
             // Aerodynamic drag force [N]
             double dragForce = -interpolatedAerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
@@ -294,152 +288,6 @@ namespace InternshipTest.Simulation
             // Result
             LongitudinalAccelerations.Add(longitudinalAcceleration);
             LateralAccelerations.Add(lateralAcceleration);
-        }
-        #endregion
-        #region TireForcesOptimization
-        /// <summary>
-        /// Gets the longitudinal slip for fixed slip angle and a given wheel torque.
-        /// </summary>
-        /// <returns> Longitudinal slip </returns>
-        private double _GetLongitudinalSlipForGivenWheelTorque()
-        {
-            // Optimization parameters
-            double epsg = 1e-10;
-            double epsf = 0;
-            double epsx = 0;
-            double diffstep = 1.0e-6;
-            int maxits = 100;
-            
-            double[] bndl = new double[] { Car.Tire.TireModel.KappaMin };
-            double[] bndu = new double[] { Car.Tire.TireModel.KappaMax };
-            
-            double[] kappaAccel = new double[] { 0 };
-            
-            alglib.minbleiccreatef(kappaAccel, diffstep, out alglib.minbleicstate state);
-            alglib.minbleicsetbc(state, bndl, bndu);
-            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minbleicoptimize(state, _LongitudinalSlipForGivenWheelTorqueOptimization, null, null);
-            alglib.minbleicresults(state, out kappaAccel, out alglib.minbleicreport rep);
-            
-            return kappaAccel[0];
-        }
-        /// <summary>
-        /// Gets the slip angle which corresponds to the minimum tire lateral force for zero longitudinal slip.
-        /// </summary>
-        /// <returns> Slip angle [rad] </returns>
-        private double _SlipAngleForFYMinimizationInPureSlip()
-        {
-            // Optimization parameters
-            double epsg = 1e-10;
-            double epsf = 0;
-            double epsx = 0;
-            double diffstep = 1.0e-6;
-            int maxits = 100;
-
-            double[] bndl = new double[] { Car.Tire.TireModel.AlphaMin * Math.PI / 180 };
-            double[] bndu = new double[] { Car.Tire.TireModel.AlphaMax * Math.PI / 180 };
-            
-            double[] alpha = new double[] { 0 };
-            
-            alglib.minbleiccreatef(alpha, diffstep, out alglib.minbleicstate state);
-            alglib.minbleicsetbc(state, bndl, bndu);
-            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minbleicoptimize(state, _SlipAngleForMinimumTireFY, null, null);
-            alglib.minbleicresults(state, out alpha, out alglib.minbleicreport rep);
-            
-            return alpha[0];
-        }
-        /// <summary>
-        /// Gets the longitudinal slip which corresponds to the minimum tire longitudinal force and zero slip angle.
-        /// </summary>
-        /// <returns> Longitudinal slip </returns>
-        private double _LongitudinalSlipForFXMinimizationInPureSlip()
-        {
-            // Optimization parameters
-            double epsg = 1e-10;
-            double epsf = 0;
-            double epsx = 0;
-            double diffstep = 1.0e-6;
-            int maxits = 100;
-
-            double[] bndl = new double[] { Car.Tire.TireModel.KappaMin };
-            double[] bndu = new double[] { Car.Tire.TireModel.KappaMax };
-
-            double[] kappaBrake = new double[] { 0 };
-
-            alglib.minbleiccreatef(kappaBrake, diffstep, out alglib.minbleicstate state);
-            alglib.minbleicsetbc(state, bndl, bndu);
-            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minbleicoptimize(state, _LongitudinalSlipForMinimumTireFX, null, null);
-            alglib.minbleicresults(state, out kappaBrake, out alglib.minbleicreport rep);
-
-            return kappaBrake[0];
-        }
-        /// <summary>
-        /// Gets the longitudinal slip which corresponds to the maximum tire longitudinal force and zero slip angle.
-        /// </summary>
-        /// <returns> Longitudinal slip </returns>
-        private double _LongitudinalSlipForFXMaximizationInPureSlip()
-        {
-            // Optimization parameters
-            double epsg = 1e-10;
-            double epsf = 0;
-            double epsx = 0;
-            double diffstep = 1.0e-6;
-            int maxits = 100;
-
-            double[] bndl = new double[] { Car.Tire.TireModel.KappaMin };
-            double[] bndu = new double[] { Car.Tire.TireModel.KappaMax };
-
-            double[] kappaAccel = new double[] { 0 };
-
-            alglib.minbleiccreatef(kappaAccel, diffstep, out alglib.minbleicstate state);
-            alglib.minbleicsetbc(state, bndl, bndu);
-            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minbleicoptimize(state, _LongitudinalSlipForMaximumTireFX, null, null);
-            alglib.minbleicresults(state, out kappaAccel, out alglib.minbleicreport rep);
-
-            return kappaAccel[0];
-        }
-        /// <summary>
-        /// Optimization function to get the longitudinal slip for a given torque.
-        /// </summary>
-        /// <param name="kappa"> Longitudinal Slip </param>
-        /// <param name="tireFx"> Longitudinal Force </param>
-        /// <param name="obj"></param>
-        private void _LongitudinalSlipForGivenWheelTorqueOptimization(double[] kappa, ref double tireFx, object obj)
-        {
-            tireFx = Math.Abs(Car.Tire.TireModel.GetTireFx(kappa[0], alpha, tireFz, 0, Speed) - referenceFx);
-        }
-        /// <summary>
-        /// Optimization function to get the slip angle for minimum lateral force and zero longitudinal slip.
-        /// </summary>
-        /// <param name="alpha"> Slip angle [rad] </param>
-        /// <param name="tireFy"> Lateral force [N] </param>
-        /// <param name="obj"></param>
-        private void _SlipAngleForMinimumTireFY(double[] alpha, ref double tireFy, object obj)
-        {
-            tireFy = Car.Tire.TireModel.GetTireFy(kappa, alpha[0], tireFz, 0, Speed);
-        }
-        /// <summary>
-        /// Optimization function to get the longitudinal slip for minimum lonitudinal force and zero slip angle.
-        /// </summary>
-        /// <param name="kappa"> Longitudinal Slip </param>
-        /// <param name="tireFx"> Longitudinal Force </param>
-        /// <param name="obj"></param>
-        private void _LongitudinalSlipForMinimumTireFX(double[] kappa, ref double tireFx, object obj)
-        {
-            tireFx = Car.Tire.TireModel.GetTireFx(kappa[0], alpha, tireFz, 0, Speed);
-        }
-        /// <summary>
-        /// Optimization function to get the longitudinal slip for maximum lonitudinal force and zero slip angle.
-        /// </summary>
-        /// <param name="kappa"> Longitudinal Slip </param>
-        /// <param name="tireFx"> Longitudinal Force </param>
-        /// <param name="obj"></param>
-        private void _LongitudinalSlipForMaximumTireFX(double[] kappa, ref double tireFx, object obj)
-        {
-            tireFx = -Car.Tire.TireModel.GetTireFx(kappa[0], alpha, tireFz, 0, Speed);
         }
         #endregion
         /// <summary>
@@ -494,12 +342,12 @@ namespace InternshipTest.Simulation
                     else iNextAcceleration = iAcceleration + 1;
                     // Checks if the current interval contains the current lateral acceleration ad if it corresponds to the current acceleration mode
                     if (longitudinalAccelerationMode == "Braking" &&
-                        LateralAccelerations[iAcceleration] >= lateralAcceleration &&
-                        LateralAccelerations[iNextAcceleration] <= lateralAcceleration)
-                        break;
-                    else if (longitudinalAccelerationMode == "Accelerating" &&
                         LateralAccelerations[iAcceleration] <= lateralAcceleration &&
                         LateralAccelerations[iNextAcceleration] >= lateralAcceleration)
+                        break;
+                    else if (longitudinalAccelerationMode == "Accelerating" &&
+                        LateralAccelerations[iAcceleration] >= lateralAcceleration &&
+                        LateralAccelerations[iNextAcceleration] <= lateralAcceleration)
                         break;
                 }
             }

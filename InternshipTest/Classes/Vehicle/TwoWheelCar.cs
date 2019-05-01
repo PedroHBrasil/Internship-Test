@@ -139,7 +139,7 @@ namespace InternshipTest.Vehicle
         private double _GetMeanWheelRadius(double speed, double carSlipAngle)
         {
             // Gets the aerodynamic coefficients
-            TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle);
+            TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle, 0);
             // Calculates the lift force
             double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
             // Calculates the aerodynamic pitch moment

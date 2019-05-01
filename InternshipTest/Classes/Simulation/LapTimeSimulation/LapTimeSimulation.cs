@@ -122,7 +122,7 @@ namespace InternshipTest.Simulation
         /// <returns> The lap time simulaton results initial guess. </returns>
         private Results.LapTimeSimulationResults _GetDynamicStatesAssociatedWithTheMaximumPossibleSpeeds(List<Dictionary<string, double[]>> interpolationCurvesDictionaries)
         {
-            Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults(this ,Path.AmountOfPointsInPath);
+            Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults(this, Path.AmountOfPointsInPath);
             // Path points "for" loop
             for (int iPathPoint = 0; iPathPoint < Path.AmountOfPointsInPath; iPathPoint++)
             {
@@ -274,7 +274,7 @@ namespace InternshipTest.Simulation
             return results;
         }
         #endregion
-        #region To Apply the Longitudial Acceleration Limitations
+        #region To Apply the Longitudinal Acceleration Limitations
         /// <summary>
         /// Gets the final dynamic states based on the longitudinal acceleration limitations.
         /// </summary>
@@ -476,7 +476,11 @@ namespace InternshipTest.Simulation
                 currentSpeed = Math.Sqrt(Math.Pow(referenceSpeed, 2) + 2 * referenceLongitudinalAcceleration * Path.Resolution);
             }
             // Checks if the calculated current speed is higher than the maximum possible speed at this point and corrects it if this is the case
-            if (currentSpeed > results.MaximumPossibleSpeeds[iPoint]) currentSpeed = results.MaximumPossibleSpeeds[iPoint];
+            if (currentSpeed > results.MaximumPossibleSpeeds[iPoint])
+            {
+                currentSpeed = results.MaximumPossibleSpeeds[iPoint];
+            }
+
             // Selects the GGV diagram to be used in the interpolation (DRS?)
             int iSectorCurrentPoint = Path.LocalSectorIndex[iPoint] - 1;
             OneWheelGGVDiagram ggvDiagram = GGVDiagramsPerSector[iSectorCurrentPoint].SectorGGVDiagram;
@@ -487,8 +491,9 @@ namespace InternshipTest.Simulation
             // Current point's lateral acceleration
             double currentLateralAcceleration = Math.Pow(currentSpeed, 2) * currentCurvature;
             // Gets the longitudinal acceleration via interpolation based on the lateral acceleration
-            double currentLongitudinalAcceleration = interpolatedGGDiagram.GetLongitudinalAccelerationViaInterpolationBasedOnLateralAcceleration
-                (currentLateralAcceleration, limitationMode);
+            double currentLongitudinalAcceleration;
+            if (currentSpeed == results.MaximumPossibleSpeeds[iPoint]) currentLongitudinalAcceleration = 0;
+            else currentLongitudinalAcceleration = interpolatedGGDiagram.GetLongitudinalAccelerationViaInterpolationBasedOnLateralAcceleration(currentLateralAcceleration, limitationMode);
             // Registers the values in the lists
             results.Speeds[iPoint] = currentSpeed;
             results.LongitudinalAccelerations[iPoint] = currentLongitudinalAcceleration;
