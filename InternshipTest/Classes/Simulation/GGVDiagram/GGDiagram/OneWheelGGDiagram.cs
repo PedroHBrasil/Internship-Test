@@ -174,29 +174,51 @@ namespace InternshipTest.Simulation
                     newLateralAccelerations[iTargetDirection] = LateralAccelerations[newAccelerationIndex];
                 }
             }
-            // Checks if there are any non assigned values in the accelerations array and fills them by interpolation
+            // Gets the indexes of the directions which have accelerations
+            List<int> nonZeroAccelerationsIndexes = new List<int>();
             for (int iDirection = 0; iDirection < newLongitudinalAccelerations.Length; iDirection++)
             {
-                if (newLongitudinalAccelerations[iDirection] == 0)
+                if (newLongitudinalAccelerations[iDirection] != 0 || newLateralAccelerations[iDirection] != 0)
                 {
-                    // Previous acceleration index
-                    int iPreviousAccel;
-                    if (iDirection > 0) iPreviousAccel = iDirection - 1;
-                    else iPreviousAccel = newLongitudinalAccelerations.Length - 1;
-                    // Next acceleration index
-                    int iNextAccel = iDirection;
-                    do
+                    nonZeroAccelerationsIndexes.Add(iDirection);
+                }
+            }
+            // Gets the remaining accelerations by interpolation
+            for (int iNonZeroAcceleration = 0; iNonZeroAcceleration < nonZeroAccelerationsIndexes.Count; iNonZeroAcceleration++)
+            {
+                // Gets the current and next non-zero accelerations indexes
+                int currentAccelerationIndex = nonZeroAccelerationsIndexes[iNonZeroAcceleration];
+                int nextAccelerationIndex;
+                if (iNonZeroAcceleration == nonZeroAccelerationsIndexes.Count - 1) nextAccelerationIndex = nonZeroAccelerationsIndexes[0];
+                else nextAccelerationIndex = nonZeroAccelerationsIndexes[iNonZeroAcceleration + 1];
+                // Checks if there are zero accelerations between these points. 
+                if (nextAccelerationIndex - currentAccelerationIndex > 1)
+                {
+                    // Gets the accelerations in the points by interpolation
+                    for (int iDirection = currentAccelerationIndex + 1; iDirection < nextAccelerationIndex; iDirection++)
                     {
-                        iNextAccel++;
-                        if (iNextAccel == newLongitudinalAccelerations.Length)
+                        double interpolationRatio = (iDirection - currentAccelerationIndex) / (nextAccelerationIndex - currentAccelerationIndex);
+                        newLongitudinalAccelerations[iDirection] = newLongitudinalAccelerations[currentAccelerationIndex] + interpolationRatio * (newLongitudinalAccelerations[nextAccelerationIndex] - newLongitudinalAccelerations[currentAccelerationIndex]);
+                        newLateralAccelerations[iDirection] = newLateralAccelerations[currentAccelerationIndex] + interpolationRatio * (newLateralAccelerations[nextAccelerationIndex] - newLateralAccelerations[currentAccelerationIndex]);
+                    }
+                }
+                else if (iNonZeroAcceleration == nonZeroAccelerationsIndexes.Count() - 1 && (currentAccelerationIndex != newLongitudinalAccelerations.Length - 1 || nextAccelerationIndex != 0))
+                {
+                    // Gets the accelerations in the points by interpolation
+                    for (int iDirection = currentAccelerationIndex + 1; iDirection < nextAccelerationIndex + newLongitudinalAccelerations.Length; iDirection++)
+                    {
+                        double interpolationRatio = (iDirection - currentAccelerationIndex) / (nextAccelerationIndex + (newLongitudinalAccelerations.Length - 1) - currentAccelerationIndex);
+                        if (iDirection < newLongitudinalAccelerations.Length)
                         {
-                            iNextAccel = 0;
+                            newLongitudinalAccelerations[iDirection] = newLongitudinalAccelerations[currentAccelerationIndex] + interpolationRatio * (newLongitudinalAccelerations[nextAccelerationIndex] - newLongitudinalAccelerations[currentAccelerationIndex]);
+                            newLateralAccelerations[iDirection] = newLateralAccelerations[currentAccelerationIndex] + interpolationRatio * (newLateralAccelerations[nextAccelerationIndex] - newLateralAccelerations[currentAccelerationIndex]);
                         }
-                    } while (newLongitudinalAccelerations[iNextAccel] == 0 && newLateralAccelerations[iNextAccel] == 0);
-                    // Interpolates to get the accelerations in this direction
-                    double interpolationRatio = (iDirection - iPreviousAccel) / (double)(iNextAccel - iPreviousAccel);
-                    newLongitudinalAccelerations[iDirection] = newLongitudinalAccelerations[iPreviousAccel] + interpolationRatio * (newLongitudinalAccelerations[iNextAccel] - newLongitudinalAccelerations[iPreviousAccel]);
-                    newLateralAccelerations[iDirection] = newLateralAccelerations[iPreviousAccel] + interpolationRatio * (newLateralAccelerations[iNextAccel] - newLateralAccelerations[iPreviousAccel]);
+                        else
+                        {
+                            newLongitudinalAccelerations[iDirection - newLongitudinalAccelerations.Length] = newLongitudinalAccelerations[currentAccelerationIndex] + interpolationRatio * (newLongitudinalAccelerations[nextAccelerationIndex] - newLongitudinalAccelerations[currentAccelerationIndex]);
+                            newLateralAccelerations[iDirection - newLongitudinalAccelerations.Length] = newLateralAccelerations[currentAccelerationIndex] + interpolationRatio * (newLateralAccelerations[nextAccelerationIndex] - newLateralAccelerations[currentAccelerationIndex]);
+                        }
+                    }
                 }
             }
             // Writes the interpolated values to the lists
