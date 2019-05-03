@@ -653,51 +653,6 @@ namespace InternshipTest.Vehicle
         {
             tireFx = -GetTireFx(kappa[0], currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed);
         }
-        /// <summary>
-        /// Gets the longitudinal slip associated with the given wheel torque for the given parameters.
-        /// </summary>
-        /// <param name="alpha"> Slip Angle [rad] </param>
-        /// <param name="Fz"> Vertical Load [N] </param>
-        /// <param name="gamma"> Inclination Angle [rad] </param>
-        /// <param name="Vc"> Wheel translational speed [m/s] </param>
-        /// <returns> Longitudinal Slip for given Wheel Torque. </returns>
-        public double GetLongitudinalSlipForGivenTireMy(double alpha, double Fz, double gamma, double Vc, double targetWheelTorque)
-        {
-            currentAlpha = alpha;
-            currentVerticalLoad = Fz;
-            currentInclinationAngle = gamma;
-            currentSpeed = Vc;
-            currentOptimizationTarget = targetWheelTorque;
-            // Optimization parameters
-            double epsg = 1e-10;
-            double epsf = 0;
-            double epsx = 0;
-            double diffstep = 1.0e-6;
-            int maxits = 100;
-
-            double[] bndl = new double[] { KappaMin };
-            double[] bndu = new double[] { KappaMax };
-
-            double[] kappa = new double[] { 0 };
-
-            alglib.minbleiccreatef(kappa, diffstep, out alglib.minbleicstate state);
-            alglib.minbleicsetbc(state, bndl, bndu);
-            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minbleicoptimize(state, _OptimizeLongitudinalSlipForGivenTireMy, null, null);
-            alglib.minbleicresults(state, out kappa, out alglib.minbleicreport rep);
-
-            return kappa[0];
-        }
-        /// <summary>
-        /// Optimization function to get the longitudinal slip for given wheel torque.
-        /// </summary>
-        /// <param name="kappa"> Longitudinal Slip </param>
-        /// <param name="errorTireMy"> Wheel Torque Difference [N] </param>
-        /// <param name="obj"></param>
-        private void _OptimizeLongitudinalSlipForGivenTireMy(double[] kappa, ref double errorTireMy, object obj)
-        {
-            errorTireMy = Math.Abs(GetTireMy(kappa[0], currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed) - currentOptimizationTarget);
-        }
         #endregion
         #region Slip Angle Optimization Methods
         /// <summary>
