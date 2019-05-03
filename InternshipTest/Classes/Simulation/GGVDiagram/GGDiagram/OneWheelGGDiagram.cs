@@ -33,6 +33,7 @@ namespace InternshipTest.Simulation
         /// Reference longitudinal force used in the optimization algorithms to find the longitudinal slip associated with a given force [N].
         /// </summary>
         private double referenceMy;
+        private List<double> errorsFx;
         #endregion
         #region Properties
         /// <summary>
@@ -84,43 +85,137 @@ namespace InternshipTest.Simulation
             // Longitudinal Slip optimization for maximum tire Fx in pureslip
             double kappaAccel = Car.Tire.TireModel.GetLongitudinalSlipForMaximumTireFx(0, tireFz, 0, Speed);
             // Generates the vectors of longitudinal slip and slip angle
-            double[] kappas = Generate.LinearSpaced(AmountOfPoints / 4, kappaBrake, kappaAccel);
-            double[] alphas = Generate.LinearSpaced(AmountOfPoints / 8, 0, alphaMin);
+            //double[] kappas = Generate.LinearSpaced(AmountOfPoints / 4, kappaBrake, kappaAccel);
+            //double[] alphas = Generate.LinearSpaced(AmountOfPoints / 8, 0, alphaMin);
+            double[] kappasBraking = Generate.LinearSpaced(AmountOfPoints, kappaBrake, 0);
+            double[] kappasAccelerating = Generate.LinearSpaced(AmountOfPoints, 0, kappaAccel);
+            double[] alphas = Generate.LinearSpaced(AmountOfPoints, 0, alphaMin);
             // Generates the GG diagram
-            _GetGGDiagramAccelerations(kappas, alphas);
+            errorsFx = new List<double>();
+            _GetGGDiagramAccelerationsTest(kappasBraking, kappasAccelerating, alphas);
         }
         #region GGDiagramAccelerations
         /// <summary>
         /// Gets the GG diagram's accelerations.
         /// </summary>
-        /// <param name="kappas"> Longitudinal slips </param>
+        /// <param name="kappasBraking"> Longitudinal slips for the braking case </param>
+        /// <param name="kappasAccelerating"> Longitudinal slips for the accelerating case </param>
         /// <param name="alphas"> Slip angles [rad] </param>
-        private void _GetGGDiagramAccelerations(double[] kappas, double[] alphas)
+        private void _GetGGDiagramAccelerationsTest(double[] kappasBraking, double[] kappasAccelerating, double[] alphas)
         {
-            // Extreme left cornering + braking region
-            foreach (double currentAlpha in alphas)
+            // Merges the longitudinal slip arrays into one.
+            double[] kappas = new double[kappasBraking.Length + kappasAccelerating.Length];
+            kappasBraking.CopyTo(kappas, 0);
+            kappasAccelerating.CopyTo(kappas, kappasBraking.Length);
+            // Calculates the wheel radius [mm]
+            double wheelRadius = Car.Tire.TireModel.RO - tireFz / Car.Tire.VerticalStiffness;
+            // Wheel center angular speed [rad/s]
+            double wheelCenterAngularSpeed = Speed / wheelRadius;
+            for (int iKappa = 0; iKappa < kappas.Length; iKappa++)
             {
-                // Longitudinal Slip for minimum longitudinal force
-                kappa = Car.Tire.TireModel.GetLongitudinalSlipForMinimumTireFx(currentAlpha, tireFz, 0, Speed);
-                // Accelerations determination
-                _GetAccelerationsForMinimumLongitudinalAndFixedSlipAngle();
-            }
-            // Extreme left cornering region
-            foreach (double currentKappa in kappas)
-            {
-                // Slip Angle for minimum lateral force
-                alpha = Car.Tire.TireModel.GetSlipAngleForMinimumTireFy(currentKappa, tireFz, 0, Speed);
-                // Which is the sign of the longitudinal slip?
-                if (currentKappa >= 0) _GetAccelerationsForMaximumLongitudinalAndFixedSlipAngle();
-                else _GetAccelerationsForMinimumLongitudinalAndFixedSlipAngle();
-            }
-            // Extreme left cornering + accelerating region
-            foreach (double currentAlpha in alphas.Reverse())
-            {
-                // Longitudinal Slip for maximum longitudinal force
-                kappa = Car.Tire.TireModel.GetLongitudinalSlipForMaximumTireFx(currentAlpha, tireFz, 0, Speed);
-                // Accelerations determination
-                _GetAccelerationsForMaximumLongitudinalAndFixedSlipAngle();
+                kappa = kappas[iKappa];
+                for (int iAlpha = 0; iAlpha < alphas.Length; iAlpha++)
+                {
+                    alpha = alphas[iAlpha];
+                    // Rolling resistance moment [Nm]
+                    double tireMy = Car.Tire.TireModel.GetTireMy(0, alpha, tireFz, 0, Speed);
+                    double carLongitudinalForce;
+                    double carLateralForce;
+                    if (kappa < 0)
+                    {
+                        // Maximum appliable torque due to tire grip [Nm]
+                        double limitTorqueDueToGrip = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * wheelRadius * 4;
+                        // Wheel braking torque curve interpolation
+                        alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelBrakingTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelBrakingTorqueInterp);
+                        double powertrainBrakingTorque = alglib.spline1dcalc(wheelBrakingTorqueInterp, wheelCenterAngularSpeed) + tireMy * Car.Transmission.AmountOfDrivenWheels;
+                        // Limit torque due to brakes
+                        double limitTorqueDueToBrakes = -Car.Brakes.MaximumTorque + powertrainBrakingTorque;
+                        // Is the torque limited by the brakes or by the tire grip?
+                        if (limitTorqueDueToGrip < limitTorqueDueToBrakes)
+                        {
+                            double referenceFx = limitTorqueDueToBrakes / 4 / wheelRadius;
+                            // Finds the longitudinal slip for the current Fx
+                            double errorFx = 1e10;
+                            double oldFx = Car.Tire.TireModel.GetTireFx(kappas[0], alpha, tireFz, 0, Speed);
+                            int iOptimizeKappa;
+                            for (iOptimizeKappa = 1; iOptimizeKappa < kappas.Length; iOptimizeKappa++)
+                            {
+                                double currentFx = Car.Tire.TireModel.GetTireFx(kappas[iOptimizeKappa], alpha, tireFz, 0, Speed);
+                                double currentErrorFx = Math.Abs(currentFx - oldFx);
+                                if (currentErrorFx > errorFx)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    oldFx = currentFx;
+                                    errorFx = currentErrorFx;
+                                }
+                            }
+                            kappa = kappas[iOptimizeKappa];
+                            errorsFx.Add(Math.Abs(Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) - referenceFx));
+                        }
+                        // Aerodynamic drag force [N]
+                        double dragForce = -interpolatedAerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+                        // Car's resultant longitudinal force [N]
+                        carLongitudinalForce = (Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) + tireMy) * 4 + dragForce;
+                        // Car's resultant lateral force [N]
+                        carLateralForce = Car.Tire.TireModel.GetTireFy(kappa, alpha, tireFz, 0, Speed) * 4;
+                    }
+                    else
+                    {
+                        // Wheel torque curve interpolation
+                        alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelTorqueInterp);
+                        double limitTorqueDueToPowertrain = alglib.spline1dcalc(wheelTorqueInterp, wheelCenterAngularSpeed);
+                        // Maximum appliable torque due to tire grip [Nm]
+                        double limitTorqueDueToGrip = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * wheelRadius * Car.Transmission.AmountOfDrivenWheels;
+                        // Is the torque limited by the engine or by the tire grip?
+                        if (limitTorqueDueToGrip > limitTorqueDueToPowertrain)
+                        {
+                            double referenceFx = limitTorqueDueToPowertrain / Car.Transmission.AmountOfDrivenWheels / wheelRadius;
+                            // Finds the longitudinal slip for the current Fx
+                            double errorFx = 1e10;
+                            double oldFx = Car.Tire.TireModel.GetTireFx(kappas[0], alpha, tireFz, 0, Speed);
+                            int iOptimizeKappa;
+                            for (iOptimizeKappa = 1; iOptimizeKappa < kappas.Length; iOptimizeKappa++)
+                            {
+                                double currentFx = Car.Tire.TireModel.GetTireFx(kappas[iOptimizeKappa], alpha, tireFz, 0, Speed);
+                                double currentErrorFx = Math.Abs(currentFx - oldFx);
+                                if (currentErrorFx > errorFx)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    oldFx = currentFx;
+                                    errorFx = currentErrorFx;
+                                }
+                            }
+                            kappa = kappas[iOptimizeKappa];
+                            errorsFx.Add(Math.Abs(Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) - referenceFx));
+                        }
+                        // Aerodynamic drag force [N]
+                        double dragForce = -interpolatedAerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+                        // Car's resultant longitudinal force [N]
+                        carLongitudinalForce = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * Car.Transmission.AmountOfDrivenWheels + dragForce +
+                            tireMy / wheelRadius * 4;
+                        // Car's resultant lateral force [N]
+                        if (Car.Transmission.AmountOfDrivenWheels == 2)
+                            carLateralForce = (Car.Tire.TireModel.GetTireFy(0, alpha, tireFz, 0, Speed) + Car.Tire.TireModel.GetTireFy(kappa, alpha, tireFz, 0, Speed)) * 2;
+                        else
+                            carLateralForce = Car.Tire.TireModel.GetTireFy(kappa, alpha, tireFz, 0, Speed) * 4;
+                    }
+                    // Inertia efficiency (due to rotational parts moment of inertia)
+                    double inertiaEfficiency = Math.Pow(wheelRadius, 2) * Car.Inertia.TotalMass /
+                        (Math.Pow(wheelRadius, 2) * Car.Inertia.TotalMass + Car.Inertia.RotPartsMI);
+                    // Car's longitudinal acceleration [G]
+                    double longitudinalAcceleration = (carLongitudinalForce / Car.Inertia.TotalMass) * inertiaEfficiency;
+                    // Car's lateral acceleration [G]
+                    double lateralAcceleration = carLateralForce / Car.Inertia.TotalMass;
+                    // Result
+                    LongitudinalAccelerations.Add(longitudinalAcceleration);
+                    LateralAccelerations.Add(lateralAcceleration);
+                }
             }
             // Mirroring to get the right cornering side
             for (int iAcceleration = LongitudinalAccelerations.Count - 2; iAcceleration > 0; iAcceleration--)
@@ -139,11 +234,14 @@ namespace InternshipTest.Simulation
             // Current accelerations arrays
             double[] currentLongitudinalAccelerations = LongitudinalAccelerations.ToArray();
             double[] currentLateralAccelerations = LateralAccelerations.ToArray();
+            // Current GG Diagram's mean accelerations
+            double meanLongitudinalAcceleration = currentLongitudinalAccelerations.Average();
+            double meanLateralAcceleration = currentLateralAccelerations.Average();
             // Current accelerations directions array
             double[] currentAccelerationsDirections = new double[LongitudinalAccelerations.Count];
             for (int i = 0; i < LongitudinalAccelerations.Count; i++)
             {
-                currentAccelerationsDirections[i] = Math.Atan2(LongitudinalAccelerations[i], LateralAccelerations[i]);
+                currentAccelerationsDirections[i] = Math.Atan2(LongitudinalAccelerations[i] - meanLongitudinalAcceleration, LateralAccelerations[i] - meanLateralAcceleration);
             }
             // Target directions array
             double[] targetDirections = Generate.LinearSpaced(AmountOfDirections + 1, -Math.PI, Math.PI);           
@@ -162,7 +260,7 @@ namespace InternshipTest.Simulation
                     if (currentAccelerationsDirections[iCurrentAcceleration] >= targetDirections[iTargetDirection] && currentAccelerationsDirections[iCurrentAcceleration] < targetDirections[iTargetDirection + 1])
                     {
                         indexesOfTheCurrentAccelerationsInRange.Add(iCurrentAcceleration);
-                        magnitudesOfTheCurrentAccelerationsInRange.Add(Math.Sqrt(Math.Pow(LongitudinalAccelerations[iCurrentAcceleration], 2) + Math.Pow(LateralAccelerations[iCurrentAcceleration], 2)));
+                        magnitudesOfTheCurrentAccelerationsInRange.Add(Math.Sqrt(Math.Pow(LongitudinalAccelerations[iCurrentAcceleration] - meanLongitudinalAcceleration, 2) + Math.Pow(LateralAccelerations[iCurrentAcceleration] - meanLateralAcceleration, 2)));
                     }
                 }
                 // Determination of the new acceleration
@@ -224,92 +322,6 @@ namespace InternshipTest.Simulation
             // Writes the interpolated values to the lists
             LongitudinalAccelerations = newLongitudinalAccelerations.ToList();
             LateralAccelerations = newLateralAccelerations.ToList();
-        }
-
-        /// <summary>
-        /// Gets the longitudinal and lateral accelerations for a fixed and slip angle and minimum longitudinal force.
-        /// </summary>
-        private void _GetAccelerationsForMinimumLongitudinalAndFixedSlipAngle()
-        {
-            // Calculates the wheel radius [mm]
-            double wheelRadius = Car.Tire.TireModel.RO - tireFz / Car.Tire.VerticalStiffness;
-            // Maximum appliable torque due to tire grip [Nm]
-            double limitTorqueDueToGrip = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * wheelRadius * 4;
-            // Rolling resistance moment [Nm]
-            double tireMy = Car.Tire.TireModel.GetTireMy(0, alpha, tireFz, 0, Speed);
-            // Wheel center angular speed [rad/s]
-            double wheelCenterAngularSpeed = Speed / wheelRadius;
-            // Wheel braking torque curve interpolation
-            alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelBrakingTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelBrakingTorqueInterp);
-            double powertrainBrakingTorque = alglib.spline1dcalc(wheelBrakingTorqueInterp, wheelCenterAngularSpeed) + tireMy * Car.Transmission.AmountOfDrivenWheels;
-            // Limit torque due to brakes 
-            double limitTorqueDueToBrakes = -Car.Brakes.MaximumTorque + powertrainBrakingTorque + tireMy * 4;
-            // Is the torque limited by the brakes or by the tire grip?
-            if (limitTorqueDueToGrip < limitTorqueDueToBrakes)
-            {
-                referenceMy = limitTorqueDueToBrakes / 4;
-                kappa = Car.Tire.TireModel.GetLongitudinalSlipForGivenTireMy(alpha, tireFz, 0, Speed, referenceMy);
-            }
-            // Aerodynamic drag force [N]
-            double dragForce = -interpolatedAerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
-            // Car's resultant longitudinal force [N]
-            double carLongitudinalForce = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * 4 + dragForce;
-            // Car's resultant lateral force [N]
-            double carLateralForce = Car.Tire.TireModel.GetTireFy(kappa, alpha, tireFz, 0, Speed) * 4;
-            // Inertia efficiency (due to rotational parts moment of inertia)
-            double inertiaEfficiency = Math.Pow(wheelRadius, 2) * Car.Inertia.TotalMass /
-                (Math.Pow(wheelRadius, 2) * Car.Inertia.TotalMass + Car.Inertia.RotPartsMI);
-            // Car's longitudinal acceleration [G]
-            double longitudinalAcceleration = (carLongitudinalForce / Car.Inertia.TotalMass) * inertiaEfficiency;
-            // Car's lateral acceleration [G]
-            double lateralAcceleration = carLateralForce / Car.Inertia.TotalMass;
-            // Result
-            LongitudinalAccelerations.Add(longitudinalAcceleration);
-            LateralAccelerations.Add(lateralAcceleration);
-        }
-        /// <summary>
-        /// Gets the longitudinal and lateral accelerations for a fixed and slip angle and maximum longitudinal force.
-        /// </summary>
-        private void _GetAccelerationsForMaximumLongitudinalAndFixedSlipAngle()
-        {
-            // Calculates the wheel radius [mm]
-            double wheelRadius = Car.Tire.TireModel.RO - tireFz / Car.Tire.VerticalStiffness;
-            // Maximum appliable torque due to tire grip [Nm]
-            double limitTorqueDueToGrip = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * wheelRadius * Car.Transmission.AmountOfDrivenWheels;
-            // Rolling resistance moment [Nm]
-            double tireMy = Car.Tire.TireModel.GetTireMy(0, alpha, tireFz, 0, Speed);
-            // Wheel center angular speed [rpm]
-            double wheelCenterAngularSpeed = Speed / wheelRadius;
-            // Wheel torque curve interpolation
-            alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelTorqueInterp);
-            double limitTorqueDueToPowertrain = alglib.spline1dcalc(wheelTorqueInterp, wheelCenterAngularSpeed) + tireMy * Car.Transmission.AmountOfDrivenWheels;
-            // Is the torque limited by the engine or by the tire grip?
-            if (limitTorqueDueToGrip > limitTorqueDueToPowertrain)
-            {
-                referenceMy = limitTorqueDueToPowertrain / Car.Transmission.AmountOfDrivenWheels;
-                kappa = Car.Tire.TireModel.GetLongitudinalSlipForGivenTireMy(alpha, tireFz, 0, Speed, referenceMy);
-            }
-            // Aerodynamic drag force [N]
-            double dragForce = -interpolatedAerodynamicMapPoint.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
-            // Car's resultant longitudinal force [N]
-            double carLongitudinalForce = Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) * Car.Transmission.AmountOfDrivenWheels + dragForce +
-                tireMy / wheelRadius * (4 - Car.Transmission.AmountOfDrivenWheels);
-            // Car's resultant lateral force [N]
-            double carLateralForce;
-            if (Car.Transmission.AmountOfDrivenWheels == 2)
-                carLateralForce = (Car.Tire.TireModel.GetTireFy(0, alpha, tireFz, 0, Speed) + Car.Tire.TireModel.GetTireFy(kappa, alpha, tireFz, 0, Speed)) * 2;
-            else
-                carLateralForce = Car.Tire.TireModel.GetTireFy(kappa, alpha, tireFz, 0, Speed) * 4;
-            // Inertia efficiency (due to rotational parts moment of inertia)
-            double inertiaEfficiency = Math.Pow(wheelRadius, 2) * Car.Inertia.TotalMass /
-                (Math.Pow(wheelRadius, 2) * Car.Inertia.TotalMass + Car.Inertia.RotPartsMI);
-            // Car's longitudinal acceleration [G]
-            double longitudinalAcceleration = (carLongitudinalForce / Car.Inertia.TotalMass) * inertiaEfficiency;
-            // Car's lateral acceleration [G]
-            double lateralAcceleration = carLateralForce / Car.Inertia.TotalMass;
-            // Result
-            LongitudinalAccelerations.Add(longitudinalAcceleration);
-            LateralAccelerations.Add(lateralAcceleration);
         }
         #endregion
         /// <summary>
