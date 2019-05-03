@@ -492,8 +492,9 @@ namespace InternshipTest.Simulation
             double currentLateralAcceleration = Math.Pow(currentSpeed, 2) * currentCurvature;
             // Gets the longitudinal acceleration via interpolation based on the lateral acceleration
             double currentLongitudinalAcceleration;
-            if (currentSpeed == results.MaximumPossibleSpeeds[iPoint]) currentLongitudinalAcceleration = 0;
-            else currentLongitudinalAcceleration = interpolatedGGDiagram.GetLongitudinalAccelerationViaInterpolationBasedOnLateralAcceleration(currentLateralAcceleration, limitationMode);
+            currentLongitudinalAcceleration = interpolatedGGDiagram.GetLongitudinalAccelerationViaInterpolationBasedOnLateralAcceleration(currentLateralAcceleration, limitationMode);
+            if (limitationMode == "Braking" && currentLongitudinalAcceleration > 0) currentLongitudinalAcceleration = 0;
+            else if (limitationMode == "Accelerating" && currentLongitudinalAcceleration < 0) currentLongitudinalAcceleration = 0;
             // Registers the values in the lists
             results.Speeds[iPoint] = currentSpeed;
             results.LongitudinalAccelerations[iPoint] = currentLongitudinalAcceleration;
