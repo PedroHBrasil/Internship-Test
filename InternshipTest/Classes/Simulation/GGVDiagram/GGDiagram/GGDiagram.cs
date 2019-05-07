@@ -10,7 +10,7 @@ namespace InternshipTest.Simulation
     {
         #region Properties
         /// <summary>
-        /// Speed at which the accelrations are calculated [m/s].
+        /// Speed at which the accelerations are calculated [m/s].
         /// </summary>
         public double Speed { get; set; }
         /// <summary>
