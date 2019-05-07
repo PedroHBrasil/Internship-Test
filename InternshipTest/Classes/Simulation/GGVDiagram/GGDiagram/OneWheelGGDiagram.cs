@@ -135,24 +135,7 @@ namespace InternshipTest.Simulation
                         {
                             double referenceFx = limitTorqueDueToBrakes / 4 / wheelRadius;
                             // Finds the longitudinal slip for the current Fx
-                            double errorFx = 1e10;
-                            double oldFx = Car.Tire.TireModel.GetTireFx(kappas[0], alpha, tireFz, 0, Speed);
-                            int iOptimizeKappa;
-                            for (iOptimizeKappa = 1; iOptimizeKappa < kappas.Length; iOptimizeKappa++)
-                            {
-                                double currentFx = Car.Tire.TireModel.GetTireFx(kappas[iOptimizeKappa], alpha, tireFz, 0, Speed);
-                                double currentErrorFx = Math.Abs(currentFx - oldFx);
-                                if (currentErrorFx > errorFx)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    oldFx = currentFx;
-                                    errorFx = currentErrorFx;
-                                }
-                            }
-                            kappa = kappas[iOptimizeKappa];
+                            kappa = Car.Tire.TireModel.GetLongitudinalSlipForGivenLongitudinalForce(referenceFx, kappas, alpha, tireFz, 0, Speed);
                             errorsFx.Add(Math.Abs(Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) - referenceFx));
                         }
                         // Aerodynamic drag force [N]
@@ -174,24 +157,7 @@ namespace InternshipTest.Simulation
                         {
                             double referenceFx = limitTorqueDueToPowertrain / Car.Transmission.AmountOfDrivenWheels / wheelRadius;
                             // Finds the longitudinal slip for the current Fx
-                            double errorFx = 1e10;
-                            double oldFx = Car.Tire.TireModel.GetTireFx(kappas[0], alpha, tireFz, 0, Speed);
-                            int iOptimizeKappa;
-                            for (iOptimizeKappa = 1; iOptimizeKappa < kappas.Length; iOptimizeKappa++)
-                            {
-                                double currentFx = Car.Tire.TireModel.GetTireFx(kappas[iOptimizeKappa], alpha, tireFz, 0, Speed);
-                                double currentErrorFx = Math.Abs(currentFx - oldFx);
-                                if (currentErrorFx > errorFx)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    oldFx = currentFx;
-                                    errorFx = currentErrorFx;
-                                }
-                            }
-                            kappa = kappas[iOptimizeKappa];
+                            kappa = Car.Tire.TireModel.GetLongitudinalSlipForGivenLongitudinalForce(referenceFx, kappas, alpha, tireFz, 0, Speed);
                             errorsFx.Add(Math.Abs(Car.Tire.TireModel.GetTireFx(kappa, alpha, tireFz, 0, Speed) - referenceFx));
                         }
                         // Aerodynamic drag force [N]

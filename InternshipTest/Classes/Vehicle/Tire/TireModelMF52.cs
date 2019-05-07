@@ -653,6 +653,30 @@ namespace InternshipTest.Vehicle
         {
             tireFx = -GetTireFx(kappa[0], currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed);
         }
+        /// <summary>
+        /// Finds the longitudinal slip of a list of longitudinal slips which gives the closest longitudinal force to the target longitudinal force.
+        /// </summary>
+        /// <param name="targetFx"> Target longitudinal force [N] </param>
+        /// <param name="kappas"> List of Longitudinal Slip candidates </param>
+        /// <param name="alpha"> Slip Angle [rad] </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Longitudinal slip for the target force. </returns>
+        public double GetLongitudinalSlipForGivenLongitudinalForce(double targetFx, double[] kappas, double alpha, double Fz, double gamma, double Vc)
+        {
+            // Finds the longitudinal slip for the current Fx
+            double errorFx = 1e10;
+            int iOptimizeKappa;
+            for (iOptimizeKappa = 0; iOptimizeKappa < kappas.Length; iOptimizeKappa++)
+            {
+                double currentFx = GetTireFx(kappas[iOptimizeKappa], alpha, Fz, 0, Vc);
+                double currentErrorFx = Math.Abs(currentFx - targetFx);
+                if (currentErrorFx > errorFx) break;
+                else errorFx = currentErrorFx;
+            }
+            return kappas[iOptimizeKappa];
+        }
         #endregion
         #region Slip Angle Optimization Methods
         /// <summary>
