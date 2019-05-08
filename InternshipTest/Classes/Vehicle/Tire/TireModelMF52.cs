@@ -675,7 +675,7 @@ namespace InternshipTest.Vehicle
                 if (currentErrorFx > errorFx) break;
                 else errorFx = currentErrorFx;
             }
-            return kappas[iOptimizeKappa];
+            return kappas[iOptimizeKappa - 1];
         }
         #endregion
         #region Slip Angle Optimization Methods
