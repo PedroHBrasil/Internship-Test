@@ -47,9 +47,10 @@ namespace InternshipTest.Simulation
             // Speed vector
             Speeds = Generate.LinearSpaced(AmountOfSpeeds, LowestSpeed, HighestSpeed);
             // GGV diagram generation
-            foreach (double speed in Speeds)
+            for (int iSpeed = 0; iSpeed < Speeds.Length; iSpeed++)
             {
-                GGDiagrams.Add(new TwoWheelGGDiagram(speed, Car, AmountOfPointsPerSpeed, AmountOfDirections));
+                GGDiagrams.Add(new TwoWheelGGDiagram(Speeds[iSpeed], Car, AmountOfPointsPerSpeed, AmountOfDirections));
+                GGDiagrams[iSpeed].GenerateGGDiagram();
             }
         }
         /// <summary>
