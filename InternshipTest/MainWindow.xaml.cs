@@ -93,67 +93,7 @@ namespace InternshipTest
         /// </summary>
         private void _PopulateFields()
         {
-            // Inertia
-            oneWheelInertiaIDTextBox.Text = "inertia1";
-            oneWheelTotalMassTextBox.Text = "300";
-            oneWheelUnsprungMassTextBox.Text = "50";
-            oneWheelRotPartsMITextBox.Text = "5";
-            oneWheelGravityAccelTextBox.Text = "9.81";
-
-            // Suspension
-            simplifiedSuspensionIDTextBox.Text = "susp1";
-            simplifiedSuspensionHeaveStiffnessTextBox.Text = "100";
-            simplifiedSuspensionRideHeightTextBox.Text = "50";
-
-            // Brakes
-            oneWheelBrakesIDTextBox.Text = "brk1";
-            oneWheelBrakesMaximumTorqueTextBox.Text = "2000";
-
-            // Tire
-            tireIDTextBox.Text = "tire1";
-            tireStiffnessTextBox.Text = "120";
-
-            // Tire Model
-            tireModelTextBox.Text = @"D:\Google Drive\Work\OptimumG\Internship Test\Programs\Auxiliar Files\TireModelMF52.txt";
-            lambdaMuxTextBox.Text = "0.66";
-            lambdaMuyTextBox.Text = "0.66";
-            lambdaMuVTextBox.Text = "0.00";
-            tireModelIDTextBox.Text = "tireModel1";
-            tireModelMinSlipAngleTextBox.Text = "-12";
-            tireModelMaxSlipAngleTextBox.Text = "12";
-            tireModelMinLongitudinalSlipTextBox.Text = "-0.15";
-            tireModelMaxLongitudinalSlipTextBox.Text = "0.15";
-
-            // Tire Model Display
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 500, 0, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, 0, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1500, 0, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, -2, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, 2, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, -.1, 1000, 0, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, .1, 1000, 0, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(-6, 0, 1000, 0, 40));
-            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(6, 0, 1000, 0, 40));
-            tireModelDisplayDataAmountOfPointsTextBox.Text = "100";
-
-            // Gear Ratios
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(2.75));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.938));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.556));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.348));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.208));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.095));
-            gearRatiosSetIDTextBox.Text = "gearRatios1";
-
-            // Transmission
-            oneWheelTransmissionIDTextBox.Text = "trans1";
-            oneWheelTransmissionTypeComboBox.Text = "2WD";
-            oneWheelPrimaryRatioTextBox.Text = "2.111";
-            oneWheelFinalRatioTextBox.Text = "3.7143";
-            oneWheelGearShiftTimeTextBox.Text = "0.2";
-            oneWheelTransmissionEfficiencyTextBox.Text = "87.5";
-
-            // Aerodynamic Map
+            // One Wheel Aerodynamic Map
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 30, 1, -2));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 40, 1.1, -1.9));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 50, 1.2, -1.8));
@@ -163,12 +103,116 @@ namespace InternshipTest
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(100, 30, 1.1, -2.3));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(100, 40, 1, -2.2));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(100, 50, 0.9, -2.1));
-            oneWheelAerodynamicMapIDTextBox.Text = "aeroMap1";
+            oneWheelAerodynamicMapIDTextBox.Text = "oneWheelAeroMap1";
+
+            // Two Wheel Aerodynamic Map
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 30, -6, 1.0, -0.2, -2.0, 0.5, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 30, 00, 1.0, 00.0, -2.0, 0.5, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 30, 06, 1.0, 00.2, -2.0, 0.5, 00.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 40, -6, 1.1, -0.2, -1.9, 0.6, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 40, 00, 1.1, 00.0, -1.9, 0.6, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 40, 06, 1.1, 00.2, -1.9, 0.6, 00.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 50, -6, 1.2, -0.2, -1.8, 0.8, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 50, 00, 1.2, 00.0, -1.8, 0.8, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 50, 06, 1.2, 00.2, -1.8, 0.8, 00.2));
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 30, -6, 0.9, -0.2, -1.8, 0.1, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 30, 00, 0.9, 00.0, -1.8, 0.1, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 30, 06, 0.9, 00.2, -1.8, 0.1, 00.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 40, -6, 1.0, -0.2, -2.0, 0.4, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 40, 00, 1.0, 00.0, -2.0, 0.4, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 40, 06, 1.0, 00.2, -2.0, 0.4, 00.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 50, -6, 1.1, -0.2, -1.9, 0.6, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 50, 00, 1.1, 00.0, -1.9, 0.6, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 50, 06, 1.1, 00.2, -1.9, 0.6, 00.2));
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 30, -6, 0.8, -0.2, -1.5, 0.0, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 30, 00, 0.8, 00.0, -1.5, 0.0, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 30, 06, 0.8, 00.2, -1.5, 0.0, 00.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 40, -6, 1.1, -0.2, -1.3, 0.1, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 40, 00, 1.1, 00.0, -1.3, 0.1, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 40, 06, 1.1, 00.2, -1.3, 0.1, 00.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 50, -6, 1.0, -0.2, -1.8, 0.7, -0.2));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 50, 00, 1.0, 00.0, -1.8, 0.7, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 50, 50, 06, 1.0, 00.2, -1.8, 0.7, 00.2));
+
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 30, -6, 0.9, -0.3, -1.5, 0.4, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 30, 00, 0.9, 00.0, -1.5, 0.4, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 30, 06, 0.9, 00.3, -1.5, 0.4, 00.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 40, -6, 1.0, -0.3, -1.4, 0.7, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 40, 00, 1.0, 00.0, -1.4, 0.7, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 40, 06, 1.0, 00.3, -1.4, 0.7, 00.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 50, -6, 1.1, -0.3, -1.7, 0.6, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 50, 00, 1.1, 00.0, -1.7, 0.6, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 50, 06, 1.1, 00.3, -1.7, 0.6, 00.3));
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 30, -6, 0.8, -0.3, -1.8, 0.2, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 30, 00, 0.8, 00.0, -1.8, 0.2, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 30, 06, 0.8, 00.3, -1.8, 0.2, 00.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 40, -6, 1.1, -0.3, -2.1, 0.3, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 40, 00, 1.1, 00.0, -2.1, 0.3, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 40, 06, 1.1, 00.3, -2.1, 0.3, 00.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 50, -6, 1.0, -0.3, -2.2, 0.7, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 50, 00, 1.0, 00.0, -2.2, 0.7, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 40, 50, 06, 1.0, 00.3, -2.2, 0.7, 00.3));
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 30, -6, 0.5, -0.3, -1.8, 0.1, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 30, 00, 0.5, 00.0, -1.8, 0.1, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 30, 06, 0.5, 00.3, -1.8, 0.1, 00.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 40, -6, 1.0, -0.3, -2.0, 0.1, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 40, 00, 1.0, 00.0, -2.0, 0.1, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 40, 06, 1.0, 00.3, -2.0, 0.1, 00.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 50, -6, 1.2, -0.3, -1.8, 0.5, -0.3));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 50, 00, 1.2, 00.0, -1.8, 0.5, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 50, 06, 1.2, 00.3, -1.8, 0.5, 00.3));
+
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 30, -6, 0.9, -0.1, -1.6, 0.5, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 30, 00, 0.9, 00.0, -1.6, 0.5, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 30, 06, 0.9, 00.1, -1.6, 0.5, 00.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 40, -6, 0.5, -0.1, -1.3, 0.1, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 40, 00, 0.5, 00.0, -1.3, 0.1, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 40, 06, 0.5, 00.1, -1.3, 0.1, 00.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 50, -6, 1.0, -0.1, -2.0, 0.3, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 50, 00, 1.0, 00.0, -2.0, 0.3, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 50, 06, 1.0, 00.1, -2.0, 0.3, 00.1));
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 30, -6, 0.7, -0.1, -1.8, 0.4, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 30, 00, 0.7, 00.0, -1.8, 0.4, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 30, 06, 0.7, 00.1, -1.8, 0.4, 00.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 40, -6, 1.4, -0.1, -2.1, 0.3, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 40, 00, 1.4, 00.0, -2.1, 0.3, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 40, 06, 1.4, 00.1, -2.1, 0.3, 00.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 50, -6, 1.2, -0.1, -2.2, 0.5, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 50, 00, 1.2, 00.0, -2.2, 0.5, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(100, 40, 50, 06, 1.2, 00.1, -2.2, 0.5, 00.1));
+
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 30, -6, 0.6, -0.1, -1.9, 0.3, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 30, 00, 0.6, 00.0, -1.9, 0.3, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 30, 06, 0.6, 00.1, -1.9, 0.3, 00.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 40, -6, 0.9, -0.1, -2.2, 0.2, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 40, 00, 0.9, 00.0, -2.2, 0.2, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 40, 06, 0.9, 00.1, -2.2, 0.2, 00.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 50, -6, 1.1, -0.1, -1.9, 0.0, -0.1));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 50, 00, 1.1, 00.0, -1.9, 0.0, 00.0));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(70, 50, 50, 06, 1.1, 00.1, -1.9, 0.0, 00.1));
+            twoWheelAerodynamicMapIDTextBox.Text = "twoWheelAeroMap1";
 
             // Aerodynamics
             aerodynamicsIDTextBox.Text = "aero1";
             frontalAreaTextBox.Text = "1.2";
             airDensityTextBox.Text = "1.3";
+
+            // One Wheel Brakes
+            oneWheelBrakesIDTextBox.Text = "oneWheelBrakes1";
+            oneWheelBrakesMaximumTorqueTextBox.Text = "2000";
+
+            // Two Wheel Brakes
+            twoWheelBrakesIDTextBox.Text = "twoWheelBrakes1";
+            twoWheelBrakesBrakeBiasTextBox.Text = "70";
+            twoWheelBrakesFrontMaximumTorqueTextBox.Text = "1100";
+            twoWheelBrakesRearMaximumTorqueTextBox.Text = "650";
 
             // Engine Curves
             engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(3000, 55.77, 3.0, 390.45));
@@ -195,9 +239,96 @@ namespace InternshipTest
             maxThrottleTextBox.Text = "100";
             fuelDensityTextBox.Text = "870";
 
-            // Car and setup fields
-            oneWheelCarIDTextBox.Text = "car1";
-            oneWheelSetupIDTextBox.Text = "setup1";
+            // Inertia
+            oneWheelInertiaIDTextBox.Text = "inertia1";
+            oneWheelTotalMassTextBox.Text = "300";
+            oneWheelUnsprungMassTextBox.Text = "50";
+            oneWheelRotPartsMITextBox.Text = "5";
+            oneWheelGravityAccelTextBox.Text = "9.81";
+
+            // Inertia And Dimensions
+            twoWheelInertiaAndDimensionsIDTextBox.Text = "inertiaAndDimensions1";
+            twoWheelTotalMassTextBox.Text = "300";
+            twoWheelTotalMassDistributionTextBox.Text = "50";
+            twoWheelTotalMassCGHeightTextBox.Text = "300";
+            twoWheelFrontUnsprungMassTextBox.Text = "20";
+            twoWheelFrontUnsprungMassCGHeightTextBox.Text = "250";
+            twoWheelRearUnsprungMassTextBox.Text = "30";
+            twoWheelRearUnsprungMassCGHeightTextBox.Text = "250";
+            twoWheelWheelbaseTextBox.Text = "1530";
+            twoWheelRotPartsMITextBox.Text = "5";
+            twoWheelGravityAccelTextBox.Text = "9.81";
+
+            // Simplified Suspension
+            simplifiedSuspensionIDTextBox.Text = "suspension1";
+            simplifiedSuspensionHeaveStiffnessTextBox.Text = "100";
+            simplifiedSuspensionRideHeightTextBox.Text = "50";
+
+            // Steering
+            steeringSystemIDTextBox.Text = "steering1";
+            steeringSystemFrontSteeringRatioTextBox.Text = ".25";
+            steeringSystemRearSteeringRatioTextBox.Text = "0";
+            steeringSystemMaximumSteeringWheelAngleTextBox.Text = "120";
+            
+            // Tire
+            tireIDTextBox.Text = "tire1";
+            tireStiffnessTextBox.Text = "120";
+
+            // Tire Model
+            tireModelTextBox.Text = @"D:\Google Drive\Work\OptimumG\Internship Test\Programs\Auxiliar Files\TireModelMF52.txt";
+            lambdaMuxTextBox.Text = "0.66";
+            lambdaMuyTextBox.Text = "0.66";
+            lambdaMuVTextBox.Text = "0.00";
+            tireModelIDTextBox.Text = "tireModel1";
+            tireModelMinSlipAngleTextBox.Text = "-12";
+            tireModelMaxSlipAngleTextBox.Text = "12";
+            tireModelMinLongitudinalSlipTextBox.Text = "-0.15";
+            tireModelMaxLongitudinalSlipTextBox.Text = "0.15";
+
+            // Tire Model Display
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 500, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1500, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, -2, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, 0, 1000, 2, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, -6, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(0, .6, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(-.06, 0, 1000, 0, 40));
+            tireModelDisplayParameterSetsCheckListBox.Items.Add(new Vehicle.TireModelMF52Point(.06, 0, 1000, 0, 40));
+            tireModelDisplayDataAmountOfPointsTextBox.Text = "100";
+
+            // Gear Ratios
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(2.75));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.938));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.556));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.348));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.208));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.095));
+            gearRatiosSetIDTextBox.Text = "gearRatios1";
+
+            // One Wheel Transmission
+            oneWheelTransmissionIDTextBox.Text = "oneWheelTransmission1";
+            oneWheelTransmissionTypeComboBox.Text = "2WD";
+            oneWheelPrimaryRatioTextBox.Text = "2.111";
+            oneWheelFinalRatioTextBox.Text = "3.7143";
+            oneWheelGearShiftTimeTextBox.Text = "0.2";
+            oneWheelTransmissionEfficiencyTextBox.Text = "87.5";
+
+            // Two Wheel Transmission
+            twoWheelTransmissionIDTextBox.Text = "twoWheelTransmission1";
+            twoWheelPrimaryRatioTextBox.Text = "2.111";
+            twoWheelFinalRatioTextBox.Text = "3.7143";
+            twoWheelGearShiftTimeTextBox.Text = "0.2";
+            twoWheelTransmissionEfficiencyTextBox.Text = "87.5";
+            twoWheelTransmissionTorqueBiasTextBox.Text = "50";
+
+            // One Wheel Car and setup fields
+            oneWheelCarIDTextBox.Text = "oneWheelCar1";
+            oneWheelSetupIDTextBox.Text = "oneWheelSetup1";
+
+            // Two Wheel Car and setup fields
+            twoWheelCarIDTextBox.Text = "twoWheelCar1";
+            twoWheelSetupIDTextBox.Text = "twoWheelSetup1";
 
             // Path Sectors
             tabularPathSectorsStartDistancesListBox.Items.Add(new PathSector(1, 0));
@@ -217,14 +348,19 @@ namespace InternshipTest
             tabularPathSectionsSetIDTextBox.Text = "sections1";
 
             // Path
-            tabularPathIDTextBox.Text = "testPath";
+            tabularPathIDTextBox.Text = "path1";
             tabularPathResolutionTextBox.Text = "100";
 
             // GGV Diagram
+            ggvDiagramIDTextBox.Text = "ggv1";
             ggvDiagramAmountOfPointsPerSpeedTextBox.Text = "40";
+            ggvDiagramAmountOfDirectionsTextBox.Text = "20";
             ggvDiagramAmountOfSpeedsTextBox.Text = "20";
             ggvDiagramLowestSpeedTextBox.Text = "10";
             ggvDiagramHighestSpeedTextBox.Text = "120";
+
+            // Lap Time Simulation
+            lapTimeSimulationIDTextBox.Text = "lapTime1";
         }
         #endregion
 
@@ -1259,7 +1395,7 @@ namespace InternshipTest
                 // Gets the object's properties values
                 string brakesID = twoWheelBrakesIDTextBox.Text;
                 string description = twoWheelBrakesDescriptionTextBox.Text;
-                double brakeBias = double.Parse(twoWheelBrakesBrakeBiasTextBox.Text);
+                double brakeBias = double.Parse(twoWheelBrakesBrakeBiasTextBox.Text) / 100;
                 double frontMaxTorque = double.Parse(twoWheelBrakesFrontMaximumTorqueTextBox.Text);
                 double rearMaxTorque = double.Parse(twoWheelBrakesRearMaximumTorqueTextBox.Text);
                 // Initializes a new object
@@ -1306,7 +1442,7 @@ namespace InternshipTest
                 // Writes the properties in the UI
                 twoWheelBrakesIDTextBox.Text = brakes.ID;
                 twoWheelBrakesDescriptionTextBox.Text = brakes.Description;
-                twoWheelBrakesBrakeBiasTextBox.Text = brakes.BrakeBias.ToString("F3");
+                twoWheelBrakesBrakeBiasTextBox.Text = (brakes.BrakeBias * 100).ToString("F3");
                 twoWheelBrakesFrontMaximumTorqueTextBox.Text = brakes.FrontMaximumTorque.ToString("F3");
                 twoWheelBrakesRearMaximumTorqueTextBox.Text = brakes.RearMaximumTorque.ToString("F3");
             }
@@ -2724,7 +2860,8 @@ namespace InternshipTest
                 // Initializes a new object
                 Vehicle.TwoWheelCar car = new Vehicle.TwoWheelCar(carID, setupID, description, aerodynamics, brakes, engine, inertiaAndDimensions, frontSuspension, rearSuspension, steering, frontTire, rearTire, transmission);
                 // Gets additional parameters
-
+                car.GetLinearAccelerationParameters();
+                car.GetCarOperationSpeedRange();
                 // Adds the object to the listbox
                 twoWheelCarAndSetupListBox.Items.Add(car);
             }
@@ -3579,14 +3716,14 @@ namespace InternshipTest
                 // Gets the object's data
                 string id = ggvDiagramIDTextBox.Text;
                 string description = ggvDiagramDescriptionTextBox.Text;
-                Vehicle.OneWheelCar car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
+                Vehicle.TwoWheelCar car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
                 int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
                 int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
                 int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
                 double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
                 double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
                 // Initializes a new object
-                Simulation.OneWheelGGVDiagram ggvDiagram = new Simulation.OneWheelGGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed);
+                Simulation.TwoWheelGGVDiagram ggvDiagram = new Simulation.TwoWheelGGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed);
                 ggvDiagram.GenerateGGVDiagram();
                 // Adds the object to the listbox and the ComboBox
                 simulationTwoWheelGGVDiagramListBox.Items.Add(ggvDiagram);
@@ -3628,7 +3765,7 @@ namespace InternshipTest
             if (simulationTwoWheelGGVDiagramListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Simulation.OneWheelGGVDiagram ggvDiagram = simulationTwoWheelGGVDiagramListBox.SelectedItem as Simulation.OneWheelGGVDiagram;
+                Simulation.TwoWheelGGVDiagram ggvDiagram = simulationTwoWheelGGVDiagramListBox.SelectedItem as Simulation.TwoWheelGGVDiagram;
                 // Writes the properties in the UI
                 ggvDiagramIDTextBox.Text = ggvDiagram.ID;
                 ggvDiagramDescriptionTextBox.Text = ggvDiagram.Description;

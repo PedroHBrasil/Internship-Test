@@ -1145,7 +1145,7 @@
                                         syncfusion:DockingManager.Header="Tire"
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="250"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="AutoHidden">
+                                        syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -1195,7 +1195,7 @@
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="250"
                                         syncfusion:DockingManager.SideInDockedMode="Left"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="AutoHidden">
+                                        syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -1588,7 +1588,7 @@
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="1250"
                                         syncfusion:DockingManager.SideInDockedMode="Left"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="1250"
-                                        syncfusion:DockingManager.State="Dock">
+                                        syncfusion:DockingManager.State="AutoHidden">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
@@ -1846,7 +1846,7 @@
                                     <!-- Gear Ratios Set line -->
                                     <TextBlock Text="Gear Ratios" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ComboBox Name="twoWheelTransmissionGearRatiosSetComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=oneWheelGearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
+                                              ItemsSource="{Binding ElementName=gearRatiosSetsListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Primary ratio line -->
                                     <TextBlock Text="Primary Ratio" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <syncfusion:DoubleTextBox Name="twoWheelPrimaryRatioTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3" 
@@ -2101,7 +2101,7 @@
                                     <!-- Steering System selection line -->
                                     <TextBlock Text="Steering System" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="twoWheelSteeringSystemComboBox" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=simplifiedSteeringSystemListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=steeringSystemListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Tire selection line -->
                                     <TextBlock Text="Tire" Grid.Row="11" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBlock Text="Front" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
@@ -2379,7 +2379,7 @@
 
                         </syncfusion:DockingManager>
                         <!-- GGV Diagram Docking Manager -->
-                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Collapsed">
                             <!-- GGV Diagram Input Dockig Window -->
                             <ContentControl Name="ggvDiagramDefinitionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
