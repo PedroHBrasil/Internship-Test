@@ -2555,7 +2555,7 @@
                                     </ComboBox>
                                     <TextBlock Text="GGV Diagram:" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="lapTimeSimulationNewSectorGGVDiagramComboBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                              ItemsSource="{Binding ElementName=simulationGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
+                                              ItemsSource="{Binding ElementName=simulationOneWheelGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
