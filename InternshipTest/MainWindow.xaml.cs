@@ -269,7 +269,7 @@ namespace InternshipTest
             steeringSystemFrontSteeringRatioTextBox.Text = ".25";
             steeringSystemRearSteeringRatioTextBox.Text = "0";
             steeringSystemMaximumSteeringWheelAngleTextBox.Text = "120";
-            
+
             // Tire
             tireIDTextBox.Text = "tire1";
             tireStiffnessTextBox.Text = "120";
@@ -864,17 +864,25 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _AddAerodynamicsToListBox_Click(object sender, RoutedEventArgs e)
         {
-            switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+            if (aerodynamicsVehicleModelComboBox.SelectedItem != null)
             {
-                case "One Wheel":
-                    _AddOneWheelAerodynamicsToListBox();
-                    break;
-                case "Two Wheel":
-                    _AddTwoWheelAerodynamicsToListBox();
-                    break;
-                default:
-                    break;
+                switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+                {
+                    case "One Wheel":
+                        _AddOneWheelAerodynamicsToListBox();
+                        break;
+                    case "Two Wheel":
+                        _AddTwoWheelAerodynamicsToListBox();
+                        break;
+                    default:
+                        break;
+                }
             }
+            else System.Windows.MessageBox.Show(
+               "Please, select a vehicle model.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
         }
 
         /// <summary>
@@ -884,17 +892,25 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _DeleteAerodynamicsOfListBox_Click(object sender, RoutedEventArgs e)
         {
-            switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+            if (aerodynamicsVehicleModelComboBox.SelectedItem != null)
             {
-                case "One Wheel":
-                    _DeleteOneWheelAerodynamicsOfListBox();
-                    break;
-                case "Two Wheel":
-                    _DeleteTwoWheelAerodynamicsOfListBox();
-                    break;
-                default:
-                    break;
+                switch (aerodynamicsVehicleModelComboBox.SelectedValue.ToString())
+                {
+                    case "One Wheel":
+                        _DeleteOneWheelAerodynamicsOfListBox();
+                        break;
+                    case "Two Wheel":
+                        _DeleteTwoWheelAerodynamicsOfListBox();
+                        break;
+                    default:
+                        break;
+                }
             }
+            else System.Windows.MessageBox.Show(
+               "Please, select a vehicle model.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
         }
 
         /// <summary>
@@ -3552,17 +3568,25 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationAddGGVDiagramToListBox_Click(object sender, RoutedEventArgs e)
         {
-            switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
+            if (ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null)
             {
-                case "One Wheel":
-                    _SimulationAddOneWheelGGVDiagramToListBox();
-                    break;
-                case "Two Wheel":
-                    _SimulationAddTwoWheelGGVDiagramToListBox();
-                    break;
-                default:
-                    break;
-            };
+                switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
+                {
+                    case "One Wheel":
+                        _SimulationAddOneWheelGGVDiagramToListBox();
+                        break;
+                    case "Two Wheel":
+                        _SimulationAddTwoWheelGGVDiagramToListBox();
+                        break;
+                    default:
+                        break;
+                };
+            }
+            else System.Windows.MessageBox.Show(
+               "Please, select a vehicle model.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
         }
         /// <summary>
         /// Deletes a ggv diagram from the ggv diagrams listbox.
@@ -3571,17 +3595,25 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationDeleteGGVDiagramOfListBox_Click(object sender, RoutedEventArgs e)
         {
-            switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
+            if (ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null)
             {
-                case "One Wheel":
-                    _SimulationDeleteOneWheelGGVDiagramOfListBox();
-                    break;
-                case "Two Wheel":
-                    _SimulationDeleteTwoWheelGGVDiagramOfListBox();
-                    break;
-                default:
-                    break;
-            };
+                switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
+                {
+                    case "One Wheel":
+                        _SimulationDeleteOneWheelGGVDiagramOfListBox();
+                        break;
+                    case "Two Wheel":
+                        _SimulationDeleteTwoWheelGGVDiagramOfListBox();
+                        break;
+                    default:
+                        break;
+                };
+            }
+            else System.Windows.MessageBox.Show(
+               "Please, select a vehicle model.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
         }
         /// <summary>
         /// Changes the GGV diagram input environment accordingly to the selected vehicle model.
