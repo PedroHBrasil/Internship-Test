@@ -58,7 +58,7 @@ namespace InternshipTest
         {
             InitializeComponent();
             // Sets the application theme
-            CurrentVisualStyle = "Blend";
+            CurrentVisualStyle = "VisualStudio2013";
             // this.Loaded += OnLoaded;
 
             _PopulateFields();
