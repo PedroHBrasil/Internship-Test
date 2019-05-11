@@ -14,48 +14,106 @@ namespace InternshipTest
     public class Project
     {
         #region Properties
+        // Aerodynamics
+        public List<Vehicle.OneWheelAerodynamics> OneWheelAerodynamics { get; set; }
+        public List<Vehicle.OneWheelAerodynamicMap> OneWheelAerodynamicMaps { get; set; }
+        public List<Vehicle.OneWheelAerodynamicMapPoint> OneWheelAerodynamicMapPoints { get; set; }
+        public List<Vehicle.TwoWheelAerodynamics> TwoWheelAerodynamics { get; set; }
+        public List<Vehicle.TwoWheelAerodynamicMap> TwoWheelAerodynamicMaps { get; set; }
+        public List<Vehicle.TwoWheelAerodynamicMapPoint> TwoWheelAerodynamicMapPoints { get; set; }
+        // Brakes
+        public List<Vehicle.OneWheelBrakes> OneWheelBrakes { get; set; }
+        public List<Vehicle.TwoWheelBrakes> TwoWheelBrakes { get; set; }
+        // Engine
+        public List<Vehicle.Engine> Engines { get; set; }
+        public List<Vehicle.EngineCurves> EngineCurves { get; set; }
+        public List<Vehicle.EngineCurvesPoint> EngineCurvesPoints { get; set; }
+        // Inertia
+        public List<Vehicle.Inertia> Inertias { get; set; }
+        public List<Vehicle.TwoWheelInertiaAndDimensions> TwoWheelInertiaAndDimensions { get; set; }
+        // Suspension And Steering
+        public List<Vehicle.SimplifiedSuspension> SimplifiedSuspensions { get; set; }
+        public List<Vehicle.SteeringSystem> SteeringSystems { get; set; }
+        // Tires
+        public List<Vehicle.Tire> Tires { get; set; }
+        public List<Vehicle.TireModelMF52> TireModelMF52s { get; set; }
+        public List<Vehicle.TireModelMF52Point> TireModelMF52Points { get; set; }
+        // Transmission
+        public List<Vehicle.OneWheelTransmission> OneWheelTransmissions { get; set; }
+        public List<Vehicle.TwoWheelTransmission> TwoWheelTransmissions { get; set; }
+        public List<Vehicle.GearRatiosSet> GearRatiosSets { get; set; }
+        public List<Vehicle.GearRatio> GearRatios { get; set; }
         // One Wheel Model Cars
         public List<Vehicle.OneWheelCar> OneWheelCars { get; set; }
-        public List<Vehicle.OneWheelInertia> OneWheelInertias { get; set; }
-        public List<Vehicle.SimplifiedSuspension> OneWheelSuspensions { get; set; }
-        public List<Vehicle.OneWheelBrakes> OneWheelBrakes { get; set; }
-        public List<Vehicle.Tire> OneWheelTires { get; set; }
-        public List<Vehicle.OneWheelTransmission> OneWheelTransmissions { get; set; }
-        public List<Vehicle.OneWheelAerodynamics> OneWheelAerodynamics { get; set; }
-        public List<Vehicle.Engine> OneWheelEngines { get; set; }
         // Two Wheel Model Cars
+        public List<Vehicle.TwoWheelCar> TwoWheelCars { get; set; }
         // Four Wheel Model Cars
         // Tabular Paths
         public List<Path> TabularPaths { get; set; }
+        public List<TabularPathSectionsSet> TabularPathSectionsSets { get; set; }
+        public List<TabularPathSection> TabularPathSections { get; set; }
+        public List<PathSectorsSet> TabularPathSectorsSets { get; set; }
+        public List<PathSector> TabularPathSectors { get; set; }
         // Drawn Paths
         // Optimization Paths
         // GGV Diagrams
-        public List<Simulation.OneWheelGGVDiagram> GGVDiagrams { get; set; }
+        public List<Simulation.OneWheelGGVDiagram> OneWheelGGVDiagrams { get; set; }
+        public List<Simulation.TwoWheelGGVDiagram> TwoWheelGGVDiagrams { get; set; }
         // Lap Time Simulations
         public List<Simulation.LapTimeSimulation> LapTimeSimulations { get; set; }
         #endregion
         #region Constructors
-        public Project() { }
-        
-        public Project(List<Vehicle.OneWheelCar> oneWheelCars, List<Vehicle.OneWheelInertia> oneWheelInertias,
-            List<Vehicle.SimplifiedSuspension> oneWheelSuspensions, List<Vehicle.OneWheelBrakes> oneWheelBrakes,
-            List<Vehicle.Tire> oneWheelTires, List<Vehicle.OneWheelTransmission> oneWheelTransmissions,
-            List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics, List<Vehicle.Engine> oneWheelEngines,
-            List<Path> tabularPaths, List<Simulation.OneWheelGGVDiagram> ggvDiagrams,
-            List<Simulation.LapTimeSimulation> lapTimeSimulations)
+        public Project()
         {
-            OneWheelCars = oneWheelCars;
-            OneWheelInertias = oneWheelInertias;
-            OneWheelSuspensions = oneWheelSuspensions;
-            OneWheelBrakes = oneWheelBrakes;
-            OneWheelTires = oneWheelTires;
-            OneWheelTransmissions = oneWheelTransmissions;
-            OneWheelAerodynamics = oneWheelAerodynamics;
-            OneWheelEngines = oneWheelEngines;
-            TabularPaths = tabularPaths;
-            GGVDiagrams = ggvDiagrams;
-            LapTimeSimulations = lapTimeSimulations;
+            // Aerodynamics
+            OneWheelAerodynamics = new List<Vehicle.OneWheelAerodynamics>();
+            OneWheelAerodynamicMaps = new List<Vehicle.OneWheelAerodynamicMap>();
+            OneWheelAerodynamicMapPoints = new List<Vehicle.OneWheelAerodynamicMapPoint>();
+            TwoWheelAerodynamics = new List<Vehicle.TwoWheelAerodynamics>();
+            TwoWheelAerodynamicMaps = new List<Vehicle.TwoWheelAerodynamicMap>();
+            TwoWheelAerodynamicMapPoints = new List<Vehicle.TwoWheelAerodynamicMapPoint>();
+            // Brakes
+            OneWheelBrakes = new List<Vehicle.OneWheelBrakes>();
+            TwoWheelBrakes = new List<Vehicle.TwoWheelBrakes>();
+            // Engine
+            Engines = new List<Vehicle.Engine>();
+            EngineCurves = new List<Vehicle.EngineCurves>();
+            EngineCurvesPoints = new List<Vehicle.EngineCurvesPoint>();
+            // Inertia
+            Inertias = new List<Vehicle.Inertia>();
+            TwoWheelInertiaAndDimensions = new List<Vehicle.TwoWheelInertiaAndDimensions>();
+            // Suspension And Steering
+            SimplifiedSuspensions = new List<Vehicle.SimplifiedSuspension>();
+            SteeringSystems = new List<Vehicle.SteeringSystem>();
+            // Tires
+            Tires = new List<Vehicle.Tire>();
+            TireModelMF52s = new List<Vehicle.TireModelMF52>();
+            TireModelMF52Points = new List<Vehicle.TireModelMF52Point>();
+            // Transmission
+            OneWheelTransmissions = new List<Vehicle.OneWheelTransmission>();
+            TwoWheelTransmissions = new List<Vehicle.TwoWheelTransmission>();
+            GearRatiosSets = new List<Vehicle.GearRatiosSet>();
+            GearRatios = new List<Vehicle.GearRatio>();
+            // One Wheel Car
+            OneWheelCars = new List<Vehicle.OneWheelCar>();
+            // Two Wheel Car
+            TwoWheelCars = new List<Vehicle.TwoWheelCar>();
+            // Four Wheel Car
+            // Tabular Path
+            TabularPaths = new List<Path>();
+            TabularPathSectionsSets = new List<TabularPathSectionsSet>();
+            TabularPathSections = new List<TabularPathSection>();
+            TabularPathSectorsSets = new List<PathSectorsSet>();
+            TabularPathSectors = new List<PathSector>();
+            // Drawn Paths
+            // Optimization Paths
+            // GGV Diagrams
+            OneWheelGGVDiagrams = new List<Simulation.OneWheelGGVDiagram>();
+            TwoWheelGGVDiagrams = new List<Simulation.TwoWheelGGVDiagram>();
+            // Lap Time Simulations
+            LapTimeSimulations = new List<Simulation.LapTimeSimulation>();
         }
+
         #endregion
         #region Methods
         public void Save(string filePath)

@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a tire subsystem.
     /// </summary>
+    [Serializable]
     public class Tire : GenericInfo
     {
         #region Properties

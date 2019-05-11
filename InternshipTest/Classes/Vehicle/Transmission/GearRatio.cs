@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains a gear ratio.
     /// </summary>
+    [Serializable]
     public class GearRatio
     {
         #region Properties
@@ -18,6 +19,7 @@ namespace InternshipTest.Vehicle
         public double Ratio { get; set; }
         #endregion
         #region Constructors
+        public GearRatio() { }
         public GearRatio(double ratio)
         {
             Ratio = Math.Abs(ratio);

@@ -518,63 +518,75 @@ namespace InternshipTest
             saveFileDialog.ShowDialog();
             // Checks if the file name is not an empty string
             if (saveFileDialog.FileName != "")
-            {
-                // Initializes the project object's lists
-                // One Wheel Model Cars
-                List<Vehicle.OneWheelCar> oneWheelCars = new List<Vehicle.OneWheelCar>();
-                List<Vehicle.OneWheelInertia> oneWheelInertias = new List<Vehicle.OneWheelInertia>();
-                List<Vehicle.SimplifiedSuspension> oneWheelSuspensions = new List<Vehicle.SimplifiedSuspension>();
-                List<Vehicle.OneWheelBrakes> oneWheelBrakes = new List<Vehicle.OneWheelBrakes>();
-                List<Vehicle.Tire> oneWheelTires = new List<Vehicle.Tire>();
-                List<Vehicle.OneWheelTransmission> oneWheelTransmissions = new List<Vehicle.OneWheelTransmission>();
-                List<Vehicle.OneWheelAerodynamics> oneWheelAerodynamics = new List<Vehicle.OneWheelAerodynamics>();
-                List<Vehicle.Engine> oneWheelEngines = new List<Vehicle.Engine>();
-                // Two Wheel Model Cars
-                // Four Wheel Model Cars
-                // Tabular Paths
-                List<Path> tabularPaths = new List<Path>();
-                // Drawn Paths
-                // Optimization Paths
-                // GGV Diagrams
-                List<Simulation.OneWheelGGVDiagram> ggvDiagrams = new List<Simulation.OneWheelGGVDiagram>();
-                // Lap Time Simulations
-                List<Simulation.LapTimeSimulation> lapTimeSimulations = new List<Simulation.LapTimeSimulation>();
-
-                // Fills the lists with the UI elements
-                // One Wheel Model Cars
-                foreach (Vehicle.OneWheelCar car in oneWheelCarAndSetupListBox.Items)
-                    oneWheelCars.Add(car);
-                foreach (Vehicle.OneWheelInertia inertia in oneWheelInertiaListBox.Items)
-                    oneWheelInertias.Add(inertia);
-                foreach (Vehicle.SimplifiedSuspension suspension in simplifiedSuspensionListBox.Items)
-                    oneWheelSuspensions.Add(suspension);
-                foreach (Vehicle.OneWheelBrakes brakes in oneWheelBrakesListBox.Items)
-                    oneWheelBrakes.Add(brakes);
-                foreach (Vehicle.Tire tires in tireListBox.Items)
-                    oneWheelTires.Add(tires);
-                foreach (Vehicle.OneWheelTransmission transmission in oneWheelTransmissionListBox.Items)
-                    oneWheelTransmissions.Add(transmission);
-                foreach (Vehicle.OneWheelAerodynamics aerodynamics in oneWheelAerodynamicsListBox.Items)
-                    oneWheelAerodynamics.Add(aerodynamics);
+            { 
+                // Creates the project object
+                Project project = new Project();
+                // Adds the lists objects to the project
+                // Aerodynamics
+                foreach (Vehicle.OneWheelAerodynamics oneWheelAerodynamics in oneWheelAerodynamicsListBox.Items)
+                    project.OneWheelAerodynamics.Add(oneWheelAerodynamics);
+                foreach (Vehicle.OneWheelAerodynamicMap oneWheelAerodynamicMaps in oneWheelAerodynamicMapsListBox.Items)
+                    project.OneWheelAerodynamicMaps.Add(oneWheelAerodynamicMaps);
+                foreach (Vehicle.OneWheelAerodynamicMapPoint oneWheelAerodynamicMapPoint in oneWheelAerodynamicMapPointsListBox.Items)
+                    project.OneWheelAerodynamicMapPoints.Add(oneWheelAerodynamicMapPoint);
+                foreach (Vehicle.TwoWheelAerodynamics twoWheelAerodynamics in twoWheelAerodynamicsListBox.Items)
+                    project.TwoWheelAerodynamics.Add(twoWheelAerodynamics);
+                foreach (Vehicle.TwoWheelAerodynamicMap twoWheelAerodynamicMaps in twoWheelAerodynamicMapsListBox.Items)
+                    project.TwoWheelAerodynamicMaps.Add(twoWheelAerodynamicMaps);
+                foreach (Vehicle.TwoWheelAerodynamicMapPoint twoWheelAerodynamicMapPoints in twoWheelAerodynamicMapPointsListBox.Items)
+                    project.TwoWheelAerodynamicMapPoints.Add(twoWheelAerodynamicMapPoints);
+                // Brakes
+                foreach (Vehicle.OneWheelBrakes oneWheelBrakes in oneWheelBrakesListBox.Items)
+                    project.OneWheelBrakes.Add(oneWheelBrakes);
+                foreach (Vehicle.TwoWheelBrakes twoWheelBrakes in twoWheelBrakesListBox.Items)
+                    project.TwoWheelBrakes.Add(twoWheelBrakes);
+                // Engine
                 foreach (Vehicle.Engine engine in engineListBox.Items)
-                    oneWheelEngines.Add(engine);
-                // Two Wheel Model Cars
-                // Four Wheel Model Cars
-                // Tabular Paths
-                foreach (Path path in tabularPathsListBox.Items)
-                    tabularPaths.Add(path);
-                // Drawn Paths
-                // Optimization Paths
+                    project.Engines.Add(engine);
+                foreach (Vehicle.EngineCurves engineCurve in engineCurvesListBox.Items)
+                    project.EngineCurves.Add(engineCurve);
+                foreach (Vehicle.EngineCurvesPoint engineCurvePoint in engineCurvesPointsListBox.Items)
+                    project.EngineCurvesPoints.Add(engineCurvePoint);
+                // Inertia
+                foreach (Vehicle.Inertia inertia in oneWheelInertiaListBox.Items)
+                    project.Inertias.Add(inertia);
+                foreach (Vehicle.TwoWheelInertiaAndDimensions twoWheelInertiaAndDimensions in twoWheelInertiaAndDimensionsListBox.Items)
+                    project.TwoWheelInertiaAndDimensions.Add(twoWheelInertiaAndDimensions);
+                // Suspension And Tires
+                foreach (Vehicle.SimplifiedSuspension simplifiedSuspension in simplifiedSuspensionListBox.Items)
+                    project.SimplifiedSuspensions.Add(simplifiedSuspension);
+                foreach (Vehicle.SteeringSystem steeringSystem in steeringSystemListBox.Items)
+                    project.SteeringSystems.Add(steeringSystem);
+                // Tires
+                foreach (Vehicle.Tire tire in tireListBox.Items)
+                    project.Tires.Add(tire);
+                foreach (Vehicle.TireModelMF52 tireModel in tireModelListBox.Items)
+                    project.TireModelMF52s.Add(tireModel);
+                foreach (Vehicle.TireModelMF52Point tireModelPoint in tireModelDisplayParameterSetsCheckListBox.Items)
+                    project.TireModelMF52Points.Add(tireModelPoint);
+                // Transmission
+                foreach (Vehicle.OneWheelTransmission oneWheelTransmission in oneWheelTransmissionListBox.Items)
+                    project.OneWheelTransmissions.Add(oneWheelTransmission);
+                foreach (Vehicle.TwoWheelTransmission twoWheelTransmission in twoWheelTransmissionListBox.Items)
+                    project.TwoWheelTransmissions.Add(twoWheelTransmission);
+                foreach (Vehicle.GearRatiosSet gearRatiosSet in gearRatiosSetsListBox.Items)
+                    project.GearRatiosSets.Add(gearRatiosSet);
+                foreach (Vehicle.GearRatio gearRatio in gearRatiosListBox.Items)
+                    project.GearRatios.Add(gearRatio);
+                // One Wheel Car
+                foreach (Vehicle.OneWheelCar oneWheelCar in oneWheelCarAndSetupListBox.Items)
+                    project.OneWheelCars.Add(oneWheelCar);
+                // Two Wheel Car
+                foreach (Vehicle.TwoWheelCar twoWheelCar in twoWheelCarAndSetupListBox.Items)
+                    project.TwoWheelCars.Add(twoWheelCar);
                 // GGV Diagrams
-                foreach (Simulation.OneWheelGGVDiagram ggvDiagram in simulationOneWheelGGVDiagramListBox.Items)
-                    ggvDiagrams.Add(ggvDiagram);
+                foreach (Simulation.OneWheelGGVDiagram oneWheelGGVDiagram in simulationOneWheelGGVDiagramListBox.Items)
+                    project.OneWheelGGVDiagrams.Add(oneWheelGGVDiagram);
+                foreach (Simulation.TwoWheelGGVDiagram twoWheelGGVDiagram in simulationTwoWheelGGVDiagramListBox.Items)
+                    project.TwoWheelGGVDiagrams.Add(twoWheelGGVDiagram);
                 // Lap Time Simulations
                 foreach (Simulation.LapTimeSimulation lapTimeSimulation in lapTimeSimulationListBox.Items)
-                    lapTimeSimulations.Add(lapTimeSimulation);
-
-                // Creates the project object
-                Project project = new Project(oneWheelCars, oneWheelInertias, oneWheelSuspensions, oneWheelBrakes, oneWheelTires,
-                    oneWheelTransmissions, oneWheelAerodynamics, oneWheelEngines, tabularPaths, ggvDiagrams, lapTimeSimulations);
+                    project.LapTimeSimulations.Add(lapTimeSimulation);
                 // Saves the project to the file
                 project.Save(saveFileDialog.FileName);
                 _CollapseOptionsButtons();
@@ -603,33 +615,68 @@ namespace InternshipTest
             project = project.Load(openFileDialog.FileName);
             // Clears the UI lists and loads the file's objects
             _ClearUILists();
-            // One Wheel Model Cars
-            foreach (Vehicle.OneWheelCar car in project.OneWheelCars)
-                oneWheelCarAndSetupListBox.Items.Add(car);
-            foreach (Vehicle.OneWheelInertia inertia in project.OneWheelInertias)
-                oneWheelInertiaListBox.Items.Add(inertia);
-            foreach (Vehicle.SimplifiedSuspension suspension in project.OneWheelSuspensions)
-                simplifiedSuspensionListBox.Items.Add(suspension);
-            foreach (Vehicle.OneWheelBrakes brakes in project.OneWheelBrakes)
-                oneWheelBrakesListBox.Items.Add(brakes);
-            foreach (Vehicle.Tire tires in project.OneWheelTires)
-                tireListBox.Items.Add(tires);
-            foreach (Vehicle.OneWheelTransmission transmission in project.OneWheelTransmissions)
-                oneWheelTransmissionListBox.Items.Add(transmission);
-            foreach (Vehicle.OneWheelAerodynamics aerodynamics in project.OneWheelAerodynamics)
-                oneWheelAerodynamicsListBox.Items.Add(aerodynamics);
-            foreach (Vehicle.Engine engine in project.OneWheelEngines)
+            // Aerodynamics
+            foreach (Vehicle.OneWheelAerodynamics oneWheelAerodynamics in project.OneWheelAerodynamics)
+                oneWheelAerodynamicsListBox.Items.Add(oneWheelAerodynamics);
+            foreach (Vehicle.OneWheelAerodynamicMap oneWheelAerodynamicMaps in project.OneWheelAerodynamicMaps)
+                oneWheelAerodynamicMapsListBox.Items.Add(oneWheelAerodynamicMaps);
+            foreach (Vehicle.OneWheelAerodynamicMapPoint oneWheelAerodynamicMapPoint in project.OneWheelAerodynamicMapPoints)
+                oneWheelAerodynamicMapPointsListBox.Items.Add(oneWheelAerodynamicMapPoint);
+            foreach (Vehicle.TwoWheelAerodynamics twoWheelAerodynamics in project.TwoWheelAerodynamics)
+                twoWheelAerodynamicsListBox.Items.Add(twoWheelAerodynamics);
+            foreach (Vehicle.TwoWheelAerodynamicMap twoWheelAerodynamicMaps in project.TwoWheelAerodynamicMaps)
+                twoWheelAerodynamicMapsListBox.Items.Add(twoWheelAerodynamicMaps);
+            foreach (Vehicle.TwoWheelAerodynamicMapPoint twoWheelAerodynamicMapPoints in project.TwoWheelAerodynamicMapPoints)
+                twoWheelAerodynamicMapPointsListBox.Items.Add(twoWheelAerodynamicMapPoints);
+            // Brakes
+            foreach (Vehicle.OneWheelBrakes oneWheelBrakes in project.OneWheelBrakes)
+                oneWheelBrakesListBox.Items.Add(oneWheelBrakes);
+            foreach (Vehicle.TwoWheelBrakes twoWheelBrakes in project.TwoWheelBrakes)
+                twoWheelBrakesListBox.Items.Add(twoWheelBrakes);
+            // Engine
+            foreach (Vehicle.Engine engine in project.Engines)
                 engineListBox.Items.Add(engine);
-            // Two Wheel Model Cars
-            // Four Wheel Model Cars
-            // Tabular Paths
-            foreach (Path path in project.TabularPaths)
-                tabularPathsListBox.Items.Add(path);
-            // Drawn Paths
-            // Optimization Paths
+            foreach (Vehicle.EngineCurves engineCurve in project.EngineCurves)
+                engineCurvesListBox.Items.Add(engineCurve);
+            foreach (Vehicle.EngineCurvesPoint engineCurvePoint in project.EngineCurvesPoints)
+                engineCurvesPointsListBox.Items.Add(engineCurvePoint);
+            // Inertia
+            foreach (Vehicle.Inertia inertia in project.Inertias)
+                oneWheelInertiaListBox.Items.Add(inertia);
+            foreach (Vehicle.TwoWheelInertiaAndDimensions twoWheelInertiaAndDimensions in project.TwoWheelInertiaAndDimensions)
+                twoWheelInertiaAndDimensionsListBox.Items.Add(twoWheelInertiaAndDimensions);
+            // Suspension And Tires
+            foreach (Vehicle.SimplifiedSuspension simplifiedSuspension in project.SimplifiedSuspensions)
+                simplifiedSuspensionListBox.Items.Add(simplifiedSuspension);
+            foreach (Vehicle.SteeringSystem steeringSystem in project.SteeringSystems)
+                steeringSystemListBox.Items.Add(steeringSystem);
+            // Tires
+            foreach (Vehicle.Tire tire in project.Tires)
+                tireListBox.Items.Add(tire);
+            foreach (Vehicle.TireModelMF52 tireModel in project.TireModelMF52s)
+                tireModelListBox.Items.Add(tireModel);
+            foreach (Vehicle.TireModelMF52Point tireModelPoint in project.TireModelMF52Points)
+                tireModelDisplayParameterSetsCheckListBox.Items.Add(tireModelPoint);
+            // Transmission
+            foreach (Vehicle.OneWheelTransmission oneWheelTransmission in project.OneWheelTransmissions)
+                oneWheelTransmissionListBox.Items.Add(oneWheelTransmission);
+            foreach (Vehicle.TwoWheelTransmission twoWheelTransmission in project.TwoWheelTransmissions)
+                twoWheelTransmissionListBox.Items.Add(twoWheelTransmission);
+            foreach (Vehicle.GearRatiosSet gearRatiosSet in project.GearRatiosSets)
+                gearRatiosSetsListBox.Items.Add(gearRatiosSet);
+            foreach (Vehicle.GearRatio gearRatio in project.GearRatios)
+                gearRatiosListBox.Items.Add(gearRatio);
+            // One Wheel Car
+            foreach (Vehicle.OneWheelCar oneWheelCar in project.OneWheelCars)
+                oneWheelCarAndSetupListBox.Items.Add(oneWheelCar);
+            // Two Wheel Car
+            foreach (Vehicle.TwoWheelCar twoWheelCar in project.TwoWheelCars)
+                twoWheelCarAndSetupListBox.Items.Add(twoWheelCar);
             // GGV Diagrams
-            foreach (Simulation.OneWheelGGVDiagram ggvDiagram in project.GGVDiagrams)
-                simulationOneWheelGGVDiagramListBox.Items.Add(ggvDiagram);
+            foreach (Simulation.OneWheelGGVDiagram oneWheelGGVDiagram in project.OneWheelGGVDiagrams)
+                simulationOneWheelGGVDiagramListBox.Items.Add(oneWheelGGVDiagram);
+            foreach (Simulation.TwoWheelGGVDiagram twoWheelGGVDiagram in project.TwoWheelGGVDiagrams)
+                simulationTwoWheelGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
             // Lap Time Simulations
             foreach (Simulation.LapTimeSimulation lapTimeSimulation in project.LapTimeSimulations)
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
@@ -642,25 +689,53 @@ namespace InternshipTest
         private void _ClearUILists()
         {
             // Clears the UI lists
+            // Aerodynamics
+            oneWheelAerodynamicsListBox.Items.Clear();
+            twoWheelAerodynamicsListBox.Items.Clear();
+            oneWheelAerodynamicMapsListBox.Items.Clear();
+            oneWheelAerodynamicMapPointsListBox.Items.Clear();
+            twoWheelAerodynamicMapsListBox.Items.Clear();
+            twoWheelAerodynamicMapPointsListBox.Items.Clear();
+            // Brakes
+            oneWheelBrakesListBox.Items.Clear();
+            twoWheelBrakesListBox.Items.Clear();
+            // Engine
+            engineListBox.Items.Clear();
+            engineCurvesListBox.Items.Clear();
+            engineCurvesPointsListBox.Items.Clear();
+            // Inertia
+            oneWheelInertiaListBox.Items.Clear();
+            twoWheelInertiaAndDimensionsListBox.Items.Clear();
+            // Suspension
+            simplifiedSuspensionListBox.Items.Clear();
+            steeringSystemListBox.Items.Clear();
+            // Tire
+            tireListBox.Items.Clear();
+            tireModelListBox.Items.Clear();
+            tireModelDisplayCheckListBox.Items.Clear();
+            tireModelDisplayParameterSetsCheckListBox.Items.Clear();
+            // Transmission
+            oneWheelTransmissionListBox.Items.Clear();
+            twoWheelTransmissionListBox.Items.Clear();
+            gearRatiosSetsListBox.Items.Clear();
+            gearRatiosListBox.Items.Clear();
             // One Wheel Model Cars
             oneWheelCarAndSetupListBox.Items.Clear();
-            oneWheelInertiaListBox.Items.Clear();
-            simplifiedSuspensionListBox.Items.Clear();
-            oneWheelBrakesListBox.Items.Clear();
-            tireListBox.Items.Clear();
-            oneWheelTransmissionListBox.Items.Clear();
-            oneWheelAerodynamicsListBox.Items.Clear();
-            engineListBox.Items.Clear();
             // Two Wheel Model Cars
+            twoWheelCarAndSetupListBox.Items.Clear();
             // Four Wheel Model Cars
             // Tabular Paths
             tabularPathsListBox.Items.Clear();
+            tabularPathSectionsListBox.Items.Clear();
+            tabularPathSectorsSetsListBox.Items.Clear();
             // Drawn Paths
             // Optimization Paths
             // GGV Diagrams
             simulationOneWheelGGVDiagramListBox.Items.Clear();
+            simulationTwoWheelGGVDiagramListBox.Items.Clear();
             // Lap Time Simulations
             lapTimeSimulationListBox.Items.Clear();
+            lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
         }
 
         #endregion

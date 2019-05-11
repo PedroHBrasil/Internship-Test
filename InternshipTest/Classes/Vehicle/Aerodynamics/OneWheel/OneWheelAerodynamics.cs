@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contais the information about a one wheel model's vehicle aerodynamics.
     /// </summary>
+    [Serializable]
     public class OneWheelAerodynamics : Aerodynamics
     {
         #region Fields

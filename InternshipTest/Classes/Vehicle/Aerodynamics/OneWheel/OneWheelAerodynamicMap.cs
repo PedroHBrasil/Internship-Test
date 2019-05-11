@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information of a one wheel model vehicle aerodynamic map.
     /// </summary>
+    [Serializable]
     public class OneWheelAerodynamicMap : GenericInfo
     {
         #region Properties

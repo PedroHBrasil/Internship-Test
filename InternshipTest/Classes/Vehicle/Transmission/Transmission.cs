@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
+    [Serializable]
     public class Transmission : GenericInfo
     {
         #region Properties

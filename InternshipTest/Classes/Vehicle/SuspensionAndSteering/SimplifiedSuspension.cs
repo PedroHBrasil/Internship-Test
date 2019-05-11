@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a simplified suspension subsystem (single, front or rear).
     /// </summary>
+    [Serializable]
     public class SimplifiedSuspension : GenericInfo
     {
         #region Properties

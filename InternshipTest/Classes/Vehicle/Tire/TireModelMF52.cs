@@ -10,6 +10,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the parameters of a Pacejka's MF5.2 tire model.
     /// </summary>
+    [Serializable]
     public class TireModelMF52 : GenericInfo
     {
         #region Fields

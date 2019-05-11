@@ -10,6 +10,7 @@ namespace InternshipTest.Simulation
     /// <summary>
     /// Contains the GGV diagram associated with a given path sector.
     /// </summary>
+    [Serializable]
     public class LapTimeSimulationSectorSetup
     {
         #region Properties
@@ -23,6 +24,7 @@ namespace InternshipTest.Simulation
         public int SectorIndex { get; set; }
         #endregion
         #region Constructor
+        public LapTimeSimulationSectorSetup() { }
         public LapTimeSimulationSectorSetup(int index, OneWheelGGVDiagram ggvDiagram)
         {
             SectorIndex = index;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Simulation
 {
+    [Serializable]
     public class TwoWheelGGVDiagram : GGVDiagram
     {
         #region Properties

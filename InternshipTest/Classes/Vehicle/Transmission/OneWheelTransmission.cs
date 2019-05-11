@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a one wheel model's transmission subsystem.
     /// </summary>
+    [Serializable]
     public class OneWheelTransmission : Transmission
     {
         #region Properties

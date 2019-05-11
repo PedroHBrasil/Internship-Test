@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace InternshipTest.Vehicle
 {
+    [Serializable]
     public class TireModelMF52Point
     {
         #region Properties
@@ -55,6 +56,7 @@ namespace InternshipTest.Vehicle
         #endregion
         #endregion
         #region Constructors
+        public TireModelMF52Point() { }
         public TireModelMF52Point(double longitudinalSlip, double slipAngle, double verticalLoad, double inclinationAngle, double speed)
         {
             LongitudinalSlip = longitudinalSlip;

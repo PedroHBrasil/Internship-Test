@@ -15,6 +15,8 @@ namespace InternshipTest.Simulation
         private double currentRearWheelSteeringAngle;
         private double currentFrontWheelRadius;
         private double currentRearWheelRadius;
+        private List<double> longitudinalAccelerationErrors;
+        private List<double> lateralAccelerationErrors;
         #endregion
         #region Properties
         /// <summary>
@@ -51,6 +53,8 @@ namespace InternshipTest.Simulation
         /// </summary>
         public void GenerateGGDiagram()
         {
+            longitudinalAccelerationErrors = new List<double>();
+            lateralAccelerationErrors = new List<double>();
             // Steering wheel angle and pedals actuation vectors
             double[] pedalActuations = Generate.LinearSpaced(AmountOfPoints * 2, -1, 1);
             double[] steeringWheelAngles = Generate.LinearSpaced(AmountOfPoints, 0, Car.Steering.MaximumSteeringWheelAngle);
@@ -58,7 +62,7 @@ namespace InternshipTest.Simulation
             {
                 for (int iSteeringWheelAngle = 0; iSteeringWheelAngle < steeringWheelAngles.Length; iSteeringWheelAngle++)
                 {
-                    double[] accelerationsAndCarSlipAngle = _GetAccelerationsWithMultiVariableOptimization(steeringWheelAngles[iSteeringWheelAngle], pedalActuations[iPedalActuation]);
+                    double[] accelerationsAndCarSlipAngle = _GetAccelerationsBasedOnDirectIteration(steeringWheelAngles[iSteeringWheelAngle], pedalActuations[iPedalActuation]);
                     LongitudinalAccelerations.Add(accelerationsAndCarSlipAngle[0]);
                     LateralAccelerations.Add(accelerationsAndCarSlipAngle[1]);
                 }
@@ -71,6 +75,202 @@ namespace InternshipTest.Simulation
             }
             // Filter the points by the directions
             _FilterGGDiagramByDirections();
+        }
+
+        private double[] _GetAccelerationsBasedOnDirectIteration(double steeringWheelAngle, double pedalsActuation)
+        {
+            currentPedalsActuation = pedalsActuation;
+            // Wheels steer angles
+            currentFrontWheelSteeringAngle = steeringWheelAngle * Car.Steering.FrontSteeringRatio;
+            currentRearWheelSteeringAngle = steeringWheelAngle * Car.Steering.RearSteeringRatio;
+            // Optimization parameters
+            double lateralAccelerationTol = 1e-3;
+            int lateralAccelerationMaxIter = 100;
+            double longitudinalAccelerationTol = 1e-4;
+            int longitudinalAccelerationMaxIter = 100;
+            double yawMomentTol = 1e-3;
+            int carSlipAngleMaxIter = 100;
+            int differentialMaxIter = 4;
+            // Optimization parameters
+            double[] accelerationDifferencesAndYawMoment;
+            double currentCarSlipAngle = 0;
+            double currentLateralAcceleration = 0;
+            double currentLongitudinalAcceleration = 0;
+            // Optimization loops
+            double lateralAccelerationError = 1e10;
+            double lateralAccelerationIter = 0;
+            do
+            {
+                // Lateral acceleration iteration number increment
+                lateralAccelerationIter++;
+                // Longitudinal acceleration loop
+                double longitudinalAccelerationError = 1e10;
+                double longitudinalAccelerationIter = 0;
+                do
+                {
+                    // Longitudinal acceleration iteration number increment
+                    longitudinalAccelerationIter++;
+                    // Car slip angle loop (Secant method)
+                    double currentYawMoment;
+                    double carSlipAngleIter = 0;
+                    double differentialStep = 1e-3;
+                    do
+                    {
+                        // Car slip angle iteration number increment
+                        carSlipAngleIter++;
+
+                        // Optimization parameters array
+                        double[] accelerationsAndCarSlipAngle = new double[3] { currentLongitudinalAcceleration, currentLateralAcceleration, currentCarSlipAngle };
+                        // Parameters optimization
+                        accelerationDifferencesAndYawMoment = _AccelerationsAndCarSlipAngleOptimizationMethod(accelerationsAndCarSlipAngle);
+                        // Yaw moment update
+                        currentYawMoment = accelerationDifferencesAndYawMoment[2];
+                        // Differential calculation loop
+                        double differential;
+                        int differentialIter = 0;
+                        do
+                        {
+                            // Values for the reference of the differential
+                            accelerationsAndCarSlipAngle[2] = currentCarSlipAngle + differentialStep * Math.Pow(10, differentialIter);
+                            double[] accelerationDifferencesAndYawMomentForDifferentialUpdate = _AccelerationsAndCarSlipAngleOptimizationMethod(accelerationsAndCarSlipAngle);
+                            // Differential calculation
+                            differential = (accelerationDifferencesAndYawMomentForDifferentialUpdate[2] - accelerationDifferencesAndYawMoment[2]) / (differentialStep * Math.Pow(10, differentialIter));
+                            // Iteration number update
+                            differentialIter++;
+                        } while (differential == 0 && differentialIter < differentialMaxIter);
+                        // Car slip angle update
+                        currentCarSlipAngle -= currentYawMoment / differential;
+                        if (double.IsInfinity(currentCarSlipAngle))
+                        {
+                            bool isInf = true;
+                        }
+                    } while (Math.Abs(currentYawMoment) > yawMomentTol && carSlipAngleIter < carSlipAngleMaxIter);
+                    // Longitudinal acceleration error criteria and current value update
+                    longitudinalAccelerationError = accelerationDifferencesAndYawMoment[0];
+                    //longitudinalAccelerationErrors.Add(longitudinalAccelerationError);
+                    currentLongitudinalAcceleration += accelerationDifferencesAndYawMoment[0];
+                } while (Math.Abs(longitudinalAccelerationError) > longitudinalAccelerationTol && longitudinalAccelerationIter < longitudinalAccelerationMaxIter);
+                // Lateral acceleration error criteria and current value update
+                lateralAccelerationError = accelerationDifferencesAndYawMoment[1];
+                currentLateralAcceleration += accelerationDifferencesAndYawMoment[1];
+            } while (Math.Abs(lateralAccelerationError) > lateralAccelerationTol && lateralAccelerationIter < lateralAccelerationMaxIter);
+
+            return new double[] { currentLongitudinalAcceleration, currentLateralAcceleration};
+        }
+
+        private double[] _AccelerationsAndCarSlipAngleOptimizationMethod(double[] accelerationsAndCarSlipAngle)
+        {
+            // Accelerations and car slip angle split
+            double longitudinalAcceleration = accelerationsAndCarSlipAngle[0];
+            double lateralAcceleration = accelerationsAndCarSlipAngle[1];
+            double carSlipAngle = accelerationsAndCarSlipAngle[2];
+            // Yaw rate [rad/s]
+            double yawRate = lateralAcceleration / Speed;
+            // Slip Angles [rad]
+            double frontWheelLateralSpeed = (Speed * Math.Sin(-carSlipAngle) + Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG * yawRate) * Math.Cos(currentFrontWheelSteeringAngle) - Speed * Math.Cos(-carSlipAngle) * Math.Sin(currentFrontWheelSteeringAngle);
+            double frontWheelLongitudinalSpeed = (Speed * Math.Sin(-carSlipAngle) + Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG * yawRate) * Math.Sin(currentFrontWheelSteeringAngle) + Speed * Math.Cos(-carSlipAngle) * Math.Cos(currentFrontWheelSteeringAngle);
+            double frontSlipAngle = Math.Atan(frontWheelLateralSpeed / frontWheelLongitudinalSpeed);
+            double rearWheelLateralSpeed = (Speed * Math.Sin(-carSlipAngle) - Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG * yawRate) * Math.Cos(currentRearWheelSteeringAngle) - Speed * Math.Cos(-carSlipAngle) * Math.Sin(currentRearWheelSteeringAngle);
+            double rearWheelLongitudinalSpeed = (Speed * Math.Sin(-carSlipAngle) - Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG * yawRate) * Math.Sin(currentRearWheelSteeringAngle) + Speed * Math.Cos(-carSlipAngle) * Math.Cos(currentRearWheelSteeringAngle);
+            double rearSlipAngle = Math.Atan(rearWheelLateralSpeed / rearWheelLongitudinalSpeed);
+            // Longitudinal load transfer [N]
+            double longitudinalLoadTransfer = longitudinalAcceleration * Car.InertiaAndDimensions.TotalMass * Car.InertiaAndDimensions.TotalMassCGHeight / Car.InertiaAndDimensions.Wheelbase;
+            // Current aerodynamic parameters
+            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, carSlipAngle, longitudinalLoadTransfer);
+            // Aerodynamic lift force [N]
+            double liftForce = -currentAerodynamicParameters.LiftCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            // Aerodynamic pitch moment [N]
+            double aerodynamicPitchMoment = -currentAerodynamicParameters.PitchMomentCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            // Aerodynamic resultant vertical forces [N]
+            double frontAerodynamicVerticalForce = liftForce / 2 - aerodynamicPitchMoment / Car.InertiaAndDimensions.Wheelbase;
+            double rearAerodynamicVerticalForce = liftForce / 2 + aerodynamicPitchMoment / Car.InertiaAndDimensions.Wheelbase;
+            // Wheels vertical loads [N]
+            double frontWheelVerticalLoad = (Car.InertiaAndDimensions.FrontWeight - longitudinalLoadTransfer + frontAerodynamicVerticalForce) / 2;
+            double rearWheelVerticalLoad = (Car.InertiaAndDimensions.RearWeight + longitudinalLoadTransfer + rearAerodynamicVerticalForce) / 2;
+            if (frontWheelVerticalLoad < 0)
+            {
+                rearWheelVerticalLoad = rearWheelVerticalLoad + frontWheelVerticalLoad;
+                frontWheelVerticalLoad = 0;
+            }
+            else if (rearWheelVerticalLoad < 0)
+            {
+                frontWheelVerticalLoad = frontWheelVerticalLoad + rearWheelVerticalLoad;
+                rearWheelVerticalLoad = 0;
+            }
+            // Wheels radiuses [m]
+            currentFrontWheelRadius = Car.FrontTire.TireModel.RO - frontWheelVerticalLoad / Car.FrontTire.VerticalStiffness;
+            currentRearWheelRadius = Car.RearTire.TireModel.RO - rearWheelVerticalLoad / Car.RearTire.VerticalStiffness;
+            // Wheels rotational speeds [rad/s]
+            double frontWheelRotationalSpeed = Speed / currentFrontWheelRadius;
+            double rearWheelRotationalSpeed = Speed / currentRearWheelRadius;
+            // Transmission rotational speed [rad/s] (reference for the engine)
+            double transmissionRotationalSpeed = frontWheelRotationalSpeed * Car.Transmission.TorqueBias + rearWheelRotationalSpeed * (1 - Car.Transmission.TorqueBias);
+            // Wheels torques limits according to brake/powertrain
+            double[] wheelsLimitTorques = _GetWheelsTorquesAccordingToPedalsActuation(transmissionRotationalSpeed);
+            double frontWheelTorqueLimit = wheelsLimitTorques[0];
+            double rearWheelTorqueLimit = wheelsLimitTorques[1];
+            // Wheels torques limits according to tires grips
+            double frontWheelSlipAngle;
+            double rearWheelSlipAngle;
+            if (currentPedalsActuation < 0)
+            {
+                frontWheelSlipAngle = Car.FrontTire.TireModel.GetLongitudinalSlipForMinimumTireFx(frontSlipAngle, frontWheelVerticalLoad, 0, Speed);
+                rearWheelSlipAngle = Car.RearTire.TireModel.GetLongitudinalSlipForMinimumTireFx(rearSlipAngle, rearWheelVerticalLoad, 0, Speed);
+            }
+            else
+            {
+                frontWheelSlipAngle = Car.FrontTire.TireModel.GetLongitudinalSlipForMaximumTireFx(frontSlipAngle, frontWheelVerticalLoad, 0, Speed);
+                rearWheelSlipAngle = Car.RearTire.TireModel.GetLongitudinalSlipForMaximumTireFx(rearSlipAngle, rearWheelVerticalLoad, 0, Speed);
+            }
+            double frontWheelGripTorqueLimit = Car.FrontTire.TireModel.GetTireFx(frontWheelSlipAngle, frontSlipAngle, frontWheelVerticalLoad, 0, Speed) * currentFrontWheelRadius * 2;
+            double rearWheelGripTorqueLimit = Car.RearTire.TireModel.GetTireFx(rearWheelSlipAngle, rearSlipAngle, rearWheelVerticalLoad, 0, Speed) * currentRearWheelRadius * 2;
+            // Gets the final torques at each wheel [Nm]
+            double[] wheelsFinalTorques = _GetWheelsFinalTorques(frontWheelTorqueLimit, rearWheelTorqueLimit, frontWheelGripTorqueLimit, rearWheelGripTorqueLimit);
+            // Wheels longitudinal forces [N]
+            double frontWheelLongitudinalForce = wheelsFinalTorques[0] / currentFrontWheelRadius;
+            double rearWheelLongitudinalForce = wheelsFinalTorques[1] / currentRearWheelRadius;
+            // Wheels longitudinal slips
+            double[] frontKappas;
+            double[] rearKappas;
+            if (currentPedalsActuation < 0)
+            {
+                frontKappas = Generate.LinearSpaced(50, Car.FrontTire.TireModel.KappaMin, 0);
+                rearKappas = Generate.LinearSpaced(50, Car.RearTire.TireModel.KappaMin, 0);
+            }
+            else
+            {
+                frontKappas = Generate.LinearSpaced(50, 0, Car.FrontTire.TireModel.KappaMax);
+                rearKappas = Generate.LinearSpaced(50, 0, Car.RearTire.TireModel.KappaMax);
+            }
+            double frontWheelLongitudinalSlip = Car.FrontTire.TireModel.GetLongitudinalSlipForGivenLongitudinalForce(frontWheelLongitudinalForce / 2, frontKappas, frontWheelSlipAngle, frontWheelVerticalLoad, 0, Speed);
+            double rearWheelLongitudinalSlip = Car.RearTire.TireModel.GetLongitudinalSlipForGivenLongitudinalForce(rearWheelLongitudinalForce / 2, rearKappas, rearWheelSlipAngle, rearWheelVerticalLoad, 0, Speed);
+            // Wheels longitudinal (correction based on longitudinl slip) and lateral forces [N].
+            frontWheelLongitudinalForce = 2 * Car.FrontTire.TireModel.GetTireFx(frontWheelLongitudinalSlip, frontWheelSlipAngle, frontWheelVerticalLoad, 0, Speed);
+            rearWheelLongitudinalForce = 2 * Car.RearTire.TireModel.GetTireFx(rearWheelLongitudinalSlip, rearWheelSlipAngle, rearWheelVerticalLoad, 0, Speed);
+            double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(frontWheelLongitudinalSlip, frontWheelSlipAngle, frontWheelVerticalLoad, 0, Speed);
+            double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(rearWheelLongitudinalSlip, rearWheelSlipAngle, rearWheelVerticalLoad, 0, Speed);
+            // Front and rear axis tire forces
+            double frontAxisLongitudinalForceDueToTire = frontWheelLongitudinalForce * Math.Cos(currentFrontWheelSteeringAngle) - frontWheelLateralForce * Math.Sin(currentFrontWheelSteeringAngle);
+            double rearAxisLongitudinalForceDueToTire = rearWheelLongitudinalForce * Math.Cos(currentRearWheelSteeringAngle) - rearWheelLongitudinalForce * Math.Sin(currentRearWheelSteeringAngle);
+            double frontAxisLateralForceDueToTire = frontWheelLateralForce * Math.Cos(currentFrontWheelSteeringAngle) + frontWheelLongitudinalForce * Math.Sin(currentFrontWheelSteeringAngle);
+            double rearAxisLateralForceDueToTire = rearWheelLateralForce * Math.Cos(currentRearWheelSteeringAngle) + rearWheelLongitudinalForce * Math.Sin(currentRearWheelSteeringAngle);
+            // Inertia efficiency (due to rotational parts moment of inertia)
+            double referenceWheelRadius = (currentFrontWheelRadius + currentRearWheelRadius) / 2;
+            double inertiaEfficiency = Math.Pow(referenceWheelRadius, 2) * Car.InertiaAndDimensions.TotalMass /
+                (Math.Pow(referenceWheelRadius, 2) * Car.InertiaAndDimensions.TotalMass + Car.InertiaAndDimensions.RotPartsMI);
+            // Aerodynamic drag force [N], side force [N] and yaw moment [Nm].
+            double dragForce = -currentAerodynamicParameters.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            double sideForce = -currentAerodynamicParameters.SideForceCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            double aerodynamicYawMoment = -currentAerodynamicParameters.YawMomentCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            // Vehicle accelerations [m/s²]
+            double newLongitudinalAcceleration = (frontAxisLongitudinalForceDueToTire + rearAxisLongitudinalForceDueToTire + dragForce) * inertiaEfficiency / Car.InertiaAndDimensions.TotalMass;
+            double newLateralAcceleration = (frontAxisLateralForceDueToTire + rearAxisLateralForceDueToTire + sideForce) / Car.InertiaAndDimensions.TotalMass;
+            // Convergence criteria update
+            double[] accelerationDifferencesAndYawMoment = new double[3];
+            accelerationDifferencesAndYawMoment[0] = newLongitudinalAcceleration - longitudinalAcceleration;
+            accelerationDifferencesAndYawMoment[1] = newLateralAcceleration - lateralAcceleration;
+            accelerationDifferencesAndYawMoment[2] = frontAxisLateralForceDueToTire * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearAxisLateralForceDueToTire * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG + aerodynamicYawMoment;
+            return accelerationDifferencesAndYawMoment;
         }
 
         /// <summary>
@@ -211,7 +411,7 @@ namespace InternshipTest.Simulation
             // Convergence criteria update
             accelerationDifferencesAndYawMoment[0] = longitudinalAcceleration - newLongitudinalAcceleration;
             accelerationDifferencesAndYawMoment[1] = lateralAcceleration - newLateralAcceleration;
-            accelerationDifferencesAndYawMoment[2] = frontWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG + aerodynamicYawMoment; 
+            accelerationDifferencesAndYawMoment[2] = frontWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG + aerodynamicYawMoment;
         }
         /// <summary>
         /// Gets the torques at the front and rear wheels based on the pedals actuation and wheels rotational speeds

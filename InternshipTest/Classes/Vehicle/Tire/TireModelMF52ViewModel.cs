@@ -10,6 +10,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the observable collections
     /// </summary>
+    [Serializable]
     public class TireModelMF52ViewModel
     {
         #region Properties

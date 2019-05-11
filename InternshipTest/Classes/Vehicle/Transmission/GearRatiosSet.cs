@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the gear ratios of a gearbox.
     /// </summary>
+    [Serializable]
     public class GearRatiosSet : GenericInfo
     {
         #region Properties

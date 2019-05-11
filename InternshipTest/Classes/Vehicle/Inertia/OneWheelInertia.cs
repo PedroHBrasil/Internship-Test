@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a one wheel model's vehicle's inertia.
     /// </summary>
+    [Serializable]
     public class OneWheelInertia : Inertia
     {
         #region Properties

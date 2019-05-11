@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a steering subsystem of one axis (front or rear).
     /// </summary>
+    [Serializable]
     public class SteeringSystem : GenericInfo
     {
         #region Properties

@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information of a one wheel model's aerodynamic map point.
     /// </summary>
+    [Serializable]
     public class OneWheelAerodynamicMapPoint : AerodynamicMapPoint
     {
         #region Properties

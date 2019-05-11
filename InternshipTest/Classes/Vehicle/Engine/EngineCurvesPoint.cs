@@ -11,6 +11,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a one wheel model's engie subsystem (torque, braking torque and specific fuel consumption as functions of the rotational speed).
     /// </summary>
+    [Serializable]
     public class EngineCurvesPoint
     {
         #region Properties

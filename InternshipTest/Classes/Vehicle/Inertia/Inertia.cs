@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the basic information about the inertia and dimensions objects.
     /// </summary>
+    [Serializable]
     public class Inertia : GenericInfo
     {
         #region Properties

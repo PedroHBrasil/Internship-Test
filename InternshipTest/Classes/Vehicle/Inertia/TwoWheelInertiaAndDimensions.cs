@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the inertia and dimensions parameters of a two wheel vehicle model's.
     /// </summary>
+    [Serializable]
     public class TwoWheelInertiaAndDimensions : Inertia
     {
         #region Properties
@@ -67,6 +68,7 @@ namespace InternshipTest.Vehicle
         public double DistanceBetweenRearAxisAndCG { get; set; }
         #endregion
         #region Constructors
+        public TwoWheelInertiaAndDimensions() { }
         public TwoWheelInertiaAndDimensions(string id, string desciption, double totalMass,double totalMassDistribution, double totalMassCGHeight, double frontUnsprungMass, double frontUnsprungMassCGHeight, double rearUnsprungMass, double rearUnsprungMassCGHeight, double wheelbase, double rotPartsMI, double gravity)
         {
             ID = id;

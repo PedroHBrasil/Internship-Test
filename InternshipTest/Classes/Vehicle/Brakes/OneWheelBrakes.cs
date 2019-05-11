@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a one wheel model brakes subsystem.
     /// </summary>
+    [Serializable]
     public class OneWheelBrakes : GenericInfo
     {
         #region Properties

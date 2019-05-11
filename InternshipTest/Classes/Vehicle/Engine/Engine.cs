@@ -9,6 +9,7 @@ namespace InternshipTest.Vehicle
     /// <summary>
     /// Contains the information about a one wheel model's engine subsystem.
     /// </summary>
+    [Serializable]
     public class Engine : GenericInfo
     {
         #region Properties
