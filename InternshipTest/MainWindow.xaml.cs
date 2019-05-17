@@ -3753,21 +3753,6 @@ namespace InternshipTest
                     break;
             }
         }
-        #region One Wheel Model
-        /// <summary>
-        /// Creates a ggv diagram object for an one wheel model car, generates it and adds it to the simulation ggv diagrams listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _SimulationAddOneWheelGGVDiagramToListBox()
-        {
-        }
-        /// <summary>
-        /// Deletes a ggv diagram of an one wheel model car from the ggv diagrams listbox.
-        /// </summary>
-        private void _SimulationDeleteOneWheelGGVDiagramOfListBox()
-        {
-        }
         /// <summary>
         /// Loads the properties of the simulation ggv diagrams listbox's ggv diagram and displays it in the UI fields.
         /// </summary>
@@ -3803,7 +3788,6 @@ namespace InternshipTest
                 if ((bool)simulationGGVDiagramAllowPathDisplayCheckBox.IsChecked) _UpdateSimulationGGVDiagramDisplayChart();
             }
         }
-        #endregion
 
         #region GGV Diagram Display
         /// <summary>
