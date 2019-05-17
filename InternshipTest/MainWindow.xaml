@@ -23,7 +23,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!-- Main Navigation Grid -->
-        <Grid>
+        <Grid Background="#FF272E38">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="auto"/>
@@ -89,7 +89,7 @@
                 </ComboBox>
             </Grid>
             <!-- Project Button Options Grid -->
-            <Grid Name="projectButtonOptionsGrid" Grid.Row="1" Visibility="Collapsed">
+            <Grid Name="projectButtonOptionsGrid" Grid.Row="1" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>

@@ -4,6 +4,75 @@
              xmlns:local="clr-namespace:InternshipTest"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme Files\AutoComplete.xaml"/>
+                <ResourceDictionary Source="Theme Files\BusyIndicator.xaml"/>
+                <ResourceDictionary Source="Theme Files\ButtonAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\Calendar.xaml"/>
+                <!-- ResourceDictionary Source="Theme Files\AutoComplete.xaml"/ -->
+                <ResourceDictionary Source="Theme Files\CheckedListBox.xaml"/>
+                <ResourceDictionary Source="Theme Files\ChromelessWindow.xaml"/>
+                <ResourceDictionary Source="Theme Files\Clock.xaml"/>
+                <ResourceDictionary Source="Theme Files\ColorPicker.xaml"/>
+                <ResourceDictionary Source="Theme Files\ColorPickerPalette.xaml"/>
+                <ResourceDictionary Source="Theme Files\ComboBoxAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\DateTimeEdit.xaml"/>
+                <ResourceDictionary Source="Theme Files\DockingManager.xaml"/>
+                <ResourceDictionary Source="Theme Files\DocumentContainer.xaml"/>
+                <ResourceDictionary Source="Theme Files\DropDownButtonAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\Editors.xaml"/>
+                <ResourceDictionary Source="Theme Files\GroupBar.xaml"/>
+                <ResourceDictionary Source="Theme Files\HierarchyNavigator.xaml"/>
+                <ResourceDictionary Source="Theme Files\MenuAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\MS control.xaml"/>
+                <ResourceDictionary Source="Theme Files\MultiValueComboBox.xaml"/>
+                <ResourceDictionary Source="Theme Files\NotifyIcon.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\OlapChart.xaml"/>
+                <ResourceDictionary Source="Theme Files\OlapClient.xaml"/>
+                <ResourceDictionary Source="Theme Files\OlapGauge.xaml"/>
+                <ResourceDictionary Source="Theme Files\OlapGrid.xaml"/>
+                <ResourceDictionary Source="Theme Files\OlapPager.xaml"/>
+                <ResourceDictionary Source="Theme Files\OlapTools.xaml"/>
+                <ResourceDictionary Source="Theme Files\PdfViewer.xaml"/-->
+                <ResourceDictionary Source="Theme Files\PinnableListBox.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\PivotGrid.xaml"/>
+                <ResourceDictionary Source="Theme Files\PropertyGrid.xaml"/-->
+                <ResourceDictionary Source="Theme Files\RangeSlider.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\ReportViewer.xaml"/-->
+                <ResourceDictionary Source="Theme Files\Ribbon.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\SfAccordion.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfBulletGraph.xaml"/-->
+                <ResourceDictionary Source="Theme Files\SfChart.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\SfCircularGauge.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfColorPalette.xaml"/-->
+                <ResourceDictionary Source="Theme Files\SfDataGrid.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfDataPager.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfDiagram.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\SfDigitalGauge.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfHubTitle.xaml"/-->
+                <ResourceDictionary Source="Theme Files\SfInput.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\SfKanban.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfLinearGauge.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfMaps.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfRadialMenu.xaml"/-->
+                <ResourceDictionary Source="Theme Files\SfRangeNavigator.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\SfRichTextBoxAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfRichTextRibbon.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfSchedule.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfTreeGrid.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfTreeMap.xaml"/>
+                <ResourceDictionary Source="Theme Files\SfTreeNavigator.xaml"/-->
+                <ResourceDictionary Source="Theme Files\SplitButtonAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\TabControlExt.xaml"/>
+                <ResourceDictionary Source="Theme Files\TabSplitter.xaml"/>
+                <ResourceDictionary Source="Theme Files\TaskBar.xaml"/>
+                <ResourceDictionary Source="Theme Files\TileView.xaml"/>
+                <ResourceDictionary Source="Theme Files\TimeSpanEdit.xaml"/>
+                <ResourceDictionary Source="Theme Files\TreeViewAdv.xaml"/>
+                <ResourceDictionary Source="Theme Files\UpDown.xaml"/>
+                <!--ResourceDictionary Source="Theme Files\WizardControl.xaml"/-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

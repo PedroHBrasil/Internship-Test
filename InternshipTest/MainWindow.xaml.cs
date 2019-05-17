@@ -60,7 +60,7 @@ namespace InternshipTest
         {
             InitializeComponent();
             // Sets the application theme
-            CurrentVisualStyle = "VisualStudio2013";
+            // CurrentVisualStyle = "VisualStudio2013";
             // this.Loaded += OnLoaded;
 
             _PopulateFields();
@@ -376,7 +376,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _ProjectEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
             projectButtonOptionsGrid.Visibility = Visibility.Visible;
         }
 
@@ -387,7 +387,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _VehicleInputEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
             vehicleButtonOptionsGrid.Visibility = Visibility.Visible;
         }
 
@@ -398,7 +398,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _PathInputEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
             pathButtonOptionsGrid.Visibility = Visibility.Visible;
         }
 
@@ -409,7 +409,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationInputEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
             simulationButtonOptionsGrid.Visibility = Visibility.Visible;
         }
 
@@ -420,7 +420,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _ResultsAnalysisEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
             resultsButtonOptionsGrid.Visibility = Visibility.Visible;
         }
 
@@ -431,7 +431,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _HelpEnvironmentButton_Click(object sender, RoutedEventArgs e)
         {
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
         }
 
         /// <summary>
@@ -448,13 +448,13 @@ namespace InternshipTest
         /// <summary>
         /// Collapses the UI's options menu.
         /// </summary>
-        private void _CollapseOptionsButtons()
+        private void _HideOptionsButtons()
         {
-            projectButtonOptionsGrid.Visibility = Visibility.Collapsed;
-            vehicleButtonOptionsGrid.Visibility = Visibility.Collapsed;
-            pathButtonOptionsGrid.Visibility = Visibility.Collapsed;
-            simulationButtonOptionsGrid.Visibility = Visibility.Collapsed;
-            resultsButtonOptionsGrid.Visibility = Visibility.Collapsed;
+            projectButtonOptionsGrid.Visibility = Visibility.Hidden;
+            vehicleButtonOptionsGrid.Visibility = Visibility.Hidden;
+            pathButtonOptionsGrid.Visibility = Visibility.Hidden;
+            simulationButtonOptionsGrid.Visibility = Visibility.Hidden;
+            resultsButtonOptionsGrid.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -483,7 +483,7 @@ namespace InternshipTest
             lapTimeSimulationDockingManager.Visibility = Visibility.Collapsed;
             ggvDiagramResultsAnalysisGrid.Visibility = Visibility.Collapsed;
             lapTimeSimulationResultsAnalysisGrid.Visibility = Visibility.Collapsed;
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
         }
 
         #region Project Button Options Methods
@@ -496,7 +496,7 @@ namespace InternshipTest
         private void _NewProjectButton_Click(object sender, RoutedEventArgs e)
         {
             _ClearUILists();
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace InternshipTest
                     project.LapTimeSimulations.Add(lapTimeSimulation);
                 // Saves the project to the file
                 project.Save(saveFileDialog.FileName);
-                _CollapseOptionsButtons();
+                _HideOptionsButtons();
             }
 
         }
@@ -665,7 +665,10 @@ namespace InternshipTest
             foreach (Vehicle.Tire tire in project.Tires)
                 tireListBox.Items.Add(tire);
             foreach (Vehicle.TireModelMF52 tireModel in project.TireModelMF52s)
+            {
                 tireModelListBox.Items.Add(tireModel);
+                tireModelDisplayCheckListBox.Items.Add(tireModel);
+            }
             foreach (Vehicle.TireModelMF52Point tireModelPoint in project.TireModelMF52Points)
                 tireModelDisplayParameterSetsCheckListBox.Items.Add(tireModelPoint);
             // Transmission
@@ -700,7 +703,7 @@ namespace InternshipTest
             // Lap Time Simulations
             foreach (Simulation.LapTimeSimulation lapTimeSimulation in project.LapTimeSimulations)
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
-            _CollapseOptionsButtons();
+            _HideOptionsButtons();
         }
 
         /// <summary>
@@ -2438,14 +2441,14 @@ namespace InternshipTest
                 SecondaryAxis = new NumericalAxis()
             };
             // Adds zoom/panning behaviour to the chart
-            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
             {
                 EnableZoomingToolBar = true,
                 EnableMouseWheelZooming = true,
                 EnablePanning = true,
                 ZoomRelativeToCursor = true,
             };
-            chart.Behaviors.Add(zoomingAndPanning);
+            chart.Behaviors.Add(zoomingAndPanning);*/
             // Adds a trackball to the chart
             ChartTrackBallBehavior trackBall = new ChartTrackBallBehavior();
             chart.Behaviors.Add(trackBall);
@@ -3212,14 +3215,14 @@ namespace InternshipTest
                 LabelFormat = "N0"
             };
             // Adds zoom/panning behaviour to the chart
-            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
             {
                 EnableZoomingToolBar = true,
                 EnableMouseWheelZooming = true,
                 EnablePanning = true,
                 ZoomRelativeToCursor = true,
             };
-            chart.Behaviors.Add(zoomingAndPanning);
+            chart.Behaviors.Add(zoomingAndPanning);*/
             // Generates and adds the sectors data series to be added to the chart
             for (int iSector = 0; iSector < sectorsPointsViewModels.Count; iSector++)
             {
@@ -3614,14 +3617,14 @@ namespace InternshipTest
                 LabelFormat = "N0"
             };
             // Adds zoom/panning behaviour to the chart
-            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
             {
                 EnableZoomingToolBar = true,
                 EnableMouseWheelZooming = true,
                 EnablePanning = true,
                 ZoomRelativeToCursor = true,
             };
-            chart.Behaviors.Add(zoomingAndPanning);
+            chart.Behaviors.Add(zoomingAndPanning);*/
             // Generates and adds the data series to be added to the chart
             FastLineSeries series = new FastLineSeries()
             {
@@ -3697,7 +3700,7 @@ namespace InternshipTest
                         Vehicle.TwoWheelCar twoWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
                         // Initializes and generates the GGV diagram
                         Simulation.GGVDiagram twoWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed, twoWheelCar);
-                        twoWheelGGVDiagram.GenerateGGVDiagramForTheOneWheelModel();
+                        twoWheelGGVDiagram.GenerateGGVDiagramForTheTwoWheelModel();
                         // Adds the GGV diagram to the listbox
                         simulationGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
                         break;
@@ -4216,14 +4219,14 @@ namespace InternshipTest
                 SecondaryAxis = new NumericalAxis()
             };
             // Adds zoom/panning behaviour to the chart
-            ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
             {
                 EnableZoomingToolBar = true,
                 EnableMouseWheelZooming = true,
                 EnablePanning = true,
                 ZoomRelativeToCursor = true,
             };
-            chart.Behaviors.Add(zoomingAndPanning);
+            chart.Behaviors.Add(zoomingAndPanning);*/
             // Initializes the data series
             FastLineSeries fastLineSeries;
             FastScatterBitmapSeries fastScatterSeries;
