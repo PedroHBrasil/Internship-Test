@@ -372,10 +372,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Reference Files\Antlr3.Runtime.dll" />
+    <Content Include="Reference Files\GeneticSharp.Domain.dll" />
+    <Content Include="Reference Files\GeneticSharp.Extensions.dll" />
+    <Content Include="Reference Files\GeneticSharp.Infrastructure.Framework.dll" />
     <Content Include="Reference Files\MathNet.Numerics.dll" />
     <Content Include="Reference Files\Microsoft.CSharp.dll" />
+    <Content Include="Reference Files\NCalc.dll" />
     <Content Include="Reference Files\PresentationCore.dll" />
+    <Content Include="Reference Files\PresentationFramework.Aero.dll" />
     <Content Include="Reference Files\PresentationFramework.dll" />
+    <Content Include="Reference Files\PresentationFramework.Luna.dll" />
+    <Content Include="Reference Files\Syncfusion.Chart.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Data.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.SfChart.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.SfDiagram.WPF.dll" />
@@ -385,7 +393,6 @@
     <Content Include="Reference Files\Syncfusion.SfSkinManager.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Shared.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.Blend.Wpf.dll" />
-    <Content Include="Reference Files\Syncfusion.Themes.Lime.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.Metro.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.Office2010Black.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.Office2010Blue.WPF.dll" />
@@ -397,7 +404,6 @@
     <Content Include="Reference Files\Syncfusion.Themes.Office2016DarkGray.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.Office2016White.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.Office365.WPF.dll" />
-    <Content Include="Reference Files\Syncfusion.Themes.Saffron.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.SystemTheme.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.VisualStudio2013.WPF.dll" />
     <Content Include="Reference Files\Syncfusion.Themes.VisualStudio2015.WPF.dll" />
@@ -406,6 +412,7 @@
     <Content Include="Reference Files\System.Data.DataSetExtensions.dll" />
     <Content Include="Reference Files\System.Data.dll" />
     <Content Include="Reference Files\System.dll" />
+    <Content Include="Reference Files\System.Drawing.Common.dll" />
     <Content Include="Reference Files\System.Drawing.dll" />
     <Content Include="Reference Files\System.Numerics.dll" />
     <Content Include="Reference Files\System.Runtime.Serialization.dll" />
