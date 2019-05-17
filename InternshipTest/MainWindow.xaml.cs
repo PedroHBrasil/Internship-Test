@@ -29,6 +29,8 @@ using MathNet.Numerics;
 
 namespace InternshipTest
 {
+    [Serializable]
+    public enum CarModelType { OneWheel, TwoWheel }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -579,11 +581,20 @@ namespace InternshipTest
                 // Two Wheel Car
                 foreach (Vehicle.TwoWheelCar twoWheelCar in twoWheelCarAndSetupListBox.Items)
                     project.TwoWheelCars.Add(twoWheelCar);
+                // Tabular Path
+                foreach (Path path in tabularPathsListBox.Items)
+                    project.TabularPaths.Add(path);
+                foreach (PathSectorsSet pathSectorSet in tabularPathSectorsSetsListBox.Items)
+                    project.TabularPathSectorsSets.Add(pathSectorSet);
+                foreach (PathSector pathSector in tabularPathSectorsStartDistancesListBox.Items)
+                    project.TabularPathSectors.Add(pathSector);
+                foreach (TabularPathSectionsSet pathSectionsSet in tabularPathSectionsSetsListBox.Items)
+                    project.TabularPathSectionsSets.Add(pathSectionsSet);
+                foreach (TabularPathSection pathSection in tabularPathSectionsListBox.Items)
+                    project.TabularPathSections.Add(pathSection);
                 // GGV Diagrams
-                foreach (Simulation.OneWheelGGVDiagram oneWheelGGVDiagram in simulationOneWheelGGVDiagramListBox.Items)
-                    project.OneWheelGGVDiagrams.Add(oneWheelGGVDiagram);
-                foreach (Simulation.TwoWheelGGVDiagram twoWheelGGVDiagram in simulationTwoWheelGGVDiagramListBox.Items)
-                    project.TwoWheelGGVDiagrams.Add(twoWheelGGVDiagram);
+                foreach (Simulation.GGVDiagram ggvDiagram in simulationGGVDiagramListBox.Items)
+                    project.GGVDiagrams.Add(ggvDiagram);
                 // Lap Time Simulations
                 foreach (Simulation.LapTimeSimulation lapTimeSimulation in lapTimeSimulationListBox.Items)
                     project.LapTimeSimulations.Add(lapTimeSimulation);
@@ -666,6 +677,17 @@ namespace InternshipTest
                 gearRatiosSetsListBox.Items.Add(gearRatiosSet);
             foreach (Vehicle.GearRatio gearRatio in project.GearRatios)
                 gearRatiosListBox.Items.Add(gearRatio);
+            // Path
+            foreach (Path path in project.TabularPaths)
+                tabularPathsListBox.Items.Add(path);
+            foreach (PathSectorsSet pathSectorSet in project.TabularPathSectorsSets)
+                tabularPathSectorsSetsListBox.Items.Add(pathSectorSet);
+            foreach (PathSector pathSector in project.TabularPathSectors)
+                tabularPathSectorsStartDistancesListBox.Items.Add(pathSector);
+            foreach (TabularPathSectionsSet pathSectionsSet in project.TabularPathSectionsSets)
+                tabularPathSectionsSetsListBox.Items.Add(pathSectionsSet);
+            foreach (TabularPathSection pathSection in project.TabularPathSections)
+                tabularPathSectionsListBox.Items.Add(pathSection);
             // One Wheel Car
             foreach (Vehicle.OneWheelCar oneWheelCar in project.OneWheelCars)
                 oneWheelCarAndSetupListBox.Items.Add(oneWheelCar);
@@ -673,10 +695,8 @@ namespace InternshipTest
             foreach (Vehicle.TwoWheelCar twoWheelCar in project.TwoWheelCars)
                 twoWheelCarAndSetupListBox.Items.Add(twoWheelCar);
             // GGV Diagrams
-            foreach (Simulation.OneWheelGGVDiagram oneWheelGGVDiagram in project.OneWheelGGVDiagrams)
-                simulationOneWheelGGVDiagramListBox.Items.Add(oneWheelGGVDiagram);
-            foreach (Simulation.TwoWheelGGVDiagram twoWheelGGVDiagram in project.TwoWheelGGVDiagrams)
-                simulationTwoWheelGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
+            foreach (Simulation.GGVDiagram ggvDiagram in project.GGVDiagrams)
+                simulationGGVDiagramListBox.Items.Add(ggvDiagram);
             // Lap Time Simulations
             foreach (Simulation.LapTimeSimulation lapTimeSimulation in project.LapTimeSimulations)
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
@@ -726,13 +746,14 @@ namespace InternshipTest
             // Four Wheel Model Cars
             // Tabular Paths
             tabularPathsListBox.Items.Clear();
-            tabularPathSectionsListBox.Items.Clear();
             tabularPathSectorsSetsListBox.Items.Clear();
+            tabularPathSectorsStartDistancesListBox.Items.Clear();
+            tabularPathSectionsSetsListBox.Items.Clear();
+            tabularPathSectionsListBox.Items.Clear();
             // Drawn Paths
             // Optimization Paths
             // GGV Diagrams
-            simulationOneWheelGGVDiagramListBox.Items.Clear();
-            simulationTwoWheelGGVDiagramListBox.Items.Clear();
+            simulationGGVDiagramListBox.Items.Clear();
             // Lap Time Simulations
             lapTimeSimulationListBox.Items.Clear();
             lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
@@ -1847,7 +1868,7 @@ namespace InternshipTest
                 double frontUnsprungMassCGHeight = double.Parse(twoWheelFrontUnsprungMassCGHeightTextBox.Text) / 1000;
                 double rearUnsprungMass = double.Parse(twoWheelRearUnsprungMassTextBox.Text);
                 double rearUnsprungMassCGHeight = double.Parse(twoWheelRearUnsprungMassCGHeightTextBox.Text) / 1000;
-                double wheelbase = double.Parse(twoWheelWheelbaseTextBox.Text);
+                double wheelbase = double.Parse(twoWheelWheelbaseTextBox.Text) / 1000;
                 double rotPartsMI = double.Parse(twoWheelRotPartsMITextBox.Text);
                 double gravity = double.Parse(twoWheelGravityAccelTextBox.Text);
                 // Initializes a new object
@@ -3643,22 +3664,57 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationAddGGVDiagramToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null)
+            if (ggvDiagramIDTextBox.Text != "" &&
+                ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null &&
+                ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
+                int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 8 &&
+                int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text) >= 4 &&
+                int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
+                Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
             {
+                // Gets the object's data
+                string id = ggvDiagramIDTextBox.Text;
+                string description = ggvDiagramDescriptionTextBox.Text;
+                int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
+                int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
+                int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
+                double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
+                double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
+                // Checks for the car model
                 switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
                 {
                     case "One Wheel":
-                        _SimulationAddOneWheelGGVDiagramToListBox();
+                        // Gets the car object
+                        Vehicle.OneWheelCar oneWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
+                        // Initializes and generates the GGV diagram
+                        Simulation.GGVDiagram oneWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed, oneWheelCar);
+                        oneWheelGGVDiagram.GenerateGGVDiagramForTheOneWheelModel();
+                        // Adds the GGV diagram to the listbox
+                        simulationGGVDiagramListBox.Items.Add(oneWheelGGVDiagram);
                         break;
                     case "Two Wheel":
-                        _SimulationAddTwoWheelGGVDiagramToListBox();
+                        // Gets the car object
+                        Vehicle.TwoWheelCar twoWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
+                        // Initializes and generates the GGV diagram
+                        Simulation.GGVDiagram twoWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed, twoWheelCar);
+                        twoWheelGGVDiagram.GenerateGGVDiagramForTheOneWheelModel();
+                        // Adds the GGV diagram to the listbox
+                        simulationGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
                         break;
                     default:
                         break;
-                };
+                }
             }
             else System.Windows.MessageBox.Show(
-               "Please, select a vehicle model.",
+               "Could not create GGV Diagram. \n " +
+               "    It should have an ID. \n" +
+               "    A vehicle model must be selected. \n" +
+               "    A vehicle must be selected. \n" +
+               "    The amount of points per speed should be at least 8. \n" +
+               "    The amount of directions should be at least 4. \n" +
+               "    The amount of speeds can't be zero. \n" +
+               "    The lowest speed should be smaller or equal to the highest speed. \n" +
+               "    Note: Negative values are corrected to positive values.",
                "Error",
                MessageBoxButton.OK,
                MessageBoxImage.Error);
@@ -3670,25 +3726,12 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationDeleteGGVDiagramOfListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null)
+            // Checks if there's a listbox item selected and then removes it
+            if (simulationGGVDiagramListBox.SelectedItems.Count == 1)
             {
-                switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
-                {
-                    case "One Wheel":
-                        _SimulationDeleteOneWheelGGVDiagramOfListBox();
-                        break;
-                    case "Two Wheel":
-                        _SimulationDeleteTwoWheelGGVDiagramOfListBox();
-                        break;
-                    default:
-                        break;
-                };
+                simulationGGVDiagramListBox.Items.RemoveAt(simulationGGVDiagramListBox.Items.IndexOf(simulationGGVDiagramListBox.SelectedItem));
+                if (simulationGGVDiagramListBox.Items.Count == 0) _ClearSimulationGGVDiagramDisplayChart();
             }
-            else System.Windows.MessageBox.Show(
-               "Please, select a vehicle model.",
-               "Error",
-               MessageBoxButton.OK,
-               MessageBoxImage.Error);
         }
         /// <summary>
         /// Changes the GGV diagram input environment accordingly to the selected vehicle model.
@@ -3700,28 +3743,15 @@ namespace InternshipTest
             switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
             {
                 case "One Wheel":
-                    _CollapseGGVDiagramListBoxes();
-                    simulationOneWheelGGVDiagramListBox.Visibility = Visibility.Visible;
                     ggvDiagramVehicleSelectionComboBox.ItemsSource = oneWheelCarAndSetupListBox.Items;
                     break;
                 case "Two Wheel":
-                    _CollapseGGVDiagramListBoxes();
-                    simulationTwoWheelGGVDiagramListBox.Visibility = Visibility.Visible;
                     ggvDiagramVehicleSelectionComboBox.ItemsSource = twoWheelCarAndSetupListBox.Items;
                     break;
                 default:
-                    _CollapseGGVDiagramListBoxes();
                     ggvDiagramVehicleSelectionComboBox.ItemsSource = null;
                     break;
             }
-        }
-        /// <summary>
-        /// Collapses the aerodynamics listboxes.
-        /// </summary>
-        private void _CollapseGGVDiagramListBoxes()
-        {
-            simulationOneWheelGGVDiagramListBox.Visibility = Visibility.Collapsed;
-            simulationTwoWheelGGVDiagramListBox.Visibility = Visibility.Collapsed;
         }
         #region One Wheel Model
         /// <summary>
@@ -3731,157 +3761,44 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationAddOneWheelGGVDiagramToListBox()
         {
-            if (ggvDiagramIDTextBox.Text != "" &&
-                ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
-                int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 8 &&
-                int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text) >= 4 &&
-                int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
-                Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
-            {
-                // Gets the object's data
-                string id = ggvDiagramIDTextBox.Text;
-                string description = ggvDiagramDescriptionTextBox.Text;
-                Vehicle.OneWheelCar car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
-                int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
-                int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
-                int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
-                double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
-                double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
-                // Initializes a new object
-                Simulation.OneWheelGGVDiagram ggvDiagram = new Simulation.OneWheelGGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed);
-                ggvDiagram.GenerateGGVDiagram();
-                // Adds the object to the listbox and the ComboBox
-                simulationOneWheelGGVDiagramListBox.Items.Add(ggvDiagram);
-            }
-            else System.Windows.MessageBox.Show(
-               "Could not create GGV Diagram. \n " +
-               "    It should have an ID. \n" +
-               "    A vehicle must be selected. \n" +
-               "    The amount of points per speed should be at least 8. \n" +
-               "    The amount of directions should be at least 4. \n" +
-               "    The amount of speeds can't be zero. \n" +
-               "    The lowest speed should be smaller or equal to the highest speed. \n" +
-               "    Note: Negative values are corrected to positive values.",
-               "Error",
-               MessageBoxButton.OK,
-               MessageBoxImage.Error);
         }
         /// <summary>
         /// Deletes a ggv diagram of an one wheel model car from the ggv diagrams listbox.
         /// </summary>
         private void _SimulationDeleteOneWheelGGVDiagramOfListBox()
         {
-            // Checks if there's a listbox item selected and then removes it
-            if (simulationOneWheelGGVDiagramListBox.SelectedItems.Count == 1)
-            {
-                simulationOneWheelGGVDiagramListBox.Items.RemoveAt(simulationOneWheelGGVDiagramListBox.Items.IndexOf(simulationOneWheelGGVDiagramListBox.SelectedItem));
-                if (simulationOneWheelGGVDiagramListBox.Items.Count == 0) _ClearSimulationGGVDiagramDisplayChart();
-            }
         }
         /// <summary>
         /// Loads the properties of the simulation ggv diagrams listbox's ggv diagram and displays it in the UI fields.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _SimulationOneWheelGGVDiagramListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _SimulationGGVDiagramListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             // Checks if there's a listbox item selected
-            if (simulationOneWheelGGVDiagramListBox.SelectedItems.Count == 1)
+            if (simulationGGVDiagramListBox.SelectedItems.Count == 1)
             {
                 // Gets the selected object
-                Simulation.OneWheelGGVDiagram ggvDiagram = simulationOneWheelGGVDiagramListBox.SelectedItem as Simulation.OneWheelGGVDiagram;
+                Simulation.GGVDiagram ggvDiagram = simulationGGVDiagramListBox.SelectedItem as Simulation.GGVDiagram;
                 // Writes the properties in the UI
                 ggvDiagramIDTextBox.Text = ggvDiagram.ID;
                 ggvDiagramDescriptionTextBox.Text = ggvDiagram.Description;
-                ggvDiagramVehicleSelectionComboBox.Text = ggvDiagram.Car.ToString();
                 ggvDiagramAmountOfPointsPerSpeedTextBox.Text = ggvDiagram.AmountOfPointsPerSpeed.ToString();
                 ggvDiagramAmountOfDirectionsTextBox.Text = ggvDiagram.AmountOfDirections.ToString();
                 ggvDiagramAmountOfSpeedsTextBox.Text = ggvDiagram.AmountOfSpeeds.ToString("F0");
                 ggvDiagramLowestSpeedTextBox.Text = (ggvDiagram.LowestSpeed * 3.6).ToString("F2");
                 ggvDiagramHighestSpeedTextBox.Text = (ggvDiagram.HighestSpeed * 3.6).ToString("F2");
-                // Updates the ggv diagram display chart
-                if ((bool)simulationGGVDiagramAllowPathDisplayCheckBox.IsChecked) _UpdateSimulationGGVDiagramDisplayChart();
-            }
-        }
-        #endregion
-        #region Two Wheel Model
-
-        /// <summary>
-        /// Creates a ggv diagram object for an two wheel model car, generates it and adds it to the simulation ggv diagrams listbox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _SimulationAddTwoWheelGGVDiagramToListBox()
-        {
-            if (ggvDiagramIDTextBox.Text != "" &&
-                ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
-                int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 8 &&
-                int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text) >= 4 &&
-                int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
-                Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
-            {
-                // Gets the object's data
-                string id = ggvDiagramIDTextBox.Text;
-                string description = ggvDiagramDescriptionTextBox.Text;
-                Vehicle.TwoWheelCar car = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
-                int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
-                int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
-                int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
-                double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
-                double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
-                // Initializes a new object
-                Simulation.TwoWheelGGVDiagram ggvDiagram = new Simulation.TwoWheelGGVDiagram(id, description, car, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed);
-                ggvDiagram.GenerateGGVDiagram();
-                // Adds the object to the listbox and the ComboBox
-                simulationTwoWheelGGVDiagramListBox.Items.Add(ggvDiagram);
-            }
-            else System.Windows.MessageBox.Show(
-               "Could not create GGV Diagram. \n " +
-               "    It should have an ID. \n" +
-               "    A vehicle must be selected. \n" +
-               "    The amount of points per speed should be at least 8. \n" +
-               "    The amount of directions should be at least 4. \n" +
-               "    The amount of speeds can't be zero. \n" +
-               "    The lowest speed should be smaller or equal to the highest speed. \n" +
-               "    Note: Negative values are corrected to positive values.",
-               "Error",
-               MessageBoxButton.OK,
-               MessageBoxImage.Error);
-        }
-        /// <summary>
-        /// Deletes a ggv diagram of an one wheel model car from the ggv diagrams listbox.
-        /// </summary>
-        private void _SimulationDeleteTwoWheelGGVDiagramOfListBox()
-        {
-            // Checks if there's a listbox item selected and then removes it
-            if (simulationTwoWheelGGVDiagramListBox.SelectedItems.Count == 1)
-            {
-                simulationTwoWheelGGVDiagramListBox.Items.RemoveAt(simulationTwoWheelGGVDiagramListBox.Items.IndexOf(simulationTwoWheelGGVDiagramListBox.SelectedItem));
-                if (simulationTwoWheelGGVDiagramListBox.Items.Count == 0) _ClearSimulationGGVDiagramDisplayChart();
-            }
-        }
-
-        /// <summary>
-        /// Loads the properties of the simulation ggv diagrams listbox's ggv diagram and displays it in the UI fields.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _SimulationTwoWheelGGVDiagramListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Checks if there's a listbox item selected
-            if (simulationTwoWheelGGVDiagramListBox.SelectedItems.Count == 1)
-            {
-                // Gets the selected object
-                Simulation.TwoWheelGGVDiagram ggvDiagram = simulationTwoWheelGGVDiagramListBox.SelectedItem as Simulation.TwoWheelGGVDiagram;
-                // Writes the properties in the UI
-                ggvDiagramIDTextBox.Text = ggvDiagram.ID;
-                ggvDiagramDescriptionTextBox.Text = ggvDiagram.Description;
-                ggvDiagramVehicleSelectionComboBox.Text = ggvDiagram.Car.ToString();
-                ggvDiagramAmountOfPointsPerSpeedTextBox.Text = ggvDiagram.AmountOfPointsPerSpeed.ToString();
-                ggvDiagramAmountOfDirectionsTextBox.Text = ggvDiagram.AmountOfDirections.ToString();
-                ggvDiagramAmountOfSpeedsTextBox.Text = ggvDiagram.AmountOfSpeeds.ToString("F0");
-                ggvDiagramLowestSpeedTextBox.Text = (ggvDiagram.LowestSpeed * 3.6).ToString("F2");
-                ggvDiagramHighestSpeedTextBox.Text = (ggvDiagram.HighestSpeed * 3.6).ToString("F2");
+                switch (ggvDiagram.CarModelType)
+                {
+                    case CarModelType.OneWheel:
+                        ggvDiagramVehicleSelectionComboBox.Text = ggvDiagram.OneWheelCar.ToString();
+                        break;
+                    case CarModelType.TwoWheel:
+                        ggvDiagramVehicleSelectionComboBox.Text = ggvDiagram.TwoWheelCar.ToString();
+                        break;
+                    default:
+                        break;
+                }
                 // Updates the ggv diagram display chart
                 if ((bool)simulationGGVDiagramAllowPathDisplayCheckBox.IsChecked) _UpdateSimulationGGVDiagramDisplayChart();
             }
@@ -3896,20 +3813,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationGGVDiagramAllowPathDisplayCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue != null)
-            {
-                switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
-                {
-                    case "One Wheel":
-                        if (simulationOneWheelGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
-                        break;
-                    case "Two Wheel":
-                        if (simulationTwoWheelGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
-                        break;
-                    default:
-                        break;
-                };
-            }
+            if (simulationGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
         }
 
         /// <summary>
@@ -3928,18 +3832,7 @@ namespace InternshipTest
         private void _UpdateSimulationGGVDiagramDisplayChart()
         {
             // Loads the GGV Diagram object and geneates its view model
-            Simulation.OneWheelGGVDiagram ggvDiagram;
-            switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
-            {
-                case "One Wheel":
-                    ggvDiagram = simulationOneWheelGGVDiagramListBox.SelectedItem as Simulation.OneWheelGGVDiagram;
-                    break;
-                case "Two Wheel":
-                    ggvDiagram = simulationTwoWheelGGVDiagramListBox.SelectedItem as Simulation.OneWheelGGVDiagram;
-                    break;
-                default:
-                    return;
-            };
+            Simulation.GGVDiagram ggvDiagram = simulationGGVDiagramListBox.SelectedItem as Simulation.GGVDiagram;
             Simulation.GGVDiagramViewModel ggvDiagramViewModel = new Simulation.GGVDiagramViewModel(ggvDiagram);
             // Initializes the surface chart
             SfSurfaceChart surface = new SfSurfaceChart()
@@ -3967,7 +3860,7 @@ namespace InternshipTest
             // Initializes the surface axis and adds them to the chart
             SurfaceAxis xAxis = new SurfaceAxis()
             {
-                Header = "Longitudinal Acceleration [G]",
+                Header = "Longitudinal Acceleration [m/s²]",
                 Minimum = surface.Data.XValues.Min(),
                 Maximum = surface.Data.XValues.Max(),
                 LabelFormat = "0.00",
@@ -3983,7 +3876,7 @@ namespace InternshipTest
             };
             SurfaceAxis zAxis = new SurfaceAxis()
             {
-                Header = "Lateral Acceleration [G]",
+                Header = "Lateral Acceleration [m/s²]",
                 Minimum = surface.Data.ZValues.Min(),
                 Maximum = surface.Data.ZValues.Max(),
                 LabelFormat = "0.00",
@@ -4033,7 +3926,7 @@ namespace InternshipTest
                 bool isFirstLap = false;
                 if (mode == "First Lap") isFirstLap = true;
                 Path path = lapTimeSimulationPathComboBox.SelectedItem as Path;
-                Simulation.OneWheelGGVDiagram ggvDiagram = lapTimeSimulationGGVDiagramComboBox.SelectedItem as Simulation.OneWheelGGVDiagram;
+                Simulation.GGVDiagram ggvDiagram = lapTimeSimulationGGVDiagramComboBox.SelectedItem as Simulation.GGVDiagram;
                 // Generates the GGV diagrams list
                 List<Simulation.LapTimeSimulationSectorSetup> ggvDiagrams = new List<Simulation.LapTimeSimulationSectorSetup>();
                 for (int iSector = 1; iSector <= path.SectorsSet.Sectors.Count; iSector++)
@@ -4122,7 +4015,7 @@ namespace InternshipTest
                 lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem != null)
             {
                 int sectorIndex = int.Parse(lapTimeSimulationNewSectorIndexComboBox.Text);
-                Simulation.OneWheelGGVDiagram ggvDiagram = lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem as Simulation.OneWheelGGVDiagram;
+                Simulation.GGVDiagram ggvDiagram = lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem as Simulation.GGVDiagram;
                 Simulation.LapTimeSimulationSectorSetup sectorSetup = new Simulation.LapTimeSimulationSectorSetup(sectorIndex, ggvDiagram);
                 lapTimeSimulationGGVDiagramPerSectorListBox.Items.Add(sectorSetup);
             }
@@ -4334,7 +4227,6 @@ namespace InternshipTest
                 FontSize = 20,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(10),
-                Width = tabularPathDockingWindow.ActualHeight,
                 Legend = new ChartLegend(),
                 PrimaryAxis = new NumericalAxis(),
                 SecondaryAxis = new NumericalAxis()

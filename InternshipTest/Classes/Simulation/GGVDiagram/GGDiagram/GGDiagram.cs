@@ -35,12 +35,36 @@ namespace InternshipTest.Simulation
         /// </summary>
         public List<double> Curvatures { get; set; }
         #endregion
+        #region Constructors
+        public GGDiagram()
+        {
+            LongitudinalAccelerations = new List<double>();
+            LateralAccelerations = new List<double>();
+        }
+        public GGDiagram(OneWheelGGDiagram twoWheelGGDiagram)
+        {
+            Speed = twoWheelGGDiagram.Speed;
+            AmountOfPoints = twoWheelGGDiagram.AmountOfPoints;
+            AmountOfDirections = twoWheelGGDiagram.AmountOfDirections;
+            LongitudinalAccelerations = twoWheelGGDiagram.LongitudinalAccelerations;
+            LateralAccelerations = twoWheelGGDiagram.LateralAccelerations;
+        }
+        public GGDiagram(TwoWheelGGDiagram twoWheelGGDiagram)
+        {
+            Speed = twoWheelGGDiagram.Speed;
+            AmountOfPoints = twoWheelGGDiagram.AmountOfPoints;
+            AmountOfDirections = twoWheelGGDiagram.AmountOfDirections;
+            LongitudinalAccelerations = twoWheelGGDiagram.LongitudinalAccelerations;
+            LateralAccelerations = twoWheelGGDiagram.LateralAccelerations;
+        }
+        #endregion
         #region Methods
         /// <summary>
         /// Gets the curvatures associated with each point of the GG diagram.
         /// </summary>
         public void GetAssociatedCurvatures()
         {
+            Curvatures = new List<double>();
             // Gets and registers the curvatures associated with each point of the GG diagram
             for (int iLateralAcceleration = 0; iLateralAcceleration < LateralAccelerations.Count; iLateralAcceleration++)
             {
@@ -146,6 +170,76 @@ namespace InternshipTest.Simulation
             // Writes the interpolated values to the lists
             LongitudinalAccelerations = newLongitudinalAccelerations.ToList();
             LateralAccelerations = newLateralAccelerations.ToList();
+        }
+        /// <summary>
+        /// Gets the longitudinal acceleration based on the interpolation of the GG diagram by a lateral acceleration.
+        /// </summary>
+        /// <param name="lateralAcceleration"> Lateral acceleration [m/s²] </param>
+        /// <param name="longitudinalAccelerationMode"> "Accelerating" or "Braking" </param>
+        /// <returns></returns>
+        public double GetLongitudinalAccelerationViaInterpolationBasedOnLateralAcceleration(double lateralAcceleration, string longitudinalAccelerationMode)
+        {
+            // Gets the lateral acceleration interval index
+            int iAcceleration = _GetLateralAccelerationIndex(lateralAcceleration, longitudinalAccelerationMode);
+            // Gets the index of the next lateral acceleration
+            int iNextAcceleration;
+            if (iAcceleration == LateralAccelerations.Count - 1) iNextAcceleration = 0;
+            else iNextAcceleration = iAcceleration + 1;
+            // Calculates the interpolation ratio
+            double interpolationRatio = (lateralAcceleration - LateralAccelerations[iAcceleration]) -
+                (LateralAccelerations[iNextAcceleration] - LateralAccelerations[iAcceleration]);
+            // Adjusts the interpolation ratio if necessary
+            if (interpolationRatio < 0) interpolationRatio = 0;
+            else if (interpolationRatio > 1) interpolationRatio = 1;
+            // Gets the longitudinal acceleration
+            double longitudinalAcceleration = LongitudinalAccelerations[iAcceleration] +
+                interpolationRatio * (LongitudinalAccelerations[iNextAcceleration] - LongitudinalAccelerations[iAcceleration]);
+            // Returns the longitudinal acceleration
+            return longitudinalAcceleration;
+        }
+        /// <summary>
+        /// Gets the index of the laterala acceleration to be used in the interpolation.
+        /// </summary>
+        /// <param name="lateralAcceleration"> Lateral acceleration [m/s²] </param>
+        /// <param name="longitudinalAccelerationMode"> "Accelerating" or "Braking" </param>
+        /// <returns></returns>
+        private int _GetLateralAccelerationIndex(double lateralAcceleration, string longitudinalAccelerationMode)
+        {
+            // Initializes the index and range indicator variables
+            int iAcceleration;
+            bool isInRange = false;
+            // Checks if the lateral acceleration is in range
+            if (lateralAcceleration >= LateralAccelerations.Min() &&
+                lateralAcceleration <= LateralAccelerations.Max())
+                isInRange = true;
+            // If in range, finds the interval. Else, uses the maximum or minimum lateral acceleration index.
+            if (isInRange)
+            {
+                for (iAcceleration = 0; iAcceleration < LateralAccelerations.Count; iAcceleration++)
+                {
+                    // Next acceleration index
+                    int iNextAcceleration;
+                    if (iAcceleration == LateralAccelerations.Count - 1) iNextAcceleration = 0;
+                    else iNextAcceleration = iAcceleration + 1;
+                    // Checks if the current interval contains the current lateral acceleration ad if it corresponds to the current acceleration mode
+                    if (longitudinalAccelerationMode == "Braking" &&
+                        LateralAccelerations[iAcceleration] <= lateralAcceleration &&
+                        LateralAccelerations[iNextAcceleration] >= lateralAcceleration)
+                        break;
+                    else if (longitudinalAccelerationMode == "Accelerating" &&
+                        LateralAccelerations[iAcceleration] >= lateralAcceleration &&
+                        LateralAccelerations[iNextAcceleration] <= lateralAcceleration)
+                        break;
+                }
+            }
+            else
+            {
+                // Gets the index of the maximum or minimum value, depending on the acceleration sign
+                if (lateralAcceleration > 0) iAcceleration = LateralAccelerations.IndexOf(LateralAccelerations.Max());
+                else iAcceleration = LateralAccelerations.IndexOf(LateralAccelerations.Min());
+            }
+            // Returns the index of the lateral acceleration interval
+            return iAcceleration;
         }
         #endregion
     }

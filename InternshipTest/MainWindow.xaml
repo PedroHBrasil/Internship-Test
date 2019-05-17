@@ -2379,7 +2379,7 @@
 
                         </syncfusion:DockingManager>
                         <!-- GGV Diagram Docking Manager -->
-                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Collapsed">
+                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Visible">
                             <!-- GGV Diagram Input Dockig Window -->
                             <ContentControl Name="ggvDiagramDefinitionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2413,8 +2413,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- GGV Diagram listbox-->
-                                    <ListBox Name="simulationOneWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationOneWheelGGVDiagramListBox_SelectionChanged"/>
-                                    <ListBox Name="simulationTwoWheelGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Collapsed" SelectionChanged="_SimulationTwoWheelGGVDiagramListBox_SelectionChanged"/>
+                                    <ListBox Name="simulationGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Visible" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
                                     <!-- GGV Diagram listbox add and delete buttons -->
                                     <Button Name="simulationAddGGVDiagramToListBox" Content="Add" Click="_SimulationAddGGVDiagramToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="simulationDeleteGGVDiagramOfListBox" Content="Delete" Click="_SimulationDeleteGGVDiagramOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
@@ -2522,7 +2521,7 @@
                                     <!-- GGV Diagram selection line -->
                                     <TextBlock Text="GGV Diagram" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ComboBox Name="lapTimeSimulationGGVDiagramComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                              ItemsSource="{Binding ElementName=simulationOneWheelGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
+                                              ItemsSource="{Binding ElementName=simulationGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Sectors specific GGV Diagram selection -->
                                     <TextBlock Text="GGV Diagram Specific Selection per Sector:" Grid.Row="7" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ListBox Name="lapTimeSimulationGGVDiagramPerSectorListBox" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
@@ -2750,9 +2749,7 @@
                         <Grid Name="lapTimeSimulationResultsAnalysisGrid" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="250"/>
-                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="250"/>
                             </Grid.ColumnDefinitions>
                             <!-- Loadcase menu grid -->
@@ -2808,10 +2805,8 @@
                                     </syncfusion:CheckListBox.ItemTemplate>
                                 </syncfusion:CheckListBox>
                             </Grid>
-                            <!-- Left Grid Splitter -->
-                            <syncfusion:SfGridSplitter Grid.Column="1"/>
                             <!-- Charts Tab Control -->
-                            <syncfusion:TabControlExt Name="lapTimeSimulationResultsAnalysisChartTabControl" Grid.Column="2"
+                            <syncfusion:TabControlExt Name="lapTimeSimulationResultsAnalysisChartTabControl" Grid.Column="1"
                                                       EnableLabelEdit="True" ShowTabItemContextMenu="True" CloseButtonType="Both"
                                                       TabItemSize="ShrinkToFit" TabItemLayout="MultiLineWithFullWidth"
                                                       TabScrollStyle="Extended" TabScrollButtonVisibility="Visible"
@@ -2820,10 +2815,8 @@
                                                       CloseMode="Delete" OnCloseButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick">
                                 <syncfusion:TabItemExt Header="Chart 1"/>
                             </syncfusion:TabControlExt>
-                            <!-- Right Grid Splitter -->
-                            <syncfusion:SfGridSplitter Grid.Column="3"/>
                             <!-- Charts options grid -->
-                            <Grid Grid.Column="4">
+                            <Grid Grid.Column="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>

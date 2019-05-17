@@ -29,10 +29,6 @@ namespace InternshipTest.Simulation
         /// Tire's slip angle [rad].
         /// </summary>
         private double alpha;
-        /// <summary>
-        /// Reference longitudinal force used in the optimization algorithms to find the longitudinal slip associated with a given force [N].
-        /// </summary>
-        private double referenceMy;
         private List<double> errorsFx;
         #endregion
         #region Properties
@@ -193,76 +189,6 @@ namespace InternshipTest.Simulation
             _FilterGGDiagramByDirections();
         }
         #endregion
-        /// <summary>
-        /// Gets the longitudinal acceleration based on the interpolation of the GG diagram by a lateral acceleration.
-        /// </summary>
-        /// <param name="lateralAcceleration"> Lateral acceleration [m/s²] </param>
-        /// <param name="longitudinalAccelerationMode"> "Accelerating" or "Braking" </param>
-        /// <returns></returns>
-        public double GetLongitudinalAccelerationViaInterpolationBasedOnLateralAcceleration(double lateralAcceleration, string longitudinalAccelerationMode)
-        {
-            // Gets the lateral acceleration interval index
-            int iAcceleration = _GetLateralAccelerationIndex(lateralAcceleration, longitudinalAccelerationMode);
-            // Gets the index of the next lateral acceleration
-            int iNextAcceleration;
-            if (iAcceleration == LateralAccelerations.Count - 1) iNextAcceleration = 0;
-            else iNextAcceleration = iAcceleration + 1;
-            // Calculates the interpolation ratio
-            double interpolationRatio = (lateralAcceleration - LateralAccelerations[iAcceleration]) -
-                (LateralAccelerations[iNextAcceleration] - LateralAccelerations[iAcceleration]);
-            // Adjusts the interpolation ratio if necessary
-            if (interpolationRatio < 0) interpolationRatio = 0;
-            else if (interpolationRatio > 1) interpolationRatio = 1;
-            // Gets the longitudinal acceleration
-            double longitudinalAcceleration = LongitudinalAccelerations[iAcceleration] +
-                interpolationRatio * (LongitudinalAccelerations[iNextAcceleration] - LongitudinalAccelerations[iAcceleration]);
-            // Returns the longitudinal acceleration
-            return longitudinalAcceleration;
-        }
-        /// <summary>
-        /// Gets the index of the laterala acceleration to be used in the interpolation.
-        /// </summary>
-        /// <param name="lateralAcceleration"> Lateral acceleration [m/s²] </param>
-        /// <param name="longitudinalAccelerationMode"> "Accelerating" or "Braking" </param>
-        /// <returns></returns>
-        private int _GetLateralAccelerationIndex(double lateralAcceleration, string longitudinalAccelerationMode)
-        {
-            // Initializes the index and range indicator variables
-            int iAcceleration;
-            bool isInRange = false;
-            // Checks if the lateral acceleration is in range
-            if (lateralAcceleration >= LateralAccelerations.Min() &&
-                lateralAcceleration <= LateralAccelerations.Max())
-                isInRange = true;
-            // If in range, finds the interval. Else, uses the maximum or minimum lateral acceleration index.
-            if (isInRange)
-            {
-                for (iAcceleration = 0; iAcceleration < LateralAccelerations.Count; iAcceleration++)
-                {
-                    // Next acceleration index
-                    int iNextAcceleration;
-                    if (iAcceleration == LateralAccelerations.Count - 1) iNextAcceleration = 0;
-                    else iNextAcceleration = iAcceleration + 1;
-                    // Checks if the current interval contains the current lateral acceleration ad if it corresponds to the current acceleration mode
-                    if (longitudinalAccelerationMode == "Braking" &&
-                        LateralAccelerations[iAcceleration] <= lateralAcceleration &&
-                        LateralAccelerations[iNextAcceleration] >= lateralAcceleration)
-                        break;
-                    else if (longitudinalAccelerationMode == "Accelerating" &&
-                        LateralAccelerations[iAcceleration] >= lateralAcceleration &&
-                        LateralAccelerations[iNextAcceleration] <= lateralAcceleration)
-                        break;
-                }
-            }
-            else
-            {
-                // Gets the index of the maximum or minimum value, depending on the acceleration sign
-                if (lateralAcceleration > 0) iAcceleration = LateralAccelerations.IndexOf(LateralAccelerations.Max());
-                else iAcceleration = LateralAccelerations.IndexOf(LateralAccelerations.Min());
-            }
-            // Returns the index of the lateral acceleration interval
-            return iAcceleration;
-        }
         #endregion
     }
 }

@@ -27,7 +27,7 @@ namespace InternshipTest.Simulation
         public int ColumnSize { get; set; }
         #endregion
         #region Construtor
-        public GGVDiagramViewModel(OneWheelGGVDiagram diagram)
+        public GGVDiagramViewModel(GGVDiagram diagram)
         {
             RowSize = diagram.Speeds.Length;
             ColumnSize = diagram.GGDiagrams[0].LongitudinalAccelerations.Count + 1;
@@ -41,13 +41,13 @@ namespace InternshipTest.Simulation
                 for (int iPoint = 0; iPoint < ColumnSize-1; iPoint++)
                 {
                     // Gets the current accelerations
-                    double currentLongitudinalAcceleration = diagram.GGDiagrams[iSpeed].LongitudinalAccelerations[iPoint] / diagram.Car.Inertia.Gravity;
-                    double currentLateralAcceleration = diagram.GGDiagrams[iSpeed].LateralAccelerations[iPoint] / diagram.Car.Inertia.Gravity;
+                    double currentLongitudinalAcceleration = diagram.GGDiagrams[iSpeed].LongitudinalAccelerations[iPoint];
+                    double currentLateralAcceleration = diagram.GGDiagrams[iSpeed].LateralAccelerations[iPoint];
                     // Adds the current point to the view model
                     GGVDiagramPoints.Add(new GGVDiagramPoint(currentLongitudinalAcceleration, currentSpeed, currentLateralAcceleration));
                 }
-                GGVDiagramPoints.Add(new GGVDiagramPoint(diagram.GGDiagrams[iSpeed].LongitudinalAccelerations[0] / diagram.Car.Inertia.Gravity,
-                    currentSpeed, diagram.GGDiagrams[iSpeed].LateralAccelerations[0] / diagram.Car.Inertia.Gravity));
+                GGVDiagramPoints.Add(new GGVDiagramPoint(diagram.GGDiagrams[iSpeed].LongitudinalAccelerations[0],
+                    currentSpeed, diagram.GGDiagrams[iSpeed].LateralAccelerations[0]));
             }
         }
         #endregion

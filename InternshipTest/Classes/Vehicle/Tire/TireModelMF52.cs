@@ -16,7 +16,7 @@ namespace InternshipTest.Vehicle
         #region Fields
         private readonly double ksi0 = 1, ksi1 = 1, ksi2 = 1, ksi3 = 1, ksi4 = 1, ksi5 = 1, ksi6 = 1, ksi7 = 1, ksi8 = 1,
             epsilonx = Math.Pow(10, -3), epsilony = Math.Pow(10, -1), epsilonK = Math.Pow(10, -2), epsilonV = Math.Pow(10, -3);
-        private double currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed, currentOptimizationTarget;
+        private double currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed;
         #endregion
         #region Properties
         // Tire Model inputs boundaries (Slip Angle and Longitudinal Slip)

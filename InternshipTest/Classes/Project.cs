@@ -57,8 +57,7 @@ namespace InternshipTest
         // Drawn Paths
         // Optimization Paths
         // GGV Diagrams
-        public List<Simulation.OneWheelGGVDiagram> OneWheelGGVDiagrams { get; set; }
-        public List<Simulation.TwoWheelGGVDiagram> TwoWheelGGVDiagrams { get; set; }
+        public List<Simulation.GGVDiagram> GGVDiagrams { get; set; }
         // Lap Time Simulations
         public List<Simulation.LapTimeSimulation> LapTimeSimulations { get; set; }
         #endregion
@@ -108,8 +107,7 @@ namespace InternshipTest
             // Drawn Paths
             // Optimization Paths
             // GGV Diagrams
-            OneWheelGGVDiagrams = new List<Simulation.OneWheelGGVDiagram>();
-            TwoWheelGGVDiagrams = new List<Simulation.TwoWheelGGVDiagram>();
+            GGVDiagrams = new List<Simulation.GGVDiagram>();
             // Lap Time Simulations
             LapTimeSimulations = new List<Simulation.LapTimeSimulation>();
         }

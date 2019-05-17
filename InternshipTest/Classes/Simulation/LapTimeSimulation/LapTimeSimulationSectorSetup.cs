@@ -17,7 +17,7 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Sector's GGV diagram.
         /// </summary>
-        public OneWheelGGVDiagram SectorGGVDiagram { get; set; }
+        public GGVDiagram SectorGGVDiagram { get; set; }
         /// <summary>
         /// Sector's index.
         /// </summary>
@@ -25,7 +25,7 @@ namespace InternshipTest.Simulation
         #endregion
         #region Constructor
         public LapTimeSimulationSectorSetup() { }
-        public LapTimeSimulationSectorSetup(int index, OneWheelGGVDiagram ggvDiagram)
+        public LapTimeSimulationSectorSetup(int index, GGVDiagram ggvDiagram)
         {
             SectorIndex = index;
             SectorGGVDiagram = ggvDiagram;

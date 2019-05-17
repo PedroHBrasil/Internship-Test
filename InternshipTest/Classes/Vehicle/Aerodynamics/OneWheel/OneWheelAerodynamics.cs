@@ -16,11 +16,11 @@ namespace InternshipTest.Vehicle
         /// <summary>
         /// Relative wind speeds of the aerodynamic map [m].
         /// </summary>
-        private List<double> aerodynamicMapWindSpeeds;
+        public List<double> aerodynamicMapWindSpeeds;
         /// <summary>
         /// Ride heights of the aerodynamic map [m].
         /// </summary>
-        private List<double> aerodynamicMapRideHeights;
+        public List<double> aerodynamicMapRideHeights;
         #endregion
         #region Properties
         /// <summary>
