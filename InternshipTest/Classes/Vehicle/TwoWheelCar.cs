@@ -131,12 +131,12 @@ namespace InternshipTest.Vehicle
             return interpolatedAerodynamicMapPoint;
         }
         /// <summary>
-        /// Gets the reference wheel radius for the transmission system calculations.
+        /// Gets the wheels loads [N].
         /// </summary>
         /// <param name="speed"> Car's speed [m/s]. </param>
         /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
         /// <returns> The reference radius for the current speed and car slip angle. </returns>
-        private double _GetMeanWheelRadius(double speed, double carSlipAngle)
+        public double[] GetWheelsLoads(double speed, double carSlipAngle)
         {
             // Gets the aerodynamic coefficients
             TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle, 0);
@@ -145,8 +145,23 @@ namespace InternshipTest.Vehicle
             // Calculates the aerodynamic pitch moment
             double aerodynamicPitchMoment = -interpolatedAerodynamicMapPoint.PitchMomentCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
             // Tire resultant Fz [N]
-            double frontTireFz = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.TotalMass * InertiaAndDimensions.Gravity * InertiaAndDimensions.TotalMassDistribution) / 2;
-            double rearTireFz = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.TotalMass * InertiaAndDimensions.Gravity * (1 - InertiaAndDimensions.TotalMassDistribution)) / 2;
+            double frontTireFz = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.FrontWeight) / 2;
+            double rearTireFz = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.RearWeight) / 2;
+
+            return new double[] { frontTireFz, rearTireFz };
+        }
+        /// <summary>
+        /// Gets the reference wheel radius for the transmission system calculations.
+        /// </summary>
+        /// <param name="speed"> Car's speed [m/s]. </param>
+        /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
+        /// <returns> The reference radius for the current speed and car slip angle. </returns>
+        private double _GetMeanWheelRadius(double speed, double carSlipAngle)
+        {
+            // Gets the wheels loads
+            double[] wheelsLoads = GetWheelsLoads(speed, carSlipAngle);
+            double frontTireFz = wheelsLoads[0];
+            double rearTireFz = wheelsLoads[1];
             // Calculates the mean wheel radius [m]
             double frontWheelRadius = FrontTire.TireModel.RO - frontTireFz / FrontTire.VerticalStiffness;
             double rearWheelRadius = RearTire.TireModel.RO - rearTireFz / RearTire.VerticalStiffness;
