@@ -1515,6 +1515,7 @@ namespace InternshipTest
                 double rearMaxTorque = double.Parse(twoWheelBrakesRearMaximumTorqueTextBox.Text);
                 // Initializes a new object
                 Vehicle.TwoWheelBrakes brakes = new Vehicle.TwoWheelBrakes(brakesID, description, brakeBias, frontMaxTorque, rearMaxTorque);
+                brakes.GetBrakesAuxiliarParameters();
                 // Adds the object to the listbox and the ComboBox
                 twoWheelBrakesListBox.Items.Add(brakes);
             }
