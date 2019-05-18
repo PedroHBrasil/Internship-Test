@@ -49,6 +49,7 @@ namespace InternshipTest.Vehicle
         /// <summary>
         /// Car's weight which is supported at the rear axis [N].
         /// </summary>
+        
         public double RearWeight { get; set; }
         /// <summary>
         /// Car's front axis unsprung mass weight [N].
@@ -66,6 +67,14 @@ namespace InternshipTest.Vehicle
         /// Distance between the rear axis and the car's CG [m].
         /// </summary>
         public double DistanceBetweenRearAxisAndCG { get; set; }
+        /// <summary>
+        /// Sprung mass [kg].
+        /// </summary>
+        public double SprungMass { get; set; }
+        /// <summary>
+        /// Height of the sprung mass's CG [m].
+        /// </summary>
+        public double SprungMassCGHeight { get; set; }
         #endregion
         #region Constructors
         public TwoWheelInertiaAndDimensions() { }
@@ -97,6 +106,8 @@ namespace InternshipTest.Vehicle
             RearUnsprungWeight = RearUnsprungMass * Gravity;
             DistanceBetweenFrontAxisAndCG = Wheelbase * (1 - TotalMassDistribution);
             DistanceBetweenRearAxisAndCG = Wheelbase * TotalMassDistribution;
+            SprungMass = TotalMass - FrontUnsprungMass - RearUnsprungMass;
+            SprungMassCGHeight = (TotalMassCGHeight * TotalMass - (FrontUnsprungMassCGHeight * FrontUnsprungMass + RearUnsprungMassCGHeight * RearUnsprungMass)) / SprungMass;
         }
         #endregion
     }

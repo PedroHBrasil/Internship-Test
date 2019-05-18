@@ -89,16 +89,38 @@ namespace InternshipTest.Vehicle
             return (int)Math.Ceiling(alglib.spline1dcalc(wheelGearCurveInterp, wheelCenterAngularSpeed));
         }
         /// <summary>
+        /// Gets the longitudinal load transfer associated with the sprung mass.
+        /// </summary>
+        /// <param name="longitudinalAcceleration"> Car's longitudinal acceleration [m/s²] </param>
+        /// <returns> Sprung mass's longitudinal load transfer [N] </returns>
+        public double GetSprungMassLongitudinalLoadTransfer(double longitudinalAcceleration)
+        {
+            return longitudinalAcceleration * InertiaAndDimensions.SprungMassCGHeight * InertiaAndDimensions.SprungMass / InertiaAndDimensions.Wheelbase;
+        }
+        /// <summary>
+        /// Gets the longitudinal load transfer associated with the unsprung mass.
+        /// </summary>
+        /// <param name="longitudinalAcceleration"> Car's longitudinal acceleration [m/s²] </param>
+        /// <returns> Unsprung mass's longitudinal load transfer [N] </returns>
+        public double GetUnsprungMassLongitudinalLoadTransfer(double longitudinalAcceleration)
+        {
+            double frontUnsprungLoadTransfer = longitudinalAcceleration * InertiaAndDimensions.FrontUnsprungMass * InertiaAndDimensions.FrontUnsprungMassCGHeight / InertiaAndDimensions.Wheelbase;
+            double rearUnsprungLoadTransfer = longitudinalAcceleration * InertiaAndDimensions.RearUnsprungMass * InertiaAndDimensions.RearUnsprungMassCGHeight / InertiaAndDimensions.Wheelbase;
+            return frontUnsprungLoadTransfer + rearUnsprungLoadTransfer;
+        }
+        /// <summary>
         /// Gets the aerodynamic coefficients by interpolation of the aerodynamic map.
         /// </summary>
         /// <param name="speed"> Car's speed [m/s] </param>
         /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
+        /// <param name="longitudinalLoadTransfer"> Car's longitudinal load transfer [N] </param>
         /// <returns> Interpolated aerodynamic map point </returns>
-        public TwoWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed, double carSlipAngle, double longitudinalLoadTransfer)
+        public TwoWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed, double carSlipAngle, double longitudinalAcceleration)
         {
-            // Equivalent heave stiffnesses
-            double equivalentFrontHeaveStiffness = (FrontSuspension.HeaveStiffness * FrontTire.VerticalStiffness * 2) / (FrontSuspension.HeaveStiffness + FrontTire.VerticalStiffness * 2);
-            double equivalentRearHeaveStiffness = (RearSuspension.HeaveStiffness * RearTire.VerticalStiffness * 2) / (RearSuspension.HeaveStiffness + RearTire.VerticalStiffness * 2);
+            // Sprung mass longitudinal load transfer
+            double sprungMassLongitudinalLoadTransfer = GetSprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
+            double unsprungMassLongitudinalLoadTransfer = GetUnsprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
+            double totalMassLongitudinalLoadTransfer = sprungMassLongitudinalLoadTransfer + unsprungMassLongitudinalLoadTransfer;
             // Optimization parameters
             double tol = 1e-6;
             double errorFront;
@@ -117,13 +139,19 @@ namespace InternshipTest.Vehicle
                 // Calculates the aerodynamic pitch moment
                 double aerodynamicPitchMoment = -interpolatedAerodynamicMapPoint.PitchMomentCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // Resultant front and rear forces
-                double frontRideHeightChangingVerticalForce = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase - longitudinalLoadTransfer) / 2;
-                double rearRideHeightChangingVerticalForce = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + longitudinalLoadTransfer) / 2;
-                // New car height [m]
+                double frontSuspensionRideHeightChangingVerticalForce = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase - sprungMassLongitudinalLoadTransfer) / 2;
+                double rearSuspensionRideHeightChangingVerticalForce = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + sprungMassLongitudinalLoadTransfer) / 2;
+                double frontTireRideHeightChangingVerticalForce = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase - totalMassLongitudinalLoadTransfer) / 2;
+                double rearTireRideHeightChangingVerticalForce = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + totalMassLongitudinalLoadTransfer) / 2;
+                // New ride heights [m]
                 double oldFrontRideHeight = frontRideHeight;
-                frontRideHeight = FrontSuspension.RideHeight - frontRideHeightChangingVerticalForce / equivalentFrontHeaveStiffness;
+                double frontSuspensionRideHeightChange = frontSuspensionRideHeightChangingVerticalForce / FrontSuspension.HeaveStiffness;
+                double frontTireRideHeightChange = frontTireRideHeightChangingVerticalForce / (2 * FrontTire.VerticalStiffness);
+                frontRideHeight = FrontSuspension.RideHeight - frontSuspensionRideHeightChange - frontTireRideHeightChange;
                 double oldRearRideHeight = rearRideHeight;
-                rearRideHeight = RearSuspension.RideHeight - rearRideHeightChangingVerticalForce / equivalentRearHeaveStiffness;
+                double rearSuspensionRideHeightChange = rearSuspensionRideHeightChangingVerticalForce / RearSuspension.HeaveStiffness;
+                double rearTireRideHeightChange = rearTireRideHeightChangingVerticalForce / (2 * RearTire.VerticalStiffness);
+                rearRideHeight = RearSuspension.RideHeight - rearSuspensionRideHeightChange - rearTireRideHeightChange;
                 // Error update
                 errorFront = Math.Abs(frontRideHeight - oldFrontRideHeight) * 1000;
                 errorRear = Math.Abs(rearRideHeight - oldRearRideHeight) * 1000;
@@ -136,17 +164,17 @@ namespace InternshipTest.Vehicle
         /// <param name="speed"> Car's speed [m/s]. </param>
         /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
         /// <returns> The reference radius for the current speed and car slip angle. </returns>
-        public double[] GetWheelsLoads(double speed, double carSlipAngle)
+        public double[] GetWheelsLoads(double speed, double carSlipAngle, double longitudinalLoadTransfer)
         {
             // Gets the aerodynamic coefficients
-            TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle, 0);
+            TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle, longitudinalLoadTransfer);
             // Calculates the lift force
             double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
             // Calculates the aerodynamic pitch moment
             double aerodynamicPitchMoment = -interpolatedAerodynamicMapPoint.PitchMomentCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
             // Tire resultant Fz [N]
-            double frontTireFz = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.FrontWeight) / 2;
-            double rearTireFz = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.RearWeight) / 2;
+            double frontTireFz = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.FrontWeight - longitudinalLoadTransfer) / 2;
+            double rearTireFz = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.RearWeight) + longitudinalLoadTransfer / 2;
 
             return new double[] { frontTireFz, rearTireFz };
         }
