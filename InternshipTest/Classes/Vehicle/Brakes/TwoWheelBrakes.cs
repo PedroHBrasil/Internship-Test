@@ -25,6 +25,14 @@ namespace InternshipTest.Vehicle
         /// Maximum appliable torque by the brakes subsystem at the rear wheel [N*m].
         /// </summary>
         public double RearMaximumTorque { get; set; }
+        /// <summary>
+        /// Maximum front torque considering the brake bias [N*m].
+        /// </summary>
+        public double ActualMaximumFrontTorque { get; set; }
+        /// <summary>
+        /// Maximum rear torque considering the brake bias [N*m].
+        /// </summary>
+        public double ActualMaximumRearTorque { get; set; }
         #endregion
         #region Constructors
         public TwoWheelBrakes() { }
@@ -35,6 +43,24 @@ namespace InternshipTest.Vehicle
             BrakeBias = Math.Abs(brakeBias);
             FrontMaximumTorque = -Math.Abs(frontMaximumTorque);
             RearMaximumTorque = -Math.Abs(rearMaximumTorque);
+        }
+        #endregion
+        #region Methods
+        public void GetBrakesAuxiliarParameters()
+        {
+            // Brake bias according to maximum appliable torques
+            double brakeBiasForMaximumTorques = FrontMaximumTorque / (FrontMaximumTorque + RearMaximumTorque);
+            // Checks if this brake bias is higher or lower than the standard brake bias. Determines the actual maximum torques based on this.
+            if (brakeBiasForMaximumTorques > BrakeBias)
+            {
+                ActualMaximumFrontTorque = RearMaximumTorque * BrakeBias / (1 - BrakeBias);
+                ActualMaximumRearTorque = RearMaximumTorque;
+            }
+            else
+            {
+                ActualMaximumFrontTorque = FrontMaximumTorque;
+                ActualMaximumRearTorque = FrontMaximumTorque * (1 - BrakeBias) / BrakeBias;
+            }
         }
         #endregion
     }
