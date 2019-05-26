@@ -80,33 +80,13 @@ namespace InternshipTest.Vehicle
         public int GetGearNumberFromCarSpeed(double speed)
         {
             // Gets the reference wheel radius [m]
-            double referenceWheelRadius = _GetMeanWheelRadius(speed, 0);
+            double referenceWheelRadius = _GetMeanWheelRadius(speed, 0, 0);
             // Wheel rotational speed [rad/s]
             double wheelCenterAngularSpeed = speed / referenceWheelRadius;
             // Gear interpolation object
             alglib.spline1dbuildlinear(WheelRotationalSpeedCurve.ToArray(), WheelGearCurve.ToArray(), out alglib.spline1dinterpolant wheelGearCurveInterp);
             // Current gear number
             return (int)Math.Ceiling(alglib.spline1dcalc(wheelGearCurveInterp, wheelCenterAngularSpeed));
-        }
-        /// <summary>
-        /// Gets the longitudinal load transfer associated with the sprung mass.
-        /// </summary>
-        /// <param name="longitudinalAcceleration"> Car's longitudinal acceleration [m/s²] </param>
-        /// <returns> Sprung mass's longitudinal load transfer [N] </returns>
-        public double GetSprungMassLongitudinalLoadTransfer(double longitudinalAcceleration)
-        {
-            return longitudinalAcceleration * InertiaAndDimensions.SprungMassCGHeight * InertiaAndDimensions.SprungMass / InertiaAndDimensions.Wheelbase;
-        }
-        /// <summary>
-        /// Gets the longitudinal load transfer associated with the unsprung mass.
-        /// </summary>
-        /// <param name="longitudinalAcceleration"> Car's longitudinal acceleration [m/s²] </param>
-        /// <returns> Unsprung mass's longitudinal load transfer [N] </returns>
-        public double GetUnsprungMassLongitudinalLoadTransfer(double longitudinalAcceleration)
-        {
-            double frontUnsprungLoadTransfer = longitudinalAcceleration * InertiaAndDimensions.FrontUnsprungMass * InertiaAndDimensions.FrontUnsprungMassCGHeight / InertiaAndDimensions.Wheelbase;
-            double rearUnsprungLoadTransfer = longitudinalAcceleration * InertiaAndDimensions.RearUnsprungMass * InertiaAndDimensions.RearUnsprungMassCGHeight / InertiaAndDimensions.Wheelbase;
-            return frontUnsprungLoadTransfer + rearUnsprungLoadTransfer;
         }
         /// <summary>
         /// Gets the aerodynamic coefficients by interpolation of the aerodynamic map.
@@ -118,8 +98,8 @@ namespace InternshipTest.Vehicle
         public TwoWheelAerodynamicMapPoint GetAerodynamicCoefficients(double speed, double carSlipAngle, double longitudinalAcceleration)
         {
             // Sprung mass longitudinal load transfer
-            double sprungMassLongitudinalLoadTransfer = GetSprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
-            double unsprungMassLongitudinalLoadTransfer = GetUnsprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
+            double sprungMassLongitudinalLoadTransfer = _GetSprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
+            double unsprungMassLongitudinalLoadTransfer = _GetUnsprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
             double totalMassLongitudinalLoadTransfer = sprungMassLongitudinalLoadTransfer + unsprungMassLongitudinalLoadTransfer;
             // Optimization parameters
             double tol = 1e-6;
@@ -164,14 +144,16 @@ namespace InternshipTest.Vehicle
         /// <param name="speed"> Car's speed [m/s]. </param>
         /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
         /// <returns> The reference radius for the current speed and car slip angle. </returns>
-        public double[] GetWheelsLoads(double speed, double carSlipAngle, double longitudinalLoadTransfer)
+        public double[] GetWheelsLoads(double speed, double carSlipAngle, double longitudinalAcceleration)
         {
             // Gets the aerodynamic coefficients
-            TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle, longitudinalLoadTransfer);
+            TwoWheelAerodynamicMapPoint interpolatedAerodynamicMapPoint = GetAerodynamicCoefficients(speed, carSlipAngle, longitudinalAcceleration);
             // Calculates the lift force
             double liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
             // Calculates the aerodynamic pitch moment
             double aerodynamicPitchMoment = -interpolatedAerodynamicMapPoint.PitchMomentCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
+            // Total Load transfer [N]
+            double longitudinalLoadTransfer = _GetSprungMassLongitudinalLoadTransfer(longitudinalAcceleration) + _GetUnsprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
             // Tire resultant Fz [N]
             double frontTireFz = (liftForce - aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.FrontWeight - longitudinalLoadTransfer) / 2;
             double rearTireFz = (liftForce + aerodynamicPitchMoment / InertiaAndDimensions.Wheelbase + InertiaAndDimensions.RearWeight) + longitudinalLoadTransfer / 2;
@@ -179,23 +161,77 @@ namespace InternshipTest.Vehicle
             return new double[] { frontTireFz, rearTireFz };
         }
         /// <summary>
+        /// Gets the front and rear wheels radiuses.
+        /// </summary>
+        /// <param name="wheelsLoads"> Vertical loads at the wheels [N]. </param>
+        /// <returns> Wheels radiuses [m]. </returns>
+        public double[] GetWheelsRadiuses(double[] wheelsLoads)
+        {
+            // Gets the front and rear wheels radiuses
+            double frontWheelRadius = FrontTire.TireModel.RO - wheelsLoads[0] / FrontTire.VerticalStiffness;
+            double rearWheelRadius = RearTire.TireModel.RO - wheelsLoads[1] / RearTire.VerticalStiffness;
+
+            return new double[] { frontWheelRadius, rearWheelRadius };
+        }
+        /// <summary>
+        /// Gets the wheels angular speeds [rad/s].
+        /// </summary>
+        /// <param name="wheelsRadiuses"> Radiuses of the front and rear wheels [m] </param>
+        /// <param name="speed"> Car speed [m/s] </param>
+        /// <returns> Wheels angular speeds [rad/s] </returns>
+        public double[] GetWheelsAngularSpeeds(double[] wheelsRadiuses, double speed)
+        {
+            double[] wheelsAngularSpeeds = new double[2];
+            wheelsAngularSpeeds[0] = speed / wheelsRadiuses[0];
+            wheelsAngularSpeeds[1] = speed / wheelsRadiuses[1];
+            return wheelsAngularSpeeds;
+        }
+        /// <summary>
+        /// Gets the inertia efficiency for a mean wheel radius.
+        /// </summary>
+        /// <param name="meanWheelRadius"> Mean wheel radius [m] </param>
+        /// <returns> Inertia efficiency [ratio] </returns>
+        public double GetInertiaEfficiency(double meanWheelRadius)
+        {
+            double inertiaEfficiency = Math.Pow(meanWheelRadius, 2) * InertiaAndDimensions.TotalMass /
+                (Math.Pow(meanWheelRadius, 2) * InertiaAndDimensions.TotalMass + InertiaAndDimensions.RotPartsMI);
+            return inertiaEfficiency;
+        }
+        /// <summary>
         /// Gets the reference wheel radius for the transmission system calculations.
         /// </summary>
         /// <param name="speed"> Car's speed [m/s]. </param>
         /// <param name="carSlipAngle"> Car's slip angle [rad] </param>
         /// <returns> The reference radius for the current speed and car slip angle. </returns>
-        private double _GetMeanWheelRadius(double speed, double carSlipAngle)
+        private double _GetMeanWheelRadius(double speed, double carSlipAngle, double longitudinalAcceleration)
         {
             // Gets the wheels loads
-            double[] wheelsLoads = GetWheelsLoads(speed, carSlipAngle);
-            double frontTireFz = wheelsLoads[0];
-            double rearTireFz = wheelsLoads[1];
+            double[] wheelsLoads = GetWheelsLoads(speed, carSlipAngle, longitudinalAcceleration);
+            double[] wheelsRadiuses = GetWheelsRadiuses(wheelsLoads);
             // Calculates the mean wheel radius [m]
-            double frontWheelRadius = FrontTire.TireModel.RO - frontTireFz / FrontTire.VerticalStiffness;
-            double rearWheelRadius = RearTire.TireModel.RO - rearTireFz / RearTire.VerticalStiffness;
-            double meanWheelRadius = (frontWheelRadius + rearWheelRadius) / 2;
+            double meanWheelRadius = wheelsRadiuses.Average();
 
             return meanWheelRadius;
+        }
+        /// <summary>
+        /// Gets the longitudinal load transfer associated with the sprung mass.
+        /// </summary>
+        /// <param name="longitudinalAcceleration"> Car's longitudinal acceleration [m/s²] </param>
+        /// <returns> Sprung mass's longitudinal load transfer [N] </returns>
+        private double _GetSprungMassLongitudinalLoadTransfer(double longitudinalAcceleration)
+        {
+            return longitudinalAcceleration * InertiaAndDimensions.SprungMassCGHeight * InertiaAndDimensions.SprungMass / InertiaAndDimensions.Wheelbase;
+        }
+        /// <summary>
+        /// Gets the longitudinal load transfer associated with the unsprung mass.
+        /// </summary>
+        /// <param name="longitudinalAcceleration"> Car's longitudinal acceleration [m/s²] </param>
+        /// <returns> Unsprung mass's longitudinal load transfer [N] </returns>
+        private double _GetUnsprungMassLongitudinalLoadTransfer(double longitudinalAcceleration)
+        {
+            double frontUnsprungLoadTransfer = longitudinalAcceleration * InertiaAndDimensions.FrontUnsprungMass * InertiaAndDimensions.FrontUnsprungMassCGHeight / InertiaAndDimensions.Wheelbase;
+            double rearUnsprungLoadTransfer = longitudinalAcceleration * InertiaAndDimensions.RearUnsprungMass * InertiaAndDimensions.RearUnsprungMassCGHeight / InertiaAndDimensions.Wheelbase;
+            return frontUnsprungLoadTransfer + rearUnsprungLoadTransfer;
         }
         #endregion
         #region Get Linear Acceleration Parameters Methods
@@ -446,7 +482,7 @@ namespace InternshipTest.Vehicle
                     (Transmission.GearRatiosSet.GearRatios[gearNumber - 1].Ratio * Transmission.PrimaryRatio * Transmission.FinalRatio);
                 // Updates the error (optimization criteria)
                 double oldReferenceWheelRadius = referenceWheelRadius;
-                referenceWheelRadius = _GetMeanWheelRadius(speed, 0);
+                referenceWheelRadius = _GetMeanWheelRadius(speed, 0, 0);
                 error = Math.Abs(referenceWheelRadius - oldReferenceWheelRadius);
             } while (error > tol);
             // Returns the found speed
