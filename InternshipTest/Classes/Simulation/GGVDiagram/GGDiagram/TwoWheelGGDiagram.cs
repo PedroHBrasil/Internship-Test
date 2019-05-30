@@ -104,8 +104,6 @@ namespace InternshipTest.Simulation
             double[] steeringAngleLimits = new double[] { -Car.Steering.MaximumSteeringWheelAngle, 0 };
             double[] carSlipAngleLimits = new double[] { -Math.PI / 3, Math.PI / 3 };
             _GetPureCorneringAccelerationByGeneticAlgorithm(-1, amountOfPointsPerOptimizationParameter, steeringAngleLimits, carSlipAngleLimits);
-            pureLeftCorneringParameters.steeringWheelAngle = -Car.Steering.MaximumSteeringWheelAngle / 2;
-            pureLeftCorneringParameters.carSlipAngle = 0;
             _GetMinimumCorneringAcceleration();
             pureLeftCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCornering(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.frontWheelParameters.steeringAngle, pureLeftCorneringParameters.rearWheelParameters.steeringAngle);
             _GetMaximumCorneringAcceleration();
