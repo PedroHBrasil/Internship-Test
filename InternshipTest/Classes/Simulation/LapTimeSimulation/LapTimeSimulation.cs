@@ -205,10 +205,10 @@ namespace InternshipTest.Simulation
             }
             // Current speed
             double currentSpeed;
-            if (curvature == 0) currentSpeed = ggvDiagram.GetCarHighestSpeed("One Wheel");
+            if (curvature == 0) currentSpeed = ggvDiagram.GetCarHighestSpeed();
             else currentSpeed = Math.Sqrt(currentLateralAcceleration / curvature);
             // Current gear
-            int currentGear = ggvDiagram.GetGearNumberFromCarSpeed("One Wheel", currentSpeed);
+            int currentGear = ggvDiagram.GetGearNumberFromCarSpeed(currentSpeed);
             // Registers the results and return them
             Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults()
             {
@@ -259,10 +259,10 @@ namespace InternshipTest.Simulation
             }
             // Gets the maximum possible speed for the current point
             double currentSpeed;
-            if (curvature == 0) currentSpeed = ggvDiagram.GetCarHighestSpeed("One Wheel");
+            if (curvature == 0) currentSpeed = ggvDiagram.GetCarHighestSpeed();
             else currentSpeed = Math.Sqrt(currentLateralAcceleration / curvature);
             // Current gear
-            int currentGear = ggvDiagram.GetGearNumberFromCarSpeed("One Wheel", currentSpeed);
+            int currentGear = ggvDiagram.GetGearNumberFromCarSpeed(currentSpeed);
             // Registers the results and return them
             Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults()
             {
@@ -397,7 +397,7 @@ namespace InternshipTest.Simulation
                         // Current sector index
                         int iCurrentSector = Path.LocalSectorIndex[iPoint] - 1;
                         // Checks if the gear shifting is over
-                        if (gearShiftingElapsedTime >= GGVDiagramsPerSector[iCurrentSector].SectorGGVDiagram.GetGearShiftTime("One Wheel")) isGearShifting = false;
+                        if (gearShiftingElapsedTime >= GGVDiagramsPerSector[iCurrentSector].SectorGGVDiagram.GetGearShiftTime()) isGearShifting = false;
                     }
                 }
                 else lastGear = results.GearNumbers[iPoint];
@@ -437,7 +437,7 @@ namespace InternshipTest.Simulation
                         // Current sector index
                         int iCurrentSector = Path.LocalSectorIndex[iPoint] - 1;
                         // Checks if the gear shifting is over
-                        if (gearShiftingElapsedTime >= GGVDiagramsPerSector[iCurrentSector].SectorGGVDiagram.GetGearShiftTime("One Wheel")) isGearShifting = false;
+                        if (gearShiftingElapsedTime >= GGVDiagramsPerSector[iCurrentSector].SectorGGVDiagram.GetGearShiftTime()) isGearShifting = false;
                     }
                 } while (results.Speeds[iReferencePoint] >= results.Speeds[iPoint]);
             }
@@ -499,7 +499,7 @@ namespace InternshipTest.Simulation
             results.Speeds[iPoint] = currentSpeed;
             results.LongitudinalAccelerations[iPoint] = currentLongitudinalAcceleration;
             results.LateralAccelerations[iPoint] = currentLateralAcceleration;
-            results.GearNumbers[iPoint] = ggvDiagram.GetGearNumberFromCarSpeed("One Wheel", currentSpeed);
+            results.GearNumbers[iPoint] = ggvDiagram.GetGearNumberFromCarSpeed(currentSpeed);
             return results;
         }
 

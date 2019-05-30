@@ -131,13 +131,13 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="carModelType"> Car Model </param>
         /// <returns> Gear shift time [s] </returns>
-        public double GetGearShiftTime(string carModelType)
+        public double GetGearShiftTime()
         {
-            switch (carModelType)
+            switch (CarModelType)
             {
-                case "One Wheel":
+                case CarModelType.OneWheel:
                     return OneWheelCar.Transmission.GearShiftTime;
-                case "Two Wheel":
+                case CarModelType.TwoWheel:
                     return TwoWheelCar.Transmission.GearShiftTime;
                 default:
                     return 0;
@@ -149,13 +149,13 @@ namespace InternshipTest.Simulation
         /// <param name="carModelType"> Car Model </param>
         /// <param name="speed"> Car speed [m/s] </param>
         /// <returns> Current gear number. </returns>
-        public int GetGearNumberFromCarSpeed(string carModelType, double speed)
+        public int GetGearNumberFromCarSpeed(double speed)
         {
-            switch (carModelType)
+            switch (CarModelType)
             {
-                case "One Wheel":
+                case CarModelType.OneWheel:
                     return OneWheelCar.GetGearNumberFromCarSpeed(speed);
-                case "Two Wheel":
+                case CarModelType.TwoWheel:
                     return TwoWheelCar.GetGearNumberFromCarSpeed(speed);
                 default:
                     return 0;
@@ -166,13 +166,13 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="carModelType"> Car Model </param>
         /// <returns> Car's highest speed [m/s] </returns>
-        public double GetCarHighestSpeed(string carModelType)
+        public double GetCarHighestSpeed()
         {
-            switch (carModelType)
+            switch (CarModelType)
             {
-                case "One Wheel":
+                case CarModelType.OneWheel:
                     return OneWheelCar.HighestSpeed;
-                case "Two Wheel":
+                case CarModelType.TwoWheel:
                     return TwoWheelCar.HighestSpeed;
                 default:
                     return 0;
