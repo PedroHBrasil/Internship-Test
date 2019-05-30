@@ -24,7 +24,6 @@ namespace InternshipTest.Simulation
         private struct DynamicStateParameters
         {
             public double steeringWheelAngle;
-            public double pedalActuation;
             public double longitudinalAcceleration;
             public double lateralAcceleration;
             public double carSlipAngle;
@@ -38,8 +37,6 @@ namespace InternshipTest.Simulation
         private struct WheelParameters
         {
             public double steeringAngle;
-            public double slipAngle;
-            public double longitudinalSlip;
         }
         #endregion
         #region Enums
@@ -55,8 +52,10 @@ namespace InternshipTest.Simulation
         private double currentLateralAcceleration;
         private double currentYawMoment;
         private double currentCarSlipAngle;
+        /*
         private double[] testCarSlipAngle;
         private double[] testYawMoment;
+        */
         #endregion
         #region Properties
         /// <summary>
@@ -120,90 +119,6 @@ namespace InternshipTest.Simulation
             }
             // Combined accelerations
             _GetCombinedOperationAccelerations();
-        }
-        private void _GetPureCorneringAccelerationByGeneticAlgorithm(int lateralAccelerationSign, int[] amountOfPointsPerOptimizationParameter, double[] steeringAngleLimits, double[] carSlipAngleLimits)
-        {
-            // Optimization parameters arrays
-            double[] steeringAngles = Generate.LinearSpaced(amountOfPointsPerOptimizationParameter[0], steeringAngleLimits[0], steeringAngleLimits[1]);
-            double[] carSlipAngles = Generate.LinearSpaced(amountOfPointsPerOptimizationParameter[1], carSlipAngleLimits[0], carSlipAngleLimits[1]);
-            // Genetic algorithm setup
-            var chromossome = new FloatingPointChromosome(
-                new double[] { 0, 0 },
-                new double[] { amountOfPointsPerOptimizationParameter[0] - 1, amountOfPointsPerOptimizationParameter[1] - 1 },
-                new int[] { 5, 5 },
-                new int[] { 0, 0 });
-            var population = new Population(10, 20, chromossome);
-            var fitness = new FuncFitness((c) =>
-                {
-                    var fc = c as FloatingPointChromosome;
-                    var values = fc.ToFloatingPoints();
-                    var steeringWheelAngle = steeringAngles[Convert.ToInt32(values[0])];
-                    var carSlipAngle = carSlipAngles[Convert.ToInt32(values[1])];
-                    // Evaluates the fitness based on: calculated lateral acceleration, the lateral acceleration difference and the yaw moment.
-                    return _GetOptimizationReferenceParametersValues(lateralAccelerationSign, steeringWheelAngle, carSlipAngle);
-                });
-            var selection = new EliteSelection();
-            var crossover = new UniformCrossover();
-            var mutation = new FlipBitMutation();
-            var termination = new FitnessStagnationTermination(20);
-            var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
-            ga.Termination = termination;
-            // Optimization tracking
-            System.Diagnostics.Debug.WriteLine("Generation: Steering Angle - Car Slip Angle - Lat. Acceleration => fitness (Speed = " + Speed.ToString("F2") + " Corner Orientation: " + lateralAccelerationSign.ToString("F0") + ")");
-            var latestFitness = 0.0;
-            ga.GenerationRan += (sender, e) =>
-            {
-                var bestChromosome = ga.BestChromosome as FloatingPointChromosome;
-                var bestFitness = bestChromosome.Fitness.Value;
-                if (latestFitness != bestFitness)
-                {
-                    latestFitness = bestFitness;
-                    var phenotype = bestChromosome.ToFloatingPoints();
-                    System.Diagnostics.Debug.WriteLine(
-                        (ga.GenerationsNumber.ToString(),
-                            steeringAngles[Convert.ToInt32(phenotype[0])].ToString("F4"),
-                            carSlipAngles[Convert.ToInt32(phenotype[1])].ToString("F4"),
-                            latestFitness.ToString("F6")));
-                };
-            };
-            // Genetic algorithm optimization execution
-            ga.Start();
-            var result = ((FloatingPointChromosome)ga.BestChromosome).ToFloatingPoints();
-
-            if (lateralAccelerationSign == -1)
-            {
-                pureLeftCorneringParameters.steeringWheelAngle = steeringAngles[Convert.ToInt32(result[0])];
-                pureLeftCorneringParameters.carSlipAngle = carSlipAngles[Convert.ToInt32(result[1])];
-                pureLeftCorneringParameters.frontWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.FrontSteeringRatio;
-                pureLeftCorneringParameters.rearWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.RearSteeringRatio;
-                pureLeftCorneringParameters.yawMoment = _GetYawMoment(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.frontWheelParameters.steeringAngle, pureLeftCorneringParameters.rearWheelParameters.steeringAngle);
-                currentFrontWheelSteeringAngle = pureLeftCorneringParameters.frontWheelParameters.steeringAngle;
-                currentRearWheelSteeringAngle = pureLeftCorneringParameters.rearWheelParameters.steeringAngle;
-                _GetOptimizationReferenceParametersValues(lateralAccelerationSign, pureLeftCorneringParameters.steeringWheelAngle, pureLeftCorneringParameters.carSlipAngle);
-            }
-            else if (lateralAccelerationSign == 1)
-            {
-                pureRightCorneringParameters.steeringWheelAngle = steeringAngles[Convert.ToInt32(result[0])];
-                pureRightCorneringParameters.carSlipAngle = carSlipAngles[Convert.ToInt32(result[1])];
-                pureRightCorneringParameters.frontWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.FrontSteeringRatio;
-                pureRightCorneringParameters.rearWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.RearSteeringRatio;
-                pureRightCorneringParameters.yawMoment = _GetYawMoment(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.frontWheelParameters.steeringAngle, pureRightCorneringParameters.rearWheelParameters.steeringAngle);
-                currentFrontWheelSteeringAngle = pureRightCorneringParameters.frontWheelParameters.steeringAngle;
-                currentRearWheelSteeringAngle = pureRightCorneringParameters.rearWheelParameters.steeringAngle;
-                _GetOptimizationReferenceParametersValues(lateralAccelerationSign, pureRightCorneringParameters.steeringWheelAngle, pureRightCorneringParameters.carSlipAngle);
-            }
-            //_UpdateCarSlipAngleVsYawMomentArrays();
-        }
-        private double _GetOptimizationReferenceParametersValues(int lateralAccelerationSign, double steeringWheelAngle, double carSlipAngle)
-        {
-            double lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(steeringWheelAngle, carSlipAngle);
-            currentLateralAcceleration = lateralAcceleration;
-            // Evaluates the fitness
-            double lateralAccelerationFitness;
-            if (Math.Sign(lateralAcceleration) != lateralAccelerationSign || lateralAcceleration == 0) lateralAccelerationFitness = 0;
-            else lateralAccelerationFitness = 1 - 1 / Math.Abs(lateralAcceleration);
-
-            return lateralAccelerationFitness;
         }
         #region Accelerations Determination By Use Of Genetic Algorithm
 
@@ -439,6 +354,105 @@ namespace InternshipTest.Simulation
         #endregion
         #endregion
         #region Pure Cornering
+        #region Initial Guess by Genetic Algorithm
+        /// <summary>
+        /// Gets the initial guess of the cornering situation by use of genetic algorithm.
+        /// </summary>
+        /// <param name="lateralAccelerationSign"> Corner orientation: -1 is left and 1 is right. </param>
+        /// <param name="amountOfPointsPerOptimizationParameter"> Contains the amount of points for each optimization parameter. </param>
+        /// <param name="steeringAngleLimits"> Limits of the steering wheel angle possibilities [rad]. </param>
+        /// <param name="carSlipAngleLimits"> Limits of the car slip angle possibilities [rad]. </param>
+        private void _GetPureCorneringAccelerationByGeneticAlgorithm(int lateralAccelerationSign, int[] amountOfPointsPerOptimizationParameter, double[] steeringAngleLimits, double[] carSlipAngleLimits)
+        {
+            // Optimization parameters arrays
+            double[] steeringAngles = Generate.LinearSpaced(amountOfPointsPerOptimizationParameter[0], steeringAngleLimits[0], steeringAngleLimits[1]);
+            double[] carSlipAngles = Generate.LinearSpaced(amountOfPointsPerOptimizationParameter[1], carSlipAngleLimits[0], carSlipAngleLimits[1]);
+            // Genetic algorithm setup
+            var chromossome = new FloatingPointChromosome(
+                new double[] { 0, 0 },
+                new double[] { amountOfPointsPerOptimizationParameter[0] - 1, amountOfPointsPerOptimizationParameter[1] - 1 },
+                new int[] { 5, 5 },
+                new int[] { 0, 0 });
+            var population = new Population(10, 20, chromossome);
+            var fitness = new FuncFitness((c) =>
+            {
+                var fc = c as FloatingPointChromosome;
+                var values = fc.ToFloatingPoints();
+                var steeringWheelAngle = steeringAngles[Convert.ToInt32(values[0])];
+                var carSlipAngle = carSlipAngles[Convert.ToInt32(values[1])];
+                // Evaluates the fitness based on: calculated lateral acceleration, the lateral acceleration difference and the yaw moment.
+                return _GetOptimizationReferenceParametersValues(lateralAccelerationSign, steeringWheelAngle, carSlipAngle);
+            });
+            var selection = new EliteSelection();
+            var crossover = new UniformCrossover();
+            var mutation = new FlipBitMutation();
+            var termination = new FitnessStagnationTermination(20);
+            var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
+            ga.Termination = termination;
+            // Optimization tracking
+            System.Diagnostics.Debug.WriteLine("Generation: Steering Angle - Car Slip Angle - Lat. Acceleration => fitness (Speed = " + Speed.ToString("F2") + " Corner Orientation: " + lateralAccelerationSign.ToString("F0") + ")");
+            var latestFitness = 0.0;
+            ga.GenerationRan += (sender, e) =>
+            {
+                var bestChromosome = ga.BestChromosome as FloatingPointChromosome;
+                var bestFitness = bestChromosome.Fitness.Value;
+                if (latestFitness != bestFitness)
+                {
+                    latestFitness = bestFitness;
+                    var phenotype = bestChromosome.ToFloatingPoints();
+                    System.Diagnostics.Debug.WriteLine(
+                        (ga.GenerationsNumber.ToString(),
+                            steeringAngles[Convert.ToInt32(phenotype[0])].ToString("F4"),
+                            carSlipAngles[Convert.ToInt32(phenotype[1])].ToString("F4"),
+                            latestFitness.ToString("F6")));
+                };
+            };
+            // Genetic algorithm optimization execution
+            ga.Start();
+            var result = ((FloatingPointChromosome)ga.BestChromosome).ToFloatingPoints();
+
+            if (lateralAccelerationSign == -1)
+            {
+                pureLeftCorneringParameters.steeringWheelAngle = steeringAngles[Convert.ToInt32(result[0])];
+                pureLeftCorneringParameters.carSlipAngle = carSlipAngles[Convert.ToInt32(result[1])];
+                pureLeftCorneringParameters.frontWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.FrontSteeringRatio;
+                pureLeftCorneringParameters.rearWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.RearSteeringRatio;
+                pureLeftCorneringParameters.yawMoment = _GetYawMoment(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.frontWheelParameters.steeringAngle, pureLeftCorneringParameters.rearWheelParameters.steeringAngle);
+                currentFrontWheelSteeringAngle = pureLeftCorneringParameters.frontWheelParameters.steeringAngle;
+                currentRearWheelSteeringAngle = pureLeftCorneringParameters.rearWheelParameters.steeringAngle;
+                _GetOptimizationReferenceParametersValues(lateralAccelerationSign, pureLeftCorneringParameters.steeringWheelAngle, pureLeftCorneringParameters.carSlipAngle);
+            }
+            else if (lateralAccelerationSign == 1)
+            {
+                pureRightCorneringParameters.steeringWheelAngle = steeringAngles[Convert.ToInt32(result[0])];
+                pureRightCorneringParameters.carSlipAngle = carSlipAngles[Convert.ToInt32(result[1])];
+                pureRightCorneringParameters.frontWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.FrontSteeringRatio;
+                pureRightCorneringParameters.rearWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.RearSteeringRatio;
+                pureRightCorneringParameters.yawMoment = _GetYawMoment(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.frontWheelParameters.steeringAngle, pureRightCorneringParameters.rearWheelParameters.steeringAngle);
+                currentFrontWheelSteeringAngle = pureRightCorneringParameters.frontWheelParameters.steeringAngle;
+                currentRearWheelSteeringAngle = pureRightCorneringParameters.rearWheelParameters.steeringAngle;
+                _GetOptimizationReferenceParametersValues(lateralAccelerationSign, pureRightCorneringParameters.steeringWheelAngle, pureRightCorneringParameters.carSlipAngle);
+            }
+        }
+        /// <summary>
+        /// Gets the fitness based on thelateral acceleration value.
+        /// </summary>
+        /// <param name="lateralAccelerationSign"> Corner orientation: -1 is left and 1 is right. </param>
+        /// <param name="steeringWheelAngle"> Current steering wheel angle [rad]. </param>
+        /// <param name="carSlipAngle"> Current car slip angle [rad]. </param>
+        /// <returns> Fitness score based on the lateral acceleration. </returns>
+        private double _GetOptimizationReferenceParametersValues(int lateralAccelerationSign, double steeringWheelAngle, double carSlipAngle)
+        {
+            double lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(steeringWheelAngle, carSlipAngle);
+            currentLateralAcceleration = lateralAcceleration;
+            // Evaluates the fitness
+            double lateralAccelerationFitness;
+            if (Math.Sign(lateralAcceleration) != lateralAccelerationSign || lateralAcceleration == 0) lateralAccelerationFitness = 0;
+            else lateralAccelerationFitness = 1 - 1 / Math.Abs(lateralAcceleration);
+
+            return lateralAccelerationFitness;
+        }
+        #endregion
         #region Left (Negative)
         /// <summary>
         /// Gets the car's minimum cornering acceleration by optimization.
