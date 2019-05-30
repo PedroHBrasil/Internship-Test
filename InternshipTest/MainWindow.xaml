@@ -2379,7 +2379,7 @@
 
                         </syncfusion:DockingManager>
                         <!-- GGV Diagram Docking Manager -->
-                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Collapsed">
                             <!-- GGV Diagram Input Dockig Window -->
                             <ContentControl Name="ggvDiagramDefinitionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2415,7 +2415,7 @@
                                     <!-- GGV Diagram listbox-->
                                     <ListBox Name="simulationGGVDiagramListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" Visibility="Visible" SelectionChanged="_SimulationGGVDiagramListBox_SelectionChanged"/>
                                     <!-- GGV Diagram listbox add and delete buttons -->
-                                    <Button Name="simulationAddGGVDiagramToListBox" Content="Add" Click="_SimulationAddGGVDiagramToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="simulationAddGGVDiagramToListBox" Content="Generate" Click="_SimulationAddGGVDiagramToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="simulationDeleteGGVDiagramOfListBox" Content="Delete" Click="_SimulationDeleteGGVDiagramOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Allow GGV Diagram display line -->
                                     <TextBlock Text="GGV Diagram Display" Grid.Row="2" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
@@ -2464,7 +2464,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Lap Time Simulation Docking Manager -->
-                        <syncfusion:DockingManager Name="lapTimeSimulationDockingManager" Visibility="Collapsed">
+                        <syncfusion:DockingManager Name="lapTimeSimulationDockingManager" Visibility="Visible">
                             <!-- Lap Time Simulation Input Dockig Window -->
                             <ContentControl Name="lapTimeSimulationDefinitionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2499,7 +2499,7 @@
                                     <!-- Lap Time Simulation listbox-->
                                     <ListBox Name="lapTimeSimulationListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_LapTimeSimulationListBox_SelectionChanged"/>
                                     <!-- Lap Time Simulation listbox add and delete buttons -->
-                                    <Button Name="lapTimeSimulationAddToListBox" Content="Add" Click="_LapTimeSimulationAddToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="lapTimeSimulationAddToListBox" Content="Simulate" Click="_LapTimeSimulationAddToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="lapTimeSimulationDeleteOfListBox" Content="Delete" Click="_LapTimeSimulationDeleteOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Lap Time Simulation ID line -->
                                     <TextBlock Text="Simulation ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
