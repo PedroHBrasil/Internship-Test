@@ -48,12 +48,12 @@ namespace InternshipTest.Simulation
             Curvatures = new List<double>();
         }
 
-        public OneWheelGGDiagram(double speed, Vehicle.OneWheelCar car, int amountOfPoints, int amountOfDirections)
+        public OneWheelGGDiagram(double speed, Vehicle.OneWheelCar car, int amountOfPoints)
         {
             Speed = speed;
             Car = car;
             AmountOfPoints = amountOfPoints;
-            AmountOfDirections = amountOfDirections;
+            AmountOfDirections = amountOfPoints;
 
             LongitudinalAccelerations = new List<double>();
             LateralAccelerations = new List<double>();

@@ -74,12 +74,11 @@ namespace InternshipTest.Simulation
             Curvatures = new List<double>();
         }
 
-        public TwoWheelGGDiagram(double speed, Vehicle.TwoWheelCar car, int amountOfPoints, int amountOfDirections)
+        public TwoWheelGGDiagram(double speed, Vehicle.TwoWheelCar car, int amountOfPoints)
         {
             Speed = speed;
             Car = car;
             AmountOfPoints = amountOfPoints;
-            AmountOfDirections = amountOfDirections;
 
             LongitudinalAccelerations = new List<double>();
             LateralAccelerations = new List<double>();
@@ -188,7 +187,8 @@ namespace InternshipTest.Simulation
                 double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
                 // Wheels angular speeds [rad/s]
                 double[] wheelsAngularSpeeds = Car.GetWheelsAngularSpeeds(wheelsRadiuses, Speed);
-                double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
+                double referenceWheelSpeedRatio = wheelsAngularSpeeds[1] * Car.Transmission.TorqueBias / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
+                double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] + referenceWheelSpeedRatio * (wheelsAngularSpeeds[1] - wheelsAngularSpeeds[0]);
                 // Engine braking torque curve determinaton by interpolation
                 alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelBrakingTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelBrakingTorqueInterp);
                 double powertrainBrakingTorque = alglib.spline1dcalc(wheelBrakingTorqueInterp, referenceWheelAngularSpeed);
@@ -281,7 +281,8 @@ namespace InternshipTest.Simulation
                 double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
                 // Wheels angular speeds [rad/s]
                 double[] wheelsAngularSpeeds = Car.GetWheelsAngularSpeeds(wheelsRadiuses, Speed);
-                double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
+                double referenceWheelSpeedRatio = wheelsAngularSpeeds[1] * Car.Transmission.TorqueBias / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
+                double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] + referenceWheelSpeedRatio * (wheelsAngularSpeeds[1] - wheelsAngularSpeeds[0]);
                 // Engine braking torque curve determinaton by interpolation
                 alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelTorqueInterp);
                 double powertrainTorque = alglib.spline1dcalc(wheelTorqueInterp, referenceWheelAngularSpeed);
@@ -722,9 +723,9 @@ namespace InternshipTest.Simulation
         private void _GetCombinedOperationAccelerations()
         {
             // Amount of directions
-            int amountOfDirections = AmountOfPoints * 4;
+            AmountOfDirections = AmountOfPoints * 4;
             // Directions array [rad]
-            double[] directions = Generate.LinearSpaced(amountOfDirections, -Math.PI, Math.PI * (amountOfDirections - 2) / amountOfDirections);
+            double[] directions = Generate.LinearSpaced(AmountOfDirections, -Math.PI, Math.PI * (AmountOfDirections - 2) / AmountOfDirections);
             // Gets the accelerations for each direction
             _GetAccelerationsForEachDirection(directions);
             // Gets the longitudinal acceleration limits given the powertrain and brakes capabilities.

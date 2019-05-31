@@ -356,7 +356,6 @@ namespace InternshipTest
             // GGV Diagram
             ggvDiagramIDTextBox.Text = "ggv1";
             ggvDiagramAmountOfPointsPerSpeedTextBox.Text = "40";
-            ggvDiagramAmountOfDirectionsTextBox.Text = "20";
             ggvDiagramAmountOfSpeedsTextBox.Text = "20";
             ggvDiagramLowestSpeedTextBox.Text = "10";
             ggvDiagramHighestSpeedTextBox.Text = "120";
@@ -3671,8 +3670,7 @@ namespace InternshipTest
             if (ggvDiagramIDTextBox.Text != "" &&
                 ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null &&
                 ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
-                int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 8 &&
-                int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text) >= 4 &&
+                int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 4 &&
                 int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
                 Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
             {
@@ -3680,7 +3678,6 @@ namespace InternshipTest
                 string id = ggvDiagramIDTextBox.Text;
                 string description = ggvDiagramDescriptionTextBox.Text;
                 int amountOfPointsPerSpeed = int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text);
-                int amountOfDirections = int.Parse(ggvDiagramAmountOfDirectionsTextBox.Text);
                 int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
                 double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
                 double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
@@ -3691,7 +3688,7 @@ namespace InternshipTest
                         // Gets the car object
                         Vehicle.OneWheelCar oneWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
                         // Initializes and generates the GGV diagram
-                        Simulation.GGVDiagram oneWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed, oneWheelCar);
+                        Simulation.GGVDiagram oneWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed, oneWheelCar);
                         oneWheelGGVDiagram.GenerateGGVDiagramForTheOneWheelModel();
                         // Adds the GGV diagram to the listbox
                         simulationGGVDiagramListBox.Items.Add(oneWheelGGVDiagram);
@@ -3700,7 +3697,7 @@ namespace InternshipTest
                         // Gets the car object
                         Vehicle.TwoWheelCar twoWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
                         // Initializes and generates the GGV diagram
-                        Simulation.GGVDiagram twoWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfDirections, amountOfSpeeds, lowestSpeed, highestSpeed, twoWheelCar);
+                        Simulation.GGVDiagram twoWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed, twoWheelCar);
                         twoWheelGGVDiagram.GenerateGGVDiagramForTheTwoWheelModel();
                         // Adds the GGV diagram to the listbox
                         simulationGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
@@ -3773,7 +3770,6 @@ namespace InternshipTest
                 ggvDiagramIDTextBox.Text = ggvDiagram.ID;
                 ggvDiagramDescriptionTextBox.Text = ggvDiagram.Description;
                 ggvDiagramAmountOfPointsPerSpeedTextBox.Text = ggvDiagram.AmountOfPointsPerSpeed.ToString();
-                ggvDiagramAmountOfDirectionsTextBox.Text = ggvDiagram.AmountOfDirections.ToString();
                 ggvDiagramAmountOfSpeedsTextBox.Text = ggvDiagram.AmountOfSpeeds.ToString("F0");
                 ggvDiagramLowestSpeedTextBox.Text = (ggvDiagram.LowestSpeed * 3.6).ToString("F2");
                 ggvDiagramHighestSpeedTextBox.Text = (ggvDiagram.HighestSpeed * 3.6).ToString("F2");

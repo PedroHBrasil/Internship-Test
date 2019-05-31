@@ -16,10 +16,6 @@ namespace InternshipTest.Simulation
         #region Properties
         public int AmountOfPointsPerSpeed { get; set; }
         /// <summary>
-        /// Amount of directions of the GGV diagram's accelerations.
-        /// </summary>
-        public int AmountOfDirections { get; set; }
-        /// <summary>
         /// Amount of speeds of the GGV diagram.
         /// </summary>
         public int AmountOfSpeeds { get; set; }
@@ -51,24 +47,22 @@ namespace InternshipTest.Simulation
         #endregion
         #region Constructors
         public GGVDiagram() { }
-        public GGVDiagram(string id, string description, int amountOfPointsPerSpeed, int amountOfDirections, int amountOfSpeeds, double lowestSpeed, double highestSpeed, Vehicle.OneWheelCar oneWheelCar)
+        public GGVDiagram(string id, string description, int amountOfPointsPerSpeed, int amountOfSpeeds, double lowestSpeed, double highestSpeed, Vehicle.OneWheelCar oneWheelCar)
         {
             ID = id;
             Description = description;
             AmountOfPointsPerSpeed = amountOfPointsPerSpeed;
-            AmountOfDirections = amountOfDirections;
             AmountOfSpeeds = amountOfSpeeds;
             LowestSpeed = lowestSpeed;
             HighestSpeed = highestSpeed;
             OneWheelCar = oneWheelCar;
             CarModelType = CarModelType.OneWheel;
         }
-        public GGVDiagram(string id, string description, int amountOfPointsPerSpeed, int amountOfDirections, int amountOfSpeeds, double lowestSpeed, double highestSpeed, Vehicle.TwoWheelCar twoWheelCar)
+        public GGVDiagram(string id, string description, int amountOfPointsPerSpeed, int amountOfSpeeds, double lowestSpeed, double highestSpeed, Vehicle.TwoWheelCar twoWheelCar)
         {
             ID = id;
             Description = description;
             AmountOfPointsPerSpeed = amountOfPointsPerSpeed;
-            AmountOfDirections = amountOfDirections;
             AmountOfSpeeds = amountOfSpeeds;
             LowestSpeed = lowestSpeed;
             HighestSpeed = highestSpeed;
@@ -94,7 +88,7 @@ namespace InternshipTest.Simulation
             // GGV diagram generation
             for (int iSpeed = 0; iSpeed < Speeds.Length; iSpeed++)
             {
-                OneWheelGGDiagram oneWheelGGDiagram = new OneWheelGGDiagram(Speeds[iSpeed], OneWheelCar, AmountOfPointsPerSpeed, AmountOfDirections);
+                OneWheelGGDiagram oneWheelGGDiagram = new OneWheelGGDiagram(Speeds[iSpeed], OneWheelCar, AmountOfPointsPerSpeed);
                 oneWheelGGDiagram.GenerateGGDiagram();
                 GGDiagram diagram = new GGDiagram(oneWheelGGDiagram);
                 diagram.GetAssociatedCurvatures();
@@ -115,7 +109,7 @@ namespace InternshipTest.Simulation
             // GGV diagram generation
             for (int iSpeed = 0; iSpeed < Speeds.Length; iSpeed++)
             {
-                TwoWheelGGDiagram twoWheelGGDiagram = new TwoWheelGGDiagram(Speeds[iSpeed], TwoWheelCar, AmountOfPointsPerSpeed, AmountOfDirections);
+                TwoWheelGGDiagram twoWheelGGDiagram = new TwoWheelGGDiagram(Speeds[iSpeed], TwoWheelCar, AmountOfPointsPerSpeed);
                 twoWheelGGDiagram.GenerateGGDiagram();
                 GGDiagram diagram = new GGDiagram(twoWheelGGDiagram);
                 diagram.GetAssociatedCurvatures();
