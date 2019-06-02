@@ -597,6 +597,9 @@ namespace InternshipTest
                 // Lap Time Simulations
                 foreach (Simulation.LapTimeSimulation lapTimeSimulation in lapTimeSimulationListBox.Items)
                     project.LapTimeSimulations.Add(lapTimeSimulation);
+                // Lap Time Simulations Analysis Templates
+                foreach (UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate in lapTimeSimulationResultsAnalysisTemplatesListBox.Items)
+                    project.LapTimeSimulationAnalysisTemplates.Add(analysisTemplate);
                 // Saves the project to the file
                 project.Save(saveFileDialog.FileName);
                 _HideOptionsButtons();
@@ -702,6 +705,9 @@ namespace InternshipTest
             // Lap Time Simulations
             foreach (Simulation.LapTimeSimulation lapTimeSimulation in project.LapTimeSimulations)
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
+            // Lap Time Simulations Analysis Templates
+            foreach (UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate in project.LapTimeSimulationAnalysisTemplates)
+                lapTimeSimulationResultsAnalysisTemplatesListBox.Items.Add(analysisTemplate);
             _HideOptionsButtons();
         }
 
@@ -759,6 +765,8 @@ namespace InternshipTest
             // Lap Time Simulations
             lapTimeSimulationListBox.Items.Clear();
             lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
+            // Lap Time Simulation Results Analysis
+            lapTimeSimulationResultsAnalysisTemplatesListBox.Items.Clear();
         }
 
         #endregion

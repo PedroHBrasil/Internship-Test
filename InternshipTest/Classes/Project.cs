@@ -60,6 +60,8 @@ namespace InternshipTest
         public List<Simulation.GGVDiagram> GGVDiagrams { get; set; }
         // Lap Time Simulations
         public List<Simulation.LapTimeSimulation> LapTimeSimulations { get; set; }
+        // Analysis Templates
+        public List<UIClasses.ResultsAnalysis.AnalysisTemplate> LapTimeSimulationAnalysisTemplates { get; set; }
         #endregion
         #region Constructors
         public Project()
@@ -110,6 +112,8 @@ namespace InternshipTest
             GGVDiagrams = new List<Simulation.GGVDiagram>();
             // Lap Time Simulations
             LapTimeSimulations = new List<Simulation.LapTimeSimulation>();
+            // Analysis Templates
+            LapTimeSimulationAnalysisTemplates = new List<UIClasses.ResultsAnalysis.AnalysisTemplate>();
         }
 
         #endregion
