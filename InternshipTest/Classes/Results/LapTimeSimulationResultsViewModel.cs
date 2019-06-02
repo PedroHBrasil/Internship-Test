@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace InternshipTest.Results
 {
     /// <summary>
-    /// Usedto dislpay the lap time simulation results.
+    /// Used to dislpay the lap time simulation results.
     /// </summary>
-    class LapTimeSimulationResultsViewModel
+    public class LapTimeSimulationResultsViewModel
     {
         #region Properties
         /// <summary>
@@ -39,7 +39,7 @@ namespace InternshipTest.Results
     /// <summary>
     /// Contanis the information of one lap time simulation result point.
     /// </summary>
-    class LapTimeSimulationResultPoint
+    public class LapTimeSimulationResultPoint
     {
         #region Properties
         /// <summary>

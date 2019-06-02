@@ -111,6 +111,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UIClasses\ResultsAnalysis\AnalysisTemplate.cs" />
+    <Compile Include="UIClasses\ResultsAnalysis\LapTimeSimulation2DChart.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -519,7 +519,7 @@ namespace InternshipTest
             saveFileDialog.ShowDialog();
             // Checks if the file name is not an empty string
             if (saveFileDialog.FileName != "")
-            { 
+            {
                 // Creates the project object
                 Project project = new Project();
                 // Adds the lists objects to the project
@@ -2335,11 +2335,15 @@ namespace InternshipTest
         private void _DeleteTireModelParameterSetOfCheckListBox_Click(object sender, RoutedEventArgs e)
         {
             // Checks if there's a listbox item selected and then removes it
-            if (tireModelListBox.SelectedItems.Count == 1)
+            if (tireModelDisplayParameterSetsCheckListBox.SelectedItems.Count == 1)
             {
-                tireModelListBox.Items.RemoveAt(tireModelListBox.Items.IndexOf(tireModelListBox.SelectedItem));
-                tireModelDisplayCheckListBox.Items.RemoveAt(tireModelDisplayCheckListBox.Items.IndexOf(tireModelDisplayCheckListBox.SelectedItem));
+                tireModelDisplayParameterSetsCheckListBox.Items.RemoveAt(tireModelDisplayParameterSetsCheckListBox.Items.IndexOf(tireModelDisplayParameterSetsCheckListBox.SelectedItem));
             }
+            else System.Windows.MessageBox.Show(
+                "Could not delete parameters set. Please, select only one parameters set. ",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
         }
 
         /// <summary>
@@ -4097,9 +4101,8 @@ namespace InternshipTest
         {
             TabItemExt item = new TabItemExt
             {
-
-                Header = "Chart" + (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count + 1),
-
+                Header = "Chart " + (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count + 1),
+                Content = new Grid()
             };
             lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(item);
         }
@@ -4198,141 +4201,41 @@ namespace InternshipTest
             }
             else _ClearCurrentLapTimeSimulationAnalysisChart();
         }
-
+        /// <summary>
+        /// Updates the current lap time simulation analysis 2D chart when the simulation results checklistbox item gets changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisResultsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedItem != null && lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems.Count != 0)
+            {
+                _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+            }
+            else _ClearCurrentLapTimeSimulationAnalysisChart();
+        }
         /// <summary>
         /// Updates the current lap time simulation analysis 2D chart
         /// </summary>
         private void _UpdateCurrentLapTimeSimulationAnalysis2DChart()
         {
+            if (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedValue == null || lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedValue == null || lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedValue == null)
+            {
+                return;
+            }
+            // Gets the chart's parameters
+            string xDataType = lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedValue.ToString();
+            string yDataType = lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedValue.ToString();
+            string lineType = lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedValue.ToString();
             // Initializes the new chart
-            SfChart chart = new SfChart
-            {
-                Header = "Lap Time Simulation Analysis: 2D Chart",
-                FontSize = 20,
-                FontWeight = FontWeights.Bold,
-                Margin = new Thickness(10),
-                Legend = new ChartLegend(),
-                PrimaryAxis = new NumericalAxis(),
-                SecondaryAxis = new NumericalAxis()
-            };
-            // Adds zoom/panning behaviour to the chart
-            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
-            {
-                EnableZoomingToolBar = true,
-                EnableMouseWheelZooming = true,
-                EnablePanning = true,
-                ZoomRelativeToCursor = true,
-            };
-            chart.Behaviors.Add(zoomingAndPanning);*/
-            // Initializes the data series
-            FastLineSeries fastLineSeries;
-            FastScatterBitmapSeries fastScatterSeries;
+            UIClasses.ResultsAnalysis.LapTimeSimulation2DChart chart = new UIClasses.ResultsAnalysis.LapTimeSimulation2DChart(xDataType, yDataType, lineType);
+            chart.InitializeChart();
             // Sweeps the lap time simulation results and adds the data to the chart.
             foreach (Results.LapTimeSimulationResults results in lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems)
             {
                 // Initializes the chart's data series
                 Results.LapTimeSimulationResultsViewModel resultsViewModel = new Results.LapTimeSimulationResultsViewModel(results);
-                fastLineSeries = new FastLineSeries() { ItemsSource = resultsViewModel.ResultsDisplayCollection };
-                fastScatterSeries = new FastScatterBitmapSeries() { ItemsSource = resultsViewModel.ResultsDisplayCollection };
-                // Adds the x axis to the chart with the x axis ComboBox selected item's type of data.
-                switch (lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedValue.ToString())
-                {
-                    case "Time":
-                        chart.PrimaryAxis.Header = "Time [s]";
-                        chart.PrimaryAxis.LabelFormat = "N2";
-                        fastLineSeries.XBindingPath = "ElapsedTime";
-                        fastScatterSeries.XBindingPath = "ElapsedTime";
-                        break;
-                    case "Distance":
-                        chart.PrimaryAxis.Header = "Distance [m]";
-                        chart.PrimaryAxis.LabelFormat = "N2";
-                        fastLineSeries.XBindingPath = "ElapsedDistance";
-                        fastScatterSeries.XBindingPath = "ElapsedDistance";
-                        break;
-                    case "Speed":
-                        chart.PrimaryAxis.Header = "Speed [km/h]";
-                        chart.PrimaryAxis.LabelFormat = "N2";
-                        fastLineSeries.XBindingPath = "Speed";
-                        fastScatterSeries.XBindingPath = "Speed";
-                        break;
-                    case "Longitudinal Acceleration":
-                        chart.PrimaryAxis.Header = "Longitudinal Acceleration [G]";
-                        chart.PrimaryAxis.LabelFormat = "N2";
-                        fastLineSeries.XBindingPath = "LongitudinalAcceleration";
-                        fastScatterSeries.XBindingPath = "LongitudinalAcceleration";
-                        break;
-                    case "Lateral Acceleration":
-                        chart.PrimaryAxis.Header = "Lateral Acceleration [G]";
-                        chart.PrimaryAxis.LabelFormat = "N2";
-                        fastLineSeries.XBindingPath = "LateralAcceleration";
-                        fastScatterSeries.XBindingPath = "LateralAcceleration";
-                        break;
-                    case "Gear":
-                        chart.PrimaryAxis.Header = "Gear Number";
-                        chart.PrimaryAxis.LabelFormat = "N0";
-                        fastLineSeries.XBindingPath = "GearNumber";
-                        fastScatterSeries.XBindingPath = "GearNumber";
-                        break;
-                    default:
-                        break;
-                }
-                // Adds the y axis to the chart with the y axis ComboBox selected item's type of data.
-                switch (lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedValue.ToString())
-                {
-                    case "Time":
-                        chart.SecondaryAxis.Header = "Time [s]";
-                        chart.SecondaryAxis.LabelFormat = "N2";
-                        fastLineSeries.YBindingPath = "ElapsedTime";
-                        fastScatterSeries.YBindingPath = "ElapsedTime";
-                        break;
-                    case "Distance":
-                        chart.SecondaryAxis.Header = "Distance [m]";
-                        chart.SecondaryAxis.LabelFormat = "N2";
-                        fastLineSeries.YBindingPath = "ElapsedDistance";
-                        fastScatterSeries.YBindingPath = "ElapsedDistance";
-                        break;
-                    case "Speed":
-                        chart.SecondaryAxis.Header = "Speed [km/h]";
-                        chart.SecondaryAxis.LabelFormat = "N2";
-                        fastLineSeries.YBindingPath = "Speed";
-                        fastScatterSeries.YBindingPath = "Speed";
-                        break;
-                    case "Longitudinal Acceleration":
-                        chart.SecondaryAxis.Header = "Longitudinal Acceleration [G]";
-                        chart.SecondaryAxis.LabelFormat = "N2";
-                        fastLineSeries.YBindingPath = "LongitudinalAcceleration";
-                        fastScatterSeries.YBindingPath = "LongitudinalAcceleration";
-                        break;
-                    case "Lateral Acceleration":
-                        chart.SecondaryAxis.Header = "Lateral Acceleration [G]";
-                        chart.SecondaryAxis.LabelFormat = "N2";
-                        fastLineSeries.YBindingPath = "LateralAcceleration";
-                        fastScatterSeries.YBindingPath = "LateralAcceleration";
-                        break;
-                    case "Gear":
-                        chart.SecondaryAxis.Header = "Gear Number";
-                        chart.SecondaryAxis.LabelFormat = "N0";
-                        fastLineSeries.YBindingPath = "GearNumber";
-                        fastScatterSeries.YBindingPath = "GearNumber";
-                        break;
-                    default:
-                        break;
-                }
-                // Adds the series to the chart
-                switch (lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedValue.ToString())
-                {
-                    case "Line":
-                        chart.Series.Add(fastLineSeries);
-                        // Adds a trackball to the chart
-                        ChartTrackBallBehavior trackBall = new ChartTrackBallBehavior();
-                        chart.Behaviors.Add(trackBall);
-                        break;
-                    case "Scatter":
-                        chart.Series.Add(fastScatterSeries);
-                        break;
-                    default:
-                        break;
-                }
+                chart.AddDataToChart(resultsViewModel);
             }
             // Adds the chart to the current chart tab
             Grid grid = new Grid();
@@ -4340,8 +4243,161 @@ namespace InternshipTest
             TabItemExt currentChartTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
             currentChartTab.Content = grid;
         }
+        /// <summary>
+        /// Gets the current tab's chart parameters, displays it in the UI and updates the chart with the selected data.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisChartTabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Gets the current tab's grid and checks if it has a chart in it.
+            TabItemExt currentTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
+            Grid currentGrid = currentTab.Content as Grid;
+            // Chechs if there is a chart in the current tab.
+            if (currentGrid.Children.Count > 0)
+            {
+                // Gets the chart's type
+                Type chartType = currentGrid.Children[0].GetType();
+                // Extract the chart's parameters and displays them at the UI based on its type
+                if (chartType == (new UIClasses.ResultsAnalysis.LapTimeSimulation2DChart().GetType()))
+                {
+                    // Gets the grid's chart
+                    UIClasses.ResultsAnalysis.LapTimeSimulation2DChart chart = currentGrid.Children[0] as UIClasses.ResultsAnalysis.LapTimeSimulation2DChart;
+                    switch (chart.ResultTypeX)
+                    {
+                        // Gets the result type of the X axis and displays it in the UI
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Time:
+                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Time";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Distance:
+                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Distance";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Speed:
+                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Speed";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LongitudinalAcceleration:
+                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Longitudinal Acceleration";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LateralAcceleration:
+                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Lateral Acceleration";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Gear:
+                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Gear";
+                            break;
+                        default:
+                            break;
+                    }
+                    // Gets the result type of the Y axis and displays it in the UI
+                    switch (chart.ResultTypeY)
+                    {
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Time:
+                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Time";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Distance:
+                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Distance";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Speed:
+                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Speed";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LongitudinalAcceleration:
+                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Longitudinal Acceleration";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LateralAcceleration:
+                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Lateral Acceleration";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Gear:
+                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Gear";
+                            break;
+                        default:
+                            break;
+                    }
+                    // Gets the line type and displays it in the UI
+                    switch (chart.LineType)
+                    {
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.LineTypes.Line:
+                            lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.Text = "Line";
+                            break;
+                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.LineTypes.Scatter:
+                            lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.Text = "Scatter";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            // Updates the results graph to match the data.
+            _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+        }
 
+        #endregion
 
+        #region Analysis Template
+        /// <summary>
+        /// Adds an analysis template to the listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisAddTemplateToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (lapTimeSimulationResultsAnalysisTemplateIDTextBox.Text != "")
+            {
+                // Gets the object's data
+                string id = lapTimeSimulationResultsAnalysisTemplateIDTextBox.Text;
+                string description = lapTimeSimulationResultsAnalysisTemplateDescriptionTextBox.Text;
+                // Gets the tab list
+                List<TabItemExt> chartTabs = new List<TabItemExt>();
+                foreach (TabItemExt chartTab in lapTimeSimulationResultsAnalysisChartTabControl.Items)
+                {
+                    chartTabs.Add(chartTab);
+                }
+                // Initializes the object
+                UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate = new UIClasses.ResultsAnalysis.AnalysisTemplate(id, description, chartTabs);
+                // Adds the template to the listbox
+                lapTimeSimulationResultsAnalysisTemplatesListBox.Items.Add(analysisTemplate);
+            }
+            else System.Windows.MessageBox.Show(
+               "Could not create Analysis Template. \n " +
+               "    It should have an ID.",
+               "Error",
+               MessageBoxButton.OK,
+               MessageBoxImage.Error);
+        }
+        /// <summary>
+        /// Deletes an analysis template of the listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisDeleteTemplateOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Checks if there's a listbox item selected and then removes it
+            if (lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItems.Count == 1)
+            {
+                lapTimeSimulationResultsAnalysisTemplatesListBox.Items.RemoveAt(lapTimeSimulationResultsAnalysisTemplatesListBox.Items.IndexOf(lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItem));
+            }
+        }
+        /// <summary>
+        /// Loads an analysis template from the listbox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisTemplatesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            // Checks if there's a listbox item selected
+            if (lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItems.Count == 1)
+            {
+                // Gets the selected object
+                UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate = lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItem as UIClasses.ResultsAnalysis.AnalysisTemplate;
+                // Writes the properties in the UI
+                lapTimeSimulationResultsAnalysisTemplateIDTextBox.Text = analysisTemplate.ID;
+                lapTimeSimulationResultsAnalysisTemplateDescriptionTextBox.Text = analysisTemplate.Description;
+                // Clears the tab control and adds the appropriate tabs
+                lapTimeSimulationResultsAnalysisChartTabControl.Items.Clear();
+                foreach (TabItemExt chartTab in analysisTemplate.ChartsTabs)
+                {
+                    lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(chartTab);
+                }
+            }
+        }
         #endregion
 
         #endregion

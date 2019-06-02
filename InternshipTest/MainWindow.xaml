@@ -10,11 +10,26 @@
 		xmlns:simulation="clr-namespace:InternshipTest.Simulation"
 		xmlns:results="clr-namespace:InternshipTest.Results"
 		xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-		Title="MainWindow" Height="1080" Width="1920" WindowState="Maximized" Icon="App.ico">
+		Title="MainWindow" Height="1080" Width="1920" WindowState="Maximized" Icon="App.ico" Background="#FF3B4554" BorderBrush="#FF3B4554">
     <Window.Resources>
+        <!-- Graphs legends display template -->
         <ItemsPanelTemplate x:Key="chartsLegendsPanelTemplate">
             <WrapPanel Orientation="Vertical"/>
         </ItemsPanelTemplate>
+        <!-- Tab control "Add new tab" style -->
+        <Style x:Key="AddChartTabButton" TargetType="syncfusion:TabItemExt">
+            <Setter Property="Header" Value="Add New Chart"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HoverBackground" Value="#FF949CA8"/>
+            <Setter Property="BorderBrush" Value="#FF949CA8"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="1,0,0,0"/>
+        </Style>
     </Window.Resources>
     <!-- Main Window Grid -->
     <Grid>
@@ -1721,6 +1736,7 @@
                                                       TabScrollStyle="Extended" TabScrollButtonVisibility="Visible"
                                                       IsNewButtonEnabled="True" NewButtonAlignment="First" NewButtonBackground="Black"
                                                       NewButtonClick="_TireModelDisplayChartTabControl_NewButtonClick"
+                                                      NewButtonStyle="{StaticResource AddChartTabButton}"
                                                       OnCloseButtonClick="_TireModelDisplayChartTabControl_OnCloseButtonClick">
                                         <syncfusion:TabItemExt Header="Chart 1"/>
                                     </syncfusion:TabControlExt>
@@ -2379,7 +2395,7 @@
 
                         </syncfusion:DockingManager>
                         <!-- GGV Diagram Docking Manager -->
-                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="ggvDiagramDockingManager" Visibility="Collapsed">
                             <!-- GGV Diagram Input Dockig Window -->
                             <ContentControl Name="ggvDiagramDefinitionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2741,7 +2757,7 @@
                             </Grid>
                         </Grid>
                         <!-- Results Analysis Docking Manager: Lap Time Simulation-->
-                        <Grid Name="lapTimeSimulationResultsAnalysisGrid" Visibility="Collapsed">
+                        <Grid Name="lapTimeSimulationResultsAnalysisGrid" Visibility="Visible">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="250"/>
                                 <ColumnDefinition/>
@@ -2767,23 +2783,23 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <!-- Loadcases listbox -->
-                                <TextBlock Text="Loadcases:" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ListBox Name="lapTimeSimulationResultsAnalysisLoadcasesListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5"/>
+                                <TextBlock Text="Analysis Templates:" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="Bold"/>
+                                <ListBox Name="lapTimeSimulationResultsAnalysisTemplatesListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_LapTimeSimulationResultsAnalysisTemplatesListBox_SelectionChanged"/>
                                 <!-- Loadcases listbox add and delete buttons -->
-                                <Button Name="lapTimeSimulationResultsAnalysisAddLoadcasesSetToListBox" Content="Add" 
-                                        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="lapTimeSimulationResultsAnalysisDeleteLoadcasesSetOfListBox" Content="Delete"
-                                        Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="lapTimeSimulationResultsAnalysisAddTemplateToListBox" Content="Add" 
+                                        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2" Click="_LapTimeSimulationResultsAnalysisAddTemplateToListBox_Click"/>
+                                <Button Name="lapTimeSimulationResultsAnalysisDeleteTemplateOfListBox" Content="Delete"
+                                        Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2" Click="_LapTimeSimulationResultsAnalysisDeleteTemplateOfListBox_Click"/>
                                 <!-- Loadcase ID line -->
-                                <TextBlock Text="Loadcase ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <TextBox Name="lapTimeSimulationResultsAnalysisLoadcaseIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                <TextBlock Text="Template ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <TextBox Name="lapTimeSimulationResultsAnalysisTemplateIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                 <!-- Description line -->
                                 <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="lapTimeSimulationResultsAnalysisLoadcaseDescriptionTextBox" 
+                                <TextBox Name="lapTimeSimulationResultsAnalysisTemplateDescriptionTextBox" 
                                          Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                <!-- GGV Diagram Results list line -->
+                                <!-- Lap Time Simulation Results list line -->
                                 <TextBlock Text="Results to be displayed:" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:CheckListBox Name="lapTimeSimulationResultsAnalysisResultsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5">
+                                <syncfusion:CheckListBox Name="lapTimeSimulationResultsAnalysisResultsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_LapTimeSimulationResultsAnalysisResultsListBox_SelectionChanged">
                                     <syncfusion:CheckListBox.ItemTemplate>
                                         <DataTemplate DataType="{x:Type results:LapTimeSimulationResults}">
                                             <Grid>
@@ -2804,11 +2820,15 @@
                             <syncfusion:TabControlExt Name="lapTimeSimulationResultsAnalysisChartTabControl" Grid.Column="1"
                                                       EnableLabelEdit="True" ShowTabItemContextMenu="True" CloseButtonType="Both"
                                                       TabItemSize="ShrinkToFit" TabItemLayout="MultiLineWithFullWidth"
-                                                      TabScrollStyle="Extended" TabScrollButtonVisibility="Visible"
-                                                      IsNewButtonEnabled="True" NewButtonAlignment="First" NewButtonBackground="Black"
+                                                      TabScrollButtonVisibility="Visible"
+                                                      IsNewButtonEnabled="True" NewButtonAlignment="First"
                                                       NewButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_NewButtonClick"
-                                                      CloseMode="Delete" OnCloseButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick">
-                                <syncfusion:TabItemExt Header="Chart 1"/>
+                                                      NewButtonStyle="{StaticResource AddChartTabButton}"
+                                                      CloseMode="Delete" OnCloseButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick"
+                                                      SelectionChanged="_LapTimeSimulationResultsAnalysisChartTabControl_SelectionChanged">
+                                <syncfusion:TabItemExt Header="Chart1">
+                                    <Grid/>
+                                </syncfusion:TabItemExt>
                             </syncfusion:TabControlExt>
                             <!-- Charts options grid -->
                             <Grid Grid.Column="2">
@@ -2825,9 +2845,8 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <!-- Add Chart Button -->
-                                <Button Name="lapTimeSimulationResultsAnalysisAddNewChartToTabControl" Content="Add New Chart" 
-                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                <!-- Current chart options -->
+                                <TextBlock Text="Current Chart Options" FontWeight="Bold" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <!-- Chart type ComboBox -->
                                 <TextBlock Text="Chart Type:" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <ComboBox Name="lapTimeSimulationResultsAnalysisChartTypeComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysisChartTypeComboBox_SelectionChanged" SelectedValuePath="Content">
