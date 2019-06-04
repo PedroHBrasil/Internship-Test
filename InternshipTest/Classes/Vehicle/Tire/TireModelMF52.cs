@@ -16,7 +16,8 @@ namespace InternshipTest.Vehicle
         #region Fields
         private readonly double ksi0 = 1, ksi1 = 1, ksi2 = 1, ksi3 = 1, ksi4 = 1, ksi5 = 1, ksi6 = 1, ksi7 = 1, ksi8 = 1,
             epsilonx = Math.Pow(10, -3), epsilony = Math.Pow(10, -1), epsilonK = Math.Pow(10, -2), epsilonV = Math.Pow(10, -3);
-        private double currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed;
+        private double currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed, targetDirection;
+        private double[] targetForces;
         #endregion
         #region Properties
         // Tire Model inputs boundaries (Slip Angle and Longitudinal Slip)
@@ -565,6 +566,136 @@ namespace InternshipTest.Vehicle
             return Mz;
         }
         #endregion
+        #region Optimization Methods
+        /// <summary>
+        /// Gets the longitudinal slip and the slip angle for given longitudinal and lateral forces.
+        /// </summary>
+        /// <param name="targetForces"> Longitudinal and lateral forces [N] </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Longitudinal Slip and Slip Angle [rad] </returns>
+        public double[] GetSlipAngleAndLongitudinalSlipForLongitudinalAndLateralForces(double[] targetForces, double Fz, double gamma, double Vc)
+        {
+            this.targetForces = targetForces;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            // Optimization Parameters
+            double[] slipParameters = new double[] { 0, 0 };
+            double[] scales = new double[] { 1, 1 };
+            double[] lowerBoundaries = new double[] { KappaMin, AlphaMin };
+            double[] upperBoundaries = new double[] { KappaMax, AlphaMax };
+            double inputParametersTol = 0.0000000001;
+            int maxIter = 100;
+            alglib.minlmstate state;
+            // Optimization setup
+            alglib.minlmcreatev(2, slipParameters, 0.0001, out state);
+            alglib.minlmsetbc(state, lowerBoundaries, upperBoundaries);
+            alglib.minlmsetcond(state, inputParametersTol, maxIter);
+            alglib.minlmsetscale(state, scales);
+            // Optimization
+            alglib.minlmoptimize(state, _OptimizeSlipAngleAndLongitudinalSlipForLongitudinalAndLateralForces, null, null);
+            alglib.minlmreport rep;
+            alglib.minlmresults(state, out slipParameters, out rep);
+
+            return slipParameters;
+        }
+        /// <summary>
+        /// Optimization function to get the longitudinal slip and slip angle for given longitudinal and lateral forces.
+        /// </summary>
+        /// <param name="slipParameters"> Longitudinal Slip and Slip Angle [rad] </param>
+        /// <param name="calculatedForces"> Longitudinal and lateral forces [N] </param>
+        /// <param name="obj"></param>
+        private void _OptimizeSlipAngleAndLongitudinalSlipForLongitudinalAndLateralForces(double[] slipParameters, double[] calculatedForces, object obj)
+        {
+            calculatedForces[0] = GetTireFx(slipParameters[0], slipParameters[1], currentVerticalLoad, currentInclinationAngle, currentSpeed) - targetForces[0];
+            calculatedForces[1] = GetTireFy(slipParameters[0], slipParameters[1], currentVerticalLoad, currentInclinationAngle, currentSpeed) - targetForces[1];
+        }
+
+        /// <summary>
+        /// Gets the longitudinal slip and the slip angle for maximum longitudinal and lateral forces in given direction.
+        /// </summary>
+        /// <param name="targetForces"> Longitudinal and lateral forces [N] </param>
+        /// <param name="Fz"> Vertical Load [N] </param>
+        /// <param name="gamma"> Inclination Angle [rad] </param>
+        /// <param name="Vc"> Wheel translational speed [m/s] </param>
+        /// <returns> Longitudinal Slip and Slip Angle [rad] </returns>
+        public double[] GetSlipAngleAndLongitudinalSlipForMaximumForceInGivenDirection(double targetDirection, double Fz, double gamma, double Vc)
+        {
+            this.targetDirection = targetDirection;
+            currentVerticalLoad = Fz;
+            currentInclinationAngle = gamma;
+            currentSpeed = Vc;
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { KappaMin };
+            double[] bndu = new double[] { KappaMax };
+
+            double[] kappa = new double[] { 0 };
+
+            alglib.minbleiccreatef(kappa, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeSlipAngleAndLongitudinalSlipForMaximumForceInGivenDirection, null, null);
+            alglib.minbleicresults(state, out kappa, out alglib.minbleicreport rep);
+
+            return new double[] { currentKappa, currentAlpha };
+        }
+        /// <summary>
+        /// Optimization function to get the longitudinal slip for maximum resultant tire force.
+        /// </summary>
+        /// <param name="longitudinalSlip"> Longitudinal Slip </param>
+        /// <param name="resultantForce"> Resultant Tire Force [N] </param>
+        /// <param name="obj"></param>
+        private void _OptimizeSlipAngleAndLongitudinalSlipForMaximumForceInGivenDirection(double[] longitudinalSlip, ref double resultantForce, object obj)
+        {
+            currentKappa = longitudinalSlip[0];
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] bndl = new double[] { AlphaMin };
+            double[] bndu = new double[] { AlphaMax };
+
+            double[] alpha = new double[] { 0 };
+
+            alglib.minbleiccreatef(alpha, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, bndl, bndu);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _OptimizeSlipAngleForGivenForceDirection, null, null);
+            alglib.minbleicresults(state, out alpha, out alglib.minbleicreport rep);
+
+            // Tire forces [N]
+            double longitudinalForce = GetTireFx(currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed) - targetForces[0];
+            double lateralForce = GetTireFy(currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed) - targetForces[1];
+            // Resultant tire force [N]
+            resultantForce = -Math.Sqrt(Math.Pow(longitudinalForce, 2) + Math.Pow(lateralForce, 2));
+        }
+        /// <summary>
+        /// Optimization function to get the slip angle for the target force direction.
+        /// </summary>
+        /// <param name="slipAngle"> Slip Angle [rad] </param>
+        /// <param name="directionError"> Direction error [rad] </param>
+        /// <param name="obj"></param>
+        private void _OptimizeSlipAngleForGivenForceDirection(double[] slipAngle, ref double directionError, object obj)
+        {
+            currentAlpha = slipAngle[0];
+            // Tire forces [N]
+            double longitudinalForce = GetTireFx(currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed) - targetForces[0];
+            double lateralForce = GetTireFy(currentKappa, currentAlpha, currentVerticalLoad, currentInclinationAngle, currentSpeed) - targetForces[1];
+            // Direction error [rad]
+            double currentDirection = Math.Atan2(longitudinalForce, lateralForce);
+            directionError = Math.Abs(currentDirection - targetDirection);
+        }
         #region Longitudinal Slip Optimization Methods
         /// <summary>
         /// Gets the longitudinal slip associated with the minimum tire longitudinal force for the given parameters.
@@ -768,6 +899,7 @@ namespace InternshipTest.Vehicle
         {
             tireFy = -GetTireFy(currentKappa, alpha[0], currentVerticalLoad, currentInclinationAngle, currentSpeed);
         }
+        #endregion
         #endregion
 
         #endregion
