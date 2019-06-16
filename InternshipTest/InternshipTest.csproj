@@ -112,7 +112,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="UIClasses\ResultsAnalysis\AnalysisTemplate.cs" />
-    <Compile Include="UIClasses\ResultsAnalysis\LapTimeSimulation2DChart.cs" />
+    <Compile Include="UIClasses\ResultsAnalysis\LapTimeSimulation2DChartParameters.cs" />
+    <Compile Include="UIClasses\ResultsAnalysis\LapTimeSimulationResultsAuxiliaryTypes.cs" />
+    <Compile Include="UIClasses\ResultsAnalysis\LapTimeSimulationTrackMapParameters.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

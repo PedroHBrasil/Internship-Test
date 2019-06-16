@@ -10,19 +10,16 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
     public class AnalysisTemplate : GenericInfo
     {
         #region Properties
-        public List<TabItemExt> ChartsTabs { get; set; }
+        public List<LapTimeSimulation2DChartParameters> ChartsParameters { get; set; }
         #endregion
         #region Constructors
         public AnalysisTemplate() { }
-        public AnalysisTemplate(string id, string description, List<TabItemExt> chartsTabs)
+        public AnalysisTemplate(string id, string description, List<LapTimeSimulation2DChartParameters> chartParameters)
         {
             ID = id;
             Description = description;
-            ChartsTabs = chartsTabs;
+            ChartsParameters = chartParameters;
         }
-        #endregion
-        #region Methods
-
         #endregion
     }
 }

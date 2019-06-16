@@ -80,28 +80,6 @@
                         Height="30" Margin="0,10,20,10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold" FontSize="15"
                         Click="_HelpEnvironmentButton_Click"/>
-                <TextBlock Text="Theme:" Grid.Column="6" VerticalAlignment="Center" 
-                           FontSize="15" FontWeight="Bold"/>
-                <ComboBox Name="themeSelectionComboBox" Grid.Column="7"
-                          Height="30" Width="150" Margin="10" HorizontalAlignment="Right"
-                          VerticalContentAlignment="Center"
-                          SelectionChanged="_ThemeSelectionComboBox_SelectionChanged">
-                    <ComboBoxItem Content="Blend"/>
-                    <ComboBoxItem Content="Metro"/>
-                    <ComboBoxItem Content="SystemTheme"/>
-                    <ComboBoxItem Content="Office2010Black"/>
-                    <ComboBoxItem Content="Office2010Blue"/>
-                    <ComboBoxItem Content="Office2010Silver"/>
-                    <ComboBoxItem Content="Office2013White"/>
-                    <ComboBoxItem Content="Office2013LightGray"/>
-                    <ComboBoxItem Content="Office2013DarkGray"/>
-                    <ComboBoxItem Content="Office2016Colorful"/>
-                    <ComboBoxItem Content="Office2016White"/>
-                    <ComboBoxItem Content="Office2016DarkGray"/>
-                    <ComboBoxItem Content="Office365"/>
-                    <ComboBoxItem Content="VisualStudio2013"/>
-                    <ComboBoxItem Content="VisualStudio2015"/>
-                </ComboBox>
             </Grid>
             <!-- Project Button Options Grid -->
             <Grid Name="projectButtonOptionsGrid" Grid.Row="1" Visibility="Hidden">
@@ -191,7 +169,7 @@
                 <Button Name="fourWheelVehicleButton" Content="Four Wheel Model Car" Grid.Column="10"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
-                        Click="_FourWheelVehicleButton_Click"/>
+                        Click="_FourWheelVehicleButton_Click" Visibility="Collapsed"/>
             </Grid>
             <!-- Path Button Options Grid -->
             <Grid Name="pathButtonOptionsGrid" Grid.Row="1" Visibility="Collapsed">
@@ -213,12 +191,12 @@
                 <Button Name="drawPathButton" Content="Draw" Grid.Column="2"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
-                        Click="_DrawPathButton_Click"/>
+                        Click="_DrawPathButton_Click" Visibility="Collapsed"/>
                 <!-- Optimize Path button -->
                 <Button Name="optimizePathButton" Content="Optimization" Grid.Column="3"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
-                        Click="_OptimizePathButton_Click"/>
+                        Click="_OptimizePathButton_Click" Visibility="Collapsed"/>
             </Grid>
             <!-- Simulation Button Options Grid -->
             <Grid Name="simulationButtonOptionsGrid" Grid.Row="1" Visibility="Collapsed">
@@ -253,38 +231,22 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!-- Question TextBox -->
-                <TextBlock Text="Choose a simulation type:" VerticalAlignment="Center" Margin="10"/>
-                <!-- GGV Diagram button -->
-                <Button Name="ggvDiagramResultsAnalysisButton" Content="GGV Diagram" Grid.Column="1"
+                <TextBlock Text="Choose an analysis type:" VerticalAlignment="Center" Margin="10"/>
+                <!--2D Chart button -->
+                <Button Name="resultsAnalysis2DChartButton" Content="2D Chart" Grid.Column="1"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
-                        Click="_GGVDiagramResultsAnalysisButton_Click"/>
-                <!-- Lap Time Simulation button -->
-                <Button Name="lapTimeSimulationResultsAnalysisButton" Content="Lap Time" Grid.Column="2"
+                        Click="_ResultsAnalysis2DChartButton_Click"/>
+                <!-- Track Map button -->
+                <Button Name="resultsAnalysisTrackMapButton" Content="Track Map" Grid.Column="2"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
                         FontWeight="Bold"
-                        Click="_LapTimeSimulationResultsAnalysisButton_Click"/>
+                        Click="_ResultsAnalysisTrackMapButton_Click"/>
             </Grid>
         </Grid>
         <!-- Main Work Environment Docking Manager -->
         <syncfusion:DockingManager Name="mainWorkEnvironmentDockingManager" Grid.Row="2"
                                    MaximizeButtonEnabled="True" DockFill="True">
-            <ContentControl Name="projectOverview" MinWidth="50"
-                            syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                            syncfusion:DockingManager.CanClose="False"
-                            syncfusion:DockingManager.CanFloat="False"
-                            syncfusion:DockingManager.Header="Overview"
-                            syncfusion:DockingManager.SidePanelDock="Left"
-                            syncfusion:DockingManager.SideInDockedMode="Left"
-                            syncfusion:DockingManager.DesiredWidthInDockedMode="250"/>
-            <ContentControl Name="taskTracker" MinWidth="50"
-                            syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                            syncfusion:DockingManager.CanClose="False"
-                            syncfusion:DockingManager.CanFloat="False"
-                            syncfusion:DockingManager.Header="Task Tracker"
-                            syncfusion:DockingManager.SidePanelDock="Right"
-                            syncfusion:DockingManager.SideInDockedMode="Right"
-                            syncfusion:DockingManager.DesiredWidthInDockedMode="250"/>
             <ContentControl Name="commentsBox" MinHeight="10"
                             syncfusion:DockingManager.IsContextMenuButtonVisible="False"
                             syncfusion:DockingManager.CanClose="False"
@@ -844,7 +806,7 @@
                                         <TextBlock Text="RPM" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
                                         <TextBlock Text="Torque (N.m)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
                                         <TextBlock Text="Braking Torque (N.m)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Spec. Fuel Cons. (g/kW)" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Spec. Fuel Cons. (g/kWh)" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
                                     </Grid>
                                     <ListBox Name="engineCurvesPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
@@ -2556,7 +2518,7 @@
                                             Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New GGV Diagram per sector region -->
                                     <TextBlock Text="Sector Index:" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="lapTimeSimulationNewSectorIndexComboBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <ComboBox Name="lapTimeSimulationNewSectorIndexComboBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate DataType="{x:Type local:PathSector}">
                                                 <TextBlock Text="{Binding Index}"/>
@@ -2565,29 +2527,26 @@
                                     </ComboBox>
                                     <TextBlock Text="GGV Diagram:" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="lapTimeSimulationNewSectorGGVDiagramComboBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
-                                              ItemsSource="{Binding ElementName=simulationOneWheelGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
+                                              ItemsSource="{Binding ElementName=simulationGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
-                        <!-- Results Analysis Grid: GGV Diagram-->
-                        <Grid Name="ggvDiagramResultsAnalysisGrid" Visibility="Collapsed">
+                        <!-- Results Analysis Docking Manager: 2D Chart-->
+                        <Grid Name="resultsAnalysis2DChartsGrid" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="250"/>
-                                <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="250"/>
                             </Grid.ColumnDefinitions>
-                            <!-- Loadcase menu grid -->
+                            <!-- Chart options grid -->
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="100"/>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -2597,209 +2556,9 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <!-- Loadcases listbox -->
-                                <TextBlock Text="Loadcases:" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ListBox Name="ggvDiagramResultsAnalysisLoadcasesListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5"/>
-                                <!-- Loadcases listbox add and delete buttons -->
-                                <Button Name="ggvDiagramResultsAnalysisAddLoadcasesSetToListBox" Content="Add" 
-                                        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="ggvDiagramResultsAnalysisDeleteLoadcasesSetOfListBox" Content="Delete"
-                                        Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <!-- Loadcase ID line -->
-                                <TextBlock Text="Loadcase ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <TextBox Name="ggvDiagramResultsAnalysisLoadcaseIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                <!-- Description line -->
-                                <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="ggvDiagramResultsAnalysisLoadcaseDescriptionTextBox" 
-                                         Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                <!-- GGV Diagram Results list line -->
-                                <TextBlock Text="Results to be displayed:" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:CheckListBox Name="ggvDiagramResultsAnalysisGGVDiagramsResultsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5"/>
-                            </Grid>
-                            <!-- Left Grid Splitter -->
-                            <syncfusion:SfGridSplitter Grid.Column="1" EnableCollapseButton="True"/>
-                            <!-- Charts Tab Control -->
-                            <syncfusion:TabControlExt Name="ggvDiagramResultsAnalysisChartTabControl" Grid.Column="2"
-                                                      EnableLabelEdit="True" ShowTabItemContextMenu="True" CloseButtonType="Both"
-                                                      TabItemSize="ShrinkToFit" TabItemLayout="MultiLineWithFullWidth"
-                                                      TabScrollStyle="Extended" TabScrollButtonVisibility="Visible"
-                                                      IsNewButtonEnabled="True" NewButtonAlignment="First"
-                                                      NewButtonClick="_GGVDiagramResultsAnalysisChartTabControl_NewButtonClick"
-                                                      OnCloseButtonClick="_GGVDiagramResultsAnalysisChartTabControl_OnCloseButtonClick">
-                                <syncfusion:TabItemExt Header="Chart 1"/>
-                                <syncfusion:TabItemExt Header="Chart 2"/>
-                            </syncfusion:TabControlExt>
-                            <!-- Right Grid Splitter -->
-                            <syncfusion:SfGridSplitter Grid.Column="3" EnableCollapseButton="True"/>
-                            <!-- Charts options grid -->
-                            <Grid Grid.Column="4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <!-- Add Chart Button -->
-                                <Button Name="ggvDiagramResultsAnalysisAddNewChartToTabControl" Content="Add New Chart" 
-                                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
-                                <!-- Chart type ComboBox -->
-                                <TextBlock Text="Chart Type:" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="ggvDiagramResultsAnalysisChartTypeComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                    <ComboBoxItem Content="2D Chart"/>
-                                    <ComboBoxItem Content="Surface"/>
-                                </ComboBox>
-                                <!-- 2D Chart menu grid -->
-                                <Grid Name="ggvDiagramResultsAnalysis2DChartMenuGrid" Grid.Row="2" Grid.ColumnSpan="6" Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Axis data text line -->
-                                    <TextBlock Text="Axis Data:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <!-- X axis line -->
-                                    <TextBlock Text="X Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysis2DChartXAxisDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                    <!-- Y axis line -->
-                                    <TextBlock Text="Y Data" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysis2DChartYAxisDataComboBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                </Grid>
-                                <!-- GG Diagram menu grid -->
-                                <Grid Name="ggvDiagramResultsAnalysisGGDiagramMenuGrid" Grid.Row="2" Grid.ColumnSpan="6" Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Speed selection -->
-                                    <TextBlock Text="Speed:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <Slider Name="ggvDiagramResultsAnalysisGGDiagramSpeedSlider" Grid.Row="1" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
-                                </Grid>
-                                <!-- Surface menu grid -->
-                                <Grid Name="ggvDiagramResultsAnalysisSurfaceMenuGrid" Grid.Row="2" Grid.ColumnSpan="6" Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Axis data text line -->
-                                    <TextBlock Text="Axis Data:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <!-- X axis line -->
-                                    <TextBlock Text="X Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceXAxisDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                    <!-- Y axis line -->
-                                    <TextBlock Text="Y Data" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceYAxisDataComboBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                    <!-- Y axis line -->
-                                    <TextBlock Text="Z Data" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="ggvDiagramResultsAnalysisSurfaceZAxisDataComboBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <!-- Results Analysis Docking Manager: Lap Time Simulation-->
-                        <Grid Name="lapTimeSimulationResultsAnalysisGrid" Visibility="Visible">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="250"/>
-                            </Grid.ColumnDefinitions>
-                            <!-- Loadcase menu grid -->
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <!-- Loadcases listbox -->
-                                <TextBlock Text="Analysis Templates:" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="Bold"/>
-                                <ListBox Name="lapTimeSimulationResultsAnalysisTemplatesListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_LapTimeSimulationResultsAnalysisTemplatesListBox_SelectionChanged"/>
-                                <!-- Loadcases listbox add and delete buttons -->
-                                <Button Name="lapTimeSimulationResultsAnalysisAddTemplateToListBox" Content="Add" 
-                                        Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2" Click="_LapTimeSimulationResultsAnalysisAddTemplateToListBox_Click"/>
-                                <Button Name="lapTimeSimulationResultsAnalysisDeleteTemplateOfListBox" Content="Delete"
-                                        Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2" Click="_LapTimeSimulationResultsAnalysisDeleteTemplateOfListBox_Click"/>
-                                <!-- Loadcase ID line -->
-                                <TextBlock Text="Template ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <TextBox Name="lapTimeSimulationResultsAnalysisTemplateIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                <!-- Description line -->
-                                <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="lapTimeSimulationResultsAnalysisTemplateDescriptionTextBox" 
-                                         Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                 <!-- Lap Time Simulation Results list line -->
-                                <TextBlock Text="Results to be displayed:" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:CheckListBox Name="lapTimeSimulationResultsAnalysisResultsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_LapTimeSimulationResultsAnalysisResultsListBox_SelectionChanged">
+                                <TextBlock Text="Results to be displayed:" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:CheckListBox Name="lapTimeSimulationResultsAnalysisResultsListBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_LapTimeSimulationResultsAnalysisResultsListBox_SelectionChanged">
                                     <syncfusion:CheckListBox.ItemTemplate>
                                         <DataTemplate DataType="{x:Type results:LapTimeSimulationResults}">
                                             <Grid>
@@ -2815,27 +2574,136 @@
                                         </DataTemplate>
                                     </syncfusion:CheckListBox.ItemTemplate>
                                 </syncfusion:CheckListBox>
+                                <!-- Axis data text line -->
+                                <TextBlock Text="Axis Data:" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                <!-- X axis line -->
+                                <TextBlock Text="X Data" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Aerodynamic Drag Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Side Force Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Pitch Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Yaw Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Drag Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Side Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Lift Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Pitch Moment"/>
+                                    <ComboBoxItem Content="Aerodynamic Yaw Moment"/>
+                                    <ComboBoxItem Content="Distance"/>
+                                    <ComboBoxItem Content="Engine Available Power"/>
+                                    <ComboBoxItem Content="Engine Power"/>
+                                    <ComboBoxItem Content="Engine Power Usage"/>
+                                    <ComboBoxItem Content="Fuel Consumption"/>
+                                    <ComboBoxItem Content="Gear"/>
+                                    <ComboBoxItem Content="Inertia Efficiency"/>
+                                    <ComboBoxItem Content="Lateral Acceleration"/>
+                                    <ComboBoxItem Content="Lateral Force"/>
+                                    <ComboBoxItem Content="Longitudinal Acceleration"/>
+                                    <ComboBoxItem Content="Longitudinal Force"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Sprung"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Total"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Unsprung"/>
+                                    <ComboBoxItem Content="Front Brakes Available Power"/>
+                                    <ComboBoxItem Content="Front Brakes Power"/>
+                                    <ComboBoxItem Content="Front Brakes Power Usage"/>
+                                    <ComboBoxItem Content="Front Ride Height"/>
+                                    <ComboBoxItem Content="Front Suspension Deflection"/>
+                                    <ComboBoxItem Content="Front Wheel Angular Speed"/>
+                                    <ComboBoxItem Content="Front Wheel Load"/>
+                                    <ComboBoxItem Content="Front Wheel Longitudinal Force"/>
+                                    <ComboBoxItem Content="Front Wheel Radius"/>
+                                    <ComboBoxItem Content="Front Wheel Torque"/>
+                                    <ComboBoxItem Content="Rear Brakes Available Power"/>
+                                    <ComboBoxItem Content="Rear Brakes Power"/>
+                                    <ComboBoxItem Content="Rear Brakes Power Usage"/>
+                                    <ComboBoxItem Content="Rear Ride Height"/>
+                                    <ComboBoxItem Content="Rear Suspension Deflection"/>
+                                    <ComboBoxItem Content="Rear Wheel Angular Speed"/>
+                                    <ComboBoxItem Content="Rear Wheel Load"/>
+                                    <ComboBoxItem Content="Rear Wheel Longitudinal Force"/>
+                                    <ComboBoxItem Content="Rear Wheel Radius"/>
+                                    <ComboBoxItem Content="Rear Wheel Torque"/>
+                                    <ComboBoxItem Content="Speed"/>
+                                    <ComboBoxItem Content="Time"/>
+                                    <ComboBoxItem Content="Vertical Load - Total"/>
+                                </ComboBox>
+                                <!-- Y axis line -->
+                                <TextBlock Text="Y Data" Grid.Row="4" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Aerodynamic Drag Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Side Force Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Pitch Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Yaw Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Drag Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Side Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Lift Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Pitch Moment"/>
+                                    <ComboBoxItem Content="Aerodynamic Yaw Moment"/>
+                                    <ComboBoxItem Content="Distance"/>
+                                    <ComboBoxItem Content="Engine Available Power"/>
+                                    <ComboBoxItem Content="Engine Power"/>
+                                    <ComboBoxItem Content="Engine Power Usage"/>
+                                    <ComboBoxItem Content="Fuel Consumption"/>
+                                    <ComboBoxItem Content="Gear"/>
+                                    <ComboBoxItem Content="Inertia Efficiency"/>
+                                    <ComboBoxItem Content="Lateral Acceleration"/>
+                                    <ComboBoxItem Content="Lateral Force"/>
+                                    <ComboBoxItem Content="Longitudinal Acceleration"/>
+                                    <ComboBoxItem Content="Longitudinal Force"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Sprung"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Total"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Unsprung"/>
+                                    <ComboBoxItem Content="Front Brakes Available Power"/>
+                                    <ComboBoxItem Content="Front Brakes Power"/>
+                                    <ComboBoxItem Content="Front Brakes Power Usage"/>
+                                    <ComboBoxItem Content="Front Ride Height"/>
+                                    <ComboBoxItem Content="Front Suspension Deflection"/>
+                                    <ComboBoxItem Content="Front Wheel Angular Speed"/>
+                                    <ComboBoxItem Content="Front Wheel Load"/>
+                                    <ComboBoxItem Content="Front Wheel Longitudinal Force"/>
+                                    <ComboBoxItem Content="Front Wheel Radius"/>
+                                    <ComboBoxItem Content="Front Wheel Torque"/>
+                                    <ComboBoxItem Content="Rear Brakes Available Power"/>
+                                    <ComboBoxItem Content="Rear Brakes Power"/>
+                                    <ComboBoxItem Content="Rear Brakes Power Usage"/>
+                                    <ComboBoxItem Content="Rear Ride Height"/>
+                                    <ComboBoxItem Content="Rear Suspension Deflection"/>
+                                    <ComboBoxItem Content="Rear Wheel Angular Speed"/>
+                                    <ComboBoxItem Content="Rear Wheel Load"/>
+                                    <ComboBoxItem Content="Rear Wheel Longitudinal Force"/>
+                                    <ComboBoxItem Content="Rear Wheel Radius"/>
+                                    <ComboBoxItem Content="Rear Wheel Torque"/>
+                                    <ComboBoxItem Content="Speed"/>
+                                    <ComboBoxItem Content="Time"/>
+                                    <ComboBoxItem Content="Vertical Load - Total"/>
+                                </ComboBox>
+                                <!-- Curve customization line -->
+                                <TextBlock Text="Customization:" Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                <!-- Curves type line -->
+                                <TextBlock Text="Curves type" Grid.Row="6" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Line"/>
+                                    <ComboBoxItem Content="Scatter"/>
+                                </ComboBox>
                             </Grid>
-                            <!-- Charts Tab Control -->
-                            <syncfusion:TabControlExt Name="lapTimeSimulationResultsAnalysisChartTabControl" Grid.Column="1"
-                                                      EnableLabelEdit="True" ShowTabItemContextMenu="True" CloseButtonType="Both"
-                                                      TabItemSize="ShrinkToFit" TabItemLayout="MultiLineWithFullWidth"
-                                                      TabScrollButtonVisibility="Visible"
-                                                      IsNewButtonEnabled="True" NewButtonAlignment="First"
-                                                      NewButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_NewButtonClick"
-                                                      NewButtonStyle="{StaticResource AddChartTabButton}"
-                                                      CloseMode="Delete" OnCloseButtonClick="_LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick"
-                                                      SelectionChanged="_LapTimeSimulationResultsAnalysisChartTabControl_SelectionChanged">
-                                <syncfusion:TabItemExt Header="Chart1">
-                                    <Grid/>
-                                </syncfusion:TabItemExt>
-                            </syncfusion:TabControlExt>
-                            <!-- Charts options grid -->
-                            <Grid Grid.Column="2">
+                            <!-- 2D chart's grid -->
+                            <Grid Name="resultsAnalysis2DChartGrid" Grid.Column="1"/>
+                        </Grid>
+                        <Grid Name="resultsAnalysisTrackMapsGrid" Visibility="Visible">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Chart options grid -->
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -2845,90 +2713,78 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <!-- Current chart options -->
-                                <TextBlock Text="Current Chart Options" FontWeight="Bold" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <!-- Chart type ComboBox -->
-                                <TextBlock Text="Chart Type:" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="lapTimeSimulationResultsAnalysisChartTypeComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysisChartTypeComboBox_SelectionChanged" SelectedValuePath="Content">
-                                    <ComboBoxItem Content="2D Chart"/>
-                                    <ComboBoxItem Content="Track Map"/>
+                                <!-- Lap Time Simulation Results list line -->
+                                <TextBlock Text="Simulation:" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <ComboBox Name="lapTimeSimulationResultsAnalysisResultsComboBox" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="6" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysisResultsComboBox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type results:LapTimeSimulationResults}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Path=ID}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Path=LapTime}" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Focusable="False"/>
+                                                <TextBlock Text="s" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <!-- 2D Chart menu grid -->
-                                <Grid Name="lapTimeSimulationResultsAnalysis2DChartMenuGrid" Grid.Row="2" Grid.ColumnSpan="6" Visibility="Visible">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Axis data text line -->
-                                    <TextBlock Text="Axis Data:" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <!-- X axis line -->
-                                    <TextBlock Text="X Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
-                                        <ComboBoxItem Content="Time"/>
-                                        <ComboBoxItem Content="Distance"/>
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                    <!-- Y axis line -->
-                                    <TextBlock Text="Y Data" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
-                                        <ComboBoxItem Content="Time"/>
-                                        <ComboBoxItem Content="Distance"/>
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                    <!-- Curve customization line -->
-                                    <TextBlock Text="Customization:" Grid.Row="3" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <!-- Curves type line -->
-                                    <TextBlock Text="Curves type" Grid.Row="4" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox_SelectionChanged" SelectedValuePath="Content">
-                                        <ComboBoxItem Content="Line"/>
-                                        <ComboBoxItem Content="Scatter"/>
-                                    </ComboBox>
-                                </Grid>
-                                <!-- Track Map menu grid -->
-                                <Grid Name="lapTimeSimulationResultsAnalysisTrackMapMenuGrid" Grid.Row="2" Grid.ColumnSpan="6" Visibility="Collapsed">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Color parameter line -->
-                                    <TextBlock Text="Parameter" Grid.Row="0" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                                    <ComboBox Name="lapTimeSimulationResultsAnalysisTrackMapParameterDataComboBox" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
-                                        <ComboBoxItem Content="Time"/>
-                                        <ComboBoxItem Content="Distance"/>
-                                        <ComboBoxItem Content="Speed"/>
-                                        <ComboBoxItem Content="Longitudinal Acceleration"/>
-                                        <ComboBoxItem Content="Lateral Acceleration"/>
-                                        <ComboBoxItem Content="Gear"/>
-                                    </ComboBox>
-                                </Grid>
+                                <!--Chart data line -->
+                                <TextBlock Text="Chart Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                                <ComboBox Name="resultsAnalysisTrackMapDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_ResultsAnalysisTrackMapDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="Aerodynamic Drag Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Side Force Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Pitch Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Yaw Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Drag Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Side Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Lift Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Pitch Moment"/>
+                                    <ComboBoxItem Content="Aerodynamic Yaw Moment"/>
+                                    <ComboBoxItem Content="Distance"/>
+                                    <ComboBoxItem Content="Engine Available Power"/>
+                                    <ComboBoxItem Content="Engine Power"/>
+                                    <ComboBoxItem Content="Engine Power Usage"/>
+                                    <ComboBoxItem Content="Fuel Consumption"/>
+                                    <ComboBoxItem Content="Gear"/>
+                                    <ComboBoxItem Content="Inertia Efficiency"/>
+                                    <ComboBoxItem Content="Lateral Acceleration"/>
+                                    <ComboBoxItem Content="Lateral Force"/>
+                                    <ComboBoxItem Content="Longitudinal Acceleration"/>
+                                    <ComboBoxItem Content="Longitudinal Force"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Sprung"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Total"/>
+                                    <ComboBoxItem Content="Longitudinal Load Transfer - Unsprung"/>
+                                    <ComboBoxItem Content="Front Brakes Available Power"/>
+                                    <ComboBoxItem Content="Front Brakes Power"/>
+                                    <ComboBoxItem Content="Front Brakes Power Usage"/>
+                                    <ComboBoxItem Content="Front Ride Height"/>
+                                    <ComboBoxItem Content="Front Suspension Deflection"/>
+                                    <ComboBoxItem Content="Front Wheel Angular Speed"/>
+                                    <ComboBoxItem Content="Front Wheel Load"/>
+                                    <ComboBoxItem Content="Front Wheel Longitudinal Force"/>
+                                    <ComboBoxItem Content="Front Wheel Radius"/>
+                                    <ComboBoxItem Content="Front Wheel Torque"/>
+                                    <ComboBoxItem Content="Rear Brakes Available Power"/>
+                                    <ComboBoxItem Content="Rear Brakes Power"/>
+                                    <ComboBoxItem Content="Rear Brakes Power Usage"/>
+                                    <ComboBoxItem Content="Rear Ride Height"/>
+                                    <ComboBoxItem Content="Rear Suspension Deflection"/>
+                                    <ComboBoxItem Content="Rear Wheel Angular Speed"/>
+                                    <ComboBoxItem Content="Rear Wheel Load"/>
+                                    <ComboBoxItem Content="Rear Wheel Longitudinal Force"/>
+                                    <ComboBoxItem Content="Rear Wheel Radius"/>
+                                    <ComboBoxItem Content="Rear Wheel Torque"/>
+                                    <ComboBoxItem Content="Speed"/>
+                                    <ComboBoxItem Content="Time"/>
+                                    <ComboBoxItem Content="Vertical Load - Total"/>
+                                </ComboBox>
                             </Grid>
+                            <!-- 2D chart's grid -->
+                            <Grid Name="resultsAnalysisTrackMapGrid" Grid.Column="1"/>
                         </Grid>
                     </Grid>
                 </ScrollViewer>

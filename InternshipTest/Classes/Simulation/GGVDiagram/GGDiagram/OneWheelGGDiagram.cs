@@ -114,7 +114,7 @@ namespace InternshipTest.Simulation
                 {
                     alpha = alphas[iAlpha];
                     // Rolling resistance moment [Nm]
-                    double tireMy = Car.Tire.TireModel.GetTireMy(0, alpha, tireFz, 0, Speed);
+                    double tireMy = 0;
                     double carLongitudinalForce;
                     double carLateralForce;
                     if (kappa < 0)

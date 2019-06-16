@@ -33,13 +33,13 @@ namespace InternshipTest.Vehicle
         /// </summary>
         public double BrakingTorque { get; set; }
         /// <summary>
-        /// Engine's specific fuel consumption at a given rotational speed [kg/W].
+        /// Engine's specific fuel consumption at a given rotational speed [kg/(W*s)].
         /// </summary>
         public double SpecFuelCons { get; set; }
         public double SpecFuelConsDisplay
         {
-            get { return SpecFuelCons * Math.Pow(10, 6); }
-            set { SpecFuelCons = value * Math.Pow(10, -6); }
+            get { return SpecFuelCons * Math.Pow(10, 6) * 3600; }
+            set { SpecFuelCons = value * Math.Pow(10, -6) / 3600; }
         }
         #endregion
         #region Constructors

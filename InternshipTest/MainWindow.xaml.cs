@@ -59,10 +59,7 @@ namespace InternshipTest
         public MainWindow()
         {
             InitializeComponent();
-            // Sets the application theme
-            // CurrentVisualStyle = "VisualStudio2013";
-            // this.Loaded += OnLoaded;
-
+            
             _PopulateFields();
         }
         /// <summary>
@@ -432,18 +429,7 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
         }
-
-        /// <summary>
-        /// Changes the application theme according o the ComboBox selection.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _ThemeSelectionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            ComboBoxItem themeItem = themeSelectionComboBox.SelectedItem as ComboBoxItem;
-            CurrentVisualStyle = themeItem.Content.ToString();
-        }
-
+        
         /// <summary>
         /// Collapses the UI's options menu.
         /// </summary>
@@ -480,8 +466,8 @@ namespace InternshipTest
             optimizePathInputDockingManager.Visibility = Visibility.Collapsed;
             ggvDiagramDockingManager.Visibility = Visibility.Collapsed;
             lapTimeSimulationDockingManager.Visibility = Visibility.Collapsed;
-            ggvDiagramResultsAnalysisGrid.Visibility = Visibility.Collapsed;
-            lapTimeSimulationResultsAnalysisGrid.Visibility = Visibility.Collapsed;
+            resultsAnalysis2DChartsGrid.Visibility = Visibility.Collapsed;
+            resultsAnalysisTrackMapsGrid.Visibility = Visibility.Collapsed;
             _HideOptionsButtons();
         }
 
@@ -597,9 +583,9 @@ namespace InternshipTest
                 // Lap Time Simulations
                 foreach (Simulation.LapTimeSimulation lapTimeSimulation in lapTimeSimulationListBox.Items)
                     project.LapTimeSimulations.Add(lapTimeSimulation);
-                // Lap Time Simulations Analysis Templates
-                foreach (UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate in lapTimeSimulationResultsAnalysisTemplatesListBox.Items)
-                    project.LapTimeSimulationAnalysisTemplates.Add(analysisTemplate);
+                // Lap Time Simulation Results
+                foreach (Results.LapTimeSimulationResults lapTimeSimulationResults in lapTimeSimulationResultsAnalysisResultsListBox.Items)
+                    project.LapTimeSimulationResults.Add(lapTimeSimulationResults);
                 // Saves the project to the file
                 project.Save(saveFileDialog.FileName);
                 _HideOptionsButtons();
@@ -705,9 +691,12 @@ namespace InternshipTest
             // Lap Time Simulations
             foreach (Simulation.LapTimeSimulation lapTimeSimulation in project.LapTimeSimulations)
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
-            // Lap Time Simulations Analysis Templates
-            foreach (UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate in project.LapTimeSimulationAnalysisTemplates)
-                lapTimeSimulationResultsAnalysisTemplatesListBox.Items.Add(analysisTemplate);
+            // Lap Time Simulation Results
+            foreach (Results.LapTimeSimulationResults lapTimeSimulationResults in project.LapTimeSimulationResults)
+            {
+                lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(lapTimeSimulationResults);
+                lapTimeSimulationResultsAnalysisResultsComboBox.Items.Add(lapTimeSimulationResults);
+            }
             _HideOptionsButtons();
         }
 
@@ -765,8 +754,6 @@ namespace InternshipTest
             // Lap Time Simulations
             lapTimeSimulationListBox.Items.Clear();
             lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
-            // Lap Time Simulation Results Analysis
-            lapTimeSimulationResultsAnalysisTemplatesListBox.Items.Clear();
         }
 
         #endregion
@@ -935,24 +922,24 @@ namespace InternshipTest
         #endregion
         #region Results Analysis Button Methods
         /// <summary>
-        /// Changes the work environment to the GGV Diagram results analysis environment.
+        /// Changes the work environment to the 2D Chart results analysis environment.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _GGVDiagramResultsAnalysisButton_Click(object sender, RoutedEventArgs e)
+        private void _ResultsAnalysis2DChartButton_Click(object sender, RoutedEventArgs e)
         {
             _CollapseMainDockingManagerContent();
-            ggvDiagramResultsAnalysisGrid.Visibility = Visibility.Visible;
+            resultsAnalysis2DChartsGrid.Visibility = Visibility.Visible;
         }
         /// <summary>
-        /// Changes the work environment to the lap time simulation results analysis environment.
+        /// Changes the work environment to thetrack map results analysis environment.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisButton_Click(object sender, RoutedEventArgs e)
+        private void _ResultsAnalysisTrackMapButton_Click(object sender, RoutedEventArgs e)
         {
             _CollapseMainDockingManagerContent();
-            lapTimeSimulationResultsAnalysisGrid.Visibility = Visibility.Visible;
+            resultsAnalysisTrackMapsGrid.Visibility = Visibility.Visible;
         }
         #endregion
         #endregion
@@ -3943,10 +3930,11 @@ namespace InternshipTest
                 // Initializes a new object
                 Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(id, description, path, ggvDiagrams, isFirstLap);
                 Results.LapTimeSimulationResults results = lapTimeSimulation.RunLapTimeSimulation();
-                results.GetElapsedTimeAndLapTime();
+                results.GetAllResults();
                 // Adds the object to the listbox and the ComboBox
                 lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
                 lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(results);
+                lapTimeSimulationResultsAnalysisResultsComboBox.Items.Add(results);
             }
             else System.Windows.MessageBox.Show(
                "Could not create Lap Time Simulation. \n " +
@@ -3969,8 +3957,9 @@ namespace InternshipTest
             // Checks if there's a listbox item selected and then removes it
             if (lapTimeSimulationListBox.SelectedItems.Count == 1)
             {
-                lapTimeSimulationListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
                 lapTimeSimulationResultsAnalysisResultsListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
+                lapTimeSimulationResultsAnalysisResultsComboBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
+                lapTimeSimulationListBox.Items.RemoveAt(lapTimeSimulationListBox.Items.IndexOf(lapTimeSimulationListBox.SelectedItem));
             }
         }
 
@@ -4010,7 +3999,7 @@ namespace InternshipTest
             if (lapTimeSimulationNewSectorIndexComboBox.SelectedItem != null &&
                 lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem != null)
             {
-                int sectorIndex = int.Parse(lapTimeSimulationNewSectorIndexComboBox.Text);
+                int sectorIndex = lapTimeSimulationNewSectorIndexComboBox.Items.IndexOf(lapTimeSimulationNewSectorIndexComboBox.SelectedItem) + 1;
                 Simulation.GGVDiagram ggvDiagram = lapTimeSimulationNewSectorGGVDiagramComboBox.SelectedItem as Simulation.GGVDiagram;
                 Simulation.LapTimeSimulationSectorSetup sectorSetup = new Simulation.LapTimeSimulationSectorSetup(sectorIndex, ggvDiagram);
                 lapTimeSimulationGGVDiagramPerSectorListBox.Items.Add(sectorSetup);
@@ -4058,113 +4047,7 @@ namespace InternshipTest
         #endregion
 
         #region Results Analysis Methods
-
-        #region GGV Diagram
-
-        /// <summary>
-        /// Adds a new chart tab to the GGV Diagram results analysis environment.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _GGVDiagramResultsAnalysisChartTabControl_NewButtonClick(object sender, EventArgs e)
-        {
-            TabItemExt item = new TabItemExt
-            {
-
-                Header = "Chart" + (ggvDiagramResultsAnalysisChartTabControl.Items.Count + 1),
-
-            };
-            ggvDiagramResultsAnalysisChartTabControl.Items.Add(item);
-        }
-
-        /// <summary>
-        /// Adds a new chart to the GGV Diagram results analysis environment when the last chart is closed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _GGVDiagramResultsAnalysisChartTabControl_OnCloseButtonClick(object sender, CloseTabEventArgs e)
-        {
-            if (ggvDiagramResultsAnalysisChartTabControl.Items.Count == 1)
-            {
-                TabItemExt item = new TabItemExt
-                {
-
-                    Header = "Chart" + (ggvDiagramResultsAnalysisChartTabControl.Items.Count),
-
-                };
-                ggvDiagramResultsAnalysisChartTabControl.Items.Add(item);
-            }
-        }
-
-        #endregion
-
         #region Lap Time Simulation
-
-        /// <summary>
-        /// Adds a new chart tab to the Lap Time Simulation results analysis environment.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisChartTabControl_NewButtonClick(object sender, EventArgs e)
-        {
-            TabItemExt item = new TabItemExt
-            {
-                Header = "Chart " + (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count + 1),
-                Content = new Grid()
-            };
-            lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(item);
-        }
-
-        /// <summary>
-        /// Adds a new chart to the Lap Time Simulation results analysis environment when the last chart is closed.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick(object sender, CloseTabEventArgs e)
-        {
-            if (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count == 1)
-            {
-                TabItemExt item = new TabItemExt
-                {
-
-                    Header = "Chart" + (lapTimeSimulationResultsAnalysisChartTabControl.Items.Count),
-
-                };
-                lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// Updates the current lap time simulation analysis chart accordingly to the specified type in the ComboBox.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisChartTypeComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            switch (lapTimeSimulationResultsAnalysisChartTypeComboBox.SelectedItem.ToString())
-            {
-                case "2D Chart":
-                    lapTimeSimulationResultsAnalysis2DChartMenuGrid.Visibility = Visibility.Visible;
-                    lapTimeSimulationResultsAnalysisTrackMapMenuGrid.Visibility = Visibility.Collapsed;
-                    break;
-                case "Track Map":
-                    lapTimeSimulationResultsAnalysis2DChartMenuGrid.Visibility = Visibility.Collapsed;
-                    lapTimeSimulationResultsAnalysisTrackMapMenuGrid.Visibility = Visibility.Visible;
-                    break;
-                default:
-                    break;
-            }
-            _ClearCurrentLapTimeSimulationAnalysisChart();
-        }
-
-        /// <summary>
-        /// Clears the current lap time simulation analysis chart
-        /// </summary>
-        private void _ClearCurrentLapTimeSimulationAnalysisChart()
-        {
-            TabItemExt currentChartTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
-            currentChartTab.Content = new Grid();
-        }
 
         #region 2D Chart
 
@@ -4179,7 +4062,6 @@ namespace InternshipTest
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
-            else _ClearCurrentLapTimeSimulationAnalysisChart();
         }
 
         /// <summary>
@@ -4193,7 +4075,6 @@ namespace InternshipTest
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
-            else _ClearCurrentLapTimeSimulationAnalysisChart();
         }
 
         /// <summary>
@@ -4207,7 +4088,6 @@ namespace InternshipTest
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
-            else _ClearCurrentLapTimeSimulationAnalysisChart();
         }
         /// <summary>
         /// Updates the current lap time simulation analysis 2D chart when the simulation results checklistbox item gets changed.
@@ -4220,7 +4100,6 @@ namespace InternshipTest
             {
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
-            else _ClearCurrentLapTimeSimulationAnalysisChart();
         }
         /// <summary>
         /// Updates the current lap time simulation analysis 2D chart
@@ -4235,176 +4114,64 @@ namespace InternshipTest
             string xDataType = lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.SelectedValue.ToString();
             string yDataType = lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.SelectedValue.ToString();
             string lineType = lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.SelectedValue.ToString();
-            // Initializes the new chart
-            UIClasses.ResultsAnalysis.LapTimeSimulation2DChart chart = new UIClasses.ResultsAnalysis.LapTimeSimulation2DChart(xDataType, yDataType, lineType);
-            chart.InitializeChart();
+            // Initializes the new chart parameters object
+            UIClasses.ResultsAnalysis.LapTimeSimulation2DChartParameters chartParameters = new UIClasses.ResultsAnalysis.LapTimeSimulation2DChartParameters(xDataType, yDataType, lineType);
+            SfChart chart = (new UIClasses.ResultsAnalysis.LapTimeSimulation2DChartParameters()).InitializeChart();
             // Sweeps the lap time simulation results and adds the data to the chart.
             foreach (Results.LapTimeSimulationResults results in lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems)
             {
                 // Initializes the chart's data series
                 Results.LapTimeSimulationResultsViewModel resultsViewModel = new Results.LapTimeSimulationResultsViewModel(results);
-                chart.AddDataToChart(resultsViewModel);
+                chart = chartParameters.AddDataToChart(chart, results.ID, resultsViewModel);
             }
             // Adds the chart to the current chart tab
-            Grid grid = new Grid();
-            grid.Children.Add(chart);
-            TabItemExt currentChartTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
-            currentChartTab.Content = grid;
-        }
-        /// <summary>
-        /// Gets the current tab's chart parameters, displays it in the UI and updates the chart with the selected data.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisChartTabControl_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            // Gets the current tab's grid and checks if it has a chart in it.
-            TabItemExt currentTab = lapTimeSimulationResultsAnalysisChartTabControl.SelectedItem as TabItemExt;
-            Grid currentGrid = currentTab.Content as Grid;
-            // Chechs if there is a chart in the current tab.
-            if (currentGrid.Children.Count > 0)
-            {
-                // Gets the chart's type
-                Type chartType = currentGrid.Children[0].GetType();
-                // Extract the chart's parameters and displays them at the UI based on its type
-                if (chartType == (new UIClasses.ResultsAnalysis.LapTimeSimulation2DChart().GetType()))
-                {
-                    // Gets the grid's chart
-                    UIClasses.ResultsAnalysis.LapTimeSimulation2DChart chart = currentGrid.Children[0] as UIClasses.ResultsAnalysis.LapTimeSimulation2DChart;
-                    switch (chart.ResultTypeX)
-                    {
-                        // Gets the result type of the X axis and displays it in the UI
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Time:
-                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Time";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Distance:
-                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Distance";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Speed:
-                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Speed";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LongitudinalAcceleration:
-                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Longitudinal Acceleration";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LateralAcceleration:
-                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Lateral Acceleration";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Gear:
-                            lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox.Text = "Gear";
-                            break;
-                        default:
-                            break;
-                    }
-                    // Gets the result type of the Y axis and displays it in the UI
-                    switch (chart.ResultTypeY)
-                    {
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Time:
-                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Time";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Distance:
-                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Distance";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Speed:
-                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Speed";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LongitudinalAcceleration:
-                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Longitudinal Acceleration";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.LateralAcceleration:
-                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Lateral Acceleration";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.ResultTypes.Gear:
-                            lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox.Text = "Gear";
-                            break;
-                        default:
-                            break;
-                    }
-                    // Gets the line type and displays it in the UI
-                    switch (chart.LineType)
-                    {
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.LineTypes.Line:
-                            lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.Text = "Line";
-                            break;
-                        case UIClasses.ResultsAnalysis.LapTimeSimulation2DChart.LineTypes.Scatter:
-                            lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox.Text = "Scatter";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            // Updates the results graph to match the data.
-            _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+            resultsAnalysis2DChartGrid.Children.Clear();
+            resultsAnalysis2DChartGrid.Children.Add(chart);
         }
 
         #endregion
 
-        #region Analysis Template
+        #region Track Map
         /// <summary>
-        /// Adds an analysis template to the listbox
+        /// Updates the track map when the results set is changed in the combobox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisAddTemplateToListBox_Click(object sender, RoutedEventArgs e)
+        private void _LapTimeSimulationResultsAnalysisResultsComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (lapTimeSimulationResultsAnalysisTemplateIDTextBox.Text != "")
-            {
-                // Gets the object's data
-                string id = lapTimeSimulationResultsAnalysisTemplateIDTextBox.Text;
-                string description = lapTimeSimulationResultsAnalysisTemplateDescriptionTextBox.Text;
-                // Gets the tab list
-                List<TabItemExt> chartTabs = new List<TabItemExt>();
-                foreach (TabItemExt chartTab in lapTimeSimulationResultsAnalysisChartTabControl.Items)
-                {
-                    chartTabs.Add(chartTab);
-                }
-                // Initializes the object
-                UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate = new UIClasses.ResultsAnalysis.AnalysisTemplate(id, description, chartTabs);
-                // Adds the template to the listbox
-                lapTimeSimulationResultsAnalysisTemplatesListBox.Items.Add(analysisTemplate);
-            }
-            else System.Windows.MessageBox.Show(
-               "Could not create Analysis Template. \n " +
-               "    It should have an ID.",
-               "Error",
-               MessageBoxButton.OK,
-               MessageBoxImage.Error);
+            _UpdateCurrentLapTimeSimulationAnalysisTrackMap();
         }
         /// <summary>
-        /// Deletes an analysis template of the listbox
+        /// Updates the track map when the results type is changed in the combobox.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisDeleteTemplateOfListBox_Click(object sender, RoutedEventArgs e)
+        private void _ResultsAnalysisTrackMapDataComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            // Checks if there's a listbox item selected and then removes it
-            if (lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItems.Count == 1)
-            {
-                lapTimeSimulationResultsAnalysisTemplatesListBox.Items.RemoveAt(lapTimeSimulationResultsAnalysisTemplatesListBox.Items.IndexOf(lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItem));
-            }
+            _UpdateCurrentLapTimeSimulationAnalysisTrackMap();
         }
         /// <summary>
-        /// Loads an analysis template from the listbox.
+        /// Updates th track map.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void _LapTimeSimulationResultsAnalysisTemplatesListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void _UpdateCurrentLapTimeSimulationAnalysisTrackMap()
         {
-            // Checks if there's a listbox item selected
-            if (lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItems.Count == 1)
+            if (lapTimeSimulationResultsAnalysisResultsComboBox.SelectedItem == null || resultsAnalysisTrackMapDataComboBox.SelectedValue == null)
             {
-                // Gets the selected object
-                UIClasses.ResultsAnalysis.AnalysisTemplate analysisTemplate = lapTimeSimulationResultsAnalysisTemplatesListBox.SelectedItem as UIClasses.ResultsAnalysis.AnalysisTemplate;
-                // Writes the properties in the UI
-                lapTimeSimulationResultsAnalysisTemplateIDTextBox.Text = analysisTemplate.ID;
-                lapTimeSimulationResultsAnalysisTemplateDescriptionTextBox.Text = analysisTemplate.Description;
-                // Clears the tab control and adds the appropriate tabs
-                lapTimeSimulationResultsAnalysisChartTabControl.Items.Clear();
-                foreach (TabItemExt chartTab in analysisTemplate.ChartsTabs)
-                {
-                    lapTimeSimulationResultsAnalysisChartTabControl.Items.Add(chartTab);
-                }
+                return;
             }
+            // Gets the track map's parameters
+            string resultType = resultsAnalysisTrackMapDataComboBox.SelectedValue.ToString();
+            // Initializes the new track map parameters object
+            UIClasses.ResultsAnalysis.LapTimeSimulationTrackMapParameters trackMapParameters = new UIClasses.ResultsAnalysis.LapTimeSimulationTrackMapParameters(resultType);
+            // Gets the results view model
+            Results.LapTimeSimulationResults lapTimeSimulationResults = lapTimeSimulationResultsAnalysisResultsComboBox.SelectedItem as Results.LapTimeSimulationResults;
+            Results.LapTimeSimulationResultsViewModel lapTimeSimulationResultsViewModel = new Results.LapTimeSimulationResultsViewModel(lapTimeSimulationResults);
+            // Creates the track map
+            double size = mainWorkEnvironment.ActualHeight;
+            SfSurfaceChart trackMap = trackMapParameters.AddDataToTrackMap(lapTimeSimulationResultsViewModel, size);
+            // Updates the track map's grid
+            resultsAnalysisTrackMapGrid.Children.Clear();
+            resultsAnalysisTrackMapGrid.Children.Add(trackMap);
         }
         #endregion
 

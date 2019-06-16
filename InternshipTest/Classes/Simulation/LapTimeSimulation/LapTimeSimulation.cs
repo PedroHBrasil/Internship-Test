@@ -54,6 +54,8 @@ namespace InternshipTest.Simulation
             results = _GetFinalDynamicStates(results);
             results.ID = ID;
             results.Description = Description;
+            results.GGVDiagramsPerSector = GGVDiagramsPerSector;
+            results.LocalSectors = Path.LocalSectorIndex.ToArray();
             return results;
         }
 
@@ -122,7 +124,7 @@ namespace InternshipTest.Simulation
         /// <returns> The lap time simulaton results initial guess. </returns>
         private Results.LapTimeSimulationResults _GetDynamicStatesAssociatedWithTheMaximumPossibleSpeeds(List<Dictionary<string, double[]>> interpolationCurvesDictionaries)
         {
-            Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults(this, Path.AmountOfPointsInPath);
+            Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults(Path);
             // Path points "for" loop
             for (int iPathPoint = 0; iPathPoint < Path.AmountOfPointsInPath; iPathPoint++)
             {
