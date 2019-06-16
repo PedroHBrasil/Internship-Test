@@ -562,7 +562,7 @@ namespace InternshipTest.Simulation
                         { 1, 0, -1/wheelsRadiuses[0], 0},
                         { 0, 1, 0, -1/wheelsRadiuses[1]}
                     });
-                    var b = Vector<double>.Build.Dense(new double[] { carLongitudinalForce - aerodynamicDrag });
+                    var b = Vector<double>.Build.Dense(new double[] { carLongitudinalForce - aerodynamicDrag , 0, 0, 0});
                     var x = A.Solve(b);
                     // Gets the results out of the vector x
                     wheelsLongitudinalForces[0] = x[0];
@@ -698,7 +698,7 @@ namespace InternshipTest.Simulation
                     break;
                 case CarModelType.TwoWheel:
                     double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] + (1 - TwoWheelCar.Transmission.TorqueBias) * (wheelsAngularSpeeds[1] - wheelsAngularSpeeds[0]);
-                    alglib.spline1dbuildlinear(OneWheelCar.WheelRotationalSpeedCurve.ToArray(), OneWheelCar.WheelSpecFuelConsCurve.ToArray(), out alglib.spline1dinterpolant twoWheelSpecFuelConsInterp);
+                    alglib.spline1dbuildlinear(TwoWheelCar.WheelRotationalSpeedCurve.ToArray(), TwoWheelCar.WheelSpecFuelConsCurve.ToArray(), out alglib.spline1dinterpolant twoWheelSpecFuelConsInterp);
                     specificFuelConsumption = alglib.spline1dcalc(twoWheelSpecFuelConsInterp, referenceWheelAngularSpeed) * wheelsAngularSpeeds[0];
                     fuelDensity = TwoWheelCar.Engine.FuelDensity;
                     break;
