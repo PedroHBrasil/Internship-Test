@@ -546,7 +546,7 @@ namespace InternshipTest.Results
         {
             if (EnginePowers[iPoint] > 0)
             {
-                LocalFuelConsumptions[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetFuelConsumption(EnginePowers[iPoint], new double[] { FrontWheelsAngularSpeeds[iPoint], RearWheelsAngularSpeeds[iPoint] }, Speeds[iPoint], ElapsedDistances[iPoint]);
+                LocalFuelConsumptions[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetFuelConsumption(EnginePowers[iPoint], new double[] { FrontWheelsAngularSpeeds[iPoint], RearWheelsAngularSpeeds[iPoint] }, Speeds[iPoint], PathResolution);
             }
             else LocalFuelConsumptions[iPoint] = 0;
             FuelConsumptions[iPoint] = LocalFuelConsumptions.Sum();
