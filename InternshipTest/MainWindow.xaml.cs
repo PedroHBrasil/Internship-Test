@@ -26,6 +26,7 @@ using Syncfusion.UI.Xaml.Charts;
 using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Tools.Controls;
 using MathNet.Numerics;
+using System.Threading;
 
 namespace InternshipTest
 {
@@ -59,7 +60,7 @@ namespace InternshipTest
         public MainWindow()
         {
             InitializeComponent();
-            
+
             _PopulateFields();
         }
         /// <summary>
@@ -429,7 +430,7 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
         }
-        
+
         /// <summary>
         /// Collapses the UI's options menu.
         /// </summary>
@@ -1388,7 +1389,7 @@ namespace InternshipTest
             twoWheelAerodynamicMapPointsListBox.Items.Add(aerodynamicMapPoint);
             // Reorders the aerodynamic map points listbox items in ascending order of car height and speed
             List<Vehicle.TwoWheelAerodynamicMapPoint> aerodynamicMapPoints = new List<Vehicle.TwoWheelAerodynamicMapPoint>();
-            foreach (var aerodynamicMapPointItem in oneWheelAerodynamicMapPointsListBox.Items)
+            foreach (var aerodynamicMapPointItem in twoWheelAerodynamicMapPointsListBox.Items)
             {
                 Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicMapPoint = aerodynamicMapPointItem as Vehicle.TwoWheelAerodynamicMapPoint;
                 aerodynamicMapPoints.Add(currentAerodynamicMapPoint);
@@ -1553,8 +1554,8 @@ namespace InternshipTest
                 twoWheelBrakesIDTextBox.Text = brakes.ID;
                 twoWheelBrakesDescriptionTextBox.Text = brakes.Description;
                 twoWheelBrakesBrakeBiasTextBox.Text = (brakes.BrakeBias * 100).ToString("F3");
-                twoWheelBrakesFrontMaximumTorqueTextBox.Text = brakes.FrontMaximumTorque.ToString("F3");
-                twoWheelBrakesRearMaximumTorqueTextBox.Text = brakes.RearMaximumTorque.ToString("F3");
+                twoWheelBrakesFrontMaximumTorqueTextBox.Text = (Math.Abs(brakes.FrontMaximumTorque)).ToString("F3");
+                twoWheelBrakesRearMaximumTorqueTextBox.Text = (Math.Abs(brakes.RearMaximumTorque)).ToString("F3");
             }
         }
 
@@ -2548,6 +2549,25 @@ namespace InternshipTest
             grid.Children.Add(chart);
             TabItemExt currentChartTab = tireModelDisplayChartTabControl.SelectedItem as TabItemExt;
             currentChartTab.Content = grid;
+        }
+
+        /// <summary>
+        /// Adds a new chart to the Tire model display chart analysis environment when the last chart is closed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _LapTimeSimulationResultsAnalysisChartTabControl_OnCloseButtonClick(object sender, CloseTabEventArgs e)
+        {
+            if (tireModelDisplayChartTabControl.Items.Count == 1)
+            {
+                TabItemExt item = new TabItemExt
+                {
+
+                    Header = "Chart" + (tireModelDisplayChartTabControl.Items.Count),
+
+                };
+                tireModelDisplayChartTabControl.Items.Add(item);
+            }
         }
 
         #endregion

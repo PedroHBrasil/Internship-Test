@@ -255,7 +255,11 @@
                             syncfusion:DockingManager.SidePanelDock="Bottom"
                             syncfusion:DockingManager.SideInDockedMode="Bottom"
                             syncfusion:DockingManager.DesiredHeightInDockedMode="10">
-                <TextBox Name="commentsTextBox" Text="Insert project's comments here." TextWrapping="WrapWithOverflow"/>
+                <RichTextBox Background="#FF272E38">
+                    <FlowDocument>
+                        <Paragraph>Insert project's comments here.</Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </ContentControl>
             <ContentControl Name="mainWorkEnvironment" MinHeight="10"
                             syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -677,7 +681,7 @@
                                     <TextBox Name="twoWheelBrakesDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Brake bias line -->
-                                    <TextBlock Text="Brake Bias" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBlock Text="Torque Brake Bias" Grid.Row="4" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <syncfusion:DoubleTextBox Name="twoWheelBrakesBrakeBiasTextBox" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="%" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Front maximum torque line -->
@@ -2690,7 +2694,7 @@
                             <!-- 2D chart's grid -->
                             <Grid Name="resultsAnalysis2DChartGrid" Grid.Column="1"/>
                         </Grid>
-                        <Grid Name="resultsAnalysisTrackMapsGrid" Visibility="Visible">
+                        <Grid Name="resultsAnalysisTrackMapsGrid" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="250"/>
                                 <ColumnDefinition/>
