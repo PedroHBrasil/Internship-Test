@@ -73,20 +73,6 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                         FontSize = 15
                     };
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForceCoefficient:
-                    for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
-                    {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].SideForceCoefficient, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
-                    }
-                    trackMap.YAxis = new SurfaceAxis()
-                    {
-                        Header = "Aero Side Force Coefficient",
-                        Minimum = trackMap.Data.YValues.Min(),
-                        Maximum = trackMap.Data.YValues.Max(),
-                        LabelFormat = "0.00",
-                        FontSize = 15
-                    };
-                    break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftCoefficient:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
@@ -101,28 +87,14 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                         FontSize = 15
                     };
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMomentCoefficient:
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDownforceDistribution:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].PitchMomentCoefficient, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].DownforceDistribution, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {
-                        Header = "Aero Pitch Moment Coefficient",
-                        Minimum = trackMap.Data.YValues.Min(),
-                        Maximum = trackMap.Data.YValues.Max(),
-                        LabelFormat = "0.00",
-                        FontSize = 15
-                    };
-                    break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMomentCoefficient:
-                    for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
-                    {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].YawMomentCoefficient, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
-                    }
-                    trackMap.YAxis = new SurfaceAxis()
-                    {
-                        Header = "Aero Yaw Moment Coefficient",
+                        Header = "Aero Downforce Distribution [%]",
                         Minimum = trackMap.Data.YValues.Min(),
                         Maximum = trackMap.Data.YValues.Max(),
                         LabelFormat = "0.00",
@@ -143,20 +115,6 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                         FontSize = 15
                     };
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForce:
-                    for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
-                    {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].SideForce, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
-                    }
-                    trackMap.YAxis = new SurfaceAxis()
-                    {
-                        Header = "Aero Side Force [N]",
-                        Minimum = trackMap.Data.YValues.Min(),
-                        Maximum = trackMap.Data.YValues.Max(),
-                        LabelFormat = "0.00",
-                        FontSize = 15
-                    };
-                    break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftForce:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
@@ -171,28 +129,28 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                         FontSize = 15
                     };
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMoment:
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicFrontLiftForce:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].AerodynamicPitchMoment, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].FrontLiftForce, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {
-                        Header = "Aero Pitch Moment [Nm]",
+                        Header = "Aero Front Lift Force [N]",
                         Minimum = trackMap.Data.YValues.Min(),
                         Maximum = trackMap.Data.YValues.Max(),
                         LabelFormat = "0.00",
                         FontSize = 15
                     };
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMoment:
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicRearLiftForce:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].AerodynamicYawMoment, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].RearLiftForce, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {
-                        Header = "Aero Yaw Moment [Nm]",
+                        Header = "Aero Rear Lift Force [N]",
                         Minimum = trackMap.Data.YValues.Min(),
                         Maximum = trackMap.Data.YValues.Max(),
                         LabelFormat = "0.00",

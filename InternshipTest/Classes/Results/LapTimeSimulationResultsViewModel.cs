@@ -46,17 +46,12 @@ namespace InternshipTest.Results
                     results.LateralAccelerations[iResult],
                     results.GearNumbers[iResult],
                     results.AeroDragCoefficients[iResult],
-                    results.AeroSideForceCoefficients[iResult],
                     results.AeroLiftCoefficients[iResult],
-                    results.AeroRollCoefficients[iResult],
-                    results.AeroPitchCoefficients[iResult],
-                    results.AeroYawCoefficients[iResult],
+                    results.AeroDownforceDistributions[iResult],
                     results.AeroDragForces[iResult],
-                    results.AeroSideForces[iResult],
                     results.AeroLiftForces[iResult],
-                    results.AeroRollMoments[iResult],
-                    results.AeroPitchMoments[iResult],
-                    results.AeroYawMoments[iResult],
+                    results.FrontLiftForces[iResult],
+                    results.RearLiftForces[iResult],
                     results.VerticalLoads[iResult],
                     results.TotalLongitudinalLoadTransfers[iResult],
                     results.UnsprungLongitudinalLoadTransfers[iResult],
@@ -134,51 +129,31 @@ namespace InternshipTest.Results
         /// </summary>
         public double DragCoefficient { get; set; }
         /// <summary>
-        /// Aerodynamic Side Force Coefficient
-        /// </summary>
-        public double SideForceCoefficient { get; set; }
-        /// <summary>
         /// Aerodynamic Lift Coefficient
         /// </summary>
         public double LiftCoefficient { get; set; }
         /// <summary>
         /// Aerodynamic Roll Moment Coefficient
         /// </summary>
-        public double RollMomentCoefficient { get; set; }
+        public double DownforceDistribution { get; set; }
         /// <summary>
         /// Aerodynamic Pitch Moment Coefficient
-        /// </summary>
-        public double PitchMomentCoefficient { get; set; }
-        /// <summary>
-        /// Aerodynamic Yaw Moment Coefficient
-        /// </summary>
-        public double YawMomentCoefficient { get; set; }
-        /// <summary>
-        /// Aerodynamic Drag Force [N]
         /// </summary>
         public double DragForce { get; set; }
         /// <summary>
         /// Aerodynamic Side Force [N]
         /// </summary>
-        public double SideForce { get; set; }
-        /// <summary>
-        /// Aerodynamic Lift Force [N]
-        /// </summary>
         public double LiftForce { get; set; }
         /// <summary>
         /// Aerodynamic Roll Moment [Nm]
         /// </summary>
-        public double AerodynamicRollMoment { get; set; }
+        public double FrontLiftForce { get; set; }
         /// <summary>
-        /// Aerodynamic Pitch Moment [Nm]
+        /// Aerodynamic Yaw Moment Coefficient
         /// </summary>
-        public double AerodynamicPitchMoment { get; set; }
+        public double RearLiftForce { get; set; }
         /// <summary>
-        /// Aerodynamic Yaw Moment [Nm]
-        /// </summary>
-        public double AerodynamicYawMoment { get; set; }
-        /// <summary>
-        /// Total vertical load [N]
+        /// Aerodynamic Drag Force [N]
         /// </summary>
         public double TotalVerticalLoad { get; set; }
         /// <summary>
@@ -312,7 +287,7 @@ namespace InternshipTest.Results
         #endregion
         #region Constructors
         public LapTimeSimulationResultPoint(double elapsedTime, double elapsedDistance, double speed,
-            double longitudinalAcceleration, double lateralAcceleration, int gearNumber, double dragCoefficient, double sideForceCoefficient, double liftCoefficient, double rollCoefficient, double pitchCoefficient, double yawCoefficient, double dragForce, double sideForce, double liftForce, double aeroRollMoment, double aeroPitchMoment, double aeroYawMoment, double totalVerticalLoad, double totalLongitudinalLoadTransfer, double unsprungLoadTransfer, double sprungLoadTransfer, double frontWheelLoad, double rearWheelLoad, double frontWheelRadius, double rearWheelRadius, double frontSuspensionDeflection, double rearSuspensionDeflection, double frontRideHeight, double rearRideHeight, double lateralForce, double inertiaEfficiency, double longitudinalForce, double frontWheelLongitudinalForce, double rearWheelLongitudinalForce, double frontWheelTorque, double rearWheelTorque, double frontWheelAngularSpeed, double rearWheelAngularSpeed, double enginePower, double engineAvailablePower, double enginePowerUsage, double frontBrakesPower, double rearBrakesPower, double frontBrakesAvailablePower, double rearBrakesAvailablePower, double frontBrakesUsage, double rearBrakesUsage, double fuelConsumption, double coordinatesX, double coordinatesY)
+            double longitudinalAcceleration, double lateralAcceleration, int gearNumber, double dragCoefficient, double liftCoefficient, double downforceDistribution, double dragForce, double liftForce, double frontLiftForce, double rearLiftForce, double totalVerticalLoad, double totalLongitudinalLoadTransfer, double unsprungLoadTransfer, double sprungLoadTransfer, double frontWheelLoad, double rearWheelLoad, double frontWheelRadius, double rearWheelRadius, double frontSuspensionDeflection, double rearSuspensionDeflection, double frontRideHeight, double rearRideHeight, double lateralForce, double inertiaEfficiency, double longitudinalForce, double frontWheelLongitudinalForce, double rearWheelLongitudinalForce, double frontWheelTorque, double rearWheelTorque, double frontWheelAngularSpeed, double rearWheelAngularSpeed, double enginePower, double engineAvailablePower, double enginePowerUsage, double frontBrakesPower, double rearBrakesPower, double frontBrakesAvailablePower, double rearBrakesAvailablePower, double frontBrakesUsage, double rearBrakesUsage, double fuelConsumption, double coordinatesX, double coordinatesY)
         {
             ElapsedTime = elapsedTime;
             ElapsedDistance = elapsedDistance;
@@ -321,17 +296,12 @@ namespace InternshipTest.Results
             LateralAcceleration = lateralAcceleration;
             GearNumber = gearNumber;
             DragCoefficient = dragCoefficient;
-            SideForceCoefficient = sideForceCoefficient;
             LiftCoefficient = liftCoefficient;
-            RollMomentCoefficient = rollCoefficient;
-            PitchMomentCoefficient = pitchCoefficient;
-            YawMomentCoefficient = yawCoefficient;
+            DownforceDistribution = downforceDistribution * 100;
             DragForce = dragForce;
-            SideForce = sideForce;
             LiftForce = liftForce;
-            AerodynamicRollMoment = aeroRollMoment;
-            AerodynamicPitchMoment = aeroPitchMoment;
-            AerodynamicYawMoment = aeroYawMoment;
+            FrontLiftForce = frontLiftForce;
+            RearLiftForce = rearLiftForce;
             TotalVerticalLoad = totalVerticalLoad;
             TotalLongitudinalLoadTransfer = totalLongitudinalLoadTransfer;
             UnsprungLongitudinalLoadTransfers = unsprungLoadTransfer;

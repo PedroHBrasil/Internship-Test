@@ -79,29 +79,17 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                     currentFastLine.XBindingPath = "DragCoefficient";
                     currentFastScatter.XBindingPath = "DragCoefficient";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForceCoefficient:
-                    chart.PrimaryAxis.Header = "Aerodynamic Side Force Cofficient";
-                    chart.PrimaryAxis.LabelFormat = "N3";
-                    currentFastLine.XBindingPath = "SideForceCoefficient";
-                    currentFastScatter.XBindingPath = "SideForceCoefficient";
-                    break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftCoefficient:
                     chart.PrimaryAxis.Header = "Aerodynamic Lift Cofficient";
                     chart.PrimaryAxis.LabelFormat = "N3";
                     currentFastLine.XBindingPath = "LiftCoefficient";
                     currentFastScatter.XBindingPath = "LiftCoefficient";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMomentCoefficient:
-                    chart.PrimaryAxis.Header = "Aerodynamic Pitch Moment Cofficient";
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDownforceDistribution:
+                    chart.PrimaryAxis.Header = "Aerodynamic Downforce Distribution [%]";
                     chart.PrimaryAxis.LabelFormat = "N3";
-                    currentFastLine.XBindingPath = "PitchMomentCoefficient";
-                    currentFastScatter.XBindingPath = "PitchMomentCoefficient";
-                    break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMomentCoefficient:
-                    chart.PrimaryAxis.Header = "Aerodynamic Yaw Moment Cofficient";
-                    chart.PrimaryAxis.LabelFormat = "N3";
-                    currentFastLine.XBindingPath = "YawMomentCoefficient";
-                    currentFastScatter.XBindingPath = "YawMomentCoefficient";
+                    currentFastLine.XBindingPath = "DownforceDistribution";
+                    currentFastScatter.XBindingPath = "DownforceDistribution";
                     break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDragForce:
                     chart.PrimaryAxis.Header = "Aerodynamic Drag Force [N]";
@@ -109,29 +97,23 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                     currentFastLine.XBindingPath = "DragForce";
                     currentFastScatter.XBindingPath = "DragForce";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForce:
-                    chart.PrimaryAxis.Header = "Aerodynamic Side Force [N]";
-                    chart.PrimaryAxis.LabelFormat = "N2";
-                    currentFastLine.XBindingPath = "SideForce";
-                    currentFastScatter.XBindingPath = "SideForce";
-                    break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftForce:
                     chart.PrimaryAxis.Header = "Aerodynamic Lift Force [N]";
                     chart.PrimaryAxis.LabelFormat = "N2";
                     currentFastLine.XBindingPath = "LiftForce";
                     currentFastScatter.XBindingPath = "LiftForce";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMoment:
-                    chart.PrimaryAxis.Header = "Aerodynamic Pitch Moment [Nm]";
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicFrontLiftForce:
+                    chart.PrimaryAxis.Header = "Aerodynamic Front Lift Force [N]";
                     chart.PrimaryAxis.LabelFormat = "N2";
-                    currentFastLine.XBindingPath = "AerodynamicPitchMoment";
-                    currentFastScatter.XBindingPath = "AerodynamicPitchMoment";
+                    currentFastLine.XBindingPath = "FrontLiftForce";
+                    currentFastScatter.XBindingPath = "FrontLiftForce";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMoment:
-                    chart.PrimaryAxis.Header = "Aerodynamic Yaw Moment [Nm]";
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicRearLiftForce:
+                    chart.PrimaryAxis.Header = "Aerodynamic Rear Lift Force [N]";
                     chart.PrimaryAxis.LabelFormat = "N2";
-                    currentFastLine.XBindingPath = "AerodynamicYawMoment";
-                    currentFastScatter.XBindingPath = "AerodynamicYawMoment";
+                    currentFastLine.XBindingPath = "RearLiftForce";
+                    currentFastScatter.XBindingPath = "RearLiftForce";
                     break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.Distance:
                     chart.PrimaryAxis.Header = "Distance [m]";
@@ -374,29 +356,17 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                     currentFastLine.YBindingPath = "DragCoefficient";
                     currentFastScatter.YBindingPath = "DragCoefficient";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForceCoefficient:
-                    chart.SecondaryAxis.Header = "Aerodynamic Side Force Cofficient";
-                    chart.SecondaryAxis.LabelFormat = "N3";
-                    currentFastLine.YBindingPath = "SideForceCoefficient";
-                    currentFastScatter.YBindingPath = "SideForceCoefficient";
-                    break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftCoefficient:
                     chart.SecondaryAxis.Header = "Aerodynamic Lift Cofficient";
                     chart.SecondaryAxis.LabelFormat = "N3";
                     currentFastLine.YBindingPath = "LiftCoefficient";
                     currentFastScatter.YBindingPath = "LiftCoefficient";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMomentCoefficient:
-                    chart.SecondaryAxis.Header = "Aerodynamic Pitch Moment Cofficient";
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDownforceDistribution:
+                    chart.SecondaryAxis.Header = "Aerodynamic Downforce Distribution [%]";
                     chart.SecondaryAxis.LabelFormat = "N3";
-                    currentFastLine.YBindingPath = "PitchMomentCoefficient";
-                    currentFastScatter.YBindingPath = "PitchMomentCoefficient";
-                    break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMomentCoefficient:
-                    chart.SecondaryAxis.Header = "Aerodynamic Yaw Moment Cofficient";
-                    chart.SecondaryAxis.LabelFormat = "N3";
-                    currentFastLine.YBindingPath = "YawMomentCoefficient";
-                    currentFastScatter.YBindingPath = "YawMomentCoefficient";
+                    currentFastLine.YBindingPath = "DownforceDistribution";
+                    currentFastScatter.YBindingPath = "DownforceDistribution";
                     break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDragForce:
                     chart.SecondaryAxis.Header = "Aerodynamic Drag Force [N]";
@@ -404,29 +374,23 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                     currentFastLine.YBindingPath = "DragForce";
                     currentFastScatter.YBindingPath = "DragForce";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForce:
-                    chart.SecondaryAxis.Header = "Aerodynamic Side Force [N]";
-                    chart.SecondaryAxis.LabelFormat = "N2";
-                    currentFastLine.YBindingPath = "SideForce";
-                    currentFastScatter.YBindingPath = "SideForce";
-                    break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftForce:
                     chart.SecondaryAxis.Header = "Aerodynamic Lift Force [N]";
                     chart.SecondaryAxis.LabelFormat = "N2";
                     currentFastLine.YBindingPath = "LiftForce";
                     currentFastScatter.YBindingPath = "LiftForce";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMoment:
-                    chart.SecondaryAxis.Header = "Aerodynamic Pitch Moment [Nm]";
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicFrontLiftForce:
+                    chart.SecondaryAxis.Header = "Aerodynamic Front Lift Force [N]";
                     chart.SecondaryAxis.LabelFormat = "N2";
-                    currentFastLine.YBindingPath = "AerodynamicPitchMoment";
-                    currentFastScatter.YBindingPath = "AerodynamicPitchMoment";
+                    currentFastLine.YBindingPath = "FrontLiftForce";
+                    currentFastScatter.YBindingPath = "FrontLiftForce";
                     break;
-                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMoment:
-                    chart.SecondaryAxis.Header = "Aerodynamic Yaw Moment [Nm]";
+                case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicRearLiftForce:
+                    chart.SecondaryAxis.Header = "Aerodynamic Rear Lift Force [N]";
                     chart.SecondaryAxis.LabelFormat = "N2";
-                    currentFastLine.YBindingPath = "AerodynamicYawMoment";
-                    currentFastScatter.YBindingPath = "AerodynamicYawMoment";
+                    currentFastLine.YBindingPath = "RearLiftForce";
+                    currentFastScatter.YBindingPath = "RearLiftForce";
                     break;
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.Distance:
                     chart.SecondaryAxis.Header = "Distance [m]";

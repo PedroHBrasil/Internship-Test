@@ -25,9 +25,8 @@ namespace InternshipTest.Vehicle
         #region Contructors
         public OneWheelAerodynamicMapPoint() { }
 
-        public OneWheelAerodynamicMapPoint(double windRelativeSpeed, double rideHeight, double dragCoefficient, double liftCoefficient)
+        public OneWheelAerodynamicMapPoint(double rideHeight, double dragCoefficient, double liftCoefficient)
         {
-            WindRelativeSpeedDisplay = windRelativeSpeed;
             RideHeightDisplay = rideHeight;
             DragCoefficient = dragCoefficient;
             LiftCoefficient = liftCoefficient;

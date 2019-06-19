@@ -30,40 +30,24 @@ namespace InternshipTest.Vehicle
             set { RearRideHeight = value / 1000; }
         }
         /// <summary>
-        /// Vehicle slip angle [rad].
-        /// </summary>
-        public double CarSlipAngle { get; set; }
-        public double CarSlipAngleDisplay {
-            get { return CarSlipAngle * 180 / Math.PI; }
-            set { CarSlipAngle = value * Math.PI / 180; }
-        }
-        /// <summary>
-        /// Aerodynamic side force coefficient.
-        /// </summary>
-        public double SideForceCoefficient { get; set; }
-        /// <summary>
         /// Aerodynamic pitch moment coefficient.
         /// </summary>
-        public double PitchMomentCoefficient { get; set; }
-        /// <summary>
-        /// Aerodynamic yaw moment coefficient.
-        /// </summary>
-        public double YawMomentCoefficient { get; set; }
+        public double DownforceDistribution { get; set; }
+        public double DownforceDistributionDisplay {
+            get { return DownforceDistribution * 100; }
+            set { DownforceDistribution = value / 100; }
+        }
         #endregion
         #region Contructors
         public TwoWheelAerodynamicMapPoint() { }
 
-        public TwoWheelAerodynamicMapPoint(double windRelativeSpeed, double frontRideHeight, double rearRideHeight, double carSlipAngle, double dragCoefficient, double sideForceCoefficient, double liftCoefficient, double pitchMomentCoefficient, double yawMomentCoefficient)
+        public TwoWheelAerodynamicMapPoint(double frontRideHeight, double rearRideHeight, double dragCoefficient, double liftCoefficient, double downforceDistribution)
         {
-            WindRelativeSpeedDisplay = windRelativeSpeed;
             FrontRideHeightDisplay = frontRideHeight;
             RearRideHeightDisplay = rearRideHeight;
-            CarSlipAngleDisplay = carSlipAngle;
             DragCoefficient = dragCoefficient;
-            SideForceCoefficient = sideForceCoefficient;
             LiftCoefficient = liftCoefficient;
-            PitchMomentCoefficient = pitchMomentCoefficient;
-            YawMomentCoefficient = yawMomentCoefficient;
+            DownforceDistributionDisplay = downforceDistribution;
         }
         #endregion
     }

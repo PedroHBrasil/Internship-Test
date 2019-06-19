@@ -254,17 +254,15 @@ namespace InternshipTest.Simulation
                 case CarModelType.OneWheel:
                     Vehicle.OneWheelAerodynamicMapPoint oneWheelAerodynamicMapPoint = OneWheelCar.GetAerodynamicCoefficients(speed);
                     aerodynamicCoefficients[0] = oneWheelAerodynamicMapPoint.DragCoefficient;
-                    aerodynamicCoefficients[2] = oneWheelAerodynamicMapPoint.LiftCoefficient;
+                    aerodynamicCoefficients[1] = oneWheelAerodynamicMapPoint.LiftCoefficient;
+                    aerodynamicCoefficients[2] = 0.5;
                     break;
                 case CarModelType.TwoWheel:
-                    double carSlipAngle = aeroInputParameters[1];
-                    double longitudinalAcceleration = aeroInputParameters[2];
-                    Vehicle.TwoWheelAerodynamicMapPoint twoWheelAerodynamicMapPoint = TwoWheelCar.GetAerodynamicCoefficients(speed, carSlipAngle, longitudinalAcceleration);
+                    double longitudinalAcceleration = aeroInputParameters[1];
+                    Vehicle.TwoWheelAerodynamicMapPoint twoWheelAerodynamicMapPoint = TwoWheelCar.GetAerodynamicCoefficients(speed, longitudinalAcceleration);
                     aerodynamicCoefficients[0] = twoWheelAerodynamicMapPoint.DragCoefficient;
-                    aerodynamicCoefficients[1] = twoWheelAerodynamicMapPoint.SideForceCoefficient;
-                    aerodynamicCoefficients[2] = twoWheelAerodynamicMapPoint.LiftCoefficient;
-                    aerodynamicCoefficients[3] = twoWheelAerodynamicMapPoint.PitchMomentCoefficient;
-                    aerodynamicCoefficients[5] = twoWheelAerodynamicMapPoint.YawMomentCoefficient;
+                    aerodynamicCoefficients[1] = twoWheelAerodynamicMapPoint.LiftCoefficient;
+                    aerodynamicCoefficients[2] = twoWheelAerodynamicMapPoint.DownforceDistribution;
                     break;
                 default:
                     break;
@@ -359,22 +357,11 @@ namespace InternshipTest.Simulation
         /// <param name="aerodynamicPitchMoment"> Aerodynamic pitch moment [Nm] </param>
         /// <param name="longitudinalLoadTransfer"> Total longitudinal laod transfer [N] </param>
         /// <returns> Loads at the front and rear wheels without the weights [N] </returns>
-        public double[] GetWheelsLoadsWithoutWeight(double aerodynamicLift, double aerodynamicPitchMoment, double longitudinalLoadTransfer)
+        public double[] GetWheelsLoadsWithoutWeight(double aerodynamicLift, double downforceDistribution, double longitudinalLoadTransfer)
         {
             double[] wheelsLoads = new double[2];
-            switch (CarModelType)
-            {
-                case CarModelType.OneWheel:
-                    wheelsLoads[0] = aerodynamicLift / 2;
-                    wheelsLoads[1] = aerodynamicLift / 2;
-                    break;
-                case CarModelType.TwoWheel:
-                    wheelsLoads[0] = aerodynamicLift / 2 - aerodynamicPitchMoment / TwoWheelCar.InertiaAndDimensions.Wheelbase - longitudinalLoadTransfer;
-                    wheelsLoads[1] = aerodynamicLift / 2 + aerodynamicPitchMoment / TwoWheelCar.InertiaAndDimensions.Wheelbase + longitudinalLoadTransfer;
-                    break;
-                default:
-                    break;
-            }
+            wheelsLoads[0] = aerodynamicLift * downforceDistribution - longitudinalLoadTransfer;
+            wheelsLoads[1] = aerodynamicLift * (1 - downforceDistribution) + longitudinalLoadTransfer;
             return wheelsLoads;
         }
         /// <summary>

@@ -11,14 +11,6 @@ namespace InternshipTest.Vehicle
     {
         #region Properties
         /// <summary>
-        /// Wind's relative speed to the car (longitudinal) [m/s].
-        /// </summary>
-        public double WindRelativeSpeed { get; set; }
-        public double WindRelativeSpeedDisplay {
-            get { return WindRelativeSpeed * 3.6; }
-            set { WindRelativeSpeed = value / 3.6; }
-        }
-        /// <summary>
         /// Aerodynamic drag coefficient.
         /// </summary>
         public double DragCoefficient { get; set; }

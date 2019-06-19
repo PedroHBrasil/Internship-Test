@@ -92,7 +92,7 @@ namespace InternshipTest.Vehicle
             {
                 iter++;
                 // Aerodynamic map interpolation
-                interpolatedAerodynamicMapPoint = Aerodynamics.GetAerodynamicMapPointFromParameters(speed, rideHeight);
+                interpolatedAerodynamicMapPoint = Aerodynamics.GetAerodynamicMapPointFromParameters(rideHeight);
                 // Calculates the lift force
                 liftForce = -interpolatedAerodynamicMapPoint.LiftCoefficient * Aerodynamics.FrontalArea * Aerodynamics.AirDensity * Math.Pow(speed, 2) / 2;
                 // New car height [m]

@@ -110,17 +110,12 @@ namespace InternshipTest.Results
         #endregion
         #region Aerodynamics
         public double[] AeroDragCoefficients { get; set; }
-        public double[] AeroSideForceCoefficients { get; set; }
         public double[] AeroLiftCoefficients { get; set; }
-        public double[] AeroRollCoefficients { get; set; }
-        public double[] AeroPitchCoefficients { get; set; }
-        public double[] AeroYawCoefficients { get; set; }
+        public double[] AeroDownforceDistributions { get; set; }
         public double[] AeroDragForces { get; set; }
-        public double[] AeroSideForces { get; set; }
         public double[] AeroLiftForces { get; set; }
-        public double[] AeroRollMoments { get; set; }
-        public double[] AeroPitchMoments { get; set; }
-        public double[] AeroYawMoments { get; set; }
+        public double[] FrontLiftForces { get; set; }
+        public double[] RearLiftForces { get; set; }
         #endregion
         #region Wheels
         /// <summary>
@@ -258,17 +253,12 @@ namespace InternshipTest.Results
             SprungLongitudinalLoadTransfers = new double[amountOfPointsInPath];
             InertiaEfficiencies = new double[amountOfPointsInPath];
             AeroDragCoefficients = new double[amountOfPointsInPath];
-            AeroSideForceCoefficients = new double[amountOfPointsInPath];
             AeroLiftCoefficients = new double[amountOfPointsInPath];
-            AeroRollCoefficients = new double[amountOfPointsInPath];
-            AeroPitchCoefficients = new double[amountOfPointsInPath];
-            AeroYawCoefficients = new double[amountOfPointsInPath];
+            AeroDownforceDistributions = new double[amountOfPointsInPath];
             AeroDragForces = new double[amountOfPointsInPath];
-            AeroSideForces = new double[amountOfPointsInPath];
             AeroLiftForces = new double[amountOfPointsInPath];
-            AeroRollMoments = new double[amountOfPointsInPath];
-            AeroPitchMoments = new double[amountOfPointsInPath];
-            AeroYawMoments = new double[amountOfPointsInPath];
+            FrontLiftForces = new double[amountOfPointsInPath];
+            RearLiftForces = new double[amountOfPointsInPath];
             FrontWheelsLoadsWithoutWeight = new double[amountOfPointsInPath];
             RearWheelsLoadsWithoutWeight = new double[amountOfPointsInPath];
             FrontWheelsLoads = new double[amountOfPointsInPath];
@@ -326,13 +316,10 @@ namespace InternshipTest.Results
         /// <param name="iSector"> Index of the current sector. </param>
         private void _GetAerodynamicCoefficients(int iPoint, int iSector)
         {
-            double[] aerodynamicCoefficients = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicCoefficients(new double[] { Speeds[iPoint], 0, LongitudinalAccelerations[iPoint] });
+            double[] aerodynamicCoefficients = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicCoefficients(new double[] { Speeds[iPoint], LongitudinalAccelerations[iPoint] });
             AeroDragCoefficients[iPoint] = aerodynamicCoefficients[0];
-            AeroSideForceCoefficients[iPoint] = aerodynamicCoefficients[1];
-            AeroLiftCoefficients[iPoint] = aerodynamicCoefficients[2];
-            AeroRollCoefficients[iPoint] = aerodynamicCoefficients[3];
-            AeroPitchCoefficients[iPoint] = aerodynamicCoefficients[4];
-            AeroYawCoefficients[iPoint] = aerodynamicCoefficients[5];
+            AeroLiftCoefficients[iPoint] = aerodynamicCoefficients[1];
+            AeroDownforceDistributions[iPoint] = aerodynamicCoefficients[2];
         }
         /// <summary>
         /// Gets the aerodynamics forces and moments
@@ -342,11 +329,9 @@ namespace InternshipTest.Results
         private void _GetAerodynamicForcesAndMoments(int iPoint, int iSector)
         {
             AeroDragForces[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicForceOrMoment(AeroDragCoefficients[iPoint], Speeds[iPoint]);
-            AeroSideForces[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicForceOrMoment(AeroSideForceCoefficients[iPoint], Speeds[iPoint]);
             AeroLiftForces[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicForceOrMoment(AeroLiftCoefficients[iPoint], Speeds[iPoint]);
-            AeroRollMoments[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicForceOrMoment(AeroRollCoefficients[iPoint], Speeds[iPoint]);
-            AeroPitchMoments[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicForceOrMoment(AeroPitchCoefficients[iPoint], Speeds[iPoint]);
-            AeroYawMoments[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetAerodynamicForceOrMoment(AeroYawCoefficients[iPoint], Speeds[iPoint]);
+            FrontLiftForces[iPoint] = AeroLiftForces[iPoint] * AeroDownforceDistributions[iPoint];
+            RearLiftForces[iPoint] = AeroLiftForces[iPoint] * (1-AeroDownforceDistributions[iPoint]);
         }
         /// <summary>
         /// Gets the car's total vertical load.
@@ -375,7 +360,7 @@ namespace InternshipTest.Results
         /// <param name="iSector"> Index of the current sector. </param>
         private void _GetWheelsLoads(int iPoint, int iSector)
         {
-            double[] wheelsLoadsWithoutWeight = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetWheelsLoadsWithoutWeight(AeroLiftForces[iPoint], AeroPitchMoments[iPoint], TotalLongitudinalLoadTransfers[iPoint]);
+            double[] wheelsLoadsWithoutWeight = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetWheelsLoadsWithoutWeight(AeroLiftForces[iPoint],AeroDownforceDistributions[iPoint], TotalLongitudinalLoadTransfers[iPoint]);
             FrontWheelsLoadsWithoutWeight[iPoint] = wheelsLoadsWithoutWeight[0];
             RearWheelsLoadsWithoutWeight[iPoint] = wheelsLoadsWithoutWeight[1];
             double[] wheelsLoads = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetWheelsLoads(wheelsLoadsWithoutWeight);

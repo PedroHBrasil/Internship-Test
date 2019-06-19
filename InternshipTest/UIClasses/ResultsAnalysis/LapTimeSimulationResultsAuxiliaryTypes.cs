@@ -12,15 +12,12 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
         public enum ResultTypes
         {
             AerodynamicDragCoefficient,
-            AerodynamicSideForceCoefficient,
             AerodynamicLiftCoefficient,
-            AerodynamicPitchMomentCoefficient,
-            AerodynamicYawMomentCoefficient,
+            AerodynamicDownforceDistribution,
             AerodynamicDragForce,
-            AerodynamicSideForce,
             AerodynamicLiftForce,
-            AerodynamicPitchMoment,
-            AerodynamicYawMoment,
+            AerodynamicFrontLiftForce,
+            AerodynamicRearLiftForce,
             Distance,
             EngineAvailablePower,
             EnginePower,
@@ -75,32 +72,23 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                 case "Aerodynamic Drag Coefficient":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDragCoefficient;
                     break;
-                case "Aerodynamic Side Force Coefficient":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForceCoefficient;
-                    break;
                 case "Aerodynamic Lift Coefficient":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftCoefficient;
                     break;
-                case "Aerodynamic Pitch Coefficient":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMomentCoefficient;
-                    break;
-                case "Aerodynamic Yaw Coefficient":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMomentCoefficient;
+                case "Downforce Distribution":
+                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDownforceDistribution;
                     break;
                 case "Aerodynamic Drag Force":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDragForce;
                     break;
-                case "Aerodynamic Side Force":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicSideForce;
-                    break;
                 case "Aerodynamic Lift Force":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftForce;
                     break;
-                case "Aerodynamic Pitch Moment":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicPitchMoment;
+                case "Aerodynamic Front Lift Force":
+                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicFrontLiftForce;
                     break;
-                case "Aerodynamic Yaw Moment":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicYawMoment;
+                case "Aerodynamic Rear Lift Force":
+                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicRearLiftForce;
                     break;
                 case "Distance":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.Distance;

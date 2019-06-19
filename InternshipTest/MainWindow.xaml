@@ -365,7 +365,6 @@
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -394,12 +393,10 @@
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
-                                            <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="Speed (km/h)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Ride Height (mm)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CD" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CL" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Ride Height (mm)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CD" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CL" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
                                     </Grid>
                                     <ListBox Name="oneWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
@@ -409,12 +406,10 @@
                                                         <ColumnDefinition/>
                                                         <ColumnDefinition/>
                                                         <ColumnDefinition/>
-                                                        <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Path=WindRelativeSpeedDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=RideHeightDisplay}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=RideHeightDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -424,23 +419,18 @@
                                     <Button Name="oneWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_DeleteOneWheelAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New Point line -->
                                     <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <!-- New point's speed line -->
-                                    <TextBlock Text="Speed" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointSpeedTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- New point's ride height line -->
-                                    <TextBlock Text="Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointRideHeightTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <TextBlock Text="Ride Height" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointRideHeightTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="mm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- New point's drag coefficient line -->
-                                    <TextBlock Text="Drag Coef." Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <TextBlock Text="Drag Coef." Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <!-- New point's lift coefficient line -->
-                                    <TextBlock Text="Lift Coef." Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" 
+                                    <TextBlock Text="Lift Coef." Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 </Grid>
                             </ContentControl>
@@ -450,8 +440,8 @@
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
                                         syncfusion:DockingManager.Header="Two Wheel Model's Aerodynamic Map"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="500"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="500"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
                                         syncfusion:DockingManager.SideInDockedMode="Left"
                                         syncfusion:DockingManager.State="Dock">
                                 <Grid>
@@ -469,14 +459,9 @@
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
@@ -487,40 +472,32 @@
                                     <!-- Aerodynamic Map listbox -->
                                     <ListBox Name="twoWheelAerodynamicMapsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" SelectionChanged="_TwoWheelAerodynamicMapsListBox_SelectionChanged"/>
                                     <!-- Aerodynamic Map listbox add and delete buttons -->
-                                    <Button Name="twoWheelAddAerodynamicMapToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
-                                    <Button Name="twoWheelDeleteAerodynamicMapOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapOfListBox_Click" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelAddAerodynamicMapToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteAerodynamicMapOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Aerodynamic Map ID line -->
-                                    <TextBlock Text="Aero. Map ID" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="twoWheelAerodynamicMapIDTextBox" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Aero. Map ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="twoWheelAerodynamicMapIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="8" Margin="5,2,5,2"/>
                                     <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="twoWheelAerodynamicMapDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Aerodynamic Map Points list line -->
                                     <TextBlock Text="Aerodynamic Map Points:" Grid.Row="4" Grid.ColumnSpan="12" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                    <Grid Grid.Row="5" Grid.ColumnSpan="12" Margin="5,0,5,0">
+                                    <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="Speed (km/h)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Front Ride Height (mm)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Rear Ride Height (mm)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="Car Slip Angle (deg)" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CD" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CS" Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CL" Grid.Column="6" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CPM" Grid.Column="7" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-                                        <TextBlock Text="CYM" Grid.Column="8" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Front Ride Height (mm)" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="Rear Ride Height (mm)" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CD" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="CL" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                        <TextBlock Text="DD (%)" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
                                     </Grid>
-                                    <ListBox Name="twoWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" HorizontalContentAlignment="Stretch">
+                                    <ListBox Name="twoWheelAerodynamicMapPointsListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate DataType="{x:Type vehicle:TwoWheelAerodynamicMapPoint}">
                                                 <Grid>
@@ -530,69 +507,44 @@
                                                         <ColumnDefinition/>
                                                         <ColumnDefinition/>
                                                         <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
-                                                        <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
-                                                    <TextBlock Text="{Binding Path=WindRelativeSpeedDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=FrontRideHeightDisplay}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=RearRideHeightDisplay}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=CarSlipAngleDisplay}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=SideForceCoefficient}" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=PitchMomentCoefficient}" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding Path=YawMomentCoefficient}" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=FrontRideHeightDisplay}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=RearRideHeightDisplay}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=DragCoefficient}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=LiftCoefficient}" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Path=DownforceDistributionDisplay}" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Grid>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                     <!-- Aerodynamic Map Points list buttons -->
-                                    <Button Name="twoWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
-                                    <Button Name="twoWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="6" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="twoWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New Point line -->
                                     <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <!-- New point's speed line -->
-                                    <TextBlock Text="Speed" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointSpeedTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- New point's front ride height line -->
-                                    <TextBlock Text="Front Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointFrontRideHeightTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
+                                    <TextBlock Text="Front Ride Height" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointFrontRideHeightTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="mm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- New point's rear ride height line -->
+                                    <TextBlock Text="Rear Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointRearRideHeightTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's rear ride height line -->
-                                    <TextBlock Text="Rear Ride Height" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointRearRideHeightTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="mm" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- New point's car slip angle line -->
-                                    <TextBlock Text="Car Slip Angle" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointCarSlipAngleTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="deg" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- New point's drag coefficient line -->
-                                    <TextBlock Text="Drag Coefficient" Grid.Row="8" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="8" Grid.Column="9" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <!-- New point's side force coefficient line -->
-                                    <TextBlock Text="Side Force Coefficient" Grid.Row="9" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointSideForceCoefficientTextBox" Grid.Row="9" Grid.Column="9" Grid.ColumnSpan="3" 
+                                    <TextBlock Text="Drag Coefficient" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <!-- New point's lift coefficient line -->
-                                    <TextBlock Text="Lift Coefficient" Grid.Row="10" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="10" Grid.Column="9" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                    <!-- New point's pitch moment coefficient line -->
-                                    <TextBlock Text="Pitch Coefficient" Grid.Row="11" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointPitchMomentCoefficientTextBox" Grid.Row="11" Grid.Column="9" Grid.ColumnSpan="3" 
+                                    <TextBlock Text="Lift Coefficient" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <!-- New point's yaw moment coefficient line -->
-                                    <TextBlock Text="Yaw Coefficient" Grid.Row="12" Grid.Column="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointYawMomentCoefficientTextBox" Grid.Row="12" Grid.Column="9" Grid.ColumnSpan="3" 
+                                    <TextBlock Text="Downforce Distrib." Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDownforceDistributionTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="%" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
@@ -2584,15 +2536,13 @@
                                 <TextBlock Text="X Data" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                 <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartXAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                     <ComboBoxItem Content="Aerodynamic Drag Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Side Force Coefficient"/>
                                     <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Pitch Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Yaw Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Downforce Distribution"/>
                                     <ComboBoxItem Content="Aerodynamic Drag Force"/>
                                     <ComboBoxItem Content="Aerodynamic Side Force"/>
                                     <ComboBoxItem Content="Aerodynamic Lift Force"/>
-                                    <ComboBoxItem Content="Aerodynamic Pitch Moment"/>
-                                    <ComboBoxItem Content="Aerodynamic Yaw Moment"/>
+                                    <ComboBoxItem Content="Aerodynamic Front Lift Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Rear Lift Force"/>
                                     <ComboBoxItem Content="Distance"/>
                                     <ComboBoxItem Content="Engine Available Power"/>
                                     <ComboBoxItem Content="Engine Power"/>
@@ -2635,15 +2585,13 @@
                                 <TextBlock Text="Y Data" Grid.Row="4" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                 <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartYAxisDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                     <ComboBoxItem Content="Aerodynamic Drag Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Side Force Coefficient"/>
                                     <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Pitch Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Yaw Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Downforce Distribution"/>
                                     <ComboBoxItem Content="Aerodynamic Drag Force"/>
                                     <ComboBoxItem Content="Aerodynamic Side Force"/>
                                     <ComboBoxItem Content="Aerodynamic Lift Force"/>
-                                    <ComboBoxItem Content="Aerodynamic Pitch Moment"/>
-                                    <ComboBoxItem Content="Aerodynamic Yaw Moment"/>
+                                    <ComboBoxItem Content="Aerodynamic Front Lift Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Rear Lift Force"/>
                                     <ComboBoxItem Content="Distance"/>
                                     <ComboBoxItem Content="Engine Available Power"/>
                                     <ComboBoxItem Content="Engine Power"/>
@@ -2739,15 +2687,13 @@
                                 <TextBlock Text="Chart Data" Grid.Row="1" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
                                 <ComboBox Name="resultsAnalysisTrackMapDataComboBox" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_ResultsAnalysisTrackMapDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                     <ComboBoxItem Content="Aerodynamic Drag Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Side Force Coefficient"/>
                                     <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Pitch Coefficient"/>
-                                    <ComboBoxItem Content="Aerodynamic Yaw Coefficient"/>
+                                    <ComboBoxItem Content="Aerodynamic Downforce Distribution"/>
                                     <ComboBoxItem Content="Aerodynamic Drag Force"/>
                                     <ComboBoxItem Content="Aerodynamic Side Force"/>
                                     <ComboBoxItem Content="Aerodynamic Lift Force"/>
-                                    <ComboBoxItem Content="Aerodynamic Pitch Moment"/>
-                                    <ComboBoxItem Content="Aerodynamic Yaw Moment"/>
+                                    <ComboBoxItem Content="Aerodynamic Front Lift Force"/>
+                                    <ComboBoxItem Content="Aerodynamic Rear Lift Force"/>
                                     <ComboBoxItem Content="Distance"/>
                                     <ComboBoxItem Content="Engine Available Power"/>
                                     <ComboBoxItem Content="Engine Power"/>

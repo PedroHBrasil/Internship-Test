@@ -203,7 +203,7 @@ namespace InternshipTest.Simulation
                 double meanWheelRadius = wheelsRadiuses.Average();
                 double inertiaEfficiency = Car.GetInertiaEfficiency(meanWheelRadius);
                 // Aerodynamic drag [N]
-                Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0, longitudinalAcceleration);
+                Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, longitudinalAcceleration);
                 double dragForce = -currentAerodynamicParameters.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
                 // Longitudinal acceleration
                 oldLongitudinalAcceleration = longitudinalAcceleration;
@@ -297,7 +297,7 @@ namespace InternshipTest.Simulation
                 double meanWheelRadius = wheelsRadiuses.Average();
                 double inertiaEfficiency = Car.GetInertiaEfficiency(meanWheelRadius);
                 // Aerodynamic drag [N]
-                Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0, longitudinalAcceleration);
+                Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, longitudinalAcceleration);
                 double dragForce = -currentAerodynamicParameters.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
                 // Longitudinal acceleration
                 oldLongitudinalAcceleration = longitudinalAcceleration;
@@ -608,10 +608,9 @@ namespace InternshipTest.Simulation
             double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(currentFrontWheelSteeringAngle);
             double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(currentRearWheelSteeringAngle);
             // Aerodynamic yaw moment [Nm]
-            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, carSlipAngle, 0);
-            double aerodynamicYawMoment = -currentAerodynamicParameters.YawMomentCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0);
             // Yaw moment (squared) [Nm]
-            currentYawMoment = frontWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG + aerodynamicYawMoment;
+            currentYawMoment = frontWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG;
             return currentYawMoment;
         }
         /*
@@ -655,10 +654,9 @@ namespace InternshipTest.Simulation
             double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(frontWheelSteeringAngle);
             double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(rearWheelSteeringAngle);
             // Aerodynamic side force [N]
-            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, carSlipAngle, 0);
-            double sideForce = -currentAerodynamicParameters.SideForceCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0);
             // Lateral acceleration [m/s²]
-            double lateralAcceleration = (frontWheelLateralForce + rearWheelLateralForce + sideForce) / Car.InertiaAndDimensions.TotalMass;
+            double lateralAcceleration = (frontWheelLateralForce + rearWheelLateralForce) / Car.InertiaAndDimensions.TotalMass;
 
             return lateralAcceleration;
         }
@@ -708,7 +706,7 @@ namespace InternshipTest.Simulation
             double meanWheelRadius = wheelsRadiuses.Average();
             double inertiaEfficiency = Car.GetInertiaEfficiency(meanWheelRadius);
             // Aerodynamic drag force [N]
-            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, carSlipAngle, 0);
+            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0);
             double dragForce = -currentAerodynamicParameters.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
             // Vehicle accelerations [m/s²]
             double longitudinalAcceleration = (frontWheelLongitudinalForce + rearWheelLongitudinalForce + dragForce) * inertiaEfficiency / Car.InertiaAndDimensions.TotalMass;
