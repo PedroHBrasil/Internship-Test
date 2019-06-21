@@ -96,8 +96,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="UIClasses\ProgressBars\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
+    <Compile Include="UIClasses\ProgressBars\TaskProgressBarWindow.xaml.cs">
+      <DependentUpon>TaskProgressBarWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UIClasses\ResultsAnalysis\AnalysisTemplate.cs" />
     <Compile Include="UIClasses\ResultsAnalysis\LapTimeSimulation2DChartParameters.cs" />
@@ -334,7 +334,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UIClasses\ProgressBars\Window1.xaml">
+    <Page Include="UIClasses\ProgressBars\TaskProgressBarWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

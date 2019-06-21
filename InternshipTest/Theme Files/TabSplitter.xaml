@@ -3,7 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Microsoft_Windows_Luna="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Luna"
     xmlns:shared="clr-namespace:Syncfusion.Windows.Shared;assembly=Syncfusion.Shared.WPF"
-    xmlns:themetools_controls="clr-namespace:WPFThemeStudio"
     xmlns:tools_controls="clr-namespace:Syncfusion.Windows.Tools.Controls;assembly=Syncfusion.Tools.WPF">
 
     <ResourceDictionary.MergedDictionaries>

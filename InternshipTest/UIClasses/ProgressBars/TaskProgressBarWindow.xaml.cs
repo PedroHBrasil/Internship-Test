@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 namespace InternshipTest.UIClasses.ProgressBars
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for TaskProgressBarWindow.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class TaskProgressBarWindow : Window
     {
-        public Window1()
+        public TaskProgressBarWindow()
         {
             InitializeComponent();
-
         }
     }
 }

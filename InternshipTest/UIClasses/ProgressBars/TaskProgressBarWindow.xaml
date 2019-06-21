@@ -1,0 +1,18 @@
+﻿<Window x:Class="InternshipTest.UIClasses.ProgressBars.TaskProgressBarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InternshipTest.UIClasses.ProgressBars"
+        mc:Ignorable="d"
+        Title="Task Progress Tracking" Height="120" Width="500" Background="#FF4E5B6F">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="taskID" Text="Current task's ID" Grid.Row="0" Margin="10" FontSize="15" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <ProgressBar Name="taskProgressBar" Grid.Row="1" Minimum="0" Maximum="100" Height="30" Margin="10" Value="50"/>
+        <TextBlock Grid.Row="1" Text="{Binding ElementName=taskProgressBar, Path=Value, StringFormat={}{0:0}%}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</Window>

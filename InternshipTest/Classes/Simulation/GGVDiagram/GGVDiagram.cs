@@ -2,8 +2,10 @@
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace InternshipTest.Simulation
@@ -45,6 +47,7 @@ namespace InternshipTest.Simulation
         /// </summary>
         public Vehicle.TwoWheelCar TwoWheelCar { get; set; }
         public CarModelType CarModelType { get; set; }
+        private UIClasses.ProgressBars.TaskProgressBarWindow ProgressBarWindow { get; set; }
         #endregion
         #region Constructors
         public GGVDiagram() { }
@@ -86,15 +89,46 @@ namespace InternshipTest.Simulation
             if (HighestSpeed > OneWheelCar.HighestSpeed) HighestSpeed = OneWheelCar.HighestSpeed;
             // Speed vector
             Speeds = Generate.LinearSpaced(AmountOfSpeeds, LowestSpeed, HighestSpeed);
+            // Progress bar window
+            ProgressBarWindow = new UIClasses.ProgressBars.TaskProgressBarWindow();
+            ProgressBarWindow.taskID.Text = "Generating One Wheel Model's GGV Diagram...";
+            ProgressBarWindow.taskProgressBar.Value = 0;
+            ProgressBarWindow.Show();
+            // Background Worker definition
+            BackgroundWorker ggvGeneration = new BackgroundWorker();
+            ggvGeneration.WorkerReportsProgress = true;
+            ggvGeneration.DoWork += _GetAccelerationsForTheSpeedsForTheOneWheelModel;
+            ggvGeneration.ProgressChanged += _ReportProgressToProgressBar;
+            ggvGeneration.RunWorkerCompleted += _GenerateGGVDiagramCompleted;
+            // Generates the ggv diagram
+            ggvGeneration.RunWorkerAsync(this);
+        }
+        private void _GetAccelerationsForTheSpeedsForTheOneWheelModel(object sender, DoWorkEventArgs e)
+        {
+            // Gets the diagram from the event argument.
+            GGVDiagram ggvDiagram = e.Argument as GGVDiagram;
             // GGV diagram generation
             for (int iSpeed = 0; iSpeed < Speeds.Length; iSpeed++)
             {
-                OneWheelGGDiagram oneWheelGGDiagram = new OneWheelGGDiagram(Speeds[iSpeed], OneWheelCar, AmountOfPointsPerSpeed);
+                OneWheelGGDiagram oneWheelGGDiagram = new OneWheelGGDiagram(ggvDiagram.Speeds[iSpeed], ggvDiagram.OneWheelCar, ggvDiagram.AmountOfPointsPerSpeed);
                 oneWheelGGDiagram.GenerateGGDiagram();
                 GGDiagram diagram = new GGDiagram(oneWheelGGDiagram);
                 diagram.GetAssociatedCurvatures();
-                GGDiagrams.Add(diagram);
+                ggvDiagram.GGDiagrams.Add(diagram);
+                // Reports the progress to the background worker to update the progress bar
+                int progress = (int)((double)(iSpeed + 1) / ggvDiagram.Speeds.Length * 100);
+                (sender as BackgroundWorker).ReportProgress(progress);
             }
+            e.Result = ggvDiagram;
+        }
+        private void _ReportProgressToProgressBar(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressBarWindow.taskProgressBar.Value = e.ProgressPercentage;
+        }
+        private void _GenerateGGVDiagramCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            GGDiagrams = (e.Result as GGVDiagram).GGDiagrams;
+            ProgressBarWindow.Close();
         }
         /// <summary>
         /// Generates a GGV diagram for a two wheel model car.

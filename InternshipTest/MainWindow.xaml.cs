@@ -3603,6 +3603,8 @@ namespace InternshipTest
                 int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
                 Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
             {
+                // Blocks the listbox
+                simulationGGVDiagramListBox.Focusable = false;
                 // Gets the object's data
                 string id = ggvDiagramIDTextBox.Text;
                 string description = ggvDiagramDescriptionTextBox.Text;
@@ -3634,6 +3636,8 @@ namespace InternshipTest
                     default:
                         break;
                 }
+                // Releases the listbox
+                simulationGGVDiagramListBox.Focusable = true;
             }
             else System.Windows.MessageBox.Show(
                "Could not create GGV Diagram. \n " +
