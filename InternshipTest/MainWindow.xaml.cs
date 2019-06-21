@@ -3750,6 +3750,10 @@ namespace InternshipTest
         {
             // Loads the GGV Diagram object and geneates its view model
             Simulation.GGVDiagram ggvDiagram = simulationGGVDiagramListBox.SelectedItem as Simulation.GGVDiagram;
+            if (ggvDiagram.GGDiagrams.Count < ggvDiagram.AmountOfSpeeds)
+            {
+                return;
+            }
             Simulation.GGVDiagramViewModel ggvDiagramViewModel = new Simulation.GGVDiagramViewModel(ggvDiagram);
             // Initializes the surface chart
             SfSurfaceChart surface = new SfSurfaceChart()

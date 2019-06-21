@@ -78,6 +78,7 @@ namespace InternshipTest.Simulation
         #region Methods
         #region GGV Diagram Generation
 
+        #region One Wheel Model
         /// <summary>
         /// Generates a GGV diagram for a one wheel model car.
         /// </summary>
@@ -91,19 +92,24 @@ namespace InternshipTest.Simulation
             Speeds = Generate.LinearSpaced(AmountOfSpeeds, LowestSpeed, HighestSpeed);
             // Progress bar window
             ProgressBarWindow = new UIClasses.ProgressBars.TaskProgressBarWindow();
-            ProgressBarWindow.taskID.Text = "Generating One Wheel Model's GGV Diagram...";
+            ProgressBarWindow.taskID.Text = "Generating One Wheel Model's GGV Diagram. ID: " + this.ID;
             ProgressBarWindow.taskProgressBar.Value = 0;
             ProgressBarWindow.Show();
             // Background Worker definition
             BackgroundWorker ggvGeneration = new BackgroundWorker();
             ggvGeneration.WorkerReportsProgress = true;
-            ggvGeneration.DoWork += _GetAccelerationsForTheSpeedsForTheOneWheelModel;
+            ggvGeneration.DoWork += _GetGGDiagramsForTheSpeedsForTheOneWheelModel;
             ggvGeneration.ProgressChanged += _ReportProgressToProgressBar;
             ggvGeneration.RunWorkerCompleted += _GenerateGGVDiagramCompleted;
             // Generates the ggv diagram
             ggvGeneration.RunWorkerAsync(this);
         }
-        private void _GetAccelerationsForTheSpeedsForTheOneWheelModel(object sender, DoWorkEventArgs e)
+        /// <summary>
+        /// Gets the GG diagrams for theone wheel model
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GetGGDiagramsForTheSpeedsForTheOneWheelModel(object sender, DoWorkEventArgs e)
         {
             // Gets the diagram from the event argument.
             GGVDiagram ggvDiagram = e.Argument as GGVDiagram;
@@ -121,15 +127,8 @@ namespace InternshipTest.Simulation
             }
             e.Result = ggvDiagram;
         }
-        private void _ReportProgressToProgressBar(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressBarWindow.taskProgressBar.Value = e.ProgressPercentage;
-        }
-        private void _GenerateGGVDiagramCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            GGDiagrams = (e.Result as GGVDiagram).GGDiagrams;
-            ProgressBarWindow.Close();
-        }
+        #endregion
+        #region Two Wheel Model
         /// <summary>
         /// Generates a GGV diagram for a two wheel model car.
         /// </summary>
@@ -141,6 +140,29 @@ namespace InternshipTest.Simulation
             if (HighestSpeed > TwoWheelCar.HighestSpeed) HighestSpeed = TwoWheelCar.HighestSpeed;
             // Speed vector
             Speeds = Generate.LinearSpaced(AmountOfSpeeds, LowestSpeed, HighestSpeed);
+            // Progress bar window
+            ProgressBarWindow = new UIClasses.ProgressBars.TaskProgressBarWindow();
+            ProgressBarWindow.taskID.Text = "Generating Two Wheel Model's GGV Diagram. ID: " + this.ID;
+            ProgressBarWindow.taskProgressBar.Value = 0;
+            ProgressBarWindow.Show();
+            // Background Worker definition
+            BackgroundWorker ggvGeneration = new BackgroundWorker();
+            ggvGeneration.WorkerReportsProgress = true;
+            ggvGeneration.DoWork += _GetGGDiagramsForTheSpeedsForTheTwoWheelModel;
+            ggvGeneration.ProgressChanged += _ReportProgressToProgressBar;
+            ggvGeneration.RunWorkerCompleted += _GenerateGGVDiagramCompleted;
+            // Generates the ggv diagram
+            ggvGeneration.RunWorkerAsync(this);
+        }
+        /// <summary>
+        /// Gets the GG diagrams for the tow wheel model
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GetGGDiagramsForTheSpeedsForTheTwoWheelModel(object sender, DoWorkEventArgs e)
+        {
+            // Gets the diagram from the event argument.
+            GGVDiagram ggvDiagram = e.Argument as GGVDiagram;
             // GGV diagram generation
             for (int iSpeed = 0; iSpeed < Speeds.Length; iSpeed++)
             {
@@ -148,10 +170,33 @@ namespace InternshipTest.Simulation
                 twoWheelGGDiagram.GenerateGGDiagram();
                 GGDiagram diagram = new GGDiagram(twoWheelGGDiagram);
                 diagram.GetAssociatedCurvatures();
-                GGDiagrams.Add(diagram);
+                ggvDiagram.GGDiagrams.Add(diagram);
+                // Reports the progress to the background worker to update the progress bar
+                int progress = (int)((double)(iSpeed + 1) / ggvDiagram.Speeds.Length * 100);
+                (sender as BackgroundWorker).ReportProgress(progress);
             }
+            e.Result = ggvDiagram;
         }
-
+        #endregion
+        /// <summary>
+        /// Updates the progress bar's value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _ReportProgressToProgressBar(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressBarWindow.taskProgressBar.Value = e.ProgressPercentage;
+        }
+        /// <summary>
+        /// Gets the resulting GGV diagram from the current thread and assigns it to the object of the main thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _GenerateGGVDiagramCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            GGDiagrams = (e.Result as GGVDiagram).GGDiagrams;
+            ProgressBarWindow.Close();
+        }
         #endregion
         #region Lap Time Simulation Methods
 
