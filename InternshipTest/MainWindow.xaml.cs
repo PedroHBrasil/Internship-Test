@@ -27,6 +27,7 @@ using Syncfusion.UI.Xaml.Grid;
 using Syncfusion.Windows.Tools.Controls;
 using MathNet.Numerics;
 using System.Threading;
+using System.ComponentModel;
 
 namespace InternshipTest
 {
@@ -61,7 +62,7 @@ namespace InternshipTest
         {
             InitializeComponent();
 
-            _PopulateFields();
+            //_PopulateFields();
         }
         /// <summary>
         /// Called when [loaded].
@@ -3603,8 +3604,6 @@ namespace InternshipTest
                 int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text) != 0 &&
                 Math.Abs(double.Parse(ggvDiagramLowestSpeedTextBox.Text)) <= Math.Abs(double.Parse(ggvDiagramHighestSpeedTextBox.Text)))
             {
-                // Blocks the listbox
-                simulationGGVDiagramListBox.Focusable = false;
                 // Gets the object's data
                 string id = ggvDiagramIDTextBox.Text;
                 string description = ggvDiagramDescriptionTextBox.Text;
@@ -3612,6 +3611,14 @@ namespace InternshipTest
                 int amountOfSpeeds = int.Parse(ggvDiagramAmountOfSpeedsTextBox.Text);
                 double lowestSpeed = double.Parse(ggvDiagramLowestSpeedTextBox.Text) / 3.6;
                 double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
+                // Progress bar window
+                UIClasses.ProgressBars.TaskProgressBarWindow progressBarWindow = new UIClasses.ProgressBars.TaskProgressBarWindow();
+                progressBarWindow.taskID.Text = "Generating GGV Diagram. ID: " + id;
+                progressBarWindow.taskProgressBar.Value = 0;
+                progressBarWindow.Show();
+                // Background Worker definition
+                BackgroundWorker ggvGenerationWorker = new BackgroundWorker();
+                ggvGenerationWorker.WorkerReportsProgress = true;
                 // Checks for the car model
                 switch (ggvDiagramVehicleTypeSelectionComboBox.SelectedValue.ToString())
                 {
@@ -3620,24 +3627,47 @@ namespace InternshipTest
                         Vehicle.OneWheelCar oneWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
                         // Initializes and generates the GGV diagram
                         Simulation.GGVDiagram oneWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed, oneWheelCar);
-                        oneWheelGGVDiagram.GenerateGGVDiagramForTheOneWheelModel();
-                        // Adds the GGV diagram to the listbox
-                        simulationGGVDiagramListBox.Items.Add(oneWheelGGVDiagram);
+                        // Worker set up
+                        ggvGenerationWorker.DoWork += oneWheelGGVDiagram.GenerateGGVDiagramForTheOneWheelModel;
+                        ggvGenerationWorker.ProgressChanged += ReportProgressToProgressBar;
+                        ggvGenerationWorker.RunWorkerCompleted += GenerateOneWheelGGVDiagramCompleted;
+                        // Generates the ggv diagram
+                        ggvGenerationWorker.RunWorkerAsync(this);
+                        void GenerateOneWheelGGVDiagramCompleted(object internalSender, RunWorkerCompletedEventArgs internalE)
+                        {
+                            oneWheelGGVDiagram.GGDiagrams = (internalE.Result as Simulation.GGVDiagram).GGDiagrams;
+                            progressBarWindow.Close();
+                            // Adds the GGV diagram to the listbox
+                            simulationGGVDiagramListBox.Items.Add(oneWheelGGVDiagram);
+                        }
                         break;
                     case "Two Wheel":
                         // Gets the car object
                         Vehicle.TwoWheelCar twoWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
                         // Initializes and generates the GGV diagram
                         Simulation.GGVDiagram twoWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed, twoWheelCar);
-                        twoWheelGGVDiagram.GenerateGGVDiagramForTheTwoWheelModel();
-                        // Adds the GGV diagram to the listbox
-                        simulationGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
+                        // Worker set up
+                        ggvGenerationWorker.DoWork += twoWheelGGVDiagram.GenerateGGVDiagramForTheTwoWheelModel;
+                        ggvGenerationWorker.ProgressChanged += ReportProgressToProgressBar;
+                        ggvGenerationWorker.RunWorkerCompleted += GenerateTwoWheelGGVDiagramCompleted;
+                        // Generates the ggv diagram
+                        ggvGenerationWorker.RunWorkerAsync(this);
+                        void GenerateTwoWheelGGVDiagramCompleted(object internalSender, RunWorkerCompletedEventArgs internalE)
+                        {
+                            twoWheelGGVDiagram.GGDiagrams = (internalE.Result as Simulation.GGVDiagram).GGDiagrams;
+                            progressBarWindow.Close();
+                            // Adds the GGV diagram to the listbox
+                            simulationGGVDiagramListBox.Items.Add(twoWheelGGVDiagram);
+                        }
                         break;
                     default:
                         break;
                 }
-                // Releases the listbox
-                simulationGGVDiagramListBox.Focusable = true;
+
+                void ReportProgressToProgressBar(object internalSender, ProgressChangedEventArgs internalE)
+                {
+                    progressBarWindow.taskProgressBar.Value = internalE.ProgressPercentage;
+                }
             }
             else System.Windows.MessageBox.Show(
                "Could not create GGV Diagram. \n " +
@@ -3865,14 +3895,40 @@ namespace InternshipTest
                     // Adds the default GGV diagram if the sector has no specific GGV diagram.
                     if (!isGGVDiagramSpecific) ggvDiagrams.Add(new Simulation.LapTimeSimulationSectorSetup(iSector, ggvDiagram));
                 }
+                // Progress bar window
+                UIClasses.ProgressBars.TaskProgressBarWindow progressBarWindow = new UIClasses.ProgressBars.TaskProgressBarWindow();
+                progressBarWindow.taskID.Text = "Running Lap Time Simulation. ID: " + id;
+                progressBarWindow.taskProgressBar.Value = 0;
+                progressBarWindow.Show();
                 // Initializes a new object
                 Simulation.LapTimeSimulation lapTimeSimulation = new Simulation.LapTimeSimulation(id, description, path, ggvDiagrams, isFirstLap);
-                Results.LapTimeSimulationResults results = lapTimeSimulation.RunLapTimeSimulation();
-                results.GetAllResults();
-                // Adds the object to the listbox and the ComboBox
-                lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
-                lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(results);
-                lapTimeSimulationResultsAnalysisResultsComboBox.Items.Add(results);
+                Results.LapTimeSimulationResults results;
+                // Background Worker definition
+                BackgroundWorker lapTimeSimulationWorker = new BackgroundWorker();
+                lapTimeSimulationWorker.WorkerReportsProgress = true;
+                lapTimeSimulationWorker.DoWork += lapTimeSimulation.RunLapTimeSimulation;
+                lapTimeSimulationWorker.ProgressChanged += _ReportProgressToProgressBar;
+                lapTimeSimulationWorker.RunWorkerCompleted += _LapTimeSimulationWorkCompleted;
+                // Runs the lap time simulation
+                lapTimeSimulationWorker.RunWorkerAsync(lapTimeSimulation);
+                void _ReportProgressToProgressBar(object internalSender, ProgressChangedEventArgs internalE)
+                {
+                    progressBarWindow.taskProgressBar.Value = internalE.ProgressPercentage;
+                }
+                void _LapTimeSimulationWorkCompleted(object internalSender, RunWorkerCompletedEventArgs internalE)
+                {
+                    lapTimeSimulation = internalE.Result as Simulation.LapTimeSimulation;
+                    results = lapTimeSimulation.Results;
+                    progressBarWindow.Close();
+                    _AddResultsToListboxes();
+                }
+                void _AddResultsToListboxes()
+                {
+                    // Adds the object to the listbox and the ComboBox
+                    lapTimeSimulationListBox.Items.Add(lapTimeSimulation);
+                    lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(results);
+                    lapTimeSimulationResultsAnalysisResultsComboBox.Items.Add(results);
+                }
             }
             else System.Windows.MessageBox.Show(
                "Could not create Lap Time Simulation. \n " +
@@ -3884,7 +3940,11 @@ namespace InternshipTest
                MessageBoxButton.OK,
                MessageBoxImage.Error);
         }
-
+        /// <summary>
+        /// Updates the progress bar's value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         /// <summary>
         /// Deletes a lap time simulation from the lap time simulation listbox and its results object from the results analysis listbox.
         /// </summary>

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InternshipTest.Simulation
 {
@@ -12,6 +14,9 @@ namespace InternshipTest.Simulation
     [Serializable]
     public class LapTimeSimulation : GenericInfo
     {
+        #region Fields
+        public int progressCounter;
+        #endregion
         #region Properties
         /// <summary>
         /// Simulation's path to be used.
@@ -25,6 +30,7 @@ namespace InternshipTest.Simulation
         /// Indicates the lap mode (first lap starts from speed = 0 and normal lap makes the speed at the end = speed at the beginning).
         /// </summary>
         public bool IsFirstLap { get; set; }
+        public Results.LapTimeSimulationResults Results { get; set; }
         #endregion
 
         #region Constructors
@@ -46,35 +52,41 @@ namespace InternshipTest.Simulation
         /// Runs the lap time simulation.
         /// </summary>
         /// <returns> The lap time simulaton results object. </returns>
-        public Results.LapTimeSimulationResults RunLapTimeSimulation()
+        public void RunLapTimeSimulation(object sender, DoWorkEventArgs e)
         {
             // Gets the maximum possible speeds at the path points, based on the lateral acceleration limitations.
-            Results.LapTimeSimulationResults results = _GetDynamicStatesBasedOnLateralAccelerationLimits();
-            // Gets the final dynamic states at the path points, based on the longiudinal acceleration limitations.
-            results = _GetFinalDynamicStates(results);
+            Results.LapTimeSimulationResults results = GetDynamicStatesBasedOnLateralAccelerationLimits(sender);
+            // Gets the final dynamic states at the path points, based on the longitudinal acceleration limitations.
+            results = GetFinalDynamicStates(sender, results);
             results.ID = ID;
             results.Description = Description;
             results.GGVDiagramsPerSector = GGVDiagramsPerSector;
             results.LocalSectors = Path.LocalSectorIndex.ToArray();
-            return results;
+            results.GetAllResults();
+            Results = results;
+            e.Result = this;
         }
-
+        /// <summary>
+        /// Gets the resulting lp ime simulation results from the current thread and assigns it to the object of the main thread.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         #endregion
 
-        #region Private
+        #region Private/Protected
         #region To Apply the Lateral Acceleration Limitations
         /// <summary>
         /// Gets the car's dynamic states along the path based on the lateral acceleration limitations and the interpolation curves to be used in the process.
         /// </summary>
         /// <returns> The lap time simulaton results. </returns>
-        private Results.LapTimeSimulationResults _GetDynamicStatesBasedOnLateralAccelerationLimits()
+        protected Results.LapTimeSimulationResults GetDynamicStatesBasedOnLateralAccelerationLimits(object sender)
         {
             // Gets the interpolation curves to be used in the determination of the dynamic states associated with  the maximum possible speeds at the path
             List<Dictionary<string, double[]>> interpolationCurvesDictionaries = new List<Dictionary<string, double[]>>();
             for (int iSector = 0; iSector < GGVDiagramsPerSector.Count(); iSector++)
                 interpolationCurvesDictionaries.Add(_GetInterpolationCurvesFromGGVDiagram(GGVDiagramsPerSector[iSector].SectorGGVDiagram));
             // Gets the dynamic states associated with the maximum possible speeds
-            Results.LapTimeSimulationResults results = _GetDynamicStatesAssociatedWithTheMaximumPossibleSpeeds(interpolationCurvesDictionaries);
+            Results.LapTimeSimulationResults results = _GetDynamicStatesAssociatedWithTheMaximumPossibleSpeeds(sender, interpolationCurvesDictionaries);
             return results;
         }
         /// <summary>
@@ -122,7 +134,7 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="interpolationCurvesDictionaries"> Curves sets to be interpolated in the processing. </param>
         /// <returns> The lap time simulaton results initial guess. </returns>
-        private Results.LapTimeSimulationResults _GetDynamicStatesAssociatedWithTheMaximumPossibleSpeeds(List<Dictionary<string, double[]>> interpolationCurvesDictionaries)
+        private Results.LapTimeSimulationResults _GetDynamicStatesAssociatedWithTheMaximumPossibleSpeeds(object sender, List<Dictionary<string, double[]>> interpolationCurvesDictionaries)
         {
             Results.LapTimeSimulationResults results = new Results.LapTimeSimulationResults(Path);
             // Path points "for" loop
@@ -145,6 +157,10 @@ namespace InternshipTest.Simulation
                 results.LongitudinalAccelerationsForMaximumPossibleSpeeds[iPathPoint] = resultsForCurrentPoint.LongitudinalAccelerationsForMaximumPossibleSpeeds[0];
                 results.LateralAccelerationsForMaximumPossibleSpeeds[iPathPoint] = resultsForCurrentPoint.LateralAccelerationsForMaximumPossibleSpeeds[0];
                 results.GearNumbersForMaximumPossibleSpeeds[iPathPoint] = resultsForCurrentPoint.GearNumbersForMaximumPossibleSpeeds[0];
+                // Progress counter update and report
+                progressCounter++;
+                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 3) * 100);
+                (sender as BackgroundWorker).ReportProgress(progress);
             }
             return results;
         }
@@ -282,7 +298,7 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="results"> Results initial guess (from the lateral acceleration limitations) </param>
         /// <returns> Final results </returns>
-        private Results.LapTimeSimulationResults _GetFinalDynamicStates(Results.LapTimeSimulationResults results)
+        protected Results.LapTimeSimulationResults GetFinalDynamicStates(object sender, Results.LapTimeSimulationResults results)
         {
             // Uses the previously calculated dynamic states as the initial guess for the final states
             for (int iPathPoint = 0; iPathPoint < Path.AmountOfPointsInPath; iPathPoint++)
@@ -293,9 +309,9 @@ namespace InternshipTest.Simulation
                 results.GearNumbers[iPathPoint] = results.GearNumbersForMaximumPossibleSpeeds[iPathPoint];
             }
             // Applies the braking limitations
-            results = _ApplyBrakingLimitations(results);
+            results = _ApplyBrakingLimitations(sender, results);
             // Applies the accelerating limitations
-            results = _ApplyAcceleratingLimitations(results);
+            results = _ApplyAcceleratingLimitations(sender, results);
 
             return results;
         }
@@ -304,7 +320,7 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="results"> Results initial guess (from the lateral acceleration limitations) </param>
         /// <returns> Results after appliance of the braking limitations. </returns>
-        private Results.LapTimeSimulationResults _ApplyBrakingLimitations(Results.LapTimeSimulationResults results)
+        private Results.LapTimeSimulationResults _ApplyBrakingLimitations(object sender, Results.LapTimeSimulationResults results)
         {
             // Checks if the simulation mode is set to first lap to determine the first point to apply the braking limitation
             int firstAnalysisPointIndex;
@@ -323,6 +339,10 @@ namespace InternshipTest.Simulation
                     // Updates the point dynamic state
                     results = _UpdateCurrentPointDynamicStateForCarLimitation(iPoint, "Braking", results);
                 }
+                // Progress counter update and report
+                progressCounter++;
+                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 3) * 100);
+                (sender as BackgroundWorker).ReportProgress(progress);
             }
             // Checks if it is a normal lap and continues to apply the limitation so that there's a continuous behaviour
             if (!IsFirstLap)
@@ -348,7 +368,7 @@ namespace InternshipTest.Simulation
         /// </summary>
         /// <param name="results"> Results after appliance of the braking limitations. </param>
         /// <returns> Final results </returns>
-        private Results.LapTimeSimulationResults _ApplyAcceleratingLimitations(Results.LapTimeSimulationResults results)
+        private Results.LapTimeSimulationResults _ApplyAcceleratingLimitations(object sender, Results.LapTimeSimulationResults results)
         {
             // Checks if the simulation mode is set to first lap and adjusts the first point dynamic state in this case.
             int firstAnalysisPointIndex;
@@ -403,6 +423,10 @@ namespace InternshipTest.Simulation
                     }
                 }
                 else lastGear = results.GearNumbers[iPoint];
+                // Progress counter update and report
+                progressCounter++;
+                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 3) * 100);
+                (sender as BackgroundWorker).ReportProgress(progress);
             }
             // Checks if it is a normal lap and continues to apply the limitation so that there's a continuous behaviour
             if (!IsFirstLap)

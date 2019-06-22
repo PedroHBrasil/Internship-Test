@@ -960,7 +960,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Suspension And Steering Docking Manager-->
-                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Collapsed">
+                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Visible">
                             <!-- Simplified Suspension Docking Window -->
                             <ContentControl Name="simplifiedSuspensionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1016,7 +1016,7 @@
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Steering System"
+                                        syncfusion:DockingManager.Header="Steering System (Two Wheel Model Only)"
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="300"
                                         syncfusion:DockingManager.DesiredMinWidthInDockedMode="300"
                                         syncfusion:DockingManager.State="Dock">
@@ -2673,7 +2673,7 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="90"/>
                                                     <ColumnDefinition Width="auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Text="{Binding Path=ID}" HorizontalAlignment="Left" VerticalAlignment="Center"/>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InternshipTest.UIClasses.ProgressBars"
         mc:Ignorable="d"
-        Title="Task Progress Tracking" Height="120" Width="500" Background="#FF4E5B6F">
+        Title="Task Progress Tracking" Height="120" Width="500" Background="#FF4E5B6F" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
