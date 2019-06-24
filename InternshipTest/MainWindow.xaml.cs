@@ -3489,7 +3489,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _TabularPathSectionsAllowPathPreviewCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            _UpdateTabularPathSectionsPreviewChart();
+            if (tabularPathSectionsListBox.Items.Count > 0) _UpdateTabularPathSectionsPreviewChart();
         }
 
         /// <summary>
@@ -3632,7 +3632,7 @@ namespace InternshipTest
                         ggvGenerationWorker.ProgressChanged += ReportProgressToProgressBar;
                         ggvGenerationWorker.RunWorkerCompleted += GenerateOneWheelGGVDiagramCompleted;
                         // Generates the ggv diagram
-                        ggvGenerationWorker.RunWorkerAsync(this);
+                        ggvGenerationWorker.RunWorkerAsync(oneWheelGGVDiagram);
                         void GenerateOneWheelGGVDiagramCompleted(object internalSender, RunWorkerCompletedEventArgs internalE)
                         {
                             oneWheelGGVDiagram.GGDiagrams = (internalE.Result as Simulation.GGVDiagram).GGDiagrams;
@@ -3651,7 +3651,7 @@ namespace InternshipTest
                         ggvGenerationWorker.ProgressChanged += ReportProgressToProgressBar;
                         ggvGenerationWorker.RunWorkerCompleted += GenerateTwoWheelGGVDiagramCompleted;
                         // Generates the ggv diagram
-                        ggvGenerationWorker.RunWorkerAsync(this);
+                        ggvGenerationWorker.RunWorkerAsync(twoWheelGGVDiagram);
                         void GenerateTwoWheelGGVDiagramCompleted(object internalSender, RunWorkerCompletedEventArgs internalE)
                         {
                             twoWheelGGVDiagram.GGDiagrams = (internalE.Result as Simulation.GGVDiagram).GGDiagrams;

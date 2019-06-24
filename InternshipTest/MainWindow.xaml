@@ -960,7 +960,7 @@
                             </ContentControl>
                         </syncfusion:DockingManager>
                         <!-- Suspension And Steering Docking Manager-->
-                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Visible">
+                        <syncfusion:DockingManager Name="suspensionAndSteeringInputDockingManager" Visibility="Collapsed">
                             <!-- Simplified Suspension Docking Window -->
                             <ContentControl Name="simplifiedSuspensionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2237,9 +2237,6 @@
                                     <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="tabularPathSectionsSetDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Allow Path preview line -->
-                                    <TextBlock Text="Path Preview" Grid.Row="5" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <CheckBox Name="tabularPathSectionsAllowPathPreviewCheckBox" Checked="_TabularPathSectionsAllowPathPreviewCheckBox_Checked" Unchecked="_TabularPathSectionsAllowPathPreviewCheckBox_Unchecked" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     <!-- Sections list line -->
                                     <TextBlock Text="Sections Definitions:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
                                     <Grid Grid.Row="6" Grid.ColumnSpan="6" Margin="5,0,5,0">
@@ -2272,6 +2269,9 @@
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
                                     </ListBox>
+                                    <!-- Allow Path preview line -->
+                                    <TextBlock Text="Path Preview" Grid.Row="5" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <CheckBox Name="tabularPathSectionsAllowPathPreviewCheckBox" IsChecked="True" Checked="_TabularPathSectionsAllowPathPreviewCheckBox_Checked" Unchecked="_TabularPathSectionsAllowPathPreviewCheckBox_Unchecked" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     <!-- Aerodynamic Map Points list buttons -->
                                     <Button Name="tabularPathAddSectionToListBox" Content="Add" Click="_TabularPathAddSectionToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="tabularPathDeleteSectionOfListBox" Content="Delete" Click="_TabularPathDeleteSectionOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
