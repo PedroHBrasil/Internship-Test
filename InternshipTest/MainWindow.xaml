@@ -1901,6 +1901,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Car and Setup Listbox -->
                                     <ListBox Name="oneWheelCarAndSetupListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelCarAndSetupListBox_SelectionChanged"/>
@@ -1934,7 +1935,7 @@
                                     <!-- Engine selection line -->
                                     <TextBlock Text="Engine" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelEngineComboBox" Grid.Row="8" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}" SelectionChanged="_OneWheelEngineComboBox_SelectionChanged"/>
                                     <!-- Suspension selection line -->
                                     <TextBlock Text="Suspension" Grid.Row="9" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelSuspensionComboBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
@@ -1946,7 +1947,9 @@
                                     <!-- Transmission selection line -->
                                     <TextBlock Text="Transmission" Grid.Row="11" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="oneWheelTransmissionComboBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=oneWheelTransmissionListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=oneWheelTransmissionListBox, Path=Items, Mode=OneWay}" SelectionChanged="_OneWheelTransmissionComboBox_SelectionChanged"/>
+                                    <!-- Path Display Grid -->
+                                    <Grid Name="oneWheelModelPowertrainDiagramDisplayGrid" Grid.Column="6" Grid.RowSpan="11"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
@@ -1990,6 +1993,7 @@
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <!-- Car and Setup Listbox -->
                                     <ListBox Name="twoWheelCarAndSetupListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" SelectionChanged="_TwoWheelCarAndSetupListBox_SelectionChanged"/>
@@ -2023,7 +2027,7 @@
                                     <!-- Engine selection line -->
                                     <TextBlock Text="Engine" Grid.Row="8" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="twoWheelEngineComboBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=engineListBox, Path=Items, Mode=OneWay}" SelectionChanged="_TwoWheelEngineComboBox_SelectionChanged"/>
                                     <!-- Suspension selection line -->
                                     <TextBlock Text="Suspension" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBlock Text="Front" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
@@ -2047,7 +2051,9 @@
                                     <!-- Transmission selection line -->
                                     <TextBlock Text="Transmission" Grid.Row="12" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <ComboBox Name="twoWheelTransmissionComboBox" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"
-                                          ItemsSource="{Binding ElementName=twoWheelTransmissionListBox, Path=Items, Mode=OneWay}"/>
+                                          ItemsSource="{Binding ElementName=twoWheelTransmissionListBox, Path=Items, Mode=OneWay}" SelectionChanged="_TwoWheelTransmissionComboBox_SelectionChanged"/>
+                                    <!-- Powertrain Diagram Display Grid -->
+                                    <Grid Name="twoWheelModelPowertrainDiagramDisplayGrid" Grid.Column="12" Grid.RowSpan="13"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>

@@ -2860,6 +2860,92 @@ namespace InternshipTest
             }
         }
 
+        #region Powertrain Diagram
+        /// <summary>
+        /// Updates the powertrain diagram when the transmission combobox item changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelTransmissionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (oneWheelTransmissionComboBox.SelectedValue != null && oneWheelEngineComboBox.SelectedValue != null) _GenerateOneWheelPowerTrainDiagram();
+            else _ClearOneWheelPowertrainDiagram();
+        }
+        /// <summary>
+        /// Updates the powertrain diagram when the engine combobox item changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelEngineComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (oneWheelTransmissionComboBox.SelectedValue != null && oneWheelEngineComboBox.SelectedValue != null) _GenerateOneWheelPowerTrainDiagram();
+            else _ClearOneWheelPowertrainDiagram();
+        }
+
+        private void _GenerateOneWheelPowerTrainDiagram()
+        {
+            // Gets the engine and transmission objects
+            Vehicle.Engine engine = oneWheelEngineComboBox.SelectedItem as Vehicle.Engine;
+            Vehicle.Transmission transmission = oneWheelTransmissionComboBox.SelectedItem as Vehicle.Transmission;
+            // Gets the view model from the engine and the transmission
+            Vehicle.PowertrainViewModel powertrainViewModel = new Vehicle.PowertrainViewModel();
+            powertrainViewModel.GetPowertrainCurvePoints(engine, transmission);
+            // Initializes a new chart
+            SfChart chart = new SfChart()
+            {
+                Header = "Powertrain Diagram - Engine: " + engine.ID + " - Transmission: " + transmission.ID,
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Width = oneWheelCarAndSetupDockingWindow.ActualHeight,
+                Legend = new ChartLegend()
+            };
+            // Adds the axis to the chart
+            chart.PrimaryAxis = new NumericalAxis()
+            {
+                Header = "Wheel Angular Speed (rpm)",
+                LabelFormat = "N0"
+            };
+            chart.SecondaryAxis = new NumericalAxis()
+            {
+                Header = "Wheel Torque (Nm)",
+                LabelFormat = "N0"
+            };
+            // Adds zoom/panning behaviour to the chart
+            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            {
+                EnableZoomingToolBar = true,
+                EnableMouseWheelZooming = true,
+                EnablePanning = true,
+                ZoomRelativeToCursor = true,
+            };
+            chart.Behaviors.Add(zoomingAndPanning);*/
+            // Adds the curves data of each gear
+            for (int iGear = 0; iGear < transmission.GearRatiosSet.GearRatios.Count; iGear++)
+            {
+                FastLineSeries fastLineSeries = new FastLineSeries()
+                {
+                    Label = "Gear: " + (iGear + 1).ToString(),
+                    ItemsSource = powertrainViewModel.PowertrainDiagramCurvePoints[iGear],
+                    XBindingPath = "WheelAngularSpeed",
+                    YBindingPath = "Torque",
+                    StrokeThickness = 5
+                };
+                chart.Series.Add(fastLineSeries);
+            }
+            // Clears the preview grid and displays the new chart
+            oneWheelModelPowertrainDiagramDisplayGrid.Children.Clear();
+            oneWheelModelPowertrainDiagramDisplayGrid.Children.Add(chart);
+            DockingManager.SetDesiredWidthInDockedMode(oneWheelCarAndSetupDockingWindow, 250 + oneWheelCarAndSetupDockingWindow.ActualHeight);
+        }
+        /// <summary>
+        /// Clears the one wheel powertrain diagram.
+        /// </summary>
+        private void _ClearOneWheelPowertrainDiagram()
+        {
+            oneWheelModelPowertrainDiagramDisplayGrid.Children.Clear();
+        }
+        #endregion
         #endregion
 
         #endregion
@@ -2962,6 +3048,95 @@ namespace InternshipTest
                 twoWheelTransmissionComboBox.Text = car.Transmission.ID;
             }
         }
+
+        #region Powertrain Diagram
+        /// <summary>
+        /// Updates the powertrain diagram when the transmission combobox item changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelTransmissionComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (twoWheelTransmissionComboBox.SelectedValue != null && twoWheelEngineComboBox.SelectedValue != null) _GenerateTwoWheelPowerTrainDiagram();
+            else _ClearTwoWheelPowertrainDiagram();
+        }
+        /// <summary>
+        /// Updates the powertrain diagram when the engine combobox item changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelEngineComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (twoWheelTransmissionComboBox.SelectedValue != null && twoWheelEngineComboBox.SelectedValue != null) _GenerateTwoWheelPowerTrainDiagram();
+            else _ClearTwoWheelPowertrainDiagram();
+        }
+
+        private void _GenerateTwoWheelPowerTrainDiagram()
+        {
+            // Gets the engine and transmission objects
+            Vehicle.Engine engine = twoWheelEngineComboBox.SelectedItem as Vehicle.Engine;
+            Vehicle.Transmission transmission = twoWheelTransmissionComboBox.SelectedItem as Vehicle.Transmission;
+            // Gets the view model from the engine and the transmission
+            Vehicle.PowertrainViewModel powertrainViewModel = new Vehicle.PowertrainViewModel();
+            powertrainViewModel.GetPowertrainCurvePoints(engine, transmission);
+            // Initializes a new chart
+            SfChart chart = new SfChart()
+            {
+                Header = "Powertrain Diagram - Engine: " + engine.ID + " - Transmission: " + transmission.ID,
+                FontSize = 20,
+                FontWeight = FontWeights.Bold,
+                Margin = new Thickness(10),
+                Width = twoWheelCarAndSetupDockingWindow.ActualHeight,
+                Legend = new ChartLegend()
+            };
+            // Adds the axis to the chart
+            chart.PrimaryAxis = new NumericalAxis()
+            {
+                Header = "Wheel Angular Speed (rpm)",
+                LabelFormat = "N0"
+            };
+            chart.SecondaryAxis = new NumericalAxis()
+            {
+                Header = "Wheel Torque (Nm)",
+                LabelFormat = "N0"
+            };
+            // Adds zoom/panning behaviour to the chart
+            /*ChartZoomPanBehavior zoomingAndPanning = new ChartZoomPanBehavior()
+            {
+                EnableZoomingToolBar = true,
+                EnableMouseWheelZooming = true,
+                EnablePanning = true,
+                ZoomRelativeToCursor = true,
+            };
+            chart.Behaviors.Add(zoomingAndPanning);*/
+            // Adds the curves data of each gear
+            for (int iGear = 0; iGear < transmission.GearRatiosSet.GearRatios.Count; iGear++)
+            {
+                FastLineSeries fastLineSeries = new FastLineSeries()
+                {
+                    Label = "Gear: " + (iGear + 1).ToString(),
+                    ItemsSource = powertrainViewModel.PowertrainDiagramCurvePoints[iGear],
+                    XBindingPath = "WheelAngularSpeed",
+                    YBindingPath = "Torque",
+                    StrokeThickness = 5
+                };
+                chart.Series.Add(fastLineSeries);
+            }
+            // Clears the preview grid and displays the new chart
+            twoWheelModelPowertrainDiagramDisplayGrid.Children.Clear();
+            twoWheelModelPowertrainDiagramDisplayGrid.Children.Add(chart);
+            DockingManager.SetDesiredWidthInDockedMode(twoWheelCarAndSetupDockingWindow, 250 + twoWheelCarAndSetupDockingWindow.ActualHeight);
+        }
+
+        /// <summary>
+        /// Clears the two wheel powertrain diagram.
+        /// </summary>
+        private void _ClearTwoWheelPowertrainDiagram()
+        {
+            twoWheelModelPowertrainDiagramDisplayGrid.Children.Clear();
+        }
+        #endregion
+
         #endregion
 
         #endregion
@@ -4176,6 +4351,7 @@ namespace InternshipTest
         #endregion
 
         #endregion
+
 
     }
 }

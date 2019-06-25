@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Vehicle\PowertrainViewModel.cs" />
     <Compile Include="UIClasses\ProgressBars\TaskProgressBarWindow.xaml.cs">
       <DependentUpon>TaskProgressBarWindow.xaml</DependentUpon>
     </Compile>
