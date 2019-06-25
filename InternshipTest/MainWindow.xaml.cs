@@ -285,6 +285,8 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
             projectButtonOptionsGrid.Visibility = Visibility.Visible;
+            _ResetMainNavigationsButtonsBackground();
+            projectEnvironmentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -296,6 +298,8 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
             vehicleButtonOptionsGrid.Visibility = Visibility.Visible;
+            _ResetMainNavigationsButtonsBackground();
+            vehicleInputEnvironmentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -307,6 +311,8 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
             pathButtonOptionsGrid.Visibility = Visibility.Visible;
+            _ResetMainNavigationsButtonsBackground();
+            pathInputEnvironmentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -318,6 +324,8 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
             simulationButtonOptionsGrid.Visibility = Visibility.Visible;
+            _ResetMainNavigationsButtonsBackground();
+            simulationInputEnvironmentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -329,6 +337,8 @@ namespace InternshipTest
         {
             _HideOptionsButtons();
             resultsButtonOptionsGrid.Visibility = Visibility.Visible;
+            _ResetMainNavigationsButtonsBackground();
+            resultsAnalysisEnvironmentButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -351,6 +361,37 @@ namespace InternshipTest
             pathButtonOptionsGrid.Visibility = Visibility.Hidden;
             simulationButtonOptionsGrid.Visibility = Visibility.Hidden;
             resultsButtonOptionsGrid.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// Makes th main navigation buttons background transparent.
+        /// </summary>
+        private void _ResetMainNavigationsButtonsBackground()
+        {
+            projectEnvironmentButton.Background = Brushes.Transparent;
+            vehicleInputEnvironmentButton.Background = Brushes.Transparent;
+            pathInputEnvironmentButton.Background = Brushes.Transparent;
+            simulationInputEnvironmentButton.Background = Brushes.Transparent;
+            resultsAnalysisEnvironmentButton.Background = Brushes.Transparent;
+            helpEnvironmentButton.Background = Brushes.Transparent;
+        }
+
+        private void _ResetOptionsButtonsBackground()
+        {
+            aerodynamicsButton.Background = Brushes.Transparent;
+            brakesButton.Background = Brushes.Transparent;
+            engineButton.Background = Brushes.Transparent;
+            inertiaAndDimensionsButton.Background = Brushes.Transparent;
+            suspensionAndSteeringButton.Background = Brushes.Transparent;
+            tireButton.Background = Brushes.Transparent;
+            transmissionButton.Background = Brushes.Transparent;
+            oneWheelVehicleButton.Background = Brushes.Transparent;
+            twoWheelVehicleButton.Background = Brushes.Transparent;
+            tabularPathButton.Background = Brushes.Transparent;
+            ggvDiagramButton.Background = Brushes.Transparent;
+            lapTimeSimulationButton.Background = Brushes.Transparent;
+            resultsAnalysis2DChartButton.Background = Brushes.Transparent;
+            resultsAnalysisTrackMapButton.Background = Brushes.Transparent;
         }
 
         #endregion
@@ -379,7 +420,6 @@ namespace InternshipTest
             lapTimeSimulationDockingManager.Visibility = Visibility.Collapsed;
             resultsAnalysis2DChartsGrid.Visibility = Visibility.Collapsed;
             resultsAnalysisTrackMapsGrid.Visibility = Visibility.Collapsed;
-            _HideOptionsButtons();
         }
 
         #region Project Button Options Methods
@@ -392,7 +432,7 @@ namespace InternshipTest
         private void _NewProjectButton_Click(object sender, RoutedEventArgs e)
         {
             _ClearUILists();
-            _HideOptionsButtons();
+            _ResetOptionsButtonsBackground();
         }
 
         /// <summary>
@@ -499,7 +539,6 @@ namespace InternshipTest
                     project.LapTimeSimulationResults.Add(lapTimeSimulationResults);
                 // Saves the project to the file
                 project.Save(saveFileDialog.FileName);
-                _HideOptionsButtons();
             }
 
         }
@@ -608,7 +647,6 @@ namespace InternshipTest
                 lapTimeSimulationResultsAnalysisResultsListBox.Items.Add(lapTimeSimulationResults);
                 lapTimeSimulationResultsAnalysisResultsComboBox.Items.Add(lapTimeSimulationResults);
             }
-            _HideOptionsButtons();
         }
 
         /// <summary>
@@ -666,7 +704,7 @@ namespace InternshipTest
             lapTimeSimulationListBox.Items.Clear();
             lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
         }
-
+        
         #endregion
         #region Vehicle Button Options Methods
 
@@ -679,6 +717,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             aerodynamicsInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            aerodynamicsButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -690,6 +730,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             brakesInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            brakesButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -701,6 +743,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             engineInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            engineButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -708,10 +752,12 @@ namespace InternshipTest
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _InertiaButton_Click(object sender, RoutedEventArgs e)
+        private void _InertiaAndDimensionsButton_Click(object sender, RoutedEventArgs e)
         {
             _CollapseMainDockingManagerContent();
             inertiaAndDimensionsInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            inertiaAndDimensionsButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -723,6 +769,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             suspensionAndSteeringInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            suspensionAndSteeringButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -734,6 +782,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             tireInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            tireButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
 
         /// <summary>
@@ -745,6 +795,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             transmissionInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            transmissionButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         /// <summary>
         /// Changes the work environment to the One Wheel vehicle model input environment.
@@ -755,6 +807,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             oneWheelVehicleInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            oneWheelVehicleButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         /// <summary>
         /// Changes the work environment to the Two Wheel vehicle model input environment.
@@ -765,6 +819,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             twoWheelVehicleInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            twoWheelVehicleButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         /// <summary>
         /// Changes the work environment to the Four Wheel vehicle model input environment.
@@ -787,6 +843,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             tabularPathInputDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            tabularPathButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         /// <summary>
         /// Changes the work environment to the Path Drawing environment.
@@ -819,6 +877,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             ggvDiagramDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            ggvDiagramButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         /// <summary>
         /// Changes the work environment to the Lap Time Simulation environment.
@@ -829,6 +889,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             lapTimeSimulationDockingManager.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            lapTimeSimulationButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         #endregion
         #region Results Analysis Button Methods
@@ -841,6 +903,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             resultsAnalysis2DChartsGrid.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            resultsAnalysis2DChartButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         /// <summary>
         /// Changes the work environment to thetrack map results analysis environment.
@@ -851,6 +915,8 @@ namespace InternshipTest
         {
             _CollapseMainDockingManagerContent();
             resultsAnalysisTrackMapsGrid.Visibility = Visibility.Visible;
+            _ResetOptionsButtonsBackground();
+            resultsAnalysisTrackMapButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF3B4554"));
         }
         #endregion
         #endregion

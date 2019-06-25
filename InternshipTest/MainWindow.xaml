@@ -141,7 +141,7 @@
                 <!-- Inertia button -->
                 <Button Name="inertiaAndDimensionsButton" Content="Inertia And Dimensions" Grid.Column="4"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
-                        FontWeight="Bold" Click="_InertiaButton_Click"/>
+                        FontWeight="Bold" Click="_InertiaAndDimensionsButton_Click"/>
                 <!-- Suspension button -->
                 <Button Name="suspensionAndSteeringButton" Content="Suspension And Steering" Grid.Column="5"
                         Height="25" Margin="10" Background="Transparent" BorderBrush="Transparent"
@@ -279,68 +279,6 @@
                         </Grid.Resources>
                         <!-- Aerodynamics Docking Manager-->
                         <syncfusion:DockingManager Name="aerodynamicsInputDockingManager" Visibility="Collapsed">
-                            <!-- Aerodynamics Docking Window -->
-                            <ContentControl Name="aerodynamicsDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Aerodynamics"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Aerodynamics listbox -->
-                                    <ListBox Name="oneWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
-                                    <ListBox Name="twoWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
-                                    <!-- Aerodynamics listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddAerodynamicsToListBox" Content="Add" Click="_AddAerodynamicsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteAerodynamicsOfListBox" Content="Delete" Click="_DeleteAerodynamicsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Aerodynamics ID line -->
-                                    <TextBlock Text="Aero ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="aerodynamicsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="aerodynamicsDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Vehicle model selection line -->
-                                    <TextBlock Text="Vehicle Model" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="aerodynamicsVehicleModelComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_AerodynamicsVehicleModelComboBox_SelectionChanged">
-                                        <ComboBoxItem Content="One Wheel"/>
-                                        <ComboBoxItem Content="Two Wheel"/>
-                                    </ComboBox>
-                                    <!-- Aerodynamic Map selection line -->
-                                    <TextBlock Text="Aero. Map" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="aerodynamicMapComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Frontal area line -->
-                                    <TextBlock Text="Frontal Area" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="frontalAreaTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="m²" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Air density line -->
-                                    <TextBlock Text="Air Density" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="airDensityTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="kg/m³" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
                             <!-- One Wheel Aerodynamic Map Docking Window -->
                             <ContentControl Name="oneWheelAerodynamicMapDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -545,6 +483,68 @@
                                     <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDownforceDistributionTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="%" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
+                                </Grid>
+                            </ContentControl>
+                            <!-- Aerodynamics Docking Window -->
+                            <ContentControl Name="aerodynamicsDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Aerodynamics"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Aerodynamics listbox -->
+                                    <ListBox Name="oneWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
+                                    <ListBox Name="twoWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
+                                    <!-- Aerodynamics listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddAerodynamicsToListBox" Content="Add" Click="_AddAerodynamicsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteAerodynamicsOfListBox" Content="Delete" Click="_DeleteAerodynamicsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Aerodynamics ID line -->
+                                    <TextBlock Text="Aero ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="aerodynamicsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="aerodynamicsDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Vehicle model selection line -->
+                                    <TextBlock Text="Vehicle Model" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="aerodynamicsVehicleModelComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_AerodynamicsVehicleModelComboBox_SelectionChanged">
+                                        <ComboBoxItem Content="One Wheel"/>
+                                        <ComboBoxItem Content="Two Wheel"/>
+                                    </ComboBox>
+                                    <!-- Aerodynamic Map selection line -->
+                                    <TextBlock Text="Aero. Map" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="aerodynamicMapComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Frontal area line -->
+                                    <TextBlock Text="Frontal Area" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="frontalAreaTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="m²" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Air density line -->
+                                    <TextBlock Text="Air Density" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="airDensityTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,2,5,2" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="kg/m³" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
@@ -1663,6 +1663,67 @@
                         </syncfusion:DockingManager>
                         <!-- Transmission Docking Manager-->
                         <syncfusion:DockingManager Name="transmissionInputDockingManager" Visibility="Collapsed">
+                            <!-- Gear Ratios Docking Window -->
+                            <ContentControl Name="gearRatiosDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Gear Ratios"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.SideInDockedMode="Left"
+                                        syncfusion:DockingManager.State="Dock">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="100"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Transmission listbox -->
+                                    <ListBox Name="gearRatiosSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_GearRatioSetListBox_SelectionChanged"/>
+                                    <!-- Transmission listbox add and delete buttons -->
+                                    <Button Name="oneWheelAddGearRatioSetToListBox" Content="Add" Click="_AddGearRatioSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteGearRatioSetOfListBox" Content="Delete" Click="_DeleteGearRatioSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- Transmission ID line -->
+                                    <TextBlock Text="Gear Ratios ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="gearRatiosSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <!-- Description line -->
+                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBox Name="gearRatiosSetDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                    <!-- Gear Ratios list line -->
+                                    <TextBlock Text="Gear Ratios:" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ListBox Name="gearRatiosListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type vehicle:GearRatio}">
+                                                <TextBlock Text="{Binding Path=Ratio}" HorizontalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <!-- Gear ratios list buttons -->
+                                    <Button Name="oneWheelAddGearRatioToListBox" Content="Add" Click="_AddGearRatioToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <Button Name="oneWheelDeleteGearRatioOfListBox" Content="Delete" Click="_DeleteGearRatioOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                    <!-- New Gear Ratio line -->
+                                    <TextBlock Text="Gear Ratio to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <syncfusion:DoubleTextBox Name="newGearRatioTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                </Grid>
+                            </ContentControl>
                             <!-- One Wheel Transmission Docking Window -->
                             <ContentControl Name="oneWheelTransmissionDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1804,67 +1865,6 @@
                                     <syncfusion:DoubleTextBox Name="twoWheelTransmissionTorqueBiasTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                     <TextBlock Text="% front" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                </Grid>
-                            </ContentControl>
-                            <!-- Gear Ratios Docking Window -->
-                            <ContentControl Name="gearRatiosDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Gear Ratios"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.SideInDockedMode="Left"
-                                        syncfusion:DockingManager.State="Dock">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Transmission listbox -->
-                                    <ListBox Name="gearRatiosSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_GearRatioSetListBox_SelectionChanged"/>
-                                    <!-- Transmission listbox add and delete buttons -->
-                                    <Button Name="oneWheelAddGearRatioSetToListBox" Content="Add" Click="_AddGearRatioSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteGearRatioSetOfListBox" Content="Delete" Click="_DeleteGearRatioSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- Transmission ID line -->
-                                    <TextBlock Text="Gear Ratios ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="gearRatiosSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                    <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <TextBox Name="gearRatiosSetDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                    <!-- Gear Ratios list line -->
-                                    <TextBlock Text="Gear Ratios:" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                    <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ListBox Name="gearRatiosListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate DataType="{x:Type vehicle:GearRatio}">
-                                                <TextBlock Text="{Binding Path=Ratio}" HorizontalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                    <!-- Gear ratios list buttons -->
-                                    <Button Name="oneWheelAddGearRatioToListBox" Content="Add" Click="_AddGearRatioToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <Button Name="oneWheelDeleteGearRatioOfListBox" Content="Delete" Click="_DeleteGearRatioOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                    <!-- New Gear Ratio line -->
-                                    <TextBlock Text="Gear Ratio to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <syncfusion:DoubleTextBox Name="newGearRatioTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 </Grid>
                             </ContentControl>
                         </syncfusion:DockingManager>
