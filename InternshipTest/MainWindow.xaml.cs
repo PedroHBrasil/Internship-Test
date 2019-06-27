@@ -62,7 +62,7 @@ namespace InternshipTest
         {
             InitializeComponent();
 
-            //_PopulateFields();
+            _PopulateFields();
         }
         /// <summary>
         /// Called when [loaded].
@@ -95,18 +95,15 @@ namespace InternshipTest
         private void _PopulateFields()
         {
             // One Wheel Aerodynamic Map
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(30, 1, -2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 1.1, -1.9));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(50, 1.2, -1.8));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(30, 1.1, -2.1));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 1.2, -2.2));
             oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(50, 1.3, -2.3));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(30, 1.1, -2.3));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(40, 1, -2.2));
-            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(50, 0.9, -2.1));
             oneWheelAerodynamicMapIDTextBox.Text = "oneWheelAeroMap1";
 
             // Two Wheel Aerodynamic Map
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(30, 30, 1.1, -2.1, 50));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(40, 40, 1.2, -2.2, 50));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(50, 50, 1.3, -2.3, 50));
             twoWheelAerodynamicMapIDTextBox.Text = "twoWheelAeroMap1";
 
             // Aerodynamics

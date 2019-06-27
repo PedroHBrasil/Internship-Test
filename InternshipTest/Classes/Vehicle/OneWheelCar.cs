@@ -288,9 +288,9 @@ namespace InternshipTest.Vehicle
             // Gears sweep "for" loop
             for (int iGear = 0; iGear < amountOfGears - 1; iGear++)
             {
-                double[,] currentGearCurve = ArrayManipulation.JoinArraysIn2DArray(ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear), ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear));
-                double[,] nextGearCurve = ArrayManipulation.JoinArraysIn2DArray(ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 0, iGear + 1), ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear + 1));
-                int[] rpmIndexes = ArrayManipulation.GetCurvesMinimumDistancePointsIndexes(currentGearCurve, nextGearCurve);
+                double[] currentGearTorqueCurve = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear);
+                double[] nextGearTorqueCurve = ArrayManipulation.GetLineFromThreeDimensionalDoubleArray(resultantEngineCurvesAtWheelsPerGearArray, 1, iGear + 1);
+                int[] rpmIndexes = _GetCurrentGearShiftingRPMs(currentGearTorqueCurve, nextGearTorqueCurve, new double[] { Transmission.GearRatiosSet.GearRatios[iGear].Ratio, Transmission.GearRatiosSet.GearRatios[iGear + 1].Ratio });
                 // Gear shifting ranges array update
                 gearsRPMRanges[1, iGear] = rpmIndexes[0];
                 gearsRPMRanges[0, iGear + 1] = rpmIndexes[1];
@@ -336,6 +336,39 @@ namespace InternshipTest.Vehicle
                 for (int iRPM = gearsRPMRanges[0, iGear]; iRPM < gearsRPMRanges[1, iGear]; iRPM++)
                     WheelGearCurve.Add(iGear + 1);
             }
+        }
+        /// <summary>
+        /// Gets the current gear shifting rpms based on the resultant wheel speed vs wheel torque curves for each gear.
+        /// </summary>
+        /// <param name="currentGearTorques"> Torque curve for the current gear. </param>
+        /// <param name="nextGearTorques"> Torque curve for the next gear. </param>
+        /// <param name="gearRatios"> Current and next gears ratios. </param>
+        /// <returns> Indexes of the gear shifting rpms. </returns>
+        private int[] _GetCurrentGearShiftingRPMs(double[] currentGearTorques, double[] nextGearTorques, double[] gearRatios)
+        {
+            // Ratio between the gears ratios
+            double gearRatiosRatio = gearRatios[1] / gearRatios[0];
+            // Gear shifting indexes array. The standard is to shift gears at the maximu rpm for the current gear.
+            int[] iGearShifting = new int[] { currentGearTorques.Length, (int)(currentGearTorques.Length * gearRatiosRatio) };
+            // Gear shifting indexes adjust loop. Assumes that the gear shifting occurs at the last intersection point between the current and next gears torque curves (If it exists). 
+            int iCurrentGear;
+            double referenceTorqueDifference = currentGearTorques[0] - nextGearTorques[0];
+            for (iCurrentGear = 1; iCurrentGear < currentGearTorques.Length; iCurrentGear++)
+            {
+                // Gets the current torque difference for the points which are at approximatelly the same wheel rotational speed.
+                int iNextGear = (int)(iCurrentGear * gearRatiosRatio);
+                double currentTorqueDifference = currentGearTorques[iCurrentGear] - nextGearTorques[iNextGear];
+                // Checkes if an intersection occured
+                if (Math.Sign(referenceTorqueDifference) != Math.Sign(currentTorqueDifference))
+                {
+                    // Updates the reference torque difference
+                    referenceTorqueDifference = currentTorqueDifference;
+                    // Gets the indexes and assigns them to the results array.
+                    iGearShifting[0] = iCurrentGear;
+                    iGearShifting[1] = iNextGear;
+                }
+            }
+            return iGearShifting;
         }
         #endregion
         #region Car Operation Speed Determination Methods

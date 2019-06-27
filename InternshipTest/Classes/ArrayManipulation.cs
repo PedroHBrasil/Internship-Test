@@ -77,7 +77,7 @@ namespace InternshipTest
 
             return pointsIndexes;
         }
-
+        
         public static double[,] JoinArraysIn2DArray(double[] array1, double[] array2)
         {
             double[,] finalArray = new double[2, array1.Length];
