@@ -325,7 +325,7 @@
                                     <TextBox Name="oneWheelAerodynamicMapDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Aerodynamic Map Points list line -->
-                                    <TextBlock Text="Aerodynamic Map Points:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <TextBlock Text="Aerodynamic Map Table:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
                                     <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
@@ -356,7 +356,7 @@
                                     <Button Name="oneWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_AddOneWheelAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="oneWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_DeleteOneWheelAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New Point line -->
-                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Data of Table's Line to Add:" Grid.Row="8" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <!-- New point's ride height line -->
                                     <TextBlock Text="Ride Height" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointRideHeightTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
@@ -420,7 +420,7 @@
                                     <TextBox Name="twoWheelAerodynamicMapDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Aerodynamic Map Points list line -->
-                                    <TextBlock Text="Aerodynamic Map Points:" Grid.Row="4" Grid.ColumnSpan="12" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <TextBlock Text="Aerodynamic Map Table:" Grid.Row="4" Grid.ColumnSpan="12" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
                                     <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
@@ -459,7 +459,7 @@
                                     <Button Name="twoWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="twoWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New Point line -->
-                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Data of Table's Line to Add:" Grid.Row="8" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <!-- New point's front ride height line -->
                                     <TextBlock Text="Front Ride Height" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointFrontRideHeightTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
@@ -751,7 +751,7 @@
                                     <TextBox Name="engineCurvesDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Engine Curves Points list line -->
-                                    <TextBlock Text="Engine Curves Points:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <TextBlock Text="Engine Curves Table:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
                                     <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
@@ -786,7 +786,7 @@
                                     <Button Name="oneWheelAddEngineCurvesPointToListBox" Content="Add" Click="_AddEngineCurvesPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="oneWheelDeleteEngineCurvesPointOfListBox" Content="Delete" Click="_DeleteEngineCurvesPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New Point line -->
-                                    <TextBlock Text="Data of Point to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Data of Table's Line to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <!-- New point's RPM line -->
                                     <TextBlock Text="RPM" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <syncfusion:DoubleTextBox Name="newEngineCurvesPointRPMTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
@@ -1707,7 +1707,7 @@
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Gear Ratios list line -->
                                     <TextBlock Text="Gear Ratios:" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                    <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Ratio" Grid.Row="5" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" HorizontalAlignment="Center"/>
                                     <ListBox Name="gearRatiosListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate DataType="{x:Type vehicle:GearRatio}">
@@ -2244,7 +2244,7 @@
                                     <TextBox Name="tabularPathSectionsSetDescriptionTextBox" 
                                          Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Sections list line -->
-                                    <TextBlock Text="Sections Definitions:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                    <TextBlock Text="Sections Table:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
                                     <Grid Grid.Row="6" Grid.ColumnSpan="6" Margin="5,0,5,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
