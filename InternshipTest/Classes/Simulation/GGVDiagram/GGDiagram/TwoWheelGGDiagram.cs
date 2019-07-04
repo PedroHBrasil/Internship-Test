@@ -47,15 +47,16 @@ namespace InternshipTest.Simulation
         private DynamicStateParameters pureAcceleratingParameters;
         private DynamicStateParameters pureLeftCorneringParameters;
         private DynamicStateParameters pureRightCorneringParameters;
+        private double currentSteeringWheelAngle;
         private double currentFrontWheelSteeringAngle;
         private double currentRearWheelSteeringAngle;
         private double currentLateralAcceleration;
         private double currentYawMoment;
         private double currentCarSlipAngle;
-        /*
+        private bool isLateralAccelerationPositive;
+
         private double[] testCarSlipAngle;
         private double[] testYawMoment;
-        */
         #endregion
         #region Properties
         /// <summary>
@@ -99,21 +100,26 @@ namespace InternshipTest.Simulation
             pureAcceleratingParameters.longitudinalAcceleration = _GetAcceleratingAccelerationDueToTires();
             pureAcceleratingParameters.lateralAcceleration = 0;
             // Limit cornering accelerations
-            int[] amountOfPointsPerOptimizationParameter = new int[] { 30, 30 };
+            /*int[] amountOfPointsPerOptimizationParameter = new int[] { 30, 100 };
             double[] steeringAngleLimits = new double[] { -Car.Steering.MaximumSteeringWheelAngle, 0 };
-            double[] carSlipAngleLimits = new double[] { -Math.PI / 3, Math.PI / 3 };
+            double[] carSlipAngleLimits = new double[] { 0, Math.PI / 3 };
             _GetPureCorneringAccelerationByGeneticAlgorithm(-1, amountOfPointsPerOptimizationParameter, steeringAngleLimits, carSlipAngleLimits);
-            _GetMinimumCorneringAcceleration();
-            pureLeftCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCornering(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.frontWheelParameters.steeringAngle, pureLeftCorneringParameters.rearWheelParameters.steeringAngle);
-            _GetMaximumCorneringAcceleration();
-            pureRightCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCornering(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.frontWheelParameters.steeringAngle, pureRightCorneringParameters.rearWheelParameters.steeringAngle);
+            _GetMinimumCorneringAcceleration();*/
+            isLateralAccelerationPositive = false;
+            _GetCorneringAccelerationSteadyState();
+            pureLeftCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCorneringSteadyState(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.steeringWheelAngle);
+            isLateralAccelerationPositive = true;
+            //_GetMaximumCorneringAcceleration();
+            _GetCorneringAccelerationSteadyState();
+            pureRightCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCorneringSteadyState(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.steeringWheelAngle);
+            /*
             if (pureLeftCorneringParameters.lateralAcceleration>-pureRightCorneringParameters.lateralAcceleration*.5)
             {
                 pureLeftCorneringParameters.steeringWheelAngle = -pureRightCorneringParameters.steeringWheelAngle;
                 pureLeftCorneringParameters.carSlipAngle = -pureRightCorneringParameters.carSlipAngle;
                 _GetMinimumCorneringAcceleration();
                 pureLeftCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCornering(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.frontWheelParameters.steeringAngle, pureLeftCorneringParameters.rearWheelParameters.steeringAngle);
-            }
+            }*/
             // Combined accelerations
             _GetCombinedOperationAccelerations();
         }
@@ -370,9 +376,9 @@ namespace InternshipTest.Simulation
             var chromossome = new FloatingPointChromosome(
                 new double[] { 0, 0 },
                 new double[] { amountOfPointsPerOptimizationParameter[0] - 1, amountOfPointsPerOptimizationParameter[1] - 1 },
-                new int[] { 5, 5 },
+                new int[] { 7, 7 },
                 new int[] { 0, 0 });
-            var population = new Population(10, 20, chromossome);
+            var population = new Population(50, 100, chromossome);
             var fitness = new FuncFitness((c) =>
             {
                 var fc = c as FloatingPointChromosome;
@@ -385,11 +391,11 @@ namespace InternshipTest.Simulation
             var selection = new EliteSelection();
             var crossover = new UniformCrossover();
             var mutation = new FlipBitMutation();
-            var termination = new FitnessStagnationTermination(20);
+            var termination = new FitnessStagnationTermination(100);
             var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
             ga.Termination = termination;
             // Optimization tracking
-            System.Diagnostics.Debug.WriteLine("Generation: Steering Angle - Car Slip Angle - Lat. Acceleration => fitness (Speed = " + Speed.ToString("F2") + " Corner Orientation: " + lateralAccelerationSign.ToString("F0") + ")");
+            System.Diagnostics.Debug.WriteLine("Generation: Steering Angle, Car Slip Angle, Lat. Acceleration, Yaw Moment, fitness (Speed = " + Speed.ToString("F2") + " Corner Orientation: " + lateralAccelerationSign.ToString("F0") + ")");
             var latestFitness = 0.0;
             ga.GenerationRan += (sender, e) =>
             {
@@ -399,10 +405,16 @@ namespace InternshipTest.Simulation
                 {
                     latestFitness = bestFitness;
                     var phenotype = bestChromosome.ToFloatingPoints();
+                    double steeringAngle = steeringAngles[Convert.ToInt32(phenotype[0])];
+                    double carSlipAngle = carSlipAngles[Convert.ToInt32(phenotype[1])];
+                    double lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(steeringAngles[Convert.ToInt32(phenotype[0])], carSlipAngles[Convert.ToInt32(phenotype[1])]);
+                    double yawMoment = _GetYawMoment(carSlipAngle, lateralAcceleration, steeringAngle);
                     System.Diagnostics.Debug.WriteLine(
                         (ga.GenerationsNumber.ToString(),
-                            steeringAngles[Convert.ToInt32(phenotype[0])].ToString("F4"),
-                            carSlipAngles[Convert.ToInt32(phenotype[1])].ToString("F4"),
+                            steeringAngle.ToString("F4"),
+                            carSlipAngle.ToString("F4"),
+                            lateralAcceleration.ToString("F4"),
+                            yawMoment.ToString("F4"),
                             latestFitness.ToString("F6")));
                 };
             };
@@ -416,10 +428,12 @@ namespace InternshipTest.Simulation
                 pureLeftCorneringParameters.carSlipAngle = carSlipAngles[Convert.ToInt32(result[1])];
                 pureLeftCorneringParameters.frontWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.FrontSteeringRatio;
                 pureLeftCorneringParameters.rearWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.RearSteeringRatio;
-                pureLeftCorneringParameters.yawMoment = _GetYawMoment(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.frontWheelParameters.steeringAngle, pureLeftCorneringParameters.rearWheelParameters.steeringAngle);
+                pureLeftCorneringParameters.lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(pureLeftCorneringParameters.steeringWheelAngle, pureLeftCorneringParameters.carSlipAngle);
+                pureLeftCorneringParameters.yawMoment = _GetYawMoment(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.steeringWheelAngle);
                 currentFrontWheelSteeringAngle = pureLeftCorneringParameters.frontWheelParameters.steeringAngle;
                 currentRearWheelSteeringAngle = pureLeftCorneringParameters.rearWheelParameters.steeringAngle;
                 _GetOptimizationReferenceParametersValues(lateralAccelerationSign, pureLeftCorneringParameters.steeringWheelAngle, pureLeftCorneringParameters.carSlipAngle);
+                _UpdateCarSlipAngleVsYawMomentArrays();
             }
             else if (lateralAccelerationSign == 1)
             {
@@ -427,14 +441,14 @@ namespace InternshipTest.Simulation
                 pureRightCorneringParameters.carSlipAngle = carSlipAngles[Convert.ToInt32(result[1])];
                 pureRightCorneringParameters.frontWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.FrontSteeringRatio;
                 pureRightCorneringParameters.rearWheelParameters.steeringAngle = pureLeftCorneringParameters.steeringWheelAngle * Car.Steering.RearSteeringRatio;
-                pureRightCorneringParameters.yawMoment = _GetYawMoment(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.frontWheelParameters.steeringAngle, pureRightCorneringParameters.rearWheelParameters.steeringAngle);
+                pureRightCorneringParameters.yawMoment = _GetYawMoment(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.steeringWheelAngle);
                 currentFrontWheelSteeringAngle = pureRightCorneringParameters.frontWheelParameters.steeringAngle;
                 currentRearWheelSteeringAngle = pureRightCorneringParameters.rearWheelParameters.steeringAngle;
                 _GetOptimizationReferenceParametersValues(lateralAccelerationSign, pureRightCorneringParameters.steeringWheelAngle, pureRightCorneringParameters.carSlipAngle);
             }
         }
         /// <summary>
-        /// Gets the fitness based on thelateral acceleration value.
+        /// Gets the fitness based on the lateral acceleration value.
         /// </summary>
         /// <param name="lateralAccelerationSign"> Corner orientation: -1 is left and 1 is right. </param>
         /// <param name="steeringWheelAngle"> Current steering wheel angle [rad]. </param>
@@ -443,21 +457,25 @@ namespace InternshipTest.Simulation
         private double _GetOptimizationReferenceParametersValues(int lateralAccelerationSign, double steeringWheelAngle, double carSlipAngle)
         {
             double lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(steeringWheelAngle, carSlipAngle);
+            double yawMoment = _GetYawMoment(carSlipAngle, lateralAcceleration, steeringWheelAngle);
             currentLateralAcceleration = lateralAcceleration;
-            // Evaluates the fitness
+            // Evaluates the lateral acceleration fitness
             double lateralAccelerationFitness;
             if (Math.Sign(lateralAcceleration) != lateralAccelerationSign || lateralAcceleration == 0) lateralAccelerationFitness = 0;
             else lateralAccelerationFitness = 1 - 1 / Math.Abs(lateralAcceleration);
-
-            return lateralAccelerationFitness;
+            // Evaluates the yaw moment fitness
+            double yawMomentFitness;
+            if (Math.Abs(yawMoment) > 1000) yawMomentFitness = 0;
+            else yawMomentFitness = 1 - (Math.Abs(yawMoment) / 1000);
+            // Returns the fitness sum
+            return lateralAccelerationFitness + yawMomentFitness;
         }
         #endregion
-        #region Left (Negative)
+        #region Steady-State Trials
         /// <summary>
-        /// Gets the car's minimum cornering acceleration by optimization.
+        /// Gets the maximum/minimum lateral acceleration in pure slip steady state
         /// </summary>
-        /// <returns> Minimum cornering lateral acceleration [m/s²] </returns>
-        private void _GetMinimumCorneringAcceleration()
+        private void _GetCorneringAccelerationSteadyState()
         {
             // Optimization parameters
             double epsg = 1e-6;
@@ -465,93 +483,222 @@ namespace InternshipTest.Simulation
             double epsx = 0;
             double diffstep = 1.0e-4;
             int maxits = 100;
-            double[] bndl = new double[] { -Car.Steering.MaximumSteeringWheelAngle, -Math.PI / 3 };
-            double[] bndu = new double[] { 0, Math.PI / 3 };
-            double[] deltaAndCarSlipAngle = new double[] { pureLeftCorneringParameters.steeringWheelAngle, pureLeftCorneringParameters.carSlipAngle };
+            double[] bndl;
+            double[] bndu;
+            double[] steeringWheelAngle;
+            if (isLateralAccelerationPositive)
+            {
+                bndl = new double[] { 0 };
+                bndu = new double[] { Car.Steering.MaximumSteeringWheelAngle };
+                steeringWheelAngle = new double[] { -pureLeftCorneringParameters.steeringWheelAngle };
+            }
+            else
+            {
+                bndl = new double[] { -Car.Steering.MaximumSteeringWheelAngle };
+                bndu = new double[] { 0 };
+                steeringWheelAngle = new double[] { -Car.Steering.MaximumSteeringWheelAngle / 2 };
+            }
             // Optimization setup
-            alglib.minbleiccreatef(deltaAndCarSlipAngle, diffstep, out alglib.minbleicstate state);
+            alglib.minbleiccreatef(steeringWheelAngle, diffstep, out alglib.minbleicstate state);
             alglib.minbleicsetbc(state, bndl, bndu);
             alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
             // Optimization execution
-            alglib.minbleicoptimize(state, _SteeringWheelAngleOptimizationForMinimumCornering, null, null);
-            alglib.minbleicresults(state, out deltaAndCarSlipAngle, out alglib.minbleicreport rep);
+            alglib.minbleicoptimize(state, _SteeringWheelAngleOptimizationForCorneringSteadyState, null, null);
+            alglib.minbleicresults(state, out steeringWheelAngle, out alglib.minbleicreport rep);
 
-            pureLeftCorneringParameters.steeringWheelAngle = deltaAndCarSlipAngle[0];
-            pureLeftCorneringParameters.carSlipAngle = deltaAndCarSlipAngle[1];
-            pureLeftCorneringParameters.frontWheelParameters.steeringAngle = currentFrontWheelSteeringAngle;
-            pureLeftCorneringParameters.rearWheelParameters.steeringAngle = currentRearWheelSteeringAngle;
+            if (isLateralAccelerationPositive)
+            {
+                pureRightCorneringParameters.steeringWheelAngle = steeringWheelAngle[0];
+                pureRightCorneringParameters.carSlipAngle = currentCarSlipAngle;
+                pureRightCorneringParameters.frontWheelParameters.steeringAngle = currentFrontWheelSteeringAngle;
+                pureRightCorneringParameters.rearWheelParameters.steeringAngle = currentRearWheelSteeringAngle;
+            }
+            else
+            {
+                pureLeftCorneringParameters.steeringWheelAngle = steeringWheelAngle[0];
+                pureLeftCorneringParameters.carSlipAngle = currentCarSlipAngle;
+                pureLeftCorneringParameters.frontWheelParameters.steeringAngle = currentFrontWheelSteeringAngle;
+                pureLeftCorneringParameters.rearWheelParameters.steeringAngle = currentRearWheelSteeringAngle;
+            }
+            //_UpdateCarSlipAngleVsYawMomentArrays();
         }
         /// <summary>
-        /// Method for optimization of the steering wheel angle for minimum lateral acceleration.
+        /// Method for optimization of the steering wheel angle for maximum/minimum lateral acceleration in pure slip steady state
         /// </summary>
-        /// <param name="deltaAndCarSlipAngle"> Steering wheel angle [rad] </param>
-        /// <param name="lateralAcceleration"> Lateral acceleration [m/s²] </param>
+        /// <param name="steeringWheelAngle"></param>
+        /// <param name="lateralAcceleration"></param>
         /// <param name="obj"></param>
-        private void _SteeringWheelAngleOptimizationForMinimumCornering(double[] deltaAndCarSlipAngle, ref double lateralAcceleration, object obj)
+        private void _SteeringWheelAngleOptimizationForCorneringSteadyState(double[] steeringWheelAngle, ref double lateralAcceleration, object obj)
         {
-            pureLeftCorneringParameters.lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(deltaAndCarSlipAngle[0], deltaAndCarSlipAngle[1]);
-            lateralAcceleration = pureLeftCorneringParameters.lateralAcceleration;
-        }
-        #endregion
-        #region Right (Positive)
-        /// <summary>
-        /// Gets the car's maximum cornering acceleration by optimization.
-        /// </summary>
-        /// <returns> Maximum cornering lateral acceleration [m/s²] </returns>
-        private void _GetMaximumCorneringAcceleration()
-        {
-            // Optimization parameters
-            double epsg = 1e-6;
-            double epsf = 1e-4;
-            double epsx = 0;
-            double diffstep = 1.0e-4;
-            int maxits = 100;
-
-            double[] bndl = new double[] { 0, -Math.PI / 3 };
-            double[] bndu = new double[] { Car.Steering.MaximumSteeringWheelAngle, Math.PI / 3 };
-
-            double[] deltaAndCarSlipAngle = new double[] { -pureLeftCorneringParameters.steeringWheelAngle, -pureLeftCorneringParameters.carSlipAngle };
-
-            alglib.minbleiccreatef(deltaAndCarSlipAngle, diffstep, out alglib.minbleicstate state);
-            alglib.minbleicsetbc(state, bndl, bndu);
-            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minbleicoptimize(state, _SteeringWheelAngleOptimizationForMaximumCornering, null, null);
-            alglib.minbleicresults(state, out deltaAndCarSlipAngle, out alglib.minbleicreport rep);
-
-            pureRightCorneringParameters.steeringWheelAngle = deltaAndCarSlipAngle[0];
-            pureRightCorneringParameters.carSlipAngle = deltaAndCarSlipAngle[1];
-            pureRightCorneringParameters.frontWheelParameters.steeringAngle = currentFrontWheelSteeringAngle;
-            pureRightCorneringParameters.rearWheelParameters.steeringAngle = currentRearWheelSteeringAngle;
+            currentSteeringWheelAngle = steeringWheelAngle[0];
+            if (isLateralAccelerationPositive)
+            {
+                pureRightCorneringParameters.lateralAcceleration = _GetLateralAccelerationForSteeringAngleSteadyState(steeringWheelAngle[0]);
+                lateralAcceleration = -pureRightCorneringParameters.lateralAcceleration;
+            }
+            else
+            {
+                pureLeftCorneringParameters.lateralAcceleration = _GetLateralAccelerationForSteeringAngleSteadyState(steeringWheelAngle[0]);
+                lateralAcceleration = pureLeftCorneringParameters.lateralAcceleration;
+            }
         }
         /// <summary>
-        /// Method for optimization of the steering wheel angle for maximum lateral acceleration.
+        /// Gets the lateral acceleration for a given steering wheel angle in steady state
         /// </summary>
-        /// <param name="deltaAndCarSlipAngle"> Steering wheel angle [rad] </param>
-        /// <param name="lateralAcceleration"> Lateral acceleration [m/s²] </param>
-        /// <param name="obj"></param>
-        private void _SteeringWheelAngleOptimizationForMaximumCornering(double[] deltaAndCarSlipAngle, ref double lateralAcceleration, object obj)
+        /// <param name="steeringAngle"></param>
+        /// <returns></returns>
+        private double _GetLateralAccelerationForSteeringAngleSteadyState(double steeringAngle)
         {
-            // Current car slip angle [rad]
-            currentCarSlipAngle = deltaAndCarSlipAngle[1];
-            // Wheels steering angles
-            currentFrontWheelSteeringAngle = deltaAndCarSlipAngle[0] * Car.Steering.FrontSteeringRatio;
-            currentRearWheelSteeringAngle = deltaAndCarSlipAngle[0] * Car.Steering.RearSteeringRatio;
+            // Wheels steering angles [rad]
+            currentFrontWheelSteeringAngle = steeringAngle * Car.Steering.FrontSteeringRatio;
+            currentRearWheelSteeringAngle = steeringAngle * Car.Steering.RearSteeringRatio;
             // Current lateral acceleration optimization.
             double[] lateralAccelerationForOptimization = new double[] { 0 };
             double epsg = 1e-6;
-            double epsf = 0;
+            double epsf = 1e-3;
             double epsx = 0;
-            double diffstep = 1.0e-2;
+            double diffstep = 1.0e-3;
             int maxits = 100;
 
             alglib.minlbfgscreatef(1, lateralAccelerationForOptimization, diffstep, out alglib.minlbfgsstate state);
             alglib.minlbfgssetcond(state, epsg, epsf, epsx, maxits);
-            alglib.minlbfgsoptimize(state, _LateralAccelerationForGivenSteeringAngleAndCarSlipAngleOptimization, null, null);
+            alglib.minlbfgsoptimize(state, _LateralAccelerationForGivenSteeringAngleSteadyStateOptimization, null, null);
             alglib.minlbfgsresults(state, out lateralAccelerationForOptimization, out alglib.minlbfgsreport rep);
 
-            pureRightCorneringParameters.lateralAcceleration = _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(deltaAndCarSlipAngle[0], deltaAndCarSlipAngle[1]);
+            return lateralAccelerationForOptimization[0];
+        }
+        /// <summary>
+        /// Methodsfor optimization of the lateral acceleration in steady state
+        /// </summary>
+        /// <param name="lateralAccelerationGuess"></param>
+        /// <param name="lateralAccelerationError"></param>
+        /// <param name="obj"></param>
+        private void _LateralAccelerationForGivenSteeringAngleSteadyStateOptimization(double[] lateralAccelerationGuess, ref double lateralAccelerationError, object obj)
+        {
+            currentLateralAcceleration = lateralAccelerationGuess[0];
+            // Lateral acceleration update [m/s²]
+            double lateralAcceleration = _GetLateralAccelerationSteadyState(currentLateralAcceleration, currentFrontWheelSteeringAngle, currentRearWheelSteeringAngle);
+            // Error evaluation [m/s²]
+            lateralAccelerationError = Math.Abs(currentLateralAcceleration - lateralAcceleration);
+        }
+        /// <summary>
+        /// Gets the lateral acceleration in steady state
+        /// </summary>
+        /// <param name="lateralAccelerationGuess"></param>
+        /// <param name="frontWheelSteeringAngle"></param>
+        /// <param name="rearWheelSteeringAngle"></param>
+        /// <returns></returns>
+        private double _GetLateralAccelerationSteadyState(double lateralAccelerationGuess, double frontWheelSteeringAngle, double rearWheelSteeringAngle)
+        {
+            // Get current Car Slip Angle for zero yaw moment
+            currentCarSlipAngle = _GetCarSlipAngleForZeroYawMoment(-Math.PI / 3, Math.PI / 3, 50);
+            // Wheels slip angles [rad]
+            double[] wheelsSlipAngles = _GetWheelsSlipAngles(currentCarSlipAngle, lateralAccelerationGuess, frontWheelSteeringAngle, rearWheelSteeringAngle);
+            // Wheels loads [N]
+            double[] wheelsLoads = Car.GetWheelsLoads(Speed, currentCarSlipAngle, 0);
+            // Wheels longitudinal forces [N]
+            double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0] / 2, 0, Speed) * Math.Cos(frontWheelSteeringAngle);
+            double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1] / 2, 0, Speed) * Math.Cos(rearWheelSteeringAngle);
+            // Lateral acceleration [m/s²]
+            double lateralAcceleration = (frontWheelLateralForce + rearWheelLateralForce) / Car.InertiaAndDimensions.TotalMass;
 
-            lateralAcceleration = -pureRightCorneringParameters.lateralAcceleration;
+            return lateralAcceleration;
+        }
+        /// <summary>
+        /// Gets the car slip angle which gives zero yaw moment
+        /// </summary>
+        /// <param name="lowerBoundary"></param>
+        /// <param name="upperBoundary"></param>
+        /// <param name="amountOfSearchIntervals"></param>
+        /// <returns></returns>
+        private double _GetCarSlipAngleForZeroYawMoment(double lowerBoundary, double upperBoundary, int amountOfSearchIntervals)
+        {
+            // Inner boundaries array generation
+            double[] innerBoundaries = Generate.LinearSpaced(amountOfSearchIntervals, lowerBoundary, upperBoundary);
+            // Reference yaw moment [Nm] (Lower boundary)
+            double referenceYawMoment = _GetYawMoment(innerBoundaries[0], currentLateralAcceleration, currentSteeringWheelAngle);
+            // Inner boundary determination loop
+            bool isSignEqual = true;
+            int iBoundary = 0;
+            do
+            {
+                iBoundary++;
+                // Gets the yaw moment for the current boundary index
+                double currentYawMoment = _GetYawMoment(innerBoundaries[iBoundary], currentLateralAcceleration, currentSteeringWheelAngle);
+                // Checks if the yaw moment has changed its sign and updates the boolean "isSignEqual" if it is
+                if (Math.Sign(referenceYawMoment) != Math.Sign(currentYawMoment))
+                {
+                    isSignEqual = false;
+                }
+            } while (isSignEqual && iBoundary < amountOfSearchIntervals - 2);
+            // Checks if an inner interval was found and runs the optimization if it was.
+            if (!isSignEqual)
+            {
+                // Optimization parameters
+                double epsg = 1e-10;
+                double epsf = 0;
+                double epsx = 0;
+                double diffstep = 1.0e-6;
+                int maxits = 100;
+                double[] minCarSlipAngle = new double[] { innerBoundaries[iBoundary - 1] };
+                double[] maxCarSlipAngle = new double[] { innerBoundaries[iBoundary] };
+
+                double[] carSlipAngle = new double[] { pureLeftCorneringParameters.carSlipAngle };
+                alglib.minbleiccreatef(carSlipAngle, diffstep, out alglib.minbleicstate state);
+                alglib.minbleicsetbc(state, minCarSlipAngle, maxCarSlipAngle);
+                alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+                alglib.minbleicoptimize(state, _CarSlipAngleOptimization, null, null);
+                alglib.minbleicresults(state, out carSlipAngle, out alglib.minbleicreport rep);
+
+                return carSlipAngle[0];
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        /// <summary>
+        /// Method used for gradient based optimization of the car slip angle for zero yaw moment
+        /// </summary>
+        /// <param name="carSlipAngleOptimization"></param>
+        /// <param name="yawMomentSquared"></param>
+        /// <param name="obj"></param>
+        private void _CarSlipAngleOptimization(double[] carSlipAngleOptimization, ref double yawMomentSquared, object obj)
+        {
+            currentYawMoment = _GetYawMoment(carSlipAngleOptimization[0], currentLateralAcceleration, currentSteeringWheelAngle);
+            yawMomentSquared = Math.Pow(currentYawMoment, 2);
+        }
+        /// <summary>
+        /// Gets the longitudinal acceleration associated with the pure slip cornering situation
+        /// </summary>
+        /// <param name="carSlipAngle"></param>
+        /// <param name="lateralAcceleration"></param>
+        /// <param name="steeringWheelAngle"></param>
+        /// <returns></returns>
+        private double _GetLongitudinalAccelerationForPureCorneringSteadyState(double carSlipAngle, double lateralAcceleration, double steeringWheelAngle)
+        {
+            // Wheels steering angles [rad]
+            double frontWheelSteeringAngle = steeringWheelAngle * Car.Steering.FrontSteeringRatio;
+            double rearWheelSteeringAngle = steeringWheelAngle * Car.Steering.RearSteeringRatio;
+            // Wheels loads [N]
+            double[] wheelsLoads = Car.GetWheelsLoads(Speed, carSlipAngle, 0);
+            // Wheels slip angles [rad]
+            double[] wheelsSlipAngles = _GetWheelsSlipAngles(carSlipAngle, lateralAcceleration, frontWheelSteeringAngle, rearWheelSteeringAngle);
+            // Wheels longitudinal forces [N]
+            double frontWheelLongitudinalForce = 2 * Car.FrontTire.TireModel.GetTireFx(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(frontWheelSteeringAngle);
+            double rearWheelLongitudinalForce = 2 * Car.RearTire.TireModel.GetTireFx(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(rearWheelSteeringAngle);
+            // Wheels radiuses [m]
+            double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
+            // Gets the inertia efficiency [ratio]
+            double meanWheelRadius = wheelsRadiuses.Average();
+            double inertiaEfficiency = Car.GetInertiaEfficiency(meanWheelRadius);
+            // Aerodynamic drag force [N]
+            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0);
+            double dragForce = -currentAerodynamicParameters.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
+            // Vehicle accelerations [m/s²]
+            double longitudinalAcceleration = (frontWheelLongitudinalForce + rearWheelLongitudinalForce + dragForce) * inertiaEfficiency / Car.InertiaAndDimensions.TotalMass;
+
+            return longitudinalAcceleration;
         }
         #endregion
         private double _GetLateralAccelerationForSteeringAngleAndCarSlipAngle(double steeringAngle, double carSlipAngle)
@@ -598,8 +745,11 @@ namespace InternshipTest.Simulation
         /// <param name="frontWheelSteeringAngle"> Front wheel steering angle [rad] </param>
         /// <param name="rearWheelSteeringAngle"> Rear wheel steering angle [rad] </param>
         /// <returns> Yaw moment [Nm] </returns>
-        private double _GetYawMoment(double carSlipAngle, double lateralAcceleration, double frontWheelSteeringAngle, double rearWheelSteeringAngle)
+        private double _GetYawMoment(double carSlipAngle, double lateralAcceleration, double steeringAngle)
         {
+            // Wheels steering angles [rad]
+            double frontWheelSteeringAngle = steeringAngle * Car.Steering.FrontSteeringRatio;
+            double rearWheelSteeringAngle = steeringAngle * Car.Steering.RearSteeringRatio;
             // Wheels loads [N]
             double[] wheelsLoads = Car.GetWheelsLoads(Speed, carSlipAngle, 0);
             // Wheels slip angles [rad]
@@ -607,36 +757,23 @@ namespace InternshipTest.Simulation
             // Front and rear lateral forces [N]
             double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(currentFrontWheelSteeringAngle);
             double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(currentRearWheelSteeringAngle);
-            // Aerodynamic yaw moment [Nm]
-            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0);
             // Yaw moment (squared) [Nm]
             currentYawMoment = frontWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG;
             return currentYawMoment;
         }
-        /*
         private void _UpdateCarSlipAngleVsYawMomentArrays()
         {
             int amountOfPoints = 500;
-            testCarSlipAngle = Generate.LinearSpaced(amountOfPoints, -Math.PI, Math.PI);
+            testCarSlipAngle = Generate.LinearSpaced(amountOfPoints, -Math.PI/3, Math.PI/3);
             testYawMoment = new double[amountOfPoints];
             for (int i = 0; i < amountOfPoints; i++)
             {
                 // Input separation
                 double carSlipAngle = testCarSlipAngle[i];
-                // Wheels loads [N]
-                double[] wheelsLoads = Car.GetWheelsLoads(Speed, carSlipAngle, 0);
-                // Wheels slip angles [rad]
-                double[] wheelsSlipAngles = _GetWheelsSlipAngles(carSlipAngle, currentLateralAcceleration, currentFrontWheelSteeringAngle, currentRearWheelSteeringAngle);
-                // Front and rear lateral forces [N]
-                double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(currentFrontWheelSteeringAngle);
-                double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(currentRearWheelSteeringAngle);
-                // Aerodynamic yaw moment [Nm]
-                Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, carSlipAngle, 0);
-                double aerodynamicYawMoment = -currentAerodynamicParameters.YawMomentCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
                 // Yaw moment (squared) [Nm]
-                testYawMoment[i] = frontWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenFrontAxisAndCG - rearWheelLateralForce * Car.InertiaAndDimensions.DistanceBetweenRearAxisAndCG + aerodynamicYawMoment;
+                testYawMoment[i] = _GetYawMoment(carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.steeringWheelAngle);
             }
-        }*/
+        }
         /// Gets the car's lateral acceleration based on a guess of lateral acceleration.
         /// </summary>
         /// <param name="carSlipAngle"> Car's slip angle [rad]. </param>
@@ -680,36 +817,6 @@ namespace InternshipTest.Simulation
             double frontSlipAngle = Math.Atan(frontWheelLateralSpeed / frontWheelLongitudinalSpeed);
             double rearSlipAngle = Math.Atan(rearWheelLateralSpeed / rearWheelLongitudinalSpeed);
             return new double[] { frontSlipAngle, rearSlipAngle };
-        }
-        /// <summary>
-        /// Gets the car's longitudinal acceleration in pure cornering situation (zero longitudinal slip).
-        /// </summary>
-        /// <param name="carSlipAngle"> Car's slip angle [rad]. </param>
-        /// <param name="lateralAcceleration"> Car's lateral acceleration [m/s²] </param>
-        /// <param name="frontWheelSteeringAngle"> Front wheel steering angle [rad] </param>
-        /// <param name="rearWheelSteeringAngle"> Rear wheel steering angle [rad] </param>
-        /// <returns> Car's longitudinal acceleration [m/s²] </returns>
-        private double _GetLongitudinalAccelerationForPureCornering(double carSlipAngle, double lateralAcceleration, double frontWheelSteeringAngle, double rearWheelSteeringAngle)
-        {
-            // Wheels loads [N]
-            double[] wheelsLoads = Car.GetWheelsLoads(Speed, carSlipAngle, 0);
-            // Wheels slip angles [rad]
-            double[] wheelsSlipAngles = _GetWheelsSlipAngles(carSlipAngle, lateralAcceleration, frontWheelSteeringAngle, rearWheelSteeringAngle);
-            // Wheels longitudinal forces [N]
-            double frontWheelLongitudinalForce = 2 * Car.FrontTire.TireModel.GetTireFx(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(frontWheelSteeringAngle);
-            double rearWheelLongitudinalForce = 2 * Car.RearTire.TireModel.GetTireFx(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(rearWheelSteeringAngle);
-            // Wheels radiuses [m]
-            double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
-            // Gets the inertia efficiency [ratio]
-            double meanWheelRadius = wheelsRadiuses.Average();
-            double inertiaEfficiency = Car.GetInertiaEfficiency(meanWheelRadius);
-            // Aerodynamic drag force [N]
-            Vehicle.TwoWheelAerodynamicMapPoint currentAerodynamicParameters = Car.GetAerodynamicCoefficients(Speed, 0);
-            double dragForce = -currentAerodynamicParameters.DragCoefficient * Car.Aerodynamics.FrontalArea * Car.Aerodynamics.AirDensity * Math.Pow(Speed, 2) / 2;
-            // Vehicle accelerations [m/s²]
-            double longitudinalAcceleration = (frontWheelLongitudinalForce + rearWheelLongitudinalForce + dragForce) * inertiaEfficiency / Car.InertiaAndDimensions.TotalMass;
-
-            return longitudinalAcceleration;
         }
         #endregion
         #region Ellipsoid Interpolation
