@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
@@ -134,15 +135,27 @@ namespace InternshipTest
         {
             if (File.Exists(filePath))
             {
-                // Initializes the reader
-                XmlSerializer reader = new XmlSerializer(GetType());
-                // Initializes the file stream reader
-                StreamReader file = new StreamReader(filePath);
-                // Gets the loaded project object
-                Project project = (Project)reader.Deserialize(file);
-                file.Close();
+                try
+                {
+                    // Initializes the reader
+                    XmlSerializer reader = new XmlSerializer(GetType());
+                    // Initializes the file stream reader
+                    StreamReader file = new StreamReader(filePath);
+                    // Gets the loaded project object
+                    Project project = (Project)reader.Deserialize(file);
+                    file.Close();
 
-                return project;
+                    return project;
+                }
+                catch (Exception)
+                {
+                    System.Windows.MessageBox.Show(
+                   "Could not load project file. Plase, check if the chosen file is a project file.",
+                   "Error",
+                   MessageBoxButton.OK,
+                   MessageBoxImage.Error);
+                   return new Project();
+                }
             }
             else return new Project();
         }

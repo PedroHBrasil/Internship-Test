@@ -1305,7 +1305,9 @@ namespace InternshipTest
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Load Project",
-                RestoreDirectory = true
+                RestoreDirectory = true,
+                DefaultExt = ".xml",
+                Filter = "Extensible Markup Language files (.xml)|*.xml"
             };
             // Displays the open file dialog box
             openFileDialog.ShowDialog();
