@@ -300,8 +300,18 @@ namespace InternshipTest.Vehicle
             double gammaStar = Math.Sin(gamma);
             // Calculated Scalling factors
             double Amu = 10;
-            double lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
-            double lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            double lambdaMuxStar;
+            double lambdaMuyStar;
+            if (VO != 0)
+            {
+                lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+                lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            }
+            else
+            {
+                lambdaMuxStar = 1;
+                lambdaMuyStar = 1;
+            }
             double lambdaMuxLine = Amu * lambdaMuxStar / (1 + (Amu - 1) * lambdaMuxStar);
             double lambdaMuyLine = Amu * lambdaMuyStar / (1 + (Amu - 1) * lambdaMuyStar);
             // Pure Slip Magic Formula
@@ -348,8 +358,18 @@ namespace InternshipTest.Vehicle
             double gammaStar = Math.Sin(gamma);
             // Calculated Scalling factors
             double Amu = 10;
-            double lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
-            double lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            double lambdaMuxStar;
+            double lambdaMuyStar;
+            if (VO != 0)
+            {
+                lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+                lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            }
+            else
+            {
+                lambdaMuxStar = 1;
+                lambdaMuyStar = 1;
+            }
             double lambdaMuxLine = Amu * lambdaMuxStar / (1 + (Amu - 1) * lambdaMuxStar);
             double lambdaMuyLine = Amu * lambdaMuyStar / (1 + (Amu - 1) * lambdaMuyStar);
             // Pure Slip Magic Formula
@@ -400,8 +420,18 @@ namespace InternshipTest.Vehicle
             double gammaStar = Math.Sin(gamma);
             // Calculated Scalling factors
             double Amu = 10;
-            double lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
-            double lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            double lambdaMuxStar;
+            double lambdaMuyStar;
+            if (VO != 0)
+            {
+                lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+                lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            }
+            else
+            {
+                lambdaMuxStar = 1;
+                lambdaMuyStar = 1;
+            }
             double lambdaMuxLine = Amu * lambdaMuxStar / (1 + (Amu - 1) * lambdaMuxStar);
             double lambdaMuyLine = Amu * lambdaMuyStar / (1 + (Amu - 1) * lambdaMuyStar);
             // Lateral Force
@@ -435,8 +465,18 @@ namespace InternshipTest.Vehicle
             double gammaStar = Math.Sin(gamma);
             // Calculated Scalling factors
             double Amu = 10;
-            double lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
-            double lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            double lambdaMuxStar;
+            double lambdaMuyStar;
+            if (VO != 0)
+            {
+                lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+                lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            }
+            else
+            {
+                lambdaMuxStar = 1;
+                lambdaMuyStar = 1;
+            }
             double lambdaMuxLine = Amu * lambdaMuxStar / (1 + (Amu - 1) * lambdaMuxStar);
             double lambdaMuyLine = Amu * lambdaMuyStar / (1 + (Amu - 1) * lambdaMuyStar);
             // Longitudinal Force
@@ -471,8 +511,18 @@ namespace InternshipTest.Vehicle
             double cosAlphaLine = Vcx / VcLine;
             // Calculated Scalling factors
             double Amu = 10;
-            double lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
-            double lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            double lambdaMuxStar;
+            double lambdaMuyStar;
+            if (VO != 0)
+            {
+                lambdaMuxStar = lambdaMux / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+                lambdaMuyStar = lambdaMuy / (1 + lambdaMuV * (Vsx / (Math.Cos(alpha))) / VO);
+            }
+            else
+            {
+                lambdaMuxStar = 1;
+                lambdaMuyStar = 1;
+            }
             double lambdaMuxLine = Amu * lambdaMuxStar / (1 + (Amu - 1) * lambdaMuxStar);
             double lambdaMuyLine = Amu * lambdaMuyStar / (1 + (Amu - 1) * lambdaMuyStar);
 
