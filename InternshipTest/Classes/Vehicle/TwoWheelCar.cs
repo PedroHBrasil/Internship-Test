@@ -155,7 +155,22 @@ namespace InternshipTest.Vehicle
             // Tire resultant Fz [N]
             double frontTireFz = (frontLiftForce + InertiaAndDimensions.FrontWeight - longitudinalLoadTransfer) / 2;
             double rearTireFz = (rearLiftForce + InertiaAndDimensions.RearWeight) + longitudinalLoadTransfer / 2;
-
+            // Correction in case of load = 0
+            if (frontTireFz<0 && rearTireFz>0)
+            {
+                rearTireFz = rearTireFz - frontTireFz;
+                frontTireFz = 0;
+            }
+            else if (frontTireFz>0 && rearTireFz < 0)
+            {
+                frontTireFz = frontTireFz - rearTireFz;
+                rearTireFz = 0;
+            }
+            else if (frontTireFz<0 && rearTireFz < 0)
+            {
+                frontTireFz = 0;
+                rearTireFz = 0;
+            }
             return new double[] { frontTireFz, rearTireFz };
         }
         /// <summary>
