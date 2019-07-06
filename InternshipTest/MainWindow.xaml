@@ -1125,9 +1125,9 @@
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
                                         syncfusion:DockingManager.Header="Tire Model"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="300"
                                         syncfusion:DockingManager.SideInDockedMode="Left"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="300"
                                         syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -1135,10 +1135,6 @@
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="100"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
-                                        <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
@@ -1182,7 +1178,7 @@
                                     <!-- Scalling Factors textblock -->
                                     <TextBlock Text="Scalling Factors:" Grid.Row="6" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <!-- lambdaFzO -->
-                                    <TextBlock HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center"
+                                    <TextBlock HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center"
                                            Grid.Row="7" Grid.Column="0" 
 										   FontSize="15" >
 									<Run>λ</Run>
@@ -1190,326 +1186,326 @@
 										<TextBlock FontSize="9" Text="Fzo"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaFzOTextBox" Text="1" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaFzOTextBox" Text="1" Grid.Row="7" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="1" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMuV -->
-                                    <TextBlock Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="μV"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaMuVTextBox" Text="0" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaMux -->
-                                    <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="μx"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaMuxTextBox" Text=".66" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaMuxTextBox" Text="1" Grid.Row="8" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaMuy -->
-                                    <TextBlock Grid.Row="8" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="μy"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaMuyTextBox" Text=".66" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaMuyTextBox" Text="1" Grid.Row="9" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaKxk -->
-                                    <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="10" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="xκ"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaKxkTextBox" Text="1" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaKxkTextBox" Text="1" Grid.Row="10" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaKya -->
-                                    <TextBlock Grid.Row="9" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="yα"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaKyaTextBox" Text="1" Grid.Row="9" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaKyaTextBox" Text="1" Grid.Row="11" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaCx -->
-                                    <TextBlock Grid.Row="10" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="12" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="10" Text="Cx"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaCxTextBox" Text="1" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaCxTextBox" Text="1" Grid.Row="12" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaCy -->
-                                    <TextBlock Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="13" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="Cy"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaCyTextBox" Text="1" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaEx -->
-                                    <TextBlock Grid.Row="11" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Ex"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaExTextBox" Text="1" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaEy -->
-                                    <TextBlock Grid.Row="11" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Ey"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaEyTextBox" Text="1" Grid.Row="11" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaHx -->
-                                    <TextBlock Grid.Row="12" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Hx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaHxTextBox" Text="1" Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaHy -->
-                                    <TextBlock Grid.Row="12" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Hy"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaHyTextBox" Text="1" Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVx -->
-                                    <TextBlock Grid.Row="13" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Vx"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaVxTextBox" Text="1" Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVy -->
-                                    <TextBlock Grid.Row="13" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Vy"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaVyTextBox" Text="1" Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaKyg -->
-                                    <TextBlock Grid.Row="14" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Kyγ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaKygTextBox" Text="1" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaKzg -->
-                                    <TextBlock Grid.Row="14" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Kzγ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaKzgTextBox" Text="1" Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdat -->
-                                    <TextBlock Grid.Row="15" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="t"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdatTextBox" Text="1" Grid.Row="15" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMr -->
-                                    <TextBlock Grid.Row="15" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Mr"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaMrTextBox" Text="1" Grid.Row="15" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaxa -->
-                                    <TextBlock Grid.Row="16" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="xα"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaxaTextBox" Text="1" Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdayk -->
-                                    <TextBlock Grid.Row="16" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="yκ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaykTextBox" Text="1" Grid.Row="16" Grid.Column="4" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaVyk -->
-                                    <TextBlock Grid.Row="17" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Vyκ"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaVykTextBox" Text="1" Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="2"
-														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
-														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdas -->
-                                    <TextBlock Grid.Row="17" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
-										   FontSize="15" >
-									<Run>λ</Run>
-									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="s"></TextBlock>
-									</InlineUIContainer>
-								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdasTextBox" Text="1" Grid.Row="17" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaCyTextBox" Text="1" Grid.Row="13" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaCz -->
-                                    <TextBlock Grid.Row="18" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="14" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="Cz"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaCzTextBox" Text="1" Grid.Row="18" Grid.Column="1" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaCzTextBox" Text="1" Grid.Row="14" Grid.Column="1" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
-                                    <!-- lambdaMx -->
-                                    <TextBlock Grid.Row="18" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <!-- lambdas -->
+                                    <TextBlock Grid.Row="15" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
-										<TextBlock FontSize="9" Text="Mx"></TextBlock>
+										<TextBlock FontSize="9" Text="s"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaMxTextBox" Text="1" Grid.Row="18" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdasTextBox" Text="1" Grid.Row="15" Grid.Column="1" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMuV -->
+                                    <TextBlock Grid.Row="7" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="μV"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMuVTextBox" Text="0" Grid.Row="7" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaEx -->
+                                    <TextBlock Grid.Row="8" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Ex"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaExTextBox" Text="1" Grid.Row="8" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaEy -->
+                                    <TextBlock Grid.Row="9" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Ey"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaEyTextBox" Text="1" Grid.Row="9" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaHx -->
+                                    <TextBlock Grid.Row="10" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Hx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaHxTextBox" Text="1" Grid.Row="10" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaHy -->
+                                    <TextBlock Grid.Row="11" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Hy"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaHyTextBox" Text="1" Grid.Row="11" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVx -->
+                                    <TextBlock Grid.Row="12" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Vx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVxTextBox" Text="1" Grid.Row="12" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVy -->
+                                    <TextBlock Grid.Row="13" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Vy"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVyTextBox" Text="1" Grid.Row="13" Grid.Column="3" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaVMx -->
-                                    <TextBlock Grid.Row="19" Grid.Column="0" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="14" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="VMx"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaVMxTextBox" Text="1" Grid.Row="19" Grid.Column="1" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaVMxTextBox" Text="1" Grid.Row="14" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMx -->
+                                    <TextBlock Grid.Row="15" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Mx"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMxTextBox" Text="1" Grid.Row="15" Grid.Column="3" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaKyg -->
+                                    <TextBlock Grid.Row="7" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Kyγ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaKygTextBox" Text="1" Grid.Row="7" Grid.Column="5" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaKzg -->
+                                    <TextBlock Grid.Row="8" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Kzγ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaKzgTextBox" Text="1" Grid.Row="8" Grid.Column="5" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdat -->
+                                    <TextBlock Grid.Row="9" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="t"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdatTextBox" Text="1" Grid.Row="9" Grid.Column="5" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaMr -->
+                                    <TextBlock Grid.Row="10" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Mr"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaMrTextBox" Text="1" Grid.Row="10" Grid.Column="5" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaxa -->
+                                    <TextBlock Grid.Row="11" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="xα"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaxaTextBox" Text="1" Grid.Row="11" Grid.Column="5" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdayk -->
+                                    <TextBlock Grid.Row="12" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="yκ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaykTextBox" Text="1" Grid.Row="12" Grid.Column="5" 
+														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
+														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
+                                    <!-- lambdaVyk -->
+                                    <TextBlock Grid.Row="13" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
+										   FontSize="15" >
+									<Run>λ</Run>
+									<InlineUIContainer>
+										<TextBlock FontSize="9" Text="Vyκ"></TextBlock>
+									</InlineUIContainer>
+								</TextBlock>
+                                    <syncfusion:DoubleTextBox Name="lambdaVykTextBox" Text="1" Grid.Row="13" Grid.Column="5" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- lambdaMy -->
-                                    <TextBlock Grid.Row="19" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" 
+                                    <TextBlock Grid.Row="14" Grid.Column="4" HorizontalAlignment="Right" Margin="0,0,5,0" VerticalAlignment="Center" 
 										   FontSize="15" >
 									<Run>λ</Run>
 									<InlineUIContainer>
 										<TextBlock FontSize="9" Text="My"></TextBlock>
 									</InlineUIContainer>
 								</TextBlock>
-                                    <syncfusion:DoubleTextBox Name="lambdaMyTextBox" Text="1" Grid.Row="19" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <syncfusion:DoubleTextBox Name="lambdaMyTextBox" Text="1" Grid.Row="14" Grid.Column="5" 
 														  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
 														  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
 														  Margin="2" NumberDecimalDigits="3"></syncfusion:DoubleTextBox>
                                     <!-- Reliabilty ranges -->
-                                    <TextBlock Text="Reliability Ranges (Min/Max):" Grid.Row="20" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Reliability Ranges (Min/Max):" Grid.Row="16" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <!-- Longitudinal Slip reliability range -->
-                                    <TextBlock Text="Long. Slip" Grid.Row="21" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="tireModelMinLongitudinalSlipTextBox" Grid.Row="21" Grid.Column="2"
-                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
-                                    <syncfusion:DoubleTextBox Name="tireModelMaxLongitudinalSlipTextBox" Grid.Row="21" Grid.Column="4"
-                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="Longitudinal Slip" Grid.Row="17" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMinLongitudinalSlipTextBox" Grid.Row="17" Grid.Column="2"
+                                                          HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" NumberDecimalDigits="3"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMaxLongitudinalSlipTextBox" Grid.Row="17" Grid.Column="4"
+                                                          HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" NumberDecimalDigits="3"/>
                                     <!-- Slip Angle reliability range -->
-                                    <TextBlock Text="Slip Angle" Grid.Row="22" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="tireModelMinSlipAngleTextBox" Grid.Row="22" Grid.Column="2"
-                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="deg" Grid.Row="22" Grid.Column="3" VerticalAlignment="Center"/>
-                                    <syncfusion:DoubleTextBox Name="tireModelMaxSlipAngleTextBox" Grid.Row="22" Grid.Column="4"
-                                                          HorizontalContentAlignment="Right" HorizontalAlignment="Center" NumberDecimalDigits="3"/>
-                                    <TextBlock Text="deg" Grid.Row="22" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Slip Angle" Grid.Row="18" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMinSlipAngleTextBox" Grid.Row="18" Grid.Column="2"
+                                                          HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="18" Grid.Column="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="tireModelMaxSlipAngleTextBox" Grid.Row="18" Grid.Column="4"
+                                                          HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" NumberDecimalDigits="3"/>
+                                    <TextBlock Text="deg" Grid.Row="18" Grid.Column="5" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 </Grid>
                             </ContentControl>
                             <!-- Tire Model Visualization Docking Window -->
@@ -1520,8 +1516,8 @@
                                         syncfusion:DockingManager.Header="Tire Model Visualization"
                                         syncfusion:DockingManager.DesiredWidthInDockedMode="1250"
                                         syncfusion:DockingManager.SideInDockedMode="Left"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="1250"
-                                        syncfusion:DockingManager.State="AutoHidden">
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="1300"
+                                        syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
@@ -1876,8 +1872,8 @@
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
                                         syncfusion:DockingManager.Header="Car And Setup"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="500"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="500"
                                         syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -1961,8 +1957,8 @@
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
                                         syncfusion:DockingManager.Header="Car And Setup"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="400"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="400"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="500"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="500"
                                         syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -2326,7 +2322,7 @@
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
                                         syncfusion:DockingManager.Header="GGV Diagram Definition"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="500"
                                         syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
