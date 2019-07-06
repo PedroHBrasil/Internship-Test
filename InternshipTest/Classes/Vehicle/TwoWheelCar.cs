@@ -158,12 +158,12 @@ namespace InternshipTest.Vehicle
             // Correction in case of load = 0
             if (frontTireFz<0 && rearTireFz>0)
             {
-                rearTireFz = rearTireFz - frontTireFz;
+                rearTireFz -= frontTireFz;
                 frontTireFz = 0;
             }
             else if (frontTireFz>0 && rearTireFz < 0)
             {
-                frontTireFz = frontTireFz - rearTireFz;
+                frontTireFz -= rearTireFz;
                 rearTireFz = 0;
             }
             else if (frontTireFz<0 && rearTireFz < 0)
