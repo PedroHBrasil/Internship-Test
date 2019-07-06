@@ -111,9 +111,6 @@ namespace InternshipTest.Simulation
             // Combined accelerations
             _GetCombinedOperationAccelerations();
         }
-        #region Accelerations Determination By Use Of Genetic Algorithm
-
-        #endregion
         #region Accelerations by Optimization in Pureslip and Ellipsoid Interpolation
         #region Pure Longitudinal
         /// <summary>
