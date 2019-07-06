@@ -45,11 +45,11 @@ namespace InternshipTest.Vehicle
         /// </summary>
         public void GetAerodynamicMapParameters()
         {
+            aerodynamicMapFrontRideHeights = new List<double>();
+            aerodynamicMapRearRideHeights = new List<double>();
             // Aerodyanmic map row sweep "for" loop
             foreach (TwoWheelAerodynamicMapPoint aerodynamicMapPoint in AerodynamicMap.MapPoints)
             {
-                aerodynamicMapFrontRideHeights = new List<double>();
-                aerodynamicMapRearRideHeights = new List<double>();
                 // Current row parameters
                 double aerodynamicMapRowFrontRideHeight = aerodynamicMapPoint.FrontRideHeight;
                 double aerodynamicMapRowRearRideHeight = aerodynamicMapPoint.RearRideHeight;
@@ -139,10 +139,10 @@ namespace InternshipTest.Vehicle
             TwoWheelAerodynamicMap interpolatedAerodynamicMap = new TwoWheelAerodynamicMap() { MapPoints = new List<TwoWheelAerodynamicMapPoint>() };
             // Finds the map's next lower speed compared to the wind speed
             int iFrontRideHeight = 0;
-            while (frontRideHeight <= aerodynamicMapFrontRideHeights[iFrontRideHeight]) iFrontRideHeight++;
+            while (frontRideHeight >= aerodynamicMapFrontRideHeights[iFrontRideHeight]) iFrontRideHeight++;
             // Lower and higher wind speeds
-            double lowerFrontRideHeight = aerodynamicMapFrontRideHeights[iFrontRideHeight];
-            double higherFrontRideHeight = aerodynamicMapFrontRideHeights[iFrontRideHeight + 1];
+            double lowerFrontRideHeight = aerodynamicMapFrontRideHeights[iFrontRideHeight - 1];
+            double higherFrontRideHeight = aerodynamicMapFrontRideHeights[iFrontRideHeight];
             // Lower and upper aerodynamic maps lists initialization
             TwoWheelAerodynamicMap lowerAerodynamicMap = new TwoWheelAerodynamicMap() { MapPoints = new List<TwoWheelAerodynamicMapPoint>() };
             TwoWheelAerodynamicMap higherAerodynamicMap = new TwoWheelAerodynamicMap() { MapPoints = new List<TwoWheelAerodynamicMapPoint>() };
@@ -231,10 +231,10 @@ namespace InternshipTest.Vehicle
             TwoWheelAerodynamicMap interpolatedAerodynamicMap = new TwoWheelAerodynamicMap() { MapPoints = new List<TwoWheelAerodynamicMapPoint>() };
             // Finds the map's next lower speed compared to the wind speed
             int iRearRideHeight = 0;
-            while (rearRideHeight <= aerodynamicMapFrontRideHeights[iRearRideHeight]) iRearRideHeight++;
+            while (rearRideHeight >= aerodynamicMapRearRideHeights[iRearRideHeight]) iRearRideHeight++;
             // Lower and higher wind speeds
-            double lowerRearRideHeight = aerodynamicMapFrontRideHeights[iRearRideHeight];
-            double higherRearRideHeight = aerodynamicMapFrontRideHeights[iRearRideHeight + 1];
+            double lowerRearRideHeight = aerodynamicMapRearRideHeights[iRearRideHeight - 1];
+            double higherRearRideHeight = aerodynamicMapRearRideHeights[iRearRideHeight];
             // Lower and upper aerodynamic maps lists initialization
             TwoWheelAerodynamicMap lowerAerodynamicMap = new TwoWheelAerodynamicMap() { MapPoints = new List<TwoWheelAerodynamicMapPoint>() };
             TwoWheelAerodynamicMap higherAerodynamicMap = new TwoWheelAerodynamicMap() { MapPoints = new List<TwoWheelAerodynamicMapPoint>() };

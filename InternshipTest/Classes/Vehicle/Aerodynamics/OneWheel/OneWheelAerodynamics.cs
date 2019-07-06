@@ -123,10 +123,10 @@ namespace InternshipTest.Vehicle
             OneWheelAerodynamicMap interpolatedAerodynamicMap = new OneWheelAerodynamicMap() { MapPoints = new List<OneWheelAerodynamicMapPoint>() };
             // Finds the map's next lower speed compared to the wind speed
             int iRideHeight = 0;
-            while (rideHeight <= aerodynamicMapRideHeights[iRideHeight]) iRideHeight++;
+            while (rideHeight >= aerodynamicMapRideHeights[iRideHeight]) iRideHeight++;
             // Lower and higher wind speeds
-            double lowerRideHeight = aerodynamicMapRideHeights[iRideHeight];
-            double higherRideHeight = aerodynamicMapRideHeights[iRideHeight + 1];
+            double lowerRideHeight = aerodynamicMapRideHeights[iRideHeight - 1];
+            double higherRideHeight = aerodynamicMapRideHeights[iRideHeight];
             // Lower and upper aerodynamic maps lists initialization
             OneWheelAerodynamicMap lowerAerodynamicMap = new OneWheelAerodynamicMap() { MapPoints = new List<OneWheelAerodynamicMapPoint>() };
             OneWheelAerodynamicMap higherAerodynamicMap = new OneWheelAerodynamicMap() { MapPoints = new List<OneWheelAerodynamicMapPoint>() };
