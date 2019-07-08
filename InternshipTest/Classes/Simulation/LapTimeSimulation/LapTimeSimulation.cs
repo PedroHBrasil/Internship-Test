@@ -347,19 +347,17 @@ namespace InternshipTest.Simulation
             // Checks if it is a normal lap and continues to apply the limitation so that there's a continuous behaviour
             if (!IsFirstLap)
             {
+                // Reference speed array
+                double[] referenceSpeedsArray = results.Speeds.ToArray();
                 // Current point index
                 int iPoint = Path.AmountOfPointsInPath;
-                int iReferencePoint;
                 do
                 {
                     // Point index update
                     iPoint--;
-                    // Gets the reference point index
-                    if (iPoint == 0) iReferencePoint = Path.AmountOfPointsInPath - 1; // Chooses the last point as the reference point
-                    else iReferencePoint = iPoint - 1; // Chooses the previous point as the reference point
                     // Updates the point dynamic state
                     results = _UpdateCurrentPointDynamicStateForCarLimitation(iPoint, "Braking", results);
-                } while (results.Speeds[iReferencePoint] >= results.Speeds[iPoint]);
+                } while (referenceSpeedsArray[iPoint] > results.Speeds[iPoint]);
             }
             return results;
         }
@@ -382,7 +380,11 @@ namespace InternshipTest.Simulation
                 results.LateralAccelerations[0] = 0;
                 results.GearNumbers[0] = 1;
             }
-            else firstAnalysisPointIndex = 0;
+            else
+            {
+                firstAnalysisPointIndex = 0;
+                results.GearNumbers[0] = results.GearNumbers[results.GearNumbers.Count() - 1];
+            }
             // Gear shifting variables initialization
             bool isGearShifting = false;
             double gearShiftingElapsedTime = 0;
@@ -431,6 +433,8 @@ namespace InternshipTest.Simulation
             // Checks if it is a normal lap and continues to apply the limitation so that there's a continuous behaviour
             if (!IsFirstLap)
             {
+                // Reference speed array
+                double[] referenceSpeedsArray = results.Speeds.ToArray();
                 // Current point index
                 int iPoint = -1;
                 int iReferencePoint;
@@ -465,7 +469,7 @@ namespace InternshipTest.Simulation
                         // Checks if the gear shifting is over
                         if (gearShiftingElapsedTime >= GGVDiagramsPerSector[iCurrentSector].SectorGGVDiagram.GetGearShiftTime()) isGearShifting = false;
                     }
-                } while (results.Speeds[iReferencePoint] >= results.Speeds[iPoint]);
+                } while (referenceSpeedsArray[iPoint] > results.Speeds[iPoint]);
             }
             return results;
         }
