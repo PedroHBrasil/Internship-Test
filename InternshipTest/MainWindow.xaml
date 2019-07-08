@@ -2330,6 +2330,7 @@
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
                                         <RowDefinition Height="100"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
@@ -2354,41 +2355,43 @@
                                     <Button Name="simulationDeleteGGVDiagramOfListBox" Content="Delete" Click="_SimulationDeleteGGVDiagramOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Allow GGV Diagram display line -->
                                     <TextBlock Text="GGV Diagram Display" Grid.Row="2" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <CheckBox Name="simulationGGVDiagramAllowPathDisplayCheckBox" Checked="_SimulationGGVDiagramAllowPathDisplayCheckBox_Checked" Unchecked="_SimulationGGVDiagramAllowPathDisplayCheckBox_Unchecked" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <CheckBox Name="simulationGGVDiagramAllowDisplayCheckBox" IsChecked="True" Checked="_SimulationGGVDiagramAllowDisplayCheckBox_Checked" Unchecked="_SimulationGGVDiagramAllowDisplayCheckBox_Unchecked" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     <!-- GGV Diagram ID line -->
-                                    <TextBlock Text="Diagram ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="ggvDiagramIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Use Car and Setup ID as Diagram ID" Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <CheckBox Name="simulationGGVDiagramUseCarAndSetupIDCheckBox" IsChecked="True" Grid.Row="3" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <TextBlock Text="Diagram ID" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="ggvDiagramIDTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Description" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="ggvDiagramDescriptionTextBox" 
-                                         Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                         Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Vehicle type selection line -->
-                                    <TextBlock Text="Vehicle Type" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="ggvDiagramVehicleTypeSelectionComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_GGVDiagramVehicleTypeSelectionComboBox_SelectionChanged">
+                                    <TextBlock Text="Vehicle Type" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="ggvDiagramVehicleTypeSelectionComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_GGVDiagramVehicleTypeSelectionComboBox_SelectionChanged">
                                         <ComboBoxItem Content="One Wheel"/>
                                         <ComboBoxItem Content="Two Wheel"/>
                                     </ComboBox>
                                     <!-- Vehicle selection line -->
-                                    <TextBlock Text="Vehicle" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="ggvDiagramVehicleSelectionComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Vehicle" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="ggvDiagramVehicleSelectionComboBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Amount of Points per Speed line -->
-                                    <TextBlock Text="Amount of Points per Speed" Grid.Row="7" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfPointsPerSpeedTextBox" Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Amount of Points per Speed" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfPointsPerSpeedTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Amount of Speeds line -->
-                                    <TextBlock Text="Amount of Speeds" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfSpeedsTextBox" Grid.Row="8" Grid.Column="4" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Amount of Speeds" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramAmountOfSpeedsTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="3"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
                                     <!-- Lowest Speed line -->
-                                    <TextBlock Text="Lowest Speed" Grid.Row="9" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramLowestSpeedTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2"
-                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
-                                    <TextBlock Text="km/h" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                    <!-- Amount of Speeds line -->
-                                    <TextBlock Text="Highest Speed" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <syncfusion:DoubleTextBox Name="ggvDiagramHighestSpeedTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2"
+                                    <TextBlock Text="Lowest Speed" Grid.Row="10" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramLowestSpeedTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2"
                                                           Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
                                     <TextBlock Text="km/h" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                    <!-- Amount of Speeds line -->
+                                    <TextBlock Text="Highest Speed" Grid.Row="11" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <syncfusion:DoubleTextBox Name="ggvDiagramHighestSpeedTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="2"/>
+                                    <TextBlock Text="km/h" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
                                     <!-- Path Display Grid -->
                                     <Grid Name="ggvDiagramDisplayGrid" Grid.Column="6" Grid.RowSpan="11"/>
                                 </Grid>
@@ -2402,11 +2405,12 @@
                                         syncfusion:DockingManager.CanClose="False"
                                         syncfusion:DockingManager.CanFloat="False"
                                         syncfusion:DockingManager.Header="Lap Time Simulation Definition"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="500"
                                         syncfusion:DockingManager.State="Dock">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="30"/>
                                         <RowDefinition Height="100"/>
@@ -2433,29 +2437,31 @@
                                     <Button Name="lapTimeSimulationAddToListBox" Content="Simulate" Click="_LapTimeSimulationAddToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="lapTimeSimulationDeleteOfListBox" Content="Delete" Click="_LapTimeSimulationDeleteOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- Lap Time Simulation ID line -->
-                                    <TextBlock Text="Simulation ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <TextBox Name="lapTimeSimulationIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Use Path And GGV Diagram IDs as Simulation ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <CheckBox Name="lapTimeSimulationUsePathAndGGVDiagramIDsCheckBox" IsChecked="True" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <TextBlock Text="Simulation ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <TextBox Name="lapTimeSimulationIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
                                     <!-- Description line -->
-                                    <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="lapTimeSimulationDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                         Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Mode Input Line -->
-                                    <TextBlock Text="Mode" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="lapTimeSimulationModeComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
+                                    <TextBlock Text="Mode" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="lapTimeSimulationModeComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2">
                                         <ComboBoxItem Content="First Lap"/>
                                         <ComboBoxItem Content="Normal Lap"/>
                                     </ComboBox>
                                     <!-- Path selection line -->
-                                    <TextBlock Text="Path" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="lapTimeSimulationPathComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
+                                    <TextBlock Text="Path" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="lapTimeSimulationPathComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
                                               ItemsSource="{Binding ElementName=tabularPathsListBox, Path=Items, Mode=OneWay}" SelectionChanged="_LapTimeSimulationPathSelectionComboBox_SelectionChanged"/>
                                     <!-- GGV Diagram selection line -->
-                                    <TextBlock Text="GGV Diagram" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ComboBox Name="lapTimeSimulationGGVDiagramComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
+                                    <TextBlock Text="GGV Diagram" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ComboBox Name="lapTimeSimulationGGVDiagramComboBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
                                               ItemsSource="{Binding ElementName=simulationGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
                                     <!-- Sectors specific GGV Diagram selection -->
-                                    <TextBlock Text="GGV Diagram Specific Selection per Sector:" Grid.Row="7" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                    <ListBox Name="lapTimeSimulationGGVDiagramPerSectorListBox" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
+                                    <TextBlock Text="GGV Diagram Specific Selection per Sector:" Grid.Row="8" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                    <ListBox Name="lapTimeSimulationGGVDiagramPerSectorListBox" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate DataType="{x:Type simulation:LapTimeSimulationSectorSetup}">
                                                 <Grid>
@@ -2471,20 +2477,20 @@
                                     </ListBox>
                                     <!-- Sectors specific GGV Diagram selection list buttons -->
                                     <Button Name="lapTimeSimulationAddGGVDiagramPerSectorToListBox" Content="Add" Click="_LapTimeSimulationAddGGVDiagramPerSectorToListBox_Click"
-                                            Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                            Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <Button Name="lapTimeSimulationDeleteGGVDiagramPerSectorOfListBox" Content="Delete" Click="_LapTimeSimulationDeleteGGVDiagramPerSectorOfListBox_Click"
-                                            Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                            Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
                                     <!-- New GGV Diagram per sector region -->
-                                    <TextBlock Text="Sector Index:" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="lapTimeSimulationNewSectorIndexComboBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content">
+                                    <TextBlock Text="Sector Index:" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="lapTimeSimulationNewSectorIndexComboBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate DataType="{x:Type local:PathSector}">
                                                 <TextBlock Text="{Binding Index}"/>
                                             </DataTemplate>
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
-                                    <TextBlock Text="GGV Diagram:" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                    <ComboBox Name="lapTimeSimulationNewSectorGGVDiagramComboBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
+                                    <TextBlock Text="GGV Diagram:" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                    <ComboBox Name="lapTimeSimulationNewSectorGGVDiagramComboBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" 
                                               ItemsSource="{Binding ElementName=simulationGGVDiagramListBox, Path=Items, Mode=OneWay}"/>
                                 </Grid>
                             </ContentControl>
@@ -2492,7 +2498,7 @@
                         <!-- Results Analysis Docking Manager: 2D Chart-->
                         <Grid Name="resultsAnalysis2DChartsGrid" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="500"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <!-- Chart options grid -->
@@ -2646,7 +2652,7 @@
                         </Grid>
                         <Grid Name="resultsAnalysisTrackMapsGrid" Visibility="Collapsed">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="500"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <!-- Chart options grid -->

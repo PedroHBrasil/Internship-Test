@@ -275,127 +275,127 @@ namespace InternshipTest
         {
             // Two Wheel Aerodynamic Map
 
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,70.0,0.593,-1.996,0.464));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,67.5,0.591,-2.010,0.457));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,65.0,0.590,-2.023,0.449));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,62.5,0.589,-2.033,0.442));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,60.0,0.587,-2.038,0.436));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,57.5,0.586,-2.044,0.431));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,55.0,0.585,-2.051,0.425));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,52.5,0.584,-2.052,0.420));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,50.0,0.583,-2.048,0.417));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,47.5,0.583,-2.046,0.414));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0,45.0,0.582,-2.045,0.410));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,70.0,0.590,-2.026,0.476));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,67.5,0.588,-2.035,0.469));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,65.0,0.587,-2.048,0.461));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,62.5,0.585,-2.055,0.455));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,60.0,0.584,-2.060,0.449));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,57.5,0.583,-2.068,0.443));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,55.0,0.582,-2.069,0.438));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,52.5,0.581,-2.066,0.434));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,50.0,0.580,-2.065,0.430));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,47.5,0.579,-2.064,0.426));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5,45.0,0.578,-2.057,0.423));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,70.0,0.586,-2.055,0.488));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,67.5,0.585,-2.064,0.480));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,65.0,0.583,-2.073,0.473));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,62.5,0.582,-2.079,0.467));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,60.0,0.581,-2.086,0.461));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,57.5,0.579,-2.088,0.455));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,55.0,0.578,-2.086,0.451));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,52.5,0.577,-2.085,0.447));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,50.0,0.576,-2.085,0.442));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,47.5,0.575,-2.079,0.438));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0,45.0,0.575,-2.067,0.436));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,70.0,0.583,-2.088,0.498));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,67.5,0.581,-2.092,0.491));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,65.0,0.580,-2.100,0.484));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,62.5,0.578,-2.102,0.478));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,60.0,0.577,-2.108,0.472));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,57.5,0.576,-2.108,0.467));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,55.0,0.575,-2.107,0.463));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,52.5,0.574,-2.107,0.458));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,50.0,0.573,-2.102,0.454));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,47.5,0.572,-2.091,0.451));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5,45.0,0.571,-2.083,0.449));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,70.0,0.580,-2.121,0.507));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,67.5,0.578,-2.125,0.501));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,65.0,0.576,-2.128,0.494));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,62.5,0.575,-2.130,0.489));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,60.0,0.574,-2.131,0.483));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,57.5,0.572,-2.131,0.478));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,55.0,0.571,-2.130,0.473));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,52.5,0.570,-2.126,0.468));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,50.0,0.569,-2.117,0.465));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,47.5,0.568,-2.109,0.463));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0,45.0,0.567,-2.101,0.460));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,70.0,0.576,-2.152,0.517));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,67.5,0.574,-2.156,0.510));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,65.0,0.573,-2.159,0.503));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,62.5,0.571,-2.156,0.498));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,60.0,0.570,-2.158,0.492));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,57.5,0.569,-2.152,0.488));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,55.0,0.567,-2.152,0.483));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,52.5,0.566,-2.144,0.479));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,50.0,0.565,-2.136,0.476));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,47.5,0.564,-2.129,0.473));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5,45.0,0.564,-2.116,0.470));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,70.0,0.572,-2.185,0.524));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,67.5,0.571,-2.190,0.518));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,65.0,0.569,-2.191,0.512));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,62.5,0.568,-2.187,0.507));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,60.0,0.566,-2.184,0.501));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,57.5,0.565,-2.178,0.497));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,55.0,0.564,-2.173,0.493));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,52.5,0.563,-2.165,0.489));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,50.0,0.562,-2.158,0.485));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,47.5,0.560,-2.146,0.482));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0,45.0,0.560,-2.130,0.480));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,70.0,0.569,-2.222,0.531));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,67.5,0.567,-2.224,0.525));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,65.0,0.565,-2.220,0.520));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,62.5,0.564,-2.217,0.514));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,60.0,0.562,-2.213,0.509));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,57.5,0.561,-2.203,0.505));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,55.0,0.560,-2.198,0.501));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,52.5,0.559,-2.185,0.498));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,50.0,0.557,-2.177,0.494));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,47.5,0.557,-2.163,0.492));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5,45.0,0.556,-2.147,0.490));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,70.0,0.565,-2.258,0.539));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,67.5,0.563,-2.254,0.533));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,65.0,0.561,-2.251,0.527));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,62.5,0.560,-2.249,0.521));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,60.0,0.558,-2.243,0.517));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,57.5,0.557,-2.233,0.513));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,55.0,0.556,-2.222,0.509));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,52.5,0.555,-2.210,0.506));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,50.0,0.553,-2.197,0.503));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,47.5,0.552,-2.182,0.500));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0,45.0,0.552,-2.168,0.498));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,70.0,0.561,-2.291,0.545));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,67.5,0.559,-2.288,0.539));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,65.0,0.557,-2.287,0.533));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,62.5,0.556,-2.282,0.528));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,60.0,0.554,-2.270,0.524));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,57.5,0.553,-2.261,0.519));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,55.0,0.552,-2.250,0.516));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,52.5,0.550,-2.233,0.513));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,50.0,0.549,-2.220,0.510));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,47.5,0.548,-2.200,0.508));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5,45.0,0.547,-2.186,0.506));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,70.0,0.557,-2.326,0.550));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,67.5,0.555,-2.326,0.544));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,65.0,0.553,-2.321,0.539));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,62.5,0.552,-2.311,0.534));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,60.0,0.550,-2.301,0.529));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,57.5,0.549,-2.292,0.525));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,55.0,0.547,-2.278,0.522));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,52.5,0.546,-2.261,0.520));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,50.0,0.545,-2.243,0.517));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,47.5,0.544,-2.223,0.515));
-            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0,45.0,0.543,-2.204,0.513));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 70.0, 0.593, -1.996, 0.464));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 67.5, 0.591, -2.010, 0.457));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 65.0, 0.590, -2.023, 0.449));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 62.5, 0.589, -2.033, 0.442));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 60.0, 0.587, -2.038, 0.436));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 57.5, 0.586, -2.044, 0.431));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 55.0, 0.585, -2.051, 0.425));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 52.5, 0.584, -2.052, 0.420));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 50.0, 0.583, -2.048, 0.417));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 47.5, 0.583, -2.046, 0.414));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(49.0, 45.0, 0.582, -2.045, 0.410));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 70.0, 0.590, -2.026, 0.476));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 67.5, 0.588, -2.035, 0.469));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 65.0, 0.587, -2.048, 0.461));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 62.5, 0.585, -2.055, 0.455));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 60.0, 0.584, -2.060, 0.449));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 57.5, 0.583, -2.068, 0.443));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 55.0, 0.582, -2.069, 0.438));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 52.5, 0.581, -2.066, 0.434));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 50.0, 0.580, -2.065, 0.430));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 47.5, 0.579, -2.064, 0.426));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(46.5, 45.0, 0.578, -2.057, 0.423));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 70.0, 0.586, -2.055, 0.488));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 67.5, 0.585, -2.064, 0.480));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 65.0, 0.583, -2.073, 0.473));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 62.5, 0.582, -2.079, 0.467));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 60.0, 0.581, -2.086, 0.461));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 57.5, 0.579, -2.088, 0.455));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 55.0, 0.578, -2.086, 0.451));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 52.5, 0.577, -2.085, 0.447));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 50.0, 0.576, -2.085, 0.442));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 47.5, 0.575, -2.079, 0.438));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(44.0, 45.0, 0.575, -2.067, 0.436));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 70.0, 0.583, -2.088, 0.498));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 67.5, 0.581, -2.092, 0.491));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 65.0, 0.580, -2.100, 0.484));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 62.5, 0.578, -2.102, 0.478));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 60.0, 0.577, -2.108, 0.472));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 57.5, 0.576, -2.108, 0.467));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 55.0, 0.575, -2.107, 0.463));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 52.5, 0.574, -2.107, 0.458));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 50.0, 0.573, -2.102, 0.454));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 47.5, 0.572, -2.091, 0.451));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(41.5, 45.0, 0.571, -2.083, 0.449));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 70.0, 0.580, -2.121, 0.507));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 67.5, 0.578, -2.125, 0.501));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 65.0, 0.576, -2.128, 0.494));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 62.5, 0.575, -2.130, 0.489));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 60.0, 0.574, -2.131, 0.483));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 57.5, 0.572, -2.131, 0.478));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 55.0, 0.571, -2.130, 0.473));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 52.5, 0.570, -2.126, 0.468));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 50.0, 0.569, -2.117, 0.465));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 47.5, 0.568, -2.109, 0.463));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(39.0, 45.0, 0.567, -2.101, 0.460));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 70.0, 0.576, -2.152, 0.517));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 67.5, 0.574, -2.156, 0.510));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 65.0, 0.573, -2.159, 0.503));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 62.5, 0.571, -2.156, 0.498));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 60.0, 0.570, -2.158, 0.492));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 57.5, 0.569, -2.152, 0.488));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 55.0, 0.567, -2.152, 0.483));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 52.5, 0.566, -2.144, 0.479));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 50.0, 0.565, -2.136, 0.476));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 47.5, 0.564, -2.129, 0.473));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(36.5, 45.0, 0.564, -2.116, 0.470));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 70.0, 0.572, -2.185, 0.524));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 67.5, 0.571, -2.190, 0.518));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 65.0, 0.569, -2.191, 0.512));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 62.5, 0.568, -2.187, 0.507));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 60.0, 0.566, -2.184, 0.501));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 57.5, 0.565, -2.178, 0.497));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 55.0, 0.564, -2.173, 0.493));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 52.5, 0.563, -2.165, 0.489));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 50.0, 0.562, -2.158, 0.485));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 47.5, 0.560, -2.146, 0.482));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(34.0, 45.0, 0.560, -2.130, 0.480));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 70.0, 0.569, -2.222, 0.531));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 67.5, 0.567, -2.224, 0.525));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 65.0, 0.565, -2.220, 0.520));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 62.5, 0.564, -2.217, 0.514));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 60.0, 0.562, -2.213, 0.509));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 57.5, 0.561, -2.203, 0.505));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 55.0, 0.560, -2.198, 0.501));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 52.5, 0.559, -2.185, 0.498));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 50.0, 0.557, -2.177, 0.494));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 47.5, 0.557, -2.163, 0.492));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(31.5, 45.0, 0.556, -2.147, 0.490));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 70.0, 0.565, -2.258, 0.539));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 67.5, 0.563, -2.254, 0.533));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 65.0, 0.561, -2.251, 0.527));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 62.5, 0.560, -2.249, 0.521));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 60.0, 0.558, -2.243, 0.517));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 57.5, 0.557, -2.233, 0.513));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 55.0, 0.556, -2.222, 0.509));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 52.5, 0.555, -2.210, 0.506));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 50.0, 0.553, -2.197, 0.503));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 47.5, 0.552, -2.182, 0.500));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(29.0, 45.0, 0.552, -2.168, 0.498));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 70.0, 0.561, -2.291, 0.545));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 67.5, 0.559, -2.288, 0.539));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 65.0, 0.557, -2.287, 0.533));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 62.5, 0.556, -2.282, 0.528));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 60.0, 0.554, -2.270, 0.524));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 57.5, 0.553, -2.261, 0.519));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 55.0, 0.552, -2.250, 0.516));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 52.5, 0.550, -2.233, 0.513));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 50.0, 0.549, -2.220, 0.510));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 47.5, 0.548, -2.200, 0.508));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(26.5, 45.0, 0.547, -2.186, 0.506));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 70.0, 0.557, -2.326, 0.550));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 67.5, 0.555, -2.326, 0.544));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 65.0, 0.553, -2.321, 0.539));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 62.5, 0.552, -2.311, 0.534));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 60.0, 0.550, -2.301, 0.529));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 57.5, 0.549, -2.292, 0.525));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 55.0, 0.547, -2.278, 0.522));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 52.5, 0.546, -2.261, 0.520));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 50.0, 0.545, -2.243, 0.517));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 47.5, 0.544, -2.223, 0.515));
+            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(24.0, 45.0, 0.543, -2.204, 0.513));
             twoWheelAerodynamicMapIDTextBox.Text = "twoWheelLMP1AeroMap1";
             _TwoWheelAddAerodynamicMapToListBox_Click(null, new RoutedEventArgs());
             // Aerodynamics
@@ -412,25 +412,25 @@ namespace InternshipTest
             twoWheelBrakesRearMaximumTorqueTextBox.Text = "1e5";
             _TwoWheelAddBrakesToListBox_Click(null, new RoutedEventArgs());
             // Engine Curves
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4000,324.30,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4500,338.60,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5000,356.00,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5500,370.00,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6000,383.00,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6500,396.60,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7000,403.80,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7500,414.00,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8000,406.80,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8500,414.70,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9000,417.00,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9250,414.20,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9500,405.50,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9750,399.50,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10000,391.60,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10250,383.50,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10500,370.30,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10750,355.00,0,0));
-            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(11000,325.00,0,0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4000, 324.30, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(4500, 338.60, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5000, 356.00, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(5500, 370.00, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6000, 383.00, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(6500, 396.60, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7000, 403.80, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(7500, 414.00, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8000, 406.80, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(8500, 414.70, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9000, 417.00, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9250, 414.20, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9500, 405.50, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(9750, 399.50, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10000, 391.60, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10250, 383.50, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10500, 370.30, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(10750, 355.00, 0, 0));
+            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(11000, 325.00, 0, 0));
 
             engineCurvesIDTextBox.Text = "engineCurvesLMP1";
             _AddEngineCurvesToListBox_Click(null, new RoutedEventArgs());
@@ -495,9 +495,9 @@ namespace InternshipTest
             steeringSystemMaximumSteeringWheelAngleTextBox.Text = "120";
             _AddSteeringSystemToListBox_Click(null, new RoutedEventArgs());
             // Gear Ratios
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)37/ (double)12));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)31/ (double)14));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)29/ (double)16));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)37 / (double)12));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)31 / (double)14));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)29 / (double)16));
             gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)28 / (double)18));
             gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)26 / (double)19));
             gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)27 / (double)22));
@@ -1461,7 +1461,7 @@ namespace InternshipTest
             lapTimeSimulationListBox.Items.Clear();
             lapTimeSimulationGGVDiagramPerSectorListBox.Items.Clear();
         }
-        
+
         #endregion
         #region Vehicle Button Options Methods
 
@@ -4598,7 +4598,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _SimulationAddGGVDiagramToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (ggvDiagramIDTextBox.Text != "" &&
+            if ((ggvDiagramIDTextBox.Text != "" || (bool)simulationGGVDiagramUseCarAndSetupIDCheckBox.IsChecked) &&
                 ggvDiagramVehicleTypeSelectionComboBox.SelectedItem != null &&
                 ggvDiagramVehicleSelectionComboBox.SelectedItem != null &&
                 int.Parse(ggvDiagramAmountOfPointsPerSpeedTextBox.Text) >= 4 &&
@@ -4614,7 +4614,6 @@ namespace InternshipTest
                 double highestSpeed = double.Parse(ggvDiagramHighestSpeedTextBox.Text) / 3.6;
                 // Progress bar window
                 UIClasses.ProgressBars.TaskProgressBarWindow progressBarWindow = new UIClasses.ProgressBars.TaskProgressBarWindow();
-                progressBarWindow.taskID.Text = "Generating GGV Diagram. ID: " + id;
                 progressBarWindow.taskProgressBar.Value = 0;
                 progressBarWindow.Show();
                 // Background Worker definition
@@ -4626,6 +4625,9 @@ namespace InternshipTest
                     case "One Wheel":
                         // Gets the car object
                         Vehicle.OneWheelCar oneWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.OneWheelCar;
+                        // Corrects the id if the checkbox is selected
+                        if ((bool)simulationGGVDiagramUseCarAndSetupIDCheckBox.IsChecked) id = oneWheelCar.ToString();
+                        progressBarWindow.taskID.Text = "Generating GGV Diagram. ID: " + id;
                         // Initializes and generates the GGV diagram
                         Simulation.GGVDiagram oneWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed, oneWheelCar);
                         // Worker set up
@@ -4645,6 +4647,9 @@ namespace InternshipTest
                     case "Two Wheel":
                         // Gets the car object
                         Vehicle.TwoWheelCar twoWheelCar = ggvDiagramVehicleSelectionComboBox.SelectedItem as Vehicle.TwoWheelCar;
+                        // Corrects the id if the checkbox is selected
+                        if ((bool)simulationGGVDiagramUseCarAndSetupIDCheckBox.IsChecked) id = twoWheelCar.ToString();
+                        progressBarWindow.taskID.Text = "Generating GGV Diagram. ID: " + id;
                         // Initializes and generates the GGV diagram
                         Simulation.GGVDiagram twoWheelGGVDiagram = new Simulation.GGVDiagram(id, description, amountOfPointsPerSpeed, amountOfSpeeds, lowestSpeed, highestSpeed, twoWheelCar);
                         // Worker set up
@@ -4749,7 +4754,7 @@ namespace InternshipTest
                         break;
                 }
                 // Updates the ggv diagram display chart
-                if ((bool)simulationGGVDiagramAllowPathDisplayCheckBox.IsChecked) _UpdateSimulationGGVDiagramDisplayChart();
+                if ((bool)simulationGGVDiagramAllowDisplayCheckBox.IsChecked) _UpdateSimulationGGVDiagramDisplayChart();
             }
         }
 
@@ -4759,7 +4764,7 @@ namespace InternshipTest
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _SimulationGGVDiagramAllowPathDisplayCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void _SimulationGGVDiagramAllowDisplayCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (simulationGGVDiagramListBox.SelectedItems.Count == 1) _UpdateSimulationGGVDiagramDisplayChart();
         }
@@ -4769,7 +4774,7 @@ namespace InternshipTest
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void _SimulationGGVDiagramAllowPathDisplayCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        private void _SimulationGGVDiagramAllowDisplayCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             _ClearSimulationGGVDiagramDisplayChart();
         }
@@ -4866,7 +4871,7 @@ namespace InternshipTest
         /// <param name="e"></param>
         private void _LapTimeSimulationAddToListBox_Click(object sender, RoutedEventArgs e)
         {
-            if (lapTimeSimulationIDTextBox.Text != "" &&
+            if ((lapTimeSimulationIDTextBox.Text != "" || (bool)lapTimeSimulationUsePathAndGGVDiagramIDsCheckBox.IsChecked) &&
                 lapTimeSimulationModeComboBox.SelectedItem != null &&
                 lapTimeSimulationPathComboBox.SelectedItem != null &&
                 lapTimeSimulationGGVDiagramComboBox.SelectedItem != null)
@@ -4879,6 +4884,8 @@ namespace InternshipTest
                 if (mode == "First Lap") isFirstLap = true;
                 Path path = lapTimeSimulationPathComboBox.SelectedItem as Path;
                 Simulation.GGVDiagram ggvDiagram = lapTimeSimulationGGVDiagramComboBox.SelectedItem as Simulation.GGVDiagram;
+                // Corrects the ID if the checkbox is selected
+                if((bool)lapTimeSimulationUsePathAndGGVDiagramIDsCheckBox.IsChecked) id = "Path: " + path.ToString() + " - GGV: " + ggvDiagram.ToString();
                 // Generates the GGV diagrams list
                 List<Simulation.LapTimeSimulationSectorSetup> ggvDiagrams = new List<Simulation.LapTimeSimulationSectorSetup>();
                 for (int iSector = 1; iSector <= path.SectorsSet.Sectors.Count; iSector++)
