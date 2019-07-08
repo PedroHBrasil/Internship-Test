@@ -62,7 +62,7 @@ namespace InternshipTest.Simulation
             results.Description = Description;
             results.GGVDiagramsPerSector = GGVDiagramsPerSector;
             results.LocalSectors = Path.LocalSectorIndex.ToArray();
-            results.GetAllResults();
+            results.GetAllResults(sender, progressCounter, Path.AmountOfPointsInPath);
             Results = results;
             e.Result = this;
         }
@@ -159,7 +159,7 @@ namespace InternshipTest.Simulation
                 results.GearNumbersForMaximumPossibleSpeeds[iPathPoint] = resultsForCurrentPoint.GearNumbersForMaximumPossibleSpeeds[0];
                 // Progress counter update and report
                 progressCounter++;
-                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 3) * 100);
+                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 4) * 100);
                 (sender as BackgroundWorker).ReportProgress(progress);
             }
             return results;
@@ -341,7 +341,7 @@ namespace InternshipTest.Simulation
                 }
                 // Progress counter update and report
                 progressCounter++;
-                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 3) * 100);
+                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 4) * 100);
                 (sender as BackgroundWorker).ReportProgress(progress);
             }
             // Checks if it is a normal lap and continues to apply the limitation so that there's a continuous behaviour
@@ -425,7 +425,7 @@ namespace InternshipTest.Simulation
                 else lastGear = results.GearNumbers[iPoint];
                 // Progress counter update and report
                 progressCounter++;
-                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 3) * 100);
+                int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 4) * 100);
                 (sender as BackgroundWorker).ReportProgress(progress);
             }
             // Checks if it is a normal lap and continues to apply the limitation so that there's a continuous behaviour

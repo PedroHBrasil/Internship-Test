@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -194,7 +195,7 @@ namespace InternshipTest.Results
         /// <summary>
         /// Gets all of the lap time simulation results.
         /// </summary>
-        public void GetAllResults()
+        public void GetAllResults(object sender, int progressCounter, int amountOfPointsInPath)
         {
             // Initializes the results arrays
             for (int iPoint = 0; iPoint < Speeds.Length; iPoint++)
@@ -223,6 +224,10 @@ namespace InternshipTest.Results
                 _GetBrakesAvailablePowers(iPoint, iSector);
                 _GetBrakesUsages(iPoint, iSector);
                 _GetFuelConsumptionResults(iPoint, iSector);
+                // Progress counter update and report
+                progressCounter++;
+                int progress = (int)((double)(progressCounter + 1) / (amountOfPointsInPath * 4) * 100);
+                (sender as BackgroundWorker).ReportProgress(progress);
             }
             LapTime = ElapsedTimes.Last();
             TotalFuelConsumption = FuelConsumptions.Last();
