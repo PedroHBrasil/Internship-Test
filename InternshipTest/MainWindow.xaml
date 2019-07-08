@@ -2364,7 +2364,7 @@
                                     <!-- Description line -->
                                     <TextBlock Text="Description" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                     <TextBox Name="ggvDiagramDescriptionTextBox" 
-                                         Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="5" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                         Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
                                     <!-- Vehicle type selection line -->
                                     <TextBlock Text="Vehicle Type" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                     <ComboBox Name="ggvDiagramVehicleTypeSelectionComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectedValuePath="Content" SelectionChanged="_GGVDiagramVehicleTypeSelectionComboBox_SelectionChanged">
