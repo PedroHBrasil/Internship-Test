@@ -290,6 +290,7 @@ namespace InternshipTest.Vehicle
         /// <returns>Tire Longitudinal Force (Fx) [N]</returns>
         public double GetTireFx(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
+            if (Fz == 0) return 0;
             // Speed components
             double Vcx = Vc * Math.Cos(alpha);
             double Vsx = -kappa * Math.Abs(Vcx);
@@ -348,6 +349,7 @@ namespace InternshipTest.Vehicle
         /// <returns>Tire Lateral Force (Fy) [N]</returns>
         public double GetTireFy(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
+            if (Fz == 0) return 0;
             // Speed components
             double Vcx = Vc * Math.Cos(alpha);
             double Vsx = -kappa * Math.Abs(Vcx);
@@ -410,6 +412,7 @@ namespace InternshipTest.Vehicle
         /// <returns>Tire Overturning Moment (Mx) [Nm]</returns>
         public double GetTireMx(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
+            if (Fz == 0) return 0;
             // Speed components
             double Vcx = Vc * Math.Cos(alpha);
             double Vsx = -kappa * Math.Abs(Vcx);
@@ -455,6 +458,7 @@ namespace InternshipTest.Vehicle
         /// <returns>Tire Rolling Resistance Moment (My) [Nm]</returns>
         public double GetTireMy(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
+            if (Fz == 0) return 0;
             // Speed components
             double Vcx = Vc * Math.Cos(alpha);
             double Vsx = -kappa * Math.Abs(Vcx);
@@ -499,6 +503,7 @@ namespace InternshipTest.Vehicle
         /// <returns>Tire Self-Aligning Torque (Mz) [Nm]</returns>
         public double GetTireMz(double kappa, double alpha, double Fz, double gamma, double Vc)
         {
+            if (Fz == 0) return 0;
             // Speed components
             double Vcx = Vc * Math.Cos(alpha);
             double Vsx = -kappa * Math.Abs(Vcx);
