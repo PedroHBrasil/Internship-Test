@@ -1837,6 +1837,7 @@ namespace InternshipTest
                 airDensityTextBox.Text = aerodynamics.AirDensity.ToString("F3");
             }
         }
+
         #endregion
 
         #region Two Wheel Model
@@ -2022,6 +2023,51 @@ namespace InternshipTest
                 oneWheelAerodynamicMapPointsListBox.Items.RemoveAt(oneWheelAerodynamicMapPointsListBox.Items.IndexOf(oneWheelAerodynamicMapPointsListBox.SelectedItem));
             }
         }
+        /// <summary>
+        /// Imports the one wheel aerodynamic map from a csv file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelImportAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the open file dialog box
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Import One Wheel Model's Aerodynamic Map",
+                RestoreDirectory = true,
+                DefaultExt = ".csv",
+                Filter = "Comma-Separated Values (.csv)|*.csv"
+            };
+            // Displays the open file dialog box
+            openFileDialog.ShowDialog();
+            // Loads the aerodynamic map
+            if (File.Exists(openFileDialog.FileName))
+            {
+                using (var reader = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+
+                        if (values.Length == 3 && double.TryParse(values[0], out double rideHeight) && double.TryParse(values[1], out double dragCoefficient) && double.TryParse(values[2], out double liftCoefficient))
+                        {
+                            oneWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.OneWheelAerodynamicMapPoint(rideHeight, dragCoefficient, liftCoefficient));
+                        };
+                    };
+                };
+            }
+        }
+        /// <summary>
+        /// Clears the aerodynamic map points listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _OneWheelClearAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            oneWheelAerodynamicMapPointsListBox.Items.Clear();
+        }
+
         #endregion
 
         #region Two Wheel Model
@@ -2151,6 +2197,52 @@ namespace InternshipTest
             {
                 twoWheelAerodynamicMapPointsListBox.Items.RemoveAt(twoWheelAerodynamicMapPointsListBox.Items.IndexOf(twoWheelAerodynamicMapPointsListBox.SelectedItem));
             }
+        }
+
+        /// <summary>
+        /// Imports the two wheel aerodynamic map from a csv file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelImportAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the open file dialog box
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Import Two Wheel Model's Aerodynamic Map",
+                RestoreDirectory = true,
+                DefaultExt = ".csv",
+                Filter = "Comma-Separated Values (.csv)|*.csv"
+            };
+            // Displays the open file dialog box
+            openFileDialog.ShowDialog();
+            // Loads the aerodynamic map
+            if (File.Exists(openFileDialog.FileName))
+            {
+                using (var reader = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+
+                        if (values.Length == 5 && double.TryParse(values[0], out double frontRideHeight) && double.TryParse(values[1], out double rearRideHeight) && double.TryParse(values[2], out double dragCoefficient) && double.TryParse(values[3], out double liftCoefficient) && double.TryParse(values[4], out double downforceDistribution))
+                        {
+                            twoWheelAerodynamicMapPointsListBox.Items.Add(new Vehicle.TwoWheelAerodynamicMapPoint(frontRideHeight, rearRideHeight, dragCoefficient, liftCoefficient, downforceDistribution));
+                        };
+                    };
+                };
+            }
+        }
+
+        /// <summary>
+        /// Clears the aerodynamic map points listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _TwoWheelClearAerodynamicMapPointOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            twoWheelAerodynamicMapPointsListBox.Items.Clear();
         }
 
         #endregion
@@ -2497,6 +2589,53 @@ namespace InternshipTest
             {
                 engineCurvesPointsListBox.Items.RemoveAt(engineCurvesPointsListBox.Items.IndexOf(engineCurvesPointsListBox.SelectedItem));
             }
+        }
+
+        /// <summary>
+        /// Imports the engine curves from a csv file.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _EngineImportCurvesToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the open file dialog box
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Import Engine's Curves Points",
+                RestoreDirectory = true,
+                DefaultExt = ".csv",
+                Filter = "Comma-Separated Values (.csv)|*.csv"
+            };
+            // Displays the open file dialog box
+            openFileDialog.ShowDialog();
+            // Loads the aerodynamic map
+
+            if (File.Exists(openFileDialog.FileName))
+            {
+                using (var reader = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+
+                        if (values.Length == 4 && double.TryParse(values[0], out double rpm) && double.TryParse(values[1], out double torque) && double.TryParse(values[2], out double brakingTorque) && double.TryParse(values[3], out double specificFuelConsumption))
+                        {
+                            engineCurvesPointsListBox.Items.Add(new Vehicle.EngineCurvesPoint(rpm, torque, brakingTorque, specificFuelConsumption));
+                        };
+                    };
+                };
+            }
+        }
+
+        /// <summary>
+        /// Clears the engine curves points listbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void _EngineClearCurvePointsListBox_Click(object sender, RoutedEventArgs e)
+        {
+            engineCurvesPointsListBox.Items.Clear();
         }
 
         #endregion
@@ -4483,6 +4622,119 @@ namespace InternshipTest
             }
         }
 
+        private void _TabularPathClearSectionsListBox_Click(object sender, RoutedEventArgs e)
+        {
+            tabularPathSectionsListBox.Items.Clear();
+        }
+
+        private void _TabularPathImportSectionToListBox_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the open file dialog box
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Import Engine's Curves Points",
+                RestoreDirectory = true,
+                DefaultExt = ".csv",
+                Filter = "Comma-Separated Values (.csv)|*.csv"
+            };
+            // Displays the open file dialog box
+            openFileDialog.ShowDialog();
+            // Loads the aerodynamic map
+            if (File.Exists(openFileDialog.FileName))
+            {
+                using (var reader = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        var values = line.Split(',');
+
+                        if (values.Length == 4 && (values[0] == "Straight" || values[0] == "Left" || values[0] == "Right") && double.TryParse(values[1], out double length) && double.TryParse(values[2], out double initialRadius) && double.TryParse(values[3], out double finalRadius))
+                        {
+                            TabularPathSection.SectionType sectionType = TabularPathSection.SectionType.Straight;
+                            if (values[0] == "Left") sectionType = TabularPathSection.SectionType.Left;
+                            else if (values[0] == "Right") sectionType = TabularPathSection.SectionType.Right;
+                            tabularPathSectionsListBox.Items.Add(new TabularPathSection(sectionType, length, initialRadius, finalRadius));
+                        };
+                    };
+                };
+                // Updates the path preview chart
+                if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked) _UpdateTabularPathSectionsPreviewChart();
+            }
+        }
+
+        private void _TabularPathInsertSectionOfListBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabularPathNewSectionTypeComboBox.SelectedItem != null &&
+                double.Parse(tabularPathNewSectionLengthTextBox.Text) != 0 &&
+                tabularPathSectionsListBox.SelectedItem != null)
+            {
+                // Gets the object's properties values
+                double length = double.Parse(tabularPathNewSectionLengthTextBox.Text);
+                if (length < 0) length = -length;
+                TabularPathSection.SectionType sectionType;
+                double initialRadius;
+                double finalRadius;
+                switch (tabularPathNewSectionTypeComboBox.Text)
+                {
+                    case ("Left"):
+                        sectionType = TabularPathSection.SectionType.Left;
+                        initialRadius = double.Parse(tabularPathNewSectionInitialRadiusTextBox.Text);
+                        finalRadius = double.Parse(tabularPathNewSectionFinalRadiusTextBox.Text);
+                        break;
+                    case ("Right"):
+                        sectionType = TabularPathSection.SectionType.Right;
+                        initialRadius = double.Parse(tabularPathNewSectionInitialRadiusTextBox.Text);
+                        finalRadius = double.Parse(tabularPathNewSectionFinalRadiusTextBox.Text);
+                        break;
+                    default:
+                        sectionType = TabularPathSection.SectionType.Straight;
+                        initialRadius = 0;
+                        finalRadius = 0;
+                        break;
+                }
+                if (initialRadius < 0) initialRadius = -initialRadius;
+                if (finalRadius < 0) finalRadius = -finalRadius;
+                // Initializes a new object
+                TabularPathSection pathSection = new TabularPathSection(sectionType, length, initialRadius, finalRadius);
+                // Gets the position where the new section will be inserted
+                int selectedIndex = tabularPathSectionsListBox.SelectedIndex;
+                // Splits the current sections into two lists
+                List<TabularPathSection> sectionsFirstHalf = new List<TabularPathSection>();
+                List<TabularPathSection> sectionsSecondHalf = new List<TabularPathSection>();
+                for (int iSection = 0; iSection < selectedIndex - 1; iSection++)
+                {
+                    sectionsFirstHalf.Add(tabularPathSectionsListBox.Items[iSection] as TabularPathSection);
+                }
+                for (int iSection = selectedIndex; iSection < tabularPathSectionsListBox.Items.Count; iSection++)
+                {
+                    sectionsSecondHalf.Add(tabularPathSectionsListBox.Items[iSection] as TabularPathSection);
+                }
+                // Adds the new section to the first list
+                sectionsFirstHalf.Add(pathSection);
+                // Sets the tabular path sections to a compound of the lists
+                List<TabularPathSection> newSectionsList = new List<TabularPathSection>(sectionsFirstHalf.Concat(sectionsSecondHalf));
+                tabularPathSectionsListBox.Items.Clear();
+                foreach (TabularPathSection section in newSectionsList)
+                {
+                    tabularPathSectionsListBox.Items.Add(section);
+                }
+                // Updates the path preview chart
+                if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked) _UpdateTabularPathSectionsPreviewChart();
+            }
+            else System.Windows.MessageBox.Show(
+                "Could not create Section. \n " +
+                "   The length can't be zero. \n" +
+                "   Note: Negative values are corrected to positive values. \n" +
+                "   Note: Radius equal to zero means straight section. \n" +
+                "   Note: Straight sections radiuses are corrected to zero.",
+                "Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+
+        #region Sections Display
+
         /// <summary>
         /// Updates the tabular path sections preview chart when the checkbox is checked.
         /// </summary>
@@ -4510,9 +4762,8 @@ namespace InternshipTest
         {
             // Gets a new path sections set from the UI
             List<TabularPathSection> pathSections = new List<TabularPathSection>();
-            foreach (var pathSectionItem in tabularPathSectionsListBox.Items)
+            foreach (TabularPathSection pathSection in tabularPathSectionsListBox.Items)
             {
-                TabularPathSection pathSection = pathSectionItem as TabularPathSection;
                 pathSections.Add(pathSection);
             }
             TabularPathSectionsSet sectionsSet = new TabularPathSectionsSet("", "", pathSections);
@@ -4581,6 +4832,7 @@ namespace InternshipTest
             // Resets the docking window width
             DockingManager.SetDesiredWidthInDockedMode(tabularPathSectionsDockingWindow, 250);
         }
+        #endregion
 
         #endregion
 
@@ -5179,12 +5431,12 @@ namespace InternshipTest
             resultsAnalysisTrackMapGrid.Children.Clear();
             resultsAnalysisTrackMapGrid.Children.Add(trackMap);
         }
-        #endregion
 
         #endregion
 
         #endregion
 
+        #endregion
 
     }
 }

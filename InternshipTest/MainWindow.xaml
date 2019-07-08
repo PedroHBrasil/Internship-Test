@@ -302,6 +302,7 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -352,22 +353,24 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <!-- Aerodynamic Map Points list buttons -->
-                                <Button Name="oneWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_AddOneWheelAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_DeleteOneWheelAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelImportAerodynamicMapPointOfListBox" Content="Import from .csv" Click="_OneWheelImportAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelClearAerodynamicMapPointOfListBox" Content="Clear" Click="_OneWheelClearAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <Button Name="oneWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_AddOneWheelAerodynamicMapPointToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_DeleteOneWheelAerodynamicMapPointOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New Point line -->
-                                <TextBlock Text="Data of Table's Line to Add:" Grid.Row="8" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBlock Text="Data of Table's Line to Add:" Grid.Row="9" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <!-- New point's ride height line -->
-                                <TextBlock Text="Ride Height" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointRideHeightTextBox" Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="3" 
+                                <TextBlock Text="Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointRideHeightTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="mm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
                                 <!-- New point's drag coefficient line -->
-                                <TextBlock Text="Drag Coef." Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="3" 
+                                <TextBlock Text="Drag Coef." Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <!-- New point's lift coefficient line -->
-                                <TextBlock Text="Lift Coef." Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
+                                <TextBlock Text="Lift Coef." Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newOneWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                             </Grid>
                         </ContentControl>
@@ -390,6 +393,7 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="70"/>
                                     <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
@@ -455,33 +459,35 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <!-- Aerodynamic Map Points list buttons -->
-                                <Button Name="twoWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="twoWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="twoWheelImportAerodynamicMapPointOfListBox" Content="Import from .csv" Click="_TwoWheelImportAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="twoWheelClearAerodynamicMapPointOfListBox" Content="Clear" Click="_TwoWheelClearAerodynamicMapPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <Button Name="twoWheelAddAerodynamicMapPointToListBox" Content="Add" Click="_TwoWheelAddAerodynamicMapPointToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="twoWheelDeleteAerodynamicMapPointOfListBox" Content="Delete" Click="_TwoWheelDeleteAerodynamicMapPointOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New Point line -->
-                                <TextBlock Text="Data of Table's Line to Add:" Grid.Row="8" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBlock Text="Data of Table's Line to Add:" Grid.Row="9" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <!-- New point's front ride height line -->
-                                <TextBlock Text="Front Ride Height" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointFrontRideHeightTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="mm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- New point's rear ride height line -->
-                                <TextBlock Text="Rear Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointRearRideHeightTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <TextBlock Text="Front Ride Height" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointFrontRideHeightTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <TextBlock Text="mm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- New point's rear ride height line -->
+                                <TextBlock Text="Rear Ride Height" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointRearRideHeightTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                <TextBlock Text="mm" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
                                 <!-- New point's drag coefficient line -->
-                                <TextBlock Text="Drag Coefficient" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <TextBlock Text="Drag Coefficient" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDragCoefficientTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <!-- New point's lift coefficient line -->
-                                <TextBlock Text="Lift Coefficient" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <TextBlock Text="Lift Coefficient" Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointLiftCoefficientTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <!-- New point's yaw moment coefficient line -->
-                                <TextBlock Text="Downforce Distrib." Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDownforceDistributionTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <TextBlock Text="Downforce Distrib." Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newTwoWheelAerodynamicMapPointDownforceDistributionTextBox" Grid.Row="14" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="%" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="%" Grid.Row="14" Grid.Column="5" VerticalAlignment="Center"/>
                             </Grid>
                         </ContentControl>
                         <!-- Aerodynamics Docking Window -->
@@ -516,8 +522,8 @@
                                 <ListBox Name="oneWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
                                 <ListBox Name="twoWheelAerodynamicsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelAerodynamicsListBox_SelectionChanged" Visibility="Hidden"/>
                                 <!-- Aerodynamics listbox add and delete buttons -->
-                                <Button Name="oneWheelAddAerodynamicsToListBox" Content="Add" Click="_AddAerodynamicsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteAerodynamicsOfListBox" Content="Delete" Click="_DeleteAerodynamicsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddAerodynamicsToListBox" Content="Add" Click="_AddAerodynamicsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteAerodynamicsOfListBox" Content="Delete" Click="_DeleteAerodynamicsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Aerodynamics ID line -->
                                 <TextBlock Text="Aero ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="aerodynamicsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -577,8 +583,8 @@
                                 <!-- Brakes listbox -->
                                 <ListBox Name="oneWheelBrakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelBrakesListBox_SelectionChanged"/>
                                 <!-- Brakes listbox add and delete buttons -->
-                                <Button Name="oneWheelAddBrakesToListBox" Content="Add" Click="_AddOneWheelBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteBrakesOfListBox" Content="Delete" Click="_DeleteOneWheelBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddBrakesToListBox" Content="Add" Click="_AddOneWheelBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteBrakesOfListBox" Content="Delete" Click="_DeleteOneWheelBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
                                 <!-- Brakes ID line -->
                                 <TextBlock Text="Brakes ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="oneWheelBrakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -622,8 +628,8 @@
                                 <!-- Brakes listbox -->
                                 <ListBox Name="twoWheelBrakesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelBrakesListBox_SelectionChanged"/>
                                 <!-- Brakes listbox add and delete buttons -->
-                                <Button Name="twoWheelAddBrakesToListBox" Content="Add" Click="_TwoWheelAddBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="twoWheelDeleteBrakesOfListBox" Content="Delete" Click="_TwoWheelDeleteBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="twoWheelAddBrakesToListBox" Content="Add" Click="_TwoWheelAddBrakesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="twoWheelDeleteBrakesOfListBox" Content="Delete" Click="_TwoWheelDeleteBrakesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Brakes ID line -->
                                 <TextBlock Text="Brakes ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="twoWheelBrakesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -678,8 +684,8 @@
                                 <!-- Engine listbox -->
                                 <ListBox Name="engineListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="2" SelectionChanged="_EngineListBox_SelectionChanged"/>
                                 <!-- Engine listbox add and delete buttons -->
-                                <Button Name="oneWheelAddEngineToListBox" Content="Add" Click="_AddEngineToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteEngineOfListBox" Content="Delete" Click="_DeleteEngineOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddEngineToListBox" Content="Add" Click="_AddEngineToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteEngineOfListBox" Content="Delete" Click="_DeleteEngineOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Engine ID line -->
                                 <TextBlock Text="Engine ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
                                 <TextBox Name="engineIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -728,6 +734,7 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -740,8 +747,8 @@
                                 <!-- Transmission listbox -->
                                 <ListBox Name="engineCurvesListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_EngineCurvesListBox_SelectionChanged"/>
                                 <!-- Transmission listbox add and delete buttons -->
-                                <Button Name="oneWheelAddEngineCurvesToListBox" Content="Add" Click="_AddEngineCurvesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteEngineCurvesOfListBox" Content="Delete" Click="_DeleteEngineCurvesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddEngineCurvesToListBox" Content="Add" Click="_AddEngineCurvesToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteEngineCurvesOfListBox" Content="Delete" Click="_DeleteEngineCurvesOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Transmission ID line -->
                                 <TextBlock Text="Curves ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="engineCurvesIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -782,30 +789,32 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <!-- Engine Curves Points list buttons -->
-                                <Button Name="oneWheelAddEngineCurvesPointToListBox" Content="Add" Click="_AddEngineCurvesPointToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteEngineCurvesPointOfListBox" Content="Delete" Click="_DeleteEngineCurvesPointOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="engineImportCurvesToListBox" Content="Import from .csv" Click="_EngineImportCurvesToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="engineClearCurvePointsListBox" Content="Clear" Click="_EngineClearCurvePointsListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <Button Name="engineAddCurvesPointToListBox" Content="Add" Click="_AddEngineCurvesPointToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                    <Button Name="engineDeleteCurvesPointOfListBox" Content="Delete" Click="_DeleteEngineCurvesPointOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New Point line -->
-                                <TextBlock Text="Data of Table's Line to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBlock Text="Data of Table's Line to Add:" Grid.Row="9" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <!-- New point's RPM line -->
-                                <TextBlock Text="RPM" Grid.Row="9" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointRPMTextBox" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <TextBlock Text="RPM" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointRPMTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="rpm" Grid.Row="9" Grid.Column="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="rpm" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
                                 <!-- New point's torque line -->
-                                <TextBlock Text="Torque" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointTorqueTextBox" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="N.m" Grid.Row="10" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- New point's braking torque line -->
-                                <TextBlock Text="Braking Torque" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointBrakingTorqueTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <TextBlock Text="Torque" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointTorqueTextBox" Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <TextBlock Text="N.m" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- New point's specific fuel consumption line -->
-                                <TextBlock Text="Spec. Fuel Cons." Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointSpecFuelConsTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
+                                <!-- New point's braking torque line -->
+                                <TextBlock Text="Braking Torque" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointBrakingTorqueTextBox" Grid.Row="12" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="g/kW" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
+                                <TextBlock Text="N.m" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- New point's specific fuel consumption line -->
+                                <TextBlock Text="Spec. Fuel Cons." Grid.Row="13" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="newEngineCurvesPointSpecFuelConsTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                <TextBlock Text="g/kW" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
                             </Grid>
                         </ContentControl>
                     </syncfusion:DockingManager>
@@ -842,8 +851,8 @@
                                 <!-- Inertia listbox -->
                                 <ListBox Name="oneWheelInertiaListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelInertiaListBox_SelectionChanged"/>
                                 <!-- Inertia listbox add and delete buttons-->
-                                <Button Name="addOneWheelInertiaToListBox" Content="Add" Click="_AddOneWheelInertiaToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="deleteOneWheelInertiaOfListBox" Content="Delete" Click="_DeleteOneWheelInertiaOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="addOneWheelInertiaToListBox" Content="Add" Click="_AddOneWheelInertiaToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteOneWheelInertiaOfListBox" Content="Delete" Click="_DeleteOneWheelInertiaOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Inertia ID line -->
                                 <TextBlock Text="Inertia ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="oneWheelInertiaIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -906,8 +915,8 @@
                                 <!-- Inertia listbox -->
                                 <ListBox Name="twoWheelInertiaAndDimensionsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelInertiaAndDimensionsListBox_SelectionChanged"/>
                                 <!-- Inertia listbox add and delete buttons-->
-                                <Button Name="addTwoWheelInertiaAndDimensionsToListBox" Content="Add" Click="_AddTwoWheelInertiaAndDimensionsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="deleteTwoWheelInertiaAndDimensionsOfListBox" Content="Delete" Click="_DeleteTwoWheelInertiaAndDimensionsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="addTwoWheelInertiaAndDimensionsToListBox" Content="Add" Click="_AddTwoWheelInertiaAndDimensionsToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteTwoWheelInertiaAndDimensionsOfListBox" Content="Delete" Click="_DeleteTwoWheelInertiaAndDimensionsOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Inertia ID line -->
                                 <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="twoWheelInertiaAndDimensionsIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -989,8 +998,8 @@
                                 <!-- Suspension Listbox -->
                                 <ListBox Name="simplifiedSuspensionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SimplifiedSuspensionListBox_SelectionChanged"/>
                                 <!-- Suspension listbox add and delete buttons -->
-                                <Button Name="addSimplifiedSuspensionToListBox" Content="Add" Click="_AddSimplifiedSuspensionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="deleteSimplifiedSuspensionOfListBox" Content="Delete" Click="_DeleteSimplifiedSuspensionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="addSimplifiedSuspensionToListBox" Content="Add" Click="_AddSimplifiedSuspensionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteSimplifiedSuspensionOfListBox" Content="Delete" Click="_DeleteSimplifiedSuspensionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Suspension ID line -->
                                 <TextBlock Text="Suspension ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="simplifiedSuspensionIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1040,8 +1049,8 @@
                                 <!-- Steering system Listbox -->
                                 <ListBox Name="steeringSystemListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_SteeringSystemListBox_SelectionChanged"/>
                                 <!-- Steering system listbox add and delete buttons -->
-                                <Button Name="addSteeringSystemToListBox" Content="Add" Click="_AddSteeringSystemToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="deleteSteeringSystemOfListBox" Content="Delete" Click="_DeleteSteeringSystemOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="addSteeringSystemToListBox" Content="Add" Click="_AddSteeringSystemToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteSteeringSystemOfListBox" Content="Delete" Click="_DeleteSteeringSystemOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- ID line -->
                                 <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="steeringSystemIDTextBox" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1098,8 +1107,8 @@
                                 <!-- Tire listbox-->
                                 <ListBox Name="tireListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TireListBox_SelectionChanged"/>
                                 <!-- Tire listbox add and delete buttons -->
-                                <Button Name="addTireToListBox" Content="Add" Click="_AddTireToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="deleteTireOfListBox" Content="Delete" Click="_DeleteTireOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="addTireToListBox" Content="Add" Click="_AddTireToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteTireOfListBox" Content="Delete" Click="_DeleteTireOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Tire ID line -->
                                 <TextBlock Text="Tire ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="tireIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1161,8 +1170,8 @@
                                 <!-- Tire Model listbox-->
                                 <ListBox Name="tireModelListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TireModelListBox_SelectionChanged"/>
                                 <!-- Tire Model listbox add and delete buttons -->
-                                <Button Name="oneWheelAddTireModelToListBox" Content="Add" Click="_AddTireModelToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteTireModelOfListBox" Content="Delete" Click="_DeleteTireModelOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddTireModelToListBox" Content="Add" Click="_AddTireModelToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteTireModelOfListBox" Content="Delete" Click="_DeleteTireModelOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Tire Model ID line -->
                                 <TextBlock Text="Model ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
                                 <TextBox Name="tireModelIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1585,8 +1594,8 @@
                                     </syncfusion:CheckListBox.ItemTemplate>
                                 </syncfusion:CheckListBox>
                                 <!-- Add/delete parameter sets buttons -->
-                                <Button Name="addTireModelParameterSetToCheckListBox" Content="Add" Click="_AddTireModelParameterSetToCheckListBox_Click" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="deleteTireModelParameterSetOfCheckListBox" Content="Delete" Click="_DeleteTireModelParameterSetOfCheckListBox_Click" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="addTireModelParameterSetToCheckListBox" Content="Add" Click="_AddTireModelParameterSetToCheckListBox_Click" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteTireModelParameterSetOfCheckListBox" Content="Delete" Click="_DeleteTireModelParameterSetOfCheckListBox_Click" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New display longitudinal slip -->
                                 <TextBlock Text="Long. Slip" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <syncfusion:DoubleTextBox Name="tireModelDisplayParametersLongitudinalSlipTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
@@ -1691,8 +1700,8 @@
                                 <!-- Transmission listbox -->
                                 <ListBox Name="gearRatiosSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_GearRatioSetListBox_SelectionChanged"/>
                                 <!-- Transmission listbox add and delete buttons -->
-                                <Button Name="oneWheelAddGearRatioSetToListBox" Content="Add" Click="_AddGearRatioSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteGearRatioSetOfListBox" Content="Delete" Click="_DeleteGearRatioSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddGearRatioSetToListBox" Content="Add" Click="_AddGearRatioSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteGearRatioSetOfListBox" Content="Delete" Click="_DeleteGearRatioSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Transmission ID line -->
                                 <TextBlock Text="Gear Ratios ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="gearRatiosSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1711,8 +1720,8 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <!-- Gear ratios list buttons -->
-                                <Button Name="oneWheelAddGearRatioToListBox" Content="Add" Click="_AddGearRatioToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteGearRatioOfListBox" Content="Delete" Click="_DeleteGearRatioOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddGearRatioToListBox" Content="Add" Click="_AddGearRatioToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteGearRatioOfListBox" Content="Delete" Click="_DeleteGearRatioOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New Gear Ratio line -->
                                 <TextBlock Text="Gear Ratio to Add:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <syncfusion:DoubleTextBox Name="newGearRatioTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" 
@@ -1752,8 +1761,8 @@
                                 <!-- One Wheel Transmission listbox -->
                                 <ListBox Name="oneWheelTransmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelTransmissionListBox_SelectionChanged"/>
                                 <!-- One Wheel Transmission listbox add and delete buttons -->
-                                <Button Name="oneWheelAddTransmissionToListBox" Content="Add" Click="_AddOneWheelTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="oneWheelDeleteTransmissionOfListBox" Content="Delete" Click="_DeleteOneWheelTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="oneWheelAddTransmissionToListBox" Content="Add" Click="_AddOneWheelTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteTransmissionOfListBox" Content="Delete" Click="_DeleteOneWheelTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- One Wheel Transmission ID line -->
                                 <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="oneWheelTransmissionIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1824,8 +1833,8 @@
                                 <!-- One Wheel Transmission listbox -->
                                 <ListBox Name="twoWheelTransmissionListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TwoWheelTransmissionListBox_SelectionChanged"/>
                                 <!-- One Wheel Transmission listbox add and delete buttons -->
-                                <Button Name="twoWheelAddTransmissionToListBox" Content="Add" Click="_TwoWheelAddTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="twoWheelDeleteTransmissionOfListBox" Content="Delete" Click="_TwoWheelDeleteTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="twoWheelAddTransmissionToListBox" Content="Add" Click="_TwoWheelAddTransmissionToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="twoWheelDeleteTransmissionOfListBox" Content="Delete" Click="_TwoWheelDeleteTransmissionOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- One Wheel Transmission ID line -->
                                 <TextBlock Text="ID" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="twoWheelTransmissionIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1902,9 +1911,9 @@
                                 <ListBox Name="oneWheelCarAndSetupListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_OneWheelCarAndSetupListBox_SelectionChanged"/>
                                 <!-- Car and Setup Listbox add and delete buttons -->
                                 <Button Name="oneWheelAddCarAndSetupToListBox" Content="Add" Click="_OneWheelAddCarAndSetupToListBox_Click" 
-                                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
                                 <Button Name="oneWheelDeleteCarAndSetupOfListBox" Content="Delete" Click="_OneWheelDeleteCarAndSetupOfListBox_Click"
-                                        Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                        Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Car ID line -->
                                 <TextBlock Text="Car ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <TextBox Name="oneWheelCarIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -1994,9 +2003,9 @@
                                 <ListBox Name="twoWheelCarAndSetupListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="12" Margin="5" SelectionChanged="_TwoWheelCarAndSetupListBox_SelectionChanged"/>
                                 <!-- Car and Setup Listbox add and delete buttons -->
                                 <Button Name="twoWheelAddCarAndSetupToListBox" Content="Add" Click="_TwoWheelAddCarAndSetupToListBox_Click" 
-                                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                        Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,2,2"/>
                                 <Button Name="twoWheelDeleteCarAndSetupOfListBox" Content="Delete" Click="_TwoWheelDeleteCarAndSetupOfListBox_Click"
-                                        Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                        Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="6" Margin="2,2,5,2"/>
                                 <!-- Car ID line -->
                                 <TextBlock Text="Car ID" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <TextBox Name="twoWheelCarIDTextBox" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="8" Margin="5,2,5,2"/>
@@ -2057,7 +2066,7 @@
 
                     </syncfusion:DockingManager>
                     <!-- Tabular Path Docking Manager -->
-                    <syncfusion:DockingManager Name="tabularPathInputDockingManager" Visibility="Collapsed">
+                    <syncfusion:DockingManager Name="tabularPathInputDockingManager" Visibility="Visible">
                         <!-- Tabular Path Docking Window -->
                         <ContentControl Name="tabularPathDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2089,11 +2098,11 @@
                                 <!-- Tabular Path listbox-->
                                 <ListBox Name="tabularPathsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathsListBox_SelectionChanged"/>
                                 <!-- Tabular Path listbox add and delete buttons -->
-                                <Button Name="tabularPathAddPathToListBox" Content="Add" Click="_TabularPathAddPathToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="tabularPathDeletePathOfListBox" Content="Delete" Click="_TabularPathDeletePathOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="tabularPathAddPathToListBox" Content="Add" Click="_TabularPathAddPathToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeletePathOfListBox" Content="Delete" Click="_TabularPathDeletePathOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Allow Path display line -->
                                 <TextBlock Text="Path Display" Grid.Row="2" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <CheckBox Name="tabularPathAllowPathDisplayCheckBox" Checked="_TabularPathAllowPathDisplayCheckBox_Checked" Unchecked="_TabularPathAllowPathDisplayCheckBox_Unchecked" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <CheckBox Name="tabularPathAllowPathDisplayCheckBox" IsChecked="True" Checked="_TabularPathAllowPathDisplayCheckBox_Checked" Unchecked="_TabularPathAllowPathDisplayCheckBox_Unchecked" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <!-- Tabular Path ID line -->
                                 <TextBlock Text="Path ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="tabularPathIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -2149,8 +2158,8 @@
                                 <!-- Transmission listbox -->
                                 <ListBox Name="tabularPathSectorsSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathSectorsListBox_SelectionChanged"/>
                                 <!-- Sectors listbox add and delete buttons -->
-                                <Button Name="tabularPathAddSectorsSetToListBox" Content="Add" Click="_TabularPathAddSectorsSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="tabularPathDeleteSectorsSetOfListBox" Content="Delete" Click="_TabularPathDeleteSectorsSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="tabularPathAddSectorsSetToListBox" Content="Add" Click="_TabularPathAddSectorsSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeleteSectorsSetOfListBox" Content="Delete" Click="_TabularPathDeleteSectorsSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Sectors ID line -->
                                 <TextBlock Text="Sectors ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="tabularPathSectorsSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -2183,8 +2192,8 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <!-- Sectors Start Distances list buttons -->
-                                <Button Name="tabularPathAddSectorStartDistanceToListBox" Content="Add" Click="_TabularPathAddSectorStartDistanceToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="tabularPathDeleteSectorStartDistanceOfListBox" Content="Delete" Click="_TabularPathDeleteSectorStartDistanceOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="tabularPathAddSectorStartDistanceToListBox" Content="Add" Click="_TabularPathAddSectorStartDistanceToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeleteSectorStartDistanceOfListBox" Content="Delete" Click="_TabularPathDeleteSectorStartDistanceOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New sector start distance line -->
                                 <TextBlock Text="New Start Distance:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <syncfusion:DoubleTextBox Name="tabularPathNewSectorStartDistanceTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" 
@@ -2216,6 +2225,8 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -2229,8 +2240,8 @@
                                 <!-- Sections Set listbox -->
                                 <ListBox Name="tabularPathSectionsSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathSectionsSetListBox_SelectionChanged"/>
                                 <!-- Sections Set listbox add and delete buttons -->
-                                <Button Name="tabularPathAddSectionsSetToListBox" Content="Add" Click="_TabularPathAddSectionsSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="tabularPathDeleteSectionsSetOfListBox" Content="Delete" Click="_TabularPathDeleteSectionsSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="tabularPathAddSectionsSetToListBox" Content="Add" Click="_TabularPathAddSectionsSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeleteSectionsSetOfListBox" Content="Delete" Click="_TabularPathDeleteSectionsSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- Sections ID line -->
                                 <TextBlock Text="Sections ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                 <TextBox Name="tabularPathSectionsSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
@@ -2274,34 +2285,37 @@
                                 <TextBlock Text="Path Preview" Grid.Row="5" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <CheckBox Name="tabularPathSectionsAllowPathPreviewCheckBox" IsChecked="True" Checked="_TabularPathSectionsAllowPathPreviewCheckBox_Checked" Unchecked="_TabularPathSectionsAllowPathPreviewCheckBox_Unchecked" Grid.Row="5" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 <!-- Aerodynamic Map Points list buttons -->
-                                <Button Name="tabularPathAddSectionToListBox" Content="Add" Click="_TabularPathAddSectionToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
-                                <Button Name="tabularPathDeleteSectionOfListBox" Content="Delete" Click="_TabularPathDeleteSectionOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="5,2,5,2"/>
+                                <Button Name="tabularPathImportSectionToListBox" Content="Import from .csv" Click="_TabularPathImportSectionToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="6" Margin="5,2,5,2"/>
+                                <Button Name="tabularPathAddSectionToListBox" Content="Add" Click="_TabularPathAddSectionToListBox_Click" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeleteSectionOfListBox" Content="Delete" Click="_TabularPathDeleteSectionOfListBox_Click" Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <Button Name="tabularPathInsertSectionInListBox" Content="Insert" Click="_TabularPathInsertSectionOfListBox_Click" Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathClearSectionsListBox" Content="Clear" Click="_TabularPathClearSectionsListBox_Click" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New Point line -->
-                                <TextBlock Text="Data of Section to Add:" Grid.Row="9" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBlock Text="Data of Section to Add/Insert:" Grid.Row="11" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <!-- New section's type line -->
-                                <TextBlock Text="Type" Grid.Row="10" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <ComboBox Name="tabularPathNewSectionTypeComboBox" Grid.Row="10" Grid.Column="2" Grid.ColumnSpan="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="5,2,5,2">
+                                <TextBlock Text="Type" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <ComboBox Name="tabularPathNewSectionTypeComboBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Margin="5,2,5,2">
                                     <ComboBoxItem Content="Straight"/>
                                     <ComboBoxItem Content="Left"/>
                                     <ComboBoxItem Content="Right"/>
                                 </ComboBox>
                                 <!-- New section's length line -->
-                                <TextBlock Text="Length" Grid.Row="11" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="tabularPathNewSectionLengthTextBox" Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="m" Grid.Row="11" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- New section's initial radius line -->
-                                <TextBlock Text="Initial Radius" Grid.Row="12" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="tabularPathNewSectionInitialRadiusTextBox" Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="3" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="m" Grid.Row="12" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- New point's final radius line -->
-                                <TextBlock Text="Final Radius" Grid.Row="13" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="tabularPathNewSectionFinalRadiusTextBox" Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="3" 
+                                <TextBlock Text="Length" Grid.Row="13" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="tabularPathNewSectionLengthTextBox" Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="3" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <TextBlock Text="m" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- New section's initial radius line -->
+                                <TextBlock Text="Initial Radius" Grid.Row="14" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="tabularPathNewSectionInitialRadiusTextBox" Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                <TextBlock Text="m" Grid.Row="14" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- New point's final radius line -->
+                                <TextBlock Text="Final Radius" Grid.Row="15" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="tabularPathNewSectionFinalRadiusTextBox" Grid.Row="15" Grid.Column="2" Grid.ColumnSpan="3" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                <TextBlock Text="m" Grid.Row="15" Grid.Column="5" VerticalAlignment="Center"/>
                                 <!-- Path Preview Grid -->
-                                <Grid Name="tabularPathSectionsPreviewGrid" Grid.Column="6" Grid.RowSpan="14"/>
+                                <Grid Name="tabularPathSectionsPreviewGrid" Grid.Column="6" Grid.RowSpan="16"/>
                             </Grid>
                         </ContentControl>
                     </syncfusion:DockingManager>
