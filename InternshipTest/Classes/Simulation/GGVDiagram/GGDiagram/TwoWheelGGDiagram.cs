@@ -54,6 +54,8 @@ namespace InternshipTest.Simulation
         private double currentYawMoment;
         private double currentCarSlipAngle;
         private bool isLateralAccelerationPositive;
+        private double[] carSlipAngleNegativeBoundaries;
+        private double[] carSlipAnglePositiveBoundaries;
 
         private double[] testCarSlipAngle;
         private double[] testYawMoment;
@@ -99,15 +101,20 @@ namespace InternshipTest.Simulation
             pureBrakingParameters.lateralAcceleration = 0;
             pureAcceleratingParameters.longitudinalAcceleration = _GetAcceleratingAccelerationDueToTires();
             pureAcceleratingParameters.lateralAcceleration = 0;
+            // Car slip angle interval search references
+            carSlipAngleNegativeBoundaries = Generate.LinearSpaced(25, 0, -Math.PI / 3);
+            carSlipAnglePositiveBoundaries = Generate.LinearSpaced(25, 0, Math.PI / 3);
             // Limit cornering accelerations
-                // Left
+            // Left
             isLateralAccelerationPositive = false;
             _GetCorneringAccelerationSteadyState();
             pureLeftCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCorneringSteadyState(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.steeringWheelAngle);
-                // Right
-            isLateralAccelerationPositive = true;
+            // Right (mirroring)
+            pureRightCorneringParameters.lateralAcceleration = -pureLeftCorneringParameters.lateralAcceleration;
+            pureRightCorneringParameters.longitudinalAcceleration = pureLeftCorneringParameters.longitudinalAcceleration;
+            /*isLateralAccelerationPositive = true;
             _GetCorneringAccelerationSteadyState();
-            pureRightCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCorneringSteadyState(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.steeringWheelAngle);
+            pureRightCorneringParameters.longitudinalAcceleration = _GetLongitudinalAccelerationForPureCorneringSteadyState(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.steeringWheelAngle);*/
             // Combined accelerations
             _GetCombinedOperationAccelerations();
         }
@@ -464,7 +471,7 @@ namespace InternshipTest.Simulation
         private double _GetLateralAccelerationSteadyState(double lateralAccelerationGuess, double frontWheelSteeringAngle, double rearWheelSteeringAngle)
         {
             // Get current Car Slip Angle for zero yaw moment
-            currentCarSlipAngle = _GetCarSlipAngleForZeroYawMoment(-Math.PI / 3, Math.PI / 3, 50);
+            currentCarSlipAngle = _GetCarSlipAngleForZeroYawMoment();
             // Wheels slip angles [rad]
             double[] wheelsSlipAngles = _GetWheelsSlipAngles(currentCarSlipAngle, lateralAccelerationGuess, frontWheelSteeringAngle, rearWheelSteeringAngle);
             // Wheels loads [N]
@@ -484,51 +491,59 @@ namespace InternshipTest.Simulation
         /// <param name="upperBoundary"></param>
         /// <param name="amountOfSearchIntervals"></param>
         /// <returns></returns>
-        private double _GetCarSlipAngleForZeroYawMoment(double lowerBoundary, double upperBoundary, int amountOfSearchIntervals)
+        private double _GetCarSlipAngleForZeroYawMoment()
         {
-            // Inner boundaries array generation
-            double[] innerBoundaries = Generate.LinearSpaced(amountOfSearchIntervals, lowerBoundary, upperBoundary);
-            // Reference yaw moment [Nm] (Lower boundary)
-            double referenceYawMoment = _GetYawMoment(innerBoundaries[0], currentLateralAcceleration, currentSteeringWheelAngle);
+            // Reference yaw moment [Nm] (Car slip angle = 0)
+            double referenceYawMoment = _GetYawMoment(0, currentLateralAcceleration, currentSteeringWheelAngle);
             // Inner boundary determination loop
-            bool isSignEqual = true;
-            int iBoundary = 0;
-            do
+            bool foundIntervalForNegativeCase = false;
+            bool foundIntervalForPositiveCase = false;
+            int iBoundary;
+            for (iBoundary = 1; iBoundary < carSlipAngleNegativeBoundaries.Length; iBoundary++)
             {
-                iBoundary++;
-                // Gets the yaw moment for the current boundary index
-                double currentYawMoment = _GetYawMoment(innerBoundaries[iBoundary], currentLateralAcceleration, currentSteeringWheelAngle);
-                // Checks if the yaw moment has changed its sign and updates the boolean "isSignEqual" if it is
-                if (Math.Sign(referenceYawMoment) != Math.Sign(currentYawMoment))
+                double currentYawMomentForNegativeCarSlipAngle = _GetYawMoment(carSlipAngleNegativeBoundaries[iBoundary], currentLateralAcceleration, currentSteeringWheelAngle);
+                double currentYawMomentForPositiveCarSlipAngle = _GetYawMoment(carSlipAnglePositiveBoundaries[iBoundary], currentLateralAcceleration, currentSteeringWheelAngle);
+                if (Math.Sign(currentYawMomentForNegativeCarSlipAngle) != Math.Sign(referenceYawMoment))
                 {
-                    isSignEqual = false;
+                    foundIntervalForNegativeCase = true;
+                    break;
                 }
-            } while (isSignEqual && iBoundary < amountOfSearchIntervals - 2);
-            // Checks if an inner interval was found and runs the optimization if it was.
-            if (!isSignEqual)
-            {
-                // Optimization parameters
-                double epsg = 1e-10;
-                double epsf = 0;
-                double epsx = 0;
-                double diffstep = 1.0e-6;
-                int maxits = 100;
-                double[] minCarSlipAngle = new double[] { innerBoundaries[iBoundary - 1] };
-                double[] maxCarSlipAngle = new double[] { innerBoundaries[iBoundary] };
-
-                double[] carSlipAngle = new double[] { pureLeftCorneringParameters.carSlipAngle };
-                alglib.minbleiccreatef(carSlipAngle, diffstep, out alglib.minbleicstate state);
-                alglib.minbleicsetbc(state, minCarSlipAngle, maxCarSlipAngle);
-                alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
-                alglib.minbleicoptimize(state, _CarSlipAngleOptimization, null, null);
-                alglib.minbleicresults(state, out carSlipAngle, out alglib.minbleicreport rep);
-
-                return carSlipAngle[0];
+                if (Math.Sign(currentYawMomentForPositiveCarSlipAngle) != Math.Sign(referenceYawMoment))
+                {
+                    foundIntervalForPositiveCase = true;
+                    break;
+                }
             }
-            else
+            // Gets the car slip angles for the optimization
+            double[] minCarSlipAngle = new double[1];
+            double[] maxCarSlipAngle = new double[1];
+            if (foundIntervalForNegativeCase)
             {
-                return 0;
+                minCarSlipAngle[0] = carSlipAngleNegativeBoundaries[iBoundary];
+                maxCarSlipAngle[0] = carSlipAngleNegativeBoundaries[iBoundary - 1];
             }
+            else if (foundIntervalForPositiveCase)
+            {
+                minCarSlipAngle[0] = carSlipAnglePositiveBoundaries[iBoundary - 1];
+                maxCarSlipAngle[0] = carSlipAnglePositiveBoundaries[iBoundary];
+            }
+            else return 0; // case the interval was not found
+
+            // Optimization parameters
+            double epsg = 1e-10;
+            double epsf = 0;
+            double epsx = 0;
+            double diffstep = 1.0e-6;
+            int maxits = 100;
+
+            double[] carSlipAngle = new double[] { (maxCarSlipAngle[0] + minCarSlipAngle[0]) / 2 };
+            alglib.minbleiccreatef(carSlipAngle, diffstep, out alglib.minbleicstate state);
+            alglib.minbleicsetbc(state, minCarSlipAngle, maxCarSlipAngle);
+            alglib.minbleicsetcond(state, epsg, epsf, epsx, maxits);
+            alglib.minbleicoptimize(state, _CarSlipAngleOptimization, null, null);
+            alglib.minbleicresults(state, out carSlipAngle, out alglib.minbleicreport rep);
+
+            return carSlipAngle[0];
         }
         /// <summary>
         /// Method used for gradient based optimization of the car slip angle for zero yaw moment
@@ -637,7 +652,7 @@ namespace InternshipTest.Simulation
         private void _UpdateCarSlipAngleVsYawMomentArrays()
         {
             int amountOfPoints = 500;
-            testCarSlipAngle = Generate.LinearSpaced(amountOfPoints, -Math.PI/3, Math.PI/3);
+            testCarSlipAngle = Generate.LinearSpaced(amountOfPoints, -Math.PI / 3, Math.PI / 3);
             testYawMoment = new double[amountOfPoints];
             for (int i = 0; i < amountOfPoints; i++)
             {
