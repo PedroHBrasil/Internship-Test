@@ -92,6 +92,70 @@ namespace InternshipTest.Results
             FuelConsumption = results.TotalFuelConsumption *1e6;
             AmountOfGearShifts = results.AmountOfGearShifts;
         }
+        public LapTimeSimulationResultsViewModel(LapTimeSimulationResults results, int sectorIndex)
+        {
+            ID = results.ID;
+            Description = results.Description;
+            ResultsDisplayCollection = new ObservableCollection<LapTimeSimulationResultPoint>();
+            for (int iResult = 0; iResult < results.ElapsedDistances.Count(); iResult++)
+            {
+                if (results.LocalSectors[iResult] == sectorIndex)
+                {
+                    LapTimeSimulationResultPoint resultPoint = new LapTimeSimulationResultPoint(
+                       results.ElapsedTimes[iResult],
+                       results.ElapsedDistances[iResult],
+                       results.Speeds[iResult],
+                       results.LongitudinalAccelerations[iResult],
+                       results.LateralAccelerations[iResult],
+                       results.GearNumbers[iResult],
+                       results.AeroDragCoefficients[iResult],
+                       results.AeroLiftCoefficients[iResult],
+                       results.AeroDownforceDistributions[iResult],
+                       results.AeroDragForces[iResult],
+                       results.AeroLiftForces[iResult],
+                       results.FrontLiftForces[iResult],
+                       results.RearLiftForces[iResult],
+                       results.VerticalLoads[iResult],
+                       results.TotalLongitudinalLoadTransfers[iResult],
+                       results.UnsprungLongitudinalLoadTransfers[iResult],
+                       results.SprungLongitudinalLoadTransfers[iResult],
+                       results.FrontWheelsLoads[iResult],
+                       results.RearWheelsLoads[iResult],
+                       results.FrontWheelsRadiuses[iResult],
+                       results.RearWheelsRadiuses[iResult],
+                       results.FrontSuspensionDeflections[iResult],
+                       results.RearSuspensionDeflections[iResult],
+                       results.FrontRideHeights[iResult],
+                       results.RearRideHeights[iResult],
+                       results.LateralForces[iResult],
+                       results.InertiaEfficiencies[iResult],
+                       results.LongitudinalForces[iResult],
+                       results.FrontWheelsLongiudinalForces[iResult],
+                       results.RearWheelsLongiudinalForces[iResult],
+                       results.FrontWheelsTorques[iResult],
+                       results.RearWheelsTorques[iResult],
+                       results.FrontWheelsAngularSpeeds[iResult],
+                       results.RearWheelsAngularSpeeds[iResult],
+                       results.EnginePowers[iResult],
+                       results.EngineAvailablePowers[iResult],
+                       results.EnginePowerUsages[iResult],
+                       results.FrontBrakesPowers[iResult],
+                       results.RearBrakesPowers[iResult],
+                       results.FrontBrakesAvailablePowers[iResult],
+                       results.RearBrakesAvailablePowers[iResult],
+                       results.FrontBrakesUsages[iResult],
+                       results.RearBrakesUsages[iResult],
+                       results.FuelConsumptions[iResult],
+                       results.CoordinatesX[iResult],
+                       results.CoordinatesY[iResult]
+                       );
+                    ResultsDisplayCollection.Add(resultPoint);
+                }
+                LapTime = results.LapTime;
+                FuelConsumption = results.TotalFuelConsumption * 1e6;
+                AmountOfGearShifts = results.AmountOfGearShifts;
+            }
+        }
         #endregion
     }
     /// <summary>

@@ -5359,6 +5359,16 @@ namespace InternshipTest
                 _UpdateCurrentLapTimeSimulationAnalysis2DChart();
             }
         }
+
+        private void _ResultsAnalysis2DChartDisplaySectorsCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+        }
+
+        private void _ResultsAnalysis2DChartDisplaySectorsCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            _UpdateCurrentLapTimeSimulationAnalysis2DChart();
+        }
         /// <summary>
         /// Updates the current lap time simulation analysis 2D chart
         /// </summary>
@@ -5378,9 +5388,18 @@ namespace InternshipTest
             // Sweeps the lap time simulation results and adds the data to the chart.
             foreach (Results.LapTimeSimulationResults results in lapTimeSimulationResultsAnalysisResultsListBox.SelectedItems)
             {
-                // Initializes the chart's data series
+                if ((bool)resultsAnalysis2DChartDisplaySectorsCheckBox.IsChecked)
+                {
+                    // Gets the results per sector
+                    for (int iSector = 1; iSector < results.LocalSectors.Last() + 1; iSector++)
+                    {
+                        Results.LapTimeSimulationResultsViewModel currentSectorResultsViewModel = new Results.LapTimeSimulationResultsViewModel(results, iSector);
+                        chart = chartParameters.AddDataToChart(chart, "", currentSectorResultsViewModel, 5);
+                    }
+                }
+                // Gets the lap results
                 Results.LapTimeSimulationResultsViewModel resultsViewModel = new Results.LapTimeSimulationResultsViewModel(results);
-                chart = chartParameters.AddDataToChart(chart, results.ID, resultsViewModel);
+                chart = chartParameters.AddDataToChart(chart, results.ID, resultsViewModel, 2);
             }
             // Adds the chart to the current chart tab
             resultsAnalysis2DChartGrid.Children.Clear();

@@ -2066,7 +2066,7 @@
 
                     </syncfusion:DockingManager>
                     <!-- Tabular Path Docking Manager -->
-                    <syncfusion:DockingManager Name="tabularPathInputDockingManager" Visibility="Visible">
+                    <syncfusion:DockingManager Name="tabularPathInputDockingManager" Visibility="Collapsed">
                         <!-- Tabular Path Docking Window -->
                         <ContentControl Name="tabularPathDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2509,7 +2509,7 @@
                         </ContentControl>
                     </syncfusion:DockingManager>
                     <!-- Results Analysis Docking Manager: 2D Chart-->
-                    <Grid Name="resultsAnalysis2DChartsGrid" Visibility="Collapsed">
+                    <Grid Name="resultsAnalysis2DChartsGrid" Visibility="Visible">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="500"/>
                             <ColumnDefinition/>
@@ -2519,6 +2519,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
@@ -2655,9 +2656,12 @@
                             </ComboBox>
                             <!-- Curve customization line -->
                             <TextBlock Text="Customization:" Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                            <!-- Display Sectors -->
+                            <TextBlock Text="Display Sectors" Grid.Row="6" Grid.ColumnSpan="2" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                            <CheckBox Name="resultsAnalysis2DChartDisplaySectorsCheckBox" IsChecked="False" Checked="_ResultsAnalysis2DChartDisplaySectorsCheckBox_Checked" Unchecked="_ResultsAnalysis2DChartDisplaySectorsCheckBox_Unchecked" Grid.Row="6" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <!-- Curves type line -->
-                            <TextBlock Text="Curves type" Grid.Row="6" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
-                            <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox_SelectionChanged" SelectedValuePath="Content">
+                            <TextBlock Text="Curves type" Grid.Row="7" Grid.ColumnSpan="6" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                            <ComboBox Name="lapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" SelectionChanged="_LapTimeSimulationResultsAnalysis2DChartCurvesTypeDataComboBox_SelectionChanged" SelectedValuePath="Content">
                                 <ComboBoxItem Content="Line"/>
                                 <ComboBoxItem Content="Scatter"/>
                             </ComboBox>

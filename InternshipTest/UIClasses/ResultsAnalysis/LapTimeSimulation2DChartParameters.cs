@@ -57,10 +57,10 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
         /// Adds the results data to the chart.
         /// </summary>
         /// <param name="lapTimeSimulationResultsViewModel"> Lap time simulation results view model. </param>
-        public SfChart AddDataToChart(SfChart chart, string dataLabel, Results.LapTimeSimulationResultsViewModel lapTimeSimulationResultsViewModel)
+        public SfChart AddDataToChart(SfChart chart, string dataLabel, Results.LapTimeSimulationResultsViewModel lapTimeSimulationResultsViewModel, int strokeThickness)
         {
-            currentFastLine = new FastLineSeries() { ItemsSource = lapTimeSimulationResultsViewModel.ResultsDisplayCollection, Label = lapTimeSimulationResultsViewModel.ID};
-            currentFastScatter = new FastScatterBitmapSeries() { ItemsSource = lapTimeSimulationResultsViewModel.ResultsDisplayCollection, Label = lapTimeSimulationResultsViewModel.ID };
+            currentFastLine = new FastLineSeries() { ItemsSource = lapTimeSimulationResultsViewModel.ResultsDisplayCollection, Label = dataLabel, StrokeThickness=strokeThickness};
+            currentFastScatter = new FastScatterBitmapSeries() { ItemsSource = lapTimeSimulationResultsViewModel.ResultsDisplayCollection, Label = dataLabel, StrokeThickness = strokeThickness };
             chart = _AddXDataToSeries(chart);
             chart = _AddYDataToSeries(chart);
             chart = _AddSeriesDataToChart(chart);
