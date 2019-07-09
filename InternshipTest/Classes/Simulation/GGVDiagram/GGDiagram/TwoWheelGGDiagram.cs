@@ -185,7 +185,7 @@ namespace InternshipTest.Simulation
                 double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
                 // Wheels angular speeds [rad/s]
                 double[] wheelsAngularSpeeds = Car.GetWheelsAngularSpeeds(wheelsRadiuses, Speed);
-                double referenceWheelSpeedRatio = wheelsAngularSpeeds[1] * Car.Transmission.TorqueBias / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
+                double referenceWheelSpeedRatio = wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias) / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
                 double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] + referenceWheelSpeedRatio * (wheelsAngularSpeeds[1] - wheelsAngularSpeeds[0]);
                 // Engine braking torque curve determinaton by interpolation
                 alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelBrakingTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelBrakingTorqueInterp);
@@ -233,11 +233,11 @@ namespace InternshipTest.Simulation
                 // Wheels radiuses [m]
                 double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
                 // Longitudinal slips for maximum brake torque due to grip
-                double frontLongitudinalSlipForMaximumBrake = Car.FrontTire.TireModel.GetLongitudinalSlipForMinimumTireFx(0, wheelsLoads[0] / 2, 0, Speed);
-                double rearLongitudinalSlipForMaximumBrake = Car.RearTire.TireModel.GetLongitudinalSlipForMinimumTireFx(0, wheelsLoads[1] / 2, 0, Speed);
+                double frontLongitudinalSlipForMaximumBrake = Car.FrontTire.TireModel.GetLongitudinalSlipForMinimumTireFx(0, wheelsLoads[0], 0, Speed);
+                double rearLongitudinalSlipForMaximumBrake = Car.RearTire.TireModel.GetLongitudinalSlipForMinimumTireFx(0, wheelsLoads[1], 0, Speed);
                 // Maximum braking wheels torques according to tire grip [Nm]
-                double frontGripTorque = Car.FrontTire.TireModel.GetTireFx(frontLongitudinalSlipForMaximumBrake, 0, wheelsLoads[0] / 2, 0, Speed) * wheelsRadiuses[0] * 2;
-                double rearGripTorque = Car.RearTire.TireModel.GetTireFx(rearLongitudinalSlipForMaximumBrake, 0, wheelsLoads[1] / 2, 0, Speed) * wheelsRadiuses[1] * 2;
+                double frontGripTorque = Car.FrontTire.TireModel.GetTireFx(frontLongitudinalSlipForMaximumBrake, 0, wheelsLoads[0], 0, Speed) * wheelsRadiuses[0] * 2;
+                double rearGripTorque = Car.RearTire.TireModel.GetTireFx(rearLongitudinalSlipForMaximumBrake, 0, wheelsLoads[1], 0, Speed) * wheelsRadiuses[1] * 2;
                 // Adjust the braking torques accordingly to the tires grips
                 double[] finalBrakeTorques = _AdjustWheelsTorquesForGivenTorqueBias(Car.Brakes.BrakeBias, frontGripTorque, rearGripTorque);
                 // Determines the longitudinal forces [N]
@@ -279,7 +279,7 @@ namespace InternshipTest.Simulation
                 double[] wheelsRadiuses = Car.GetWheelsRadiuses(wheelsLoads);
                 // Wheels angular speeds [rad/s]
                 double[] wheelsAngularSpeeds = Car.GetWheelsAngularSpeeds(wheelsRadiuses, Speed);
-                double referenceWheelSpeedRatio = wheelsAngularSpeeds[1] * Car.Transmission.TorqueBias / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
+                double referenceWheelSpeedRatio = wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias) / (wheelsAngularSpeeds[0] * Car.Transmission.TorqueBias + wheelsAngularSpeeds[1] * (1 - Car.Transmission.TorqueBias));
                 double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] + referenceWheelSpeedRatio * (wheelsAngularSpeeds[1] - wheelsAngularSpeeds[0]);
                 // Engine braking torque curve determinaton by interpolation
                 alglib.spline1dbuildlinear(Car.WheelRotationalSpeedCurve.ToArray(), Car.WheelTorqueCurve.ToArray(), out alglib.spline1dinterpolant wheelTorqueInterp);
@@ -330,8 +330,8 @@ namespace InternshipTest.Simulation
                 double frontLongitudinalSlipForMaximumAccelerating = Car.FrontTire.TireModel.GetLongitudinalSlipForMaximumTireFx(0, wheelsLoads[0], 0, Speed);
                 double rearLongitudinalSlipForMaximumAccelerating = Car.RearTire.TireModel.GetLongitudinalSlipForMaximumTireFx(0, wheelsLoads[1], 0, Speed);
                 // Maximum braking wheels torques according to tire grip [Nm]
-                double frontGripTorque = Car.FrontTire.TireModel.GetTireFx(frontLongitudinalSlipForMaximumAccelerating, 0, wheelsLoads[0] / 2, 0, Speed) * wheelsRadiuses[0] * 2;
-                double rearGripTorque = Car.RearTire.TireModel.GetTireFx(rearLongitudinalSlipForMaximumAccelerating, 0, wheelsLoads[1] / 2, 0, Speed) * wheelsRadiuses[1] * 2;
+                double frontGripTorque = Car.FrontTire.TireModel.GetTireFx(frontLongitudinalSlipForMaximumAccelerating, 0, wheelsLoads[0], 0, Speed) * wheelsRadiuses[0] * 2;
+                double rearGripTorque = Car.RearTire.TireModel.GetTireFx(rearLongitudinalSlipForMaximumAccelerating, 0, wheelsLoads[1], 0, Speed) * wheelsRadiuses[1] * 2;
                 // Adjust the braking torques accordingly to the tires grips
                 double[] finalPowertrainTorques = _AdjustWheelsTorquesForGivenTorqueBias(Car.Transmission.TorqueBias, frontGripTorque, rearGripTorque);
                 // Determines the longitudinal forces [N]
@@ -392,6 +392,7 @@ namespace InternshipTest.Simulation
                 pureRightCorneringParameters.carSlipAngle = currentCarSlipAngle;
                 pureRightCorneringParameters.frontWheelParameters.steeringAngle = currentFrontWheelSteeringAngle;
                 pureRightCorneringParameters.rearWheelParameters.steeringAngle = currentRearWheelSteeringAngle;
+                pureRightCorneringParameters.yawMoment = _GetYawMoment(pureRightCorneringParameters.carSlipAngle, pureRightCorneringParameters.lateralAcceleration, pureRightCorneringParameters.steeringWheelAngle);
             }
             else
             {
@@ -399,6 +400,7 @@ namespace InternshipTest.Simulation
                 pureLeftCorneringParameters.carSlipAngle = currentCarSlipAngle;
                 pureLeftCorneringParameters.frontWheelParameters.steeringAngle = currentFrontWheelSteeringAngle;
                 pureLeftCorneringParameters.rearWheelParameters.steeringAngle = currentRearWheelSteeringAngle;
+                pureLeftCorneringParameters.yawMoment = _GetYawMoment(pureLeftCorneringParameters.carSlipAngle, pureLeftCorneringParameters.lateralAcceleration, pureLeftCorneringParameters.steeringWheelAngle);
             }
             //_UpdateCarSlipAngleVsYawMomentArrays();
         }
@@ -477,8 +479,8 @@ namespace InternshipTest.Simulation
             // Wheels loads [N]
             double[] wheelsLoads = Car.GetWheelsLoads(Speed, currentCarSlipAngle, 0);
             // Wheels longitudinal forces [N]
-            double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0] / 2, 0, Speed) * Math.Cos(frontWheelSteeringAngle);
-            double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1] / 2, 0, Speed) * Math.Cos(rearWheelSteeringAngle);
+            double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(frontWheelSteeringAngle);
+            double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(rearWheelSteeringAngle);
             // Lateral acceleration [m/s²]
             double lateralAcceleration = (frontWheelLateralForce + rearWheelLateralForce) / Car.InertiaAndDimensions.TotalMass;
 
@@ -676,8 +678,8 @@ namespace InternshipTest.Simulation
             // Wheels loads [N]
             double[] wheelsLoads = Car.GetWheelsLoads(Speed, carSlipAngle, 0);
             // Wheels longitudinal forces [N]
-            double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0] / 2, 0, Speed) * Math.Cos(frontWheelSteeringAngle);
-            double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1] / 2, 0, Speed) * Math.Cos(rearWheelSteeringAngle);
+            double frontWheelLateralForce = 2 * Car.FrontTire.TireModel.GetTireFy(0, wheelsSlipAngles[0], wheelsLoads[0], 0, Speed) * Math.Cos(frontWheelSteeringAngle);
+            double rearWheelLateralForce = 2 * Car.RearTire.TireModel.GetTireFy(0, wheelsSlipAngles[1], wheelsLoads[1], 0, Speed) * Math.Cos(rearWheelSteeringAngle);
             // Lateral acceleration [m/s²]
             double lateralAcceleration = (frontWheelLateralForce + rearWheelLateralForce) / Car.InertiaAndDimensions.TotalMass;
 

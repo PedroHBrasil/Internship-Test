@@ -255,7 +255,7 @@
                             syncfusion:DockingManager.SidePanelDock="Bottom"
                             syncfusion:DockingManager.SideInDockedMode="Bottom"
                             syncfusion:DockingManager.DesiredHeightInDockedMode="10">
-                <RichTextBox Background="#FF272E38">
+                <RichTextBox Name="projectCommentsTextBox" Background="#FF272E38">
                     <FlowDocument>
                         <Paragraph>Insert project's comments here.</Paragraph>
                     </FlowDocument>
@@ -2509,7 +2509,7 @@
                         </ContentControl>
                     </syncfusion:DockingManager>
                     <!-- Results Analysis Docking Manager: 2D Chart-->
-                    <Grid Name="resultsAnalysis2DChartsGrid" Visibility="Visible">
+                    <Grid Name="resultsAnalysis2DChartsGrid" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="500"/>
                             <ColumnDefinition/>

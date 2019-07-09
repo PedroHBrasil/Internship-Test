@@ -154,7 +154,7 @@ namespace InternshipTest.Vehicle
             double longitudinalLoadTransfer = _GetSprungMassLongitudinalLoadTransfer(longitudinalAcceleration) + _GetUnsprungMassLongitudinalLoadTransfer(longitudinalAcceleration);
             // Tire resultant Fz [N]
             double frontTireFz = (frontLiftForce + InertiaAndDimensions.FrontWeight - longitudinalLoadTransfer) / 2;
-            double rearTireFz = (rearLiftForce + InertiaAndDimensions.RearWeight) + longitudinalLoadTransfer / 2;
+            double rearTireFz = (rearLiftForce + InertiaAndDimensions.RearWeight + longitudinalLoadTransfer) / 2;
             // Correction in case of load = 0
             if (frontTireFz<0 && rearTireFz>0)
             {
@@ -181,8 +181,8 @@ namespace InternshipTest.Vehicle
         public double[] GetWheelsRadiuses(double[] wheelsLoads)
         {
             // Gets the front and rear wheels radiuses
-            double frontWheelRadius = FrontTire.TireModel.RO - wheelsLoads[0] / FrontTire.VerticalStiffness;
-            double rearWheelRadius = RearTire.TireModel.RO - wheelsLoads[1] / RearTire.VerticalStiffness;
+            double frontWheelRadius = FrontTire.TireModel.RO - wheelsLoads[0] * 2 / FrontTire.VerticalStiffness;
+            double rearWheelRadius = RearTire.TireModel.RO - wheelsLoads[1] * 2 / RearTire.VerticalStiffness;
 
             return new double[] { frontWheelRadius, rearWheelRadius };
         }
