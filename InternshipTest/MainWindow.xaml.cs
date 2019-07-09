@@ -494,12 +494,12 @@ namespace InternshipTest
             steeringSystemMaximumSteeringWheelAngleTextBox.Text = "120";
             //_AddSteeringSystemToListBox_Click(null, new RoutedEventArgs());
             // Gear Ratios
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)37 / (double)12));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)31 / (double)14));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)29 / (double)16));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)28 / (double)18));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)26 / (double)19));
-            gearRatiosListBox.Items.Add(new Vehicle.GearRatio((double)27 / (double)22));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(3.083));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(2.214));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.813));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.556));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.368));
+            gearRatiosListBox.Items.Add(new Vehicle.GearRatio(1.227));
             gearRatiosSetIDTextBox.Text = "gearRatiosLMP1";
             //_AddGearRatioSetToListBox_Click(null, new RoutedEventArgs());
             // Two Wheel Transmission
@@ -4662,7 +4662,7 @@ namespace InternshipTest
                     };
                 };
                 // Updates the path preview chart
-                if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked) _UpdateTabularPathSectionsPreviewChart();
+                if ((bool)tabularPathSectionsAllowPathPreviewCheckBox.IsChecked && tabularPathSectionsListBox.Items.Count > 0) _UpdateTabularPathSectionsPreviewChart();
             }
         }
 
