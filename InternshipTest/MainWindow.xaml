@@ -654,61 +654,6 @@
                     </syncfusion:DockingManager>
                     <!-- Engine Docking Manager-->
                     <syncfusion:DockingManager Name="engineInputDockingManager" Visibility="Collapsed">
-                        <!-- Engine Docking Window -->
-                        <ContentControl Name="engineDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Engine"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <!-- Engine listbox -->
-                                <ListBox Name="engineListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="2" SelectionChanged="_EngineListBox_SelectionChanged"/>
-                                <!-- Engine listbox add and delete buttons -->
-                                <Button Name="oneWheelAddEngineToListBox" Content="Add" Click="_AddEngineToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
-                                <Button Name="oneWheelDeleteEngineOfListBox" Content="Delete" Click="_DeleteEngineOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
-                                <!-- Engine ID line -->
-                                <TextBlock Text="Engine ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                <TextBox Name="engineIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                <!-- Description line -->
-                                <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="engineDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                <!-- Engine Curves selection line -->
-                                <TextBlock Text="Engine Curves" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="engineCurvesComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=engineCurvesListBox, Path=Items, Mode=OneWay}"/>
-                                <!-- Maximum throttle line -->
-                                <TextBlock Text="Max. Throttle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                <syncfusion:DoubleTextBox Name="maxThrottleTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" VerticalAlignment="Center" NumberDecimalDigits="3"/>
-                                <TextBlock Text="%" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- Fuel density line -->
-                                <TextBlock Text="Fuel Density" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
-                                <syncfusion:DoubleTextBox Name="fuelDensityTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
-                                <TextBlock Text="kg/m³" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
-                            </Grid>
-                        </ContentControl>
                         <!-- Engine Curves Docking Window -->
                         <ContentControl Name="engineCurvesDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -792,7 +737,7 @@
                                 <Button Name="engineImportCurvesToListBox" Content="Import from .csv" Click="_EngineImportCurvesToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
                                 <Button Name="engineClearCurvePointsListBox" Content="Clear" Click="_EngineClearCurvePointsListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <Button Name="engineAddCurvesPointToListBox" Content="Add" Click="_AddEngineCurvesPointToListBox_Click" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
-                                    <Button Name="engineDeleteCurvesPointOfListBox" Content="Delete" Click="_DeleteEngineCurvesPointOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <Button Name="engineDeleteCurvesPointOfListBox" Content="Delete" Click="_DeleteEngineCurvesPointOfListBox_Click" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
                                 <!-- New Point line -->
                                 <TextBlock Text="Data of Table's Line to Add:" Grid.Row="9" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2"/>
                                 <!-- New point's RPM line -->
@@ -815,6 +760,61 @@
                                 <syncfusion:DoubleTextBox Name="newEngineCurvesPointSpecFuelConsTextBox" Grid.Row="13" Grid.Column="3" Grid.ColumnSpan="2" 
                                                           HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
                                 <TextBlock Text="g/kW" Grid.Row="13" Grid.Column="5" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ContentControl>
+                        <!-- Engine Docking Window -->
+                        <ContentControl Name="engineDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Engine"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Engine listbox -->
+                                <ListBox Name="engineListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="2" SelectionChanged="_EngineListBox_SelectionChanged"/>
+                                <!-- Engine listbox add and delete buttons -->
+                                <Button Name="oneWheelAddEngineToListBox" Content="Add" Click="_AddEngineToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="oneWheelDeleteEngineOfListBox" Content="Delete" Click="_DeleteEngineOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <!-- Engine ID line -->
+                                <TextBlock Text="Engine ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox Name="engineIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                <!-- Description line -->
+                                <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBox Name="engineDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                <!-- Engine Curves selection line -->
+                                <TextBlock Text="Engine Curves" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <ComboBox Name="engineCurvesComboBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=engineCurvesListBox, Path=Items, Mode=OneWay}"/>
+                                <!-- Maximum throttle line -->
+                                <TextBlock Text="Max. Throttle" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                <syncfusion:DoubleTextBox Name="maxThrottleTextBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" VerticalAlignment="Center" NumberDecimalDigits="3"/>
+                                <TextBlock Text="%" Grid.Row="5" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- Fuel density line -->
+                                <TextBlock Text="Fuel Density" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5"/>
+                                <syncfusion:DoubleTextBox Name="fuelDensityTextBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="3"/>
+                                <TextBlock Text="kg/m³" Grid.Row="6" Grid.Column="5" VerticalAlignment="Center"/>
                             </Grid>
                         </ContentControl>
                     </syncfusion:DockingManager>
@@ -1078,55 +1078,6 @@
                     </syncfusion:DockingManager>
                     <!-- Tire Docking Manager -->
                     <syncfusion:DockingManager Name="tireInputDockingManager" Visibility="Collapsed">
-                        <!-- Tire Docking Window -->
-                        <ContentControl Name="tireDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Tire"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <!-- Tire listbox-->
-                                <ListBox Name="tireListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TireListBox_SelectionChanged"/>
-                                <!-- Tire listbox add and delete buttons -->
-                                <Button Name="addTireToListBox" Content="Add" Click="_AddTireToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
-                                <Button Name="deleteTireOfListBox" Content="Delete" Click="_DeleteTireOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
-                                <!-- Tire ID line -->
-                                <TextBlock Text="Tire ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <TextBox Name="tireIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                <!-- Description line -->
-                                <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="tireDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                <!-- Tire vertical stiffness line -->
-                                <TextBlock Text="Vert. Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <syncfusion:DoubleTextBox Name="tireStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
-                                <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- Tire model file selection line -->
-                                <TextBlock Text="Tire Model" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="tireModelComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=tireModelListBox, Path=Items, Mode=OneWay}"/>
-                            </Grid>
-                        </ContentControl>
                         <!-- Tire Model Docking Window -->
                         <ContentControl Name="tireModelDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -1514,6 +1465,55 @@
                                 <syncfusion:DoubleTextBox Name="tireModelMaxSlipAngleTextBox" Grid.Row="18" Grid.Column="4"
                                                           HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" NumberDecimalDigits="3"/>
                                 <TextBlock Text="deg" Grid.Row="18" Grid.Column="5" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                            </Grid>
+                        </ContentControl>
+                        <!-- Tire Docking Window -->
+                        <ContentControl Name="tireDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Tire"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.DesiredMinWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Tire listbox-->
+                                <ListBox Name="tireListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TireListBox_SelectionChanged"/>
+                                <!-- Tire listbox add and delete buttons -->
+                                <Button Name="addTireToListBox" Content="Add" Click="_AddTireToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="deleteTireOfListBox" Content="Delete" Click="_DeleteTireOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <!-- Tire ID line -->
+                                <TextBlock Text="Tire ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <TextBox Name="tireIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                <!-- Description line -->
+                                <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBox Name="tireDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                <!-- Tire vertical stiffness line -->
+                                <TextBlock Text="Vert. Stiffness" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <syncfusion:DoubleTextBox Name="tireStiffnessTextBox" Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="3"/>
+                                <TextBlock Text="N/mm" Grid.Row="4" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- Tire model file selection line -->
+                                <TextBlock Text="Tire Model" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <ComboBox Name="tireModelComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=tireModelListBox, Path=Items, Mode=OneWay}"/>
                             </Grid>
                         </ContentControl>
                         <!-- Tire Model Visualization Docking Window -->
@@ -2067,140 +2067,6 @@
                     </syncfusion:DockingManager>
                     <!-- Tabular Path Docking Manager -->
                     <syncfusion:DockingManager Name="tabularPathInputDockingManager" Visibility="Collapsed">
-                        <!-- Tabular Path Docking Window -->
-                        <ContentControl Name="tabularPathDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Tabular Path"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.State="Dock">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <!-- Tabular Path listbox-->
-                                <ListBox Name="tabularPathsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathsListBox_SelectionChanged"/>
-                                <!-- Tabular Path listbox add and delete buttons -->
-                                <Button Name="tabularPathAddPathToListBox" Content="Add" Click="_TabularPathAddPathToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
-                                <Button Name="tabularPathDeletePathOfListBox" Content="Delete" Click="_TabularPathDeletePathOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
-                                <!-- Allow Path display line -->
-                                <TextBlock Text="Path Display" Grid.Row="2" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <CheckBox Name="tabularPathAllowPathDisplayCheckBox" IsChecked="True" Checked="_TabularPathAllowPathDisplayCheckBox_Checked" Unchecked="_TabularPathAllowPathDisplayCheckBox_Unchecked" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <!-- Tabular Path ID line -->
-                                <TextBlock Text="Path ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <TextBox Name="tabularPathIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                <!-- Description line -->
-                                <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="tabularPathDescriptionTextBox" 
-                                         Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                <!-- Path sectors selection line -->
-                                <TextBlock Text="Sectors Set" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="tabularPathSectorsSetComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=tabularPathSectorsSetsListBox, Path=Items, Mode=OneWay}"/>
-                                <!-- Path sections selection line -->
-                                <TextBlock Text="Sections Set" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <ComboBox Name="tabularPathSectionsSetComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
-                                              ItemsSource="{Binding ElementName=tabularPathSectionsSetsListBox, Path=Items, Mode=OneWay}"/>
-                                <!-- Path Resolution -->
-                                <TextBlock Text="Resolution" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <syncfusion:DoubleTextBox Name="tabularPathResolutionTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"
-                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
-                                <TextBlock Text="mm" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
-                                <!-- Path Display Grid -->
-                                <Grid Name="tabularPathDisplayGrid" Grid.Column="6" Grid.RowSpan="8"/>
-                            </Grid>
-                        </ContentControl>
-                        <!-- Tabular Path Sectors Docking Window -->
-                        <ContentControl Name="tabularPathSectorsDockingWindow"
-                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
-                                        syncfusion:DockingManager.CanClose="False"
-                                        syncfusion:DockingManager.CanFloat="False"
-                                        syncfusion:DockingManager.Header="Sectors"
-                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
-                                        syncfusion:DockingManager.SideInDockedMode="Tabbed">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="100"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="*"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <!-- Transmission listbox -->
-                                <ListBox Name="tabularPathSectorsSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathSectorsListBox_SelectionChanged"/>
-                                <!-- Sectors listbox add and delete buttons -->
-                                <Button Name="tabularPathAddSectorsSetToListBox" Content="Add" Click="_TabularPathAddSectorsSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
-                                <Button Name="tabularPathDeleteSectorsSetOfListBox" Content="Delete" Click="_TabularPathDeleteSectorsSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
-                                <!-- Sectors ID line -->
-                                <TextBlock Text="Sectors ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                <TextBox Name="tabularPathSectorsSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
-                                <!-- Description line -->
-                                <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <TextBox Name="tabularPathSectorsSetDescriptionTextBox" 
-                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
-                                <!-- Sectors Start Distances list line -->
-                                <TextBlock Text="Sectors Start Distances:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
-                                <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="Index" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="Start Distance (m)" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                </Grid>
-                                <ListBox Name="tabularPathSectorsStartDistancesListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type local:PathSector}">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Text="{Binding Path=Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <TextBlock Text="{Binding Path=StartDistance}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                                <!-- Sectors Start Distances list buttons -->
-                                <Button Name="tabularPathAddSectorStartDistanceToListBox" Content="Add" Click="_TabularPathAddSectorStartDistanceToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
-                                <Button Name="tabularPathDeleteSectorStartDistanceOfListBox" Content="Delete" Click="_TabularPathDeleteSectorStartDistanceOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
-                                <!-- New sector start distance line -->
-                                <TextBlock Text="New Start Distance:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
-                                <syncfusion:DoubleTextBox Name="tabularPathNewSectorStartDistanceTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" 
-                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="2"/>
-                                <TextBlock Text="m" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
-                            </Grid>
-                        </ContentControl>
                         <!-- Tabular Path Sections Docking Window -->
                         <ContentControl Name="tabularPathSectionsDockingWindow"
                                         syncfusion:DockingManager.IsContextMenuButtonVisible="False"
@@ -2316,6 +2182,140 @@
                                 <TextBlock Text="m" Grid.Row="15" Grid.Column="5" VerticalAlignment="Center"/>
                                 <!-- Path Preview Grid -->
                                 <Grid Name="tabularPathSectionsPreviewGrid" Grid.Column="6" Grid.RowSpan="16"/>
+                            </Grid>
+                        </ContentControl>
+                        <!-- Tabular Path Sectors Docking Window -->
+                        <ContentControl Name="tabularPathSectorsDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Sectors"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.SideInDockedMode="Tabbed">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Transmission listbox -->
+                                <ListBox Name="tabularPathSectorsSetsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathSectorsListBox_SelectionChanged"/>
+                                <!-- Sectors listbox add and delete buttons -->
+                                <Button Name="tabularPathAddSectorsSetToListBox" Content="Add" Click="_TabularPathAddSectorsSetToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeleteSectorsSetOfListBox" Content="Delete" Click="_TabularPathDeleteSectorsSetOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <!-- Sectors ID line -->
+                                <TextBlock Text="Sectors ID" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <TextBox Name="tabularPathSectorsSetIDTextBox" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                <!-- Description line -->
+                                <TextBlock Text="Description" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBox Name="tabularPathSectorsSetDescriptionTextBox" 
+                                         Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                <!-- Sectors Start Distances list line -->
+                                <TextBlock Text="Sectors Start Distances:" Grid.Row="4" Grid.ColumnSpan="6" VerticalAlignment="Center" Margin="5,2,5,2" FontWeight="Bold"/>
+                                <Grid Grid.Row="5" Grid.ColumnSpan="6" Margin="5,0,5,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Index" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Start Distance (m)" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <ListBox Name="tabularPathSectorsStartDistancesListBox" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" HorizontalContentAlignment="Stretch">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type local:PathSector}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Path=Index}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding Path=StartDistance}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <!-- Sectors Start Distances list buttons -->
+                                <Button Name="tabularPathAddSectorStartDistanceToListBox" Content="Add" Click="_TabularPathAddSectorStartDistanceToListBox_Click" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeleteSectorStartDistanceOfListBox" Content="Delete" Click="_TabularPathDeleteSectorStartDistanceOfListBox_Click" Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <!-- New sector start distance line -->
+                                <TextBlock Text="New Start Distance:" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <syncfusion:DoubleTextBox Name="tabularPathNewSectorStartDistanceTextBox" Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" 
+                                                          HorizontalContentAlignment="Right" Margin="5,0,5,0" NumberDecimalDigits="2"/>
+                                <TextBlock Text="m" Grid.Row="8" Grid.Column="5" VerticalAlignment="Center"/>
+                            </Grid>
+                        </ContentControl>
+                        <!-- Tabular Path Docking Window -->
+                        <ContentControl Name="tabularPathDockingWindow"
+                                        syncfusion:DockingManager.IsContextMenuButtonVisible="False"
+                                        syncfusion:DockingManager.CanClose="False"
+                                        syncfusion:DockingManager.CanFloat="False"
+                                        syncfusion:DockingManager.Header="Tabular Path"
+                                        syncfusion:DockingManager.DesiredWidthInDockedMode="250"
+                                        syncfusion:DockingManager.State="Dock">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Tabular Path listbox-->
+                                <ListBox Name="tabularPathsListBox" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="5" SelectionChanged="_TabularPathsListBox_SelectionChanged"/>
+                                <!-- Tabular Path listbox add and delete buttons -->
+                                <Button Name="tabularPathAddPathToListBox" Content="Add" Click="_TabularPathAddPathToListBox_Click" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,2,2,2"/>
+                                <Button Name="tabularPathDeletePathOfListBox" Content="Delete" Click="_TabularPathDeletePathOfListBox_Click" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Margin="2,2,5,2"/>
+                                <!-- Allow Path display line -->
+                                <TextBlock Text="Path Display" Grid.Row="2" Grid.ColumnSpan="5" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <CheckBox Name="tabularPathAllowPathDisplayCheckBox" IsChecked="True" Checked="_TabularPathAllowPathDisplayCheckBox_Checked" Unchecked="_TabularPathAllowPathDisplayCheckBox_Unchecked" Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <!-- Tabular Path ID line -->
+                                <TextBlock Text="Path ID" Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <TextBox Name="tabularPathIDTextBox" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"/>
+                                <!-- Description line -->
+                                <TextBlock Text="Description" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,2,5,2"/>
+                                <TextBox Name="tabularPathDescriptionTextBox" 
+                                         Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2" TextWrapping="WrapWithOverflow"/>
+                                <!-- Path sectors selection line -->
+                                <TextBlock Text="Sectors Set" Grid.Row="5" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <ComboBox Name="tabularPathSectorsSetComboBox" Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=tabularPathSectorsSetsListBox, Path=Items, Mode=OneWay}"/>
+                                <!-- Path sections selection line -->
+                                <TextBlock Text="Sections Set" Grid.Row="6" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <ComboBox Name="tabularPathSectionsSetComboBox" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="4" Margin="5,2,5,2"
+                                              ItemsSource="{Binding ElementName=tabularPathSectionsSetsListBox, Path=Items, Mode=OneWay}"/>
+                                <!-- Path Resolution -->
+                                <TextBlock Text="Resolution" Grid.Row="7" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <syncfusion:DoubleTextBox Name="tabularPathResolutionTextBox" Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="3"
+                                                          Margin="5,0,5,0" HorizontalContentAlignment="Right" NumberDecimalDigits="0"/>
+                                <TextBlock Text="mm" Grid.Row="7" Grid.Column="5" VerticalAlignment="Center"/>
+                                <!-- Path Display Grid -->
+                                <Grid Name="tabularPathDisplayGrid" Grid.Column="6" Grid.RowSpan="8"/>
                             </Grid>
                         </ContentControl>
                     </syncfusion:DockingManager>

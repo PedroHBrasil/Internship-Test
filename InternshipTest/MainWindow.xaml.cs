@@ -1187,6 +1187,7 @@ namespace InternshipTest
         {
             _ClearUILists();
             _ResetOptionsButtonsBackground();
+            _PopulateFieldsWithLMP1();
         }
 
         /// <summary>
@@ -3102,7 +3103,7 @@ namespace InternshipTest
             if (tireModelListBox.SelectedItems.Count == 1)
             {
                 tireModelListBox.Items.RemoveAt(tireModelListBox.Items.IndexOf(tireModelListBox.SelectedItem));
-                tireModelDisplayCheckListBox.Items.RemoveAt(tireModelDisplayCheckListBox.Items.IndexOf(tireModelDisplayCheckListBox.SelectedItem));
+                tireModelDisplayCheckListBox.Items.RemoveAt(tireModelListBox.Items.IndexOf(tireModelListBox.SelectedItem));
             }
         }
 
