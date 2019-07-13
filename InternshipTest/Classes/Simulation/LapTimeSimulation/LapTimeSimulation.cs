@@ -223,7 +223,8 @@ namespace InternshipTest.Simulation
             }
             // Current speed
             double currentSpeed;
-            if (curvature == 0) currentSpeed = ggvDiagram.GetCarHighestSpeed();
+            if (curvature == 0 || Math.Abs(Math.Sqrt(currentLateralAcceleration / curvature)) > ggvDiagram.GetCarHighestSpeed())
+                currentSpeed = ggvDiagram.GetCarHighestSpeed();
             else currentSpeed = Math.Sqrt(currentLateralAcceleration / curvature);
             // Current gear
             int currentGear = ggvDiagram.GetGearNumberFromCarSpeed(currentSpeed);
@@ -277,7 +278,8 @@ namespace InternshipTest.Simulation
             }
             // Gets the maximum possible speed for the current point
             double currentSpeed;
-            if (curvature == 0) currentSpeed = ggvDiagram.GetCarHighestSpeed();
+            if (curvature == 0)
+                currentSpeed = ggvDiagram.GetCarHighestSpeed();
             else currentSpeed = Math.Sqrt(currentLateralAcceleration / curvature);
             // Current gear
             int currentGear = ggvDiagram.GetGearNumberFromCarSpeed(currentSpeed);
@@ -300,6 +302,10 @@ namespace InternshipTest.Simulation
         /// <returns> Final results </returns>
         protected Results.LapTimeSimulationResults GetFinalDynamicStates(object sender, Results.LapTimeSimulationResults results)
         {
+            results.Speeds = results.MaximumPossibleSpeeds;
+            results.LongitudinalAccelerations = results.LongitudinalAccelerationsForMaximumPossibleSpeeds;
+            results.LateralAccelerations = results.LateralAccelerationsForMaximumPossibleSpeeds;
+            results.GearNumbers = results.GearNumbersForMaximumPossibleSpeeds;
             // Uses the previously calculated dynamic states as the initial guess for the final states
             for (int iPathPoint = 0; iPathPoint < Path.AmountOfPointsInPath; iPathPoint++)
             {
@@ -329,16 +335,8 @@ namespace InternshipTest.Simulation
             // Path points sweep
             for (int iPoint = firstAnalysisPointIndex; iPoint >= 0; iPoint--)
             {
-                // Determines the index of the reference point
-                int iReferencePoint;
-                if (iPoint == 0) iReferencePoint = Path.AmountOfPointsInPath - 1; // Chooses the last point as the reference point
-                else iReferencePoint = iPoint - 1; // Chooses the previous point as the reference point
-                // Checks if the maximum possible speed at the reference point is equal or higher the one of the current point
-                if (results.Speeds[iReferencePoint] >= results.Speeds[iPoint])
-                {
-                    // Updates the point dynamic state
-                    results = _UpdateCurrentPointDynamicStateForCarLimitation(iPoint, "Braking", results);
-                }
+                // Updates the point dynamic state
+                results = _UpdateCurrentPointDynamicStateForCarLimitation(iPoint, "Braking", results);
                 // Progress counter update and report
                 progressCounter++;
                 int progress = (int)((double)(progressCounter + 1) / (Path.AmountOfPointsInPath * 4) * 100);
@@ -532,7 +530,6 @@ namespace InternshipTest.Simulation
             results.GearNumbers[iPoint] = ggvDiagram.GetGearNumberFromCarSpeed(currentSpeed);
             return results;
         }
-
 
         #endregion
         #endregion

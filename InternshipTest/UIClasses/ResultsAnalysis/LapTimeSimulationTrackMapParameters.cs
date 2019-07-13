@@ -314,7 +314,7 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.LongitudinalLoadTransferSprung:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].SprungLongitudinalLoadTransfers, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].SprungLongitudinalLoadTransfer, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {
@@ -342,7 +342,7 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.LongitudinalLoadTransferUnsprung:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].UnsprungLongitudinalLoadTransfers, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].UnsprungLongitudinalLoadTransfer, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {
@@ -384,7 +384,7 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.FrontBrakesPowerUsage:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].FrontBrakesUsage, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].FrontBrakesPowerUsage, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {
@@ -524,7 +524,7 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                 case LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.RearBrakesPowerUsage:
                     for (int i = 0; i < lapTimeSimulationResultsViewModel.ResultsDisplayCollection.Count(); i++)
                     {
-                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].RearBrakesUsage, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
+                        trackMap.Data.AddPoints(lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesX, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].RearBrakesPowerUsage, lapTimeSimulationResultsViewModel.ResultsDisplayCollection[i].CoordinatesY);
                     }
                     trackMap.YAxis = new SurfaceAxis()
                     {

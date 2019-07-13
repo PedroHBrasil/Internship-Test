@@ -186,7 +186,7 @@ namespace InternshipTest.Simulation
             if (iAcceleration == LateralAccelerations.Count - 1) iNextAcceleration = 0;
             else iNextAcceleration = iAcceleration + 1;
             // Calculates the interpolation ratio
-            double interpolationRatio = (lateralAcceleration - LateralAccelerations[iAcceleration]) -
+            double interpolationRatio = (lateralAcceleration - LateralAccelerations[iAcceleration]) /
                 (LateralAccelerations[iNextAcceleration] - LateralAccelerations[iAcceleration]);
             // Adjusts the interpolation ratio if necessary
             if (interpolationRatio < 0) interpolationRatio = 0;

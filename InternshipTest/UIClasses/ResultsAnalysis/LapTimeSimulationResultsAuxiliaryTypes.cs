@@ -75,7 +75,7 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                 case "Aerodynamic Lift Coefficient":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicLiftCoefficient;
                     break;
-                case "Downforce Distribution":
+                case "Aerodynamic Downforce Distribution":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.AerodynamicDownforceDistribution;
                     break;
                 case "Aerodynamic Drag Force":
@@ -130,7 +130,7 @@ namespace InternshipTest.UIClasses.ResultsAnalysis
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.LongitudinalLoadTransferTotal;
                     break;
                 case "Longitudinal Load Transfer - Unsprung":
-                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.LongitudinalLoadTransferSprung;
+                    resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.LongitudinalLoadTransferUnsprung;
                     break;
                 case "Front Brakes Available Power":
                     resultType = LapTimeSimulationResultsAuxiliaryTypes.ResultTypes.FrontBrakesAvailablePower;

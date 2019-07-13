@@ -552,24 +552,77 @@ namespace InternshipTest.Simulation
                     break;
                 case CarModelType.TwoWheel:
                     // Generates the linear system matrix A and vector b of A*x=b adn solves it.
-                    // Equations set:
-                    // 0: frontLongitudinalForce + rearLonitudinalForce = totalLongitudinalForce
-                    // 1: frontTorque * (1-torqueBias) - rearToque = 0
-                    // 2: frontLongitudinalForce - frontTorque / frontWheelRadius = 0
-                    // 3: rearLongitudinalForce - rearTorque / rearWheelRadius = 0
-                    var A = Matrix<double>.Build.DenseOfArray(new double[,] {
+                    Matrix<double> A;
+                    if (carLongitudinalForce-aerodynamicDrag>0)
+                    {
+                        if (TwoWheelCar.Transmission.TorqueBias == 0)
+                        {
+                            // Equations set:
+                            // 0: frontLongitudinalForce + rearLonitudinalForce = totalLongitudinalForce
+                            // 1: frontTorque - rearToque * ( 1 - 1 / (1 - torqueBias)) = 0
+                            // 2: frontLongitudinalForce - frontTorque / frontWheelRadius = 0
+                            // 3: rearLongitudinalForce - rearTorque / rearWheelRadius = 0
+                            A = Matrix<double>.Build.DenseOfArray(new double[,] {
                         { 1, 1, 0, 0 },
-                        { 0, 0, 1-TwoWheelCar.Transmission.TorqueBias, -1},
+                        { 0, 0, 1, 1-1/(1-TwoWheelCar.Transmission.TorqueBias)},
                         { 1, 0, -1/wheelsRadiuses[0], 0},
                         { 0, 1, 0, -1/wheelsRadiuses[1]}
-                    });
+                        });
+                        }
+                        else
+                        // Equations set:
+                        // 0: frontLongitudinalForce + rearLonitudinalForce = totalLongitudinalForce
+                        // 1: frontTorque * ( 1 - 1 / torqueBias) - rearToque = 0
+                        // 2: frontLongitudinalForce - frontTorque / frontWheelRadius = 0
+                        // 3: rearLongitudinalForce - rearTorque / rearWheelRadius = 0
+                        {
+                            A = Matrix<double>.Build.DenseOfArray(new double[,] {
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1-1/TwoWheelCar.Transmission.TorqueBias, 1},
+                        { 1, 0, -1/wheelsRadiuses[0], 0},
+                        { 0, 1, 0, -1/wheelsRadiuses[1]}
+                        });
+                        }
+                    }
+                    else
+                    {
+                        if (TwoWheelCar.Brakes.BrakeBias == 0)
+                        {
+                            // Equations set:
+                            // 0: frontLongitudinalForce + rearLonitudinalForce = totalLongitudinalForce
+                            // 1: frontTorque - rearToque * ( 1 - 1 / (1 - brakeBias)) = 0
+                            // 2: frontLongitudinalForce - frontTorque / frontWheelRadius = 0
+                            // 3: rearLongitudinalForce - rearTorque / rearWheelRadius = 0
+                            A = Matrix<double>.Build.DenseOfArray(new double[,] {
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1, 1-1/(1-TwoWheelCar.Brakes.BrakeBias)},
+                        { 1, 0, -1/wheelsRadiuses[0], 0},
+                        { 0, 1, 0, -1/wheelsRadiuses[1]}
+                        });
+                        }
+                        else
+                        // Equations set:
+                        // 0: frontLongitudinalForce + rearLonitudinalForce = totalLongitudinalForce
+                        // 1: frontTorque * ( 1 - 1 / brakeBias) - rearToque = 0
+                        // 2: frontLongitudinalForce - frontTorque / frontWheelRadius = 0
+                        // 3: rearLongitudinalForce - rearTorque / rearWheelRadius = 0
+                        {
+                            A = Matrix<double>.Build.DenseOfArray(new double[,] {
+                        { 1, 1, 0, 0 },
+                        { 0, 0, 1-1/TwoWheelCar.Brakes.BrakeBias, 1},
+                        { 1, 0, -1/wheelsRadiuses[0], 0},
+                        { 0, 1, 0, -1/wheelsRadiuses[1]}
+                        });
+                        }
+                    }
+                    
                     var b = Vector<double>.Build.Dense(new double[] { carLongitudinalForce - aerodynamicDrag , 0, 0, 0});
                     var x = A.Solve(b);
                     // Gets the results out of the vector x
                     wheelsLongitudinalForces[0] = x[0];
                     wheelsLongitudinalForces[1] = x[1];
                     wheelsTorques[0] = x[2];
-                    wheelsTorques[0] = x[3];
+                    wheelsTorques[1] = x[3];
                     break;
                 default:
                     break;
@@ -592,7 +645,7 @@ namespace InternshipTest.Simulation
         /// <param name="wheelsLongitudinalForces"> Wheels longitudinal forces [N] </param>
         /// <param name="speed"> Car speed [m/s] </param>
         /// <returns> Engine power [W] </returns>
-        public double GetEnginePower(double[] wheelsTorques, double[] wheelsAngularSpeeds)
+        public double GetEnginePowerFromTorque(double[] wheelsTorques, double[] wheelsAngularSpeeds)
         {
             switch (CarModelType)
             {
@@ -607,6 +660,25 @@ namespace InternshipTest.Simulation
                     }
                 case CarModelType.TwoWheel:
                     return (wheelsTorques[0] * wheelsAngularSpeeds[0] + wheelsTorques[1] * wheelsAngularSpeeds[1]) / TwoWheelCar.Transmission.Efficiency;
+                default:
+                    return 0;
+            }
+        }
+        public double GetEnginePowerFromForce(double[] wheelsLongitudinalForces, double speed)
+        {
+            switch (CarModelType)
+            {
+                case CarModelType.OneWheel:
+                    if (OneWheelCar.Transmission.Type == "4WD")
+                    {
+                        return wheelsLongitudinalForces[1] * speed * 2 / OneWheelCar.Transmission.Efficiency;
+                    }
+                    else
+                    {
+                        return wheelsLongitudinalForces[0] * speed / OneWheelCar.Transmission.Efficiency;
+                    }
+                case CarModelType.TwoWheel:
+                    return (wheelsLongitudinalForces[0] * speed + wheelsLongitudinalForces[1] * speed) / TwoWheelCar.Transmission.Efficiency;
                 default:
                     return 0;
             }
@@ -644,13 +716,13 @@ namespace InternshipTest.Simulation
         /// <summary>
         /// Gets the brakes powers.
         /// </summary>
-        /// <param name="wheelsTorques"> Torques at the wheels [N] </param>
-        /// <param name="wheelsAngularSpeeds"> Wheels angular speeds [rad/s] </param>
+        /// <param name="wheelsLongitudinalForces"> Torques at the wheels [N] </param>
+        /// <param name="speed"> Wheels angular speeds [rad/s] </param>
         /// <returns> Brakes powers [W] </returns>
-        public double[] GetBrakesPower(double[] wheelsTorques, double[] wheelsAngularSpeeds)
+        public double[] GetBrakesPower(double[] wheelsLongitudinalForces, double speed)
         {
-            double frontBrakesPower = -wheelsTorques[0] * wheelsAngularSpeeds[0];
-            double rearBrakesPower = -wheelsTorques[1] * wheelsAngularSpeeds[1];
+            double frontBrakesPower = -wheelsLongitudinalForces[0] * speed;
+            double rearBrakesPower = -wheelsLongitudinalForces[1] * speed;
             return new double[] { frontBrakesPower, rearBrakesPower };
         }
         /// <summary>
@@ -671,8 +743,8 @@ namespace InternshipTest.Simulation
                 case CarModelType.TwoWheel:
                     double referenceWheelAngularSpeed = wheelsAngularSpeeds[0] + (1 - TwoWheelCar.Transmission.TorqueBias) * (wheelsAngularSpeeds[1] - wheelsAngularSpeeds[0]);
                     alglib.spline1dbuildlinear(TwoWheelCar.WheelRotationalSpeedCurve.ToArray(), TwoWheelCar.WheelBrakingTorqueCurve.ToArray(), out alglib.spline1dinterpolant twoWheelBrakingTorqueInterp);
-                    brakesAvailablePowers[0] = wheelsAngularSpeeds[0] * (alglib.spline1dcalc(twoWheelBrakingTorqueInterp, referenceWheelAngularSpeed) * TwoWheelCar.Transmission.TorqueBias + TwoWheelCar.Brakes.FrontMaximumTorque);
-                    brakesAvailablePowers[1] = wheelsAngularSpeeds[1] * (alglib.spline1dcalc(twoWheelBrakingTorqueInterp, referenceWheelAngularSpeed) * (1 - TwoWheelCar.Transmission.TorqueBias) + TwoWheelCar.Brakes.RearMaximumTorque);
+                    brakesAvailablePowers[0] = wheelsAngularSpeeds[0] * (alglib.spline1dcalc(twoWheelBrakingTorqueInterp, referenceWheelAngularSpeed) * TwoWheelCar.Transmission.TorqueBias - TwoWheelCar.Brakes.FrontMaximumTorque);
+                    brakesAvailablePowers[1] = wheelsAngularSpeeds[1] * (alglib.spline1dcalc(twoWheelBrakingTorqueInterp, referenceWheelAngularSpeed) * (1 - TwoWheelCar.Transmission.TorqueBias) - TwoWheelCar.Brakes.RearMaximumTorque);
                     break;
                 default:
                     break;

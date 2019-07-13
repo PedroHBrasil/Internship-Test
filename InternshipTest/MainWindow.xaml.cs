@@ -5396,13 +5396,11 @@ namespace InternshipTest
                     // Gets the results per sector
                     for (int iSector = 1; iSector < results.LocalSectors.Last() + 1; iSector++)
                     {
-                        Results.LapTimeSimulationResultsViewModel currentSectorResultsViewModel = new Results.LapTimeSimulationResultsViewModel(results, iSector);
-                        chart = chartParameters.AddDataToChart(chart, "", currentSectorResultsViewModel, 5);
+                        chart = chartParameters.AddDataToChart(chart, "", results.ViewModelsPerSector[iSector - 1], 5);
                     }
                 }
                 // Gets the lap results
-                Results.LapTimeSimulationResultsViewModel resultsViewModel = new Results.LapTimeSimulationResultsViewModel(results);
-                chart = chartParameters.AddDataToChart(chart, results.ID, resultsViewModel, 2);
+                chart = chartParameters.AddDataToChart(chart, results.ID, results.ViewModel, 2);
             }
             // Adds the chart to the current chart tab
             resultsAnalysis2DChartGrid.Children.Clear();

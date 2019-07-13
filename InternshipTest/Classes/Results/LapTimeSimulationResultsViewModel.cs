@@ -10,6 +10,7 @@ namespace InternshipTest.Results
     /// <summary>
     /// Used to dislpay the lap time simulation results.
     /// </summary>
+    [Serializable]
     public class LapTimeSimulationResultsViewModel : GenericInfo
     {
         #region Properties
@@ -31,6 +32,7 @@ namespace InternshipTest.Results
         public int AmountOfGearShifts { get; set; }
         #endregion
         #region Constructors
+        public LapTimeSimulationResultsViewModel() { }
         public LapTimeSimulationResultsViewModel(LapTimeSimulationResults results)
         {
             ID = results.ID;
@@ -80,8 +82,8 @@ namespace InternshipTest.Results
                     results.RearBrakesPowers[iResult],
                     results.FrontBrakesAvailablePowers[iResult],
                     results.RearBrakesAvailablePowers[iResult],
-                    results.FrontBrakesUsages[iResult],
-                    results.RearBrakesUsages[iResult],
+                    results.FrontBrakesPowerUsage[iResult],
+                    results.RearBrakesPowerUsage[iResult],
                     results.FuelConsumptions[iResult],
                     results.CoordinatesX[iResult],
                     results.CoordinatesY[iResult]
@@ -143,8 +145,8 @@ namespace InternshipTest.Results
                        results.RearBrakesPowers[iResult],
                        results.FrontBrakesAvailablePowers[iResult],
                        results.RearBrakesAvailablePowers[iResult],
-                       results.FrontBrakesUsages[iResult],
-                       results.RearBrakesUsages[iResult],
+                       results.FrontBrakesPowerUsage[iResult],
+                       results.RearBrakesPowerUsage[iResult],
                        results.FuelConsumptions[iResult],
                        results.CoordinatesX[iResult],
                        results.CoordinatesY[iResult]
@@ -161,6 +163,7 @@ namespace InternshipTest.Results
     /// <summary>
     /// Contanis the information of one lap time simulation result point.
     /// </summary>
+    [Serializable]
     public class LapTimeSimulationResultPoint
     {
         #region Properties
@@ -227,11 +230,11 @@ namespace InternshipTest.Results
         /// <summary>
         /// Longitudinal load transfer due to unsprung mass [N]
         /// </summary>
-        public double UnsprungLongitudinalLoadTransfers { get; set; }
+        public double UnsprungLongitudinalLoadTransfer { get; set; }
         /// <summary>
         /// Longitudinal load transfer due to sprung mass [N]
         /// </summary>
-        public double SprungLongitudinalLoadTransfers { get; set; }
+        public double SprungLongitudinalLoadTransfer { get; set; }
         /// <summary>
         /// Front wheel load [N]
         /// </summary>
@@ -331,11 +334,11 @@ namespace InternshipTest.Results
         /// <summary>
         /// Front brakes usage [%]
         /// </summary>
-        public double FrontBrakesUsage { get; set; }
+        public double FrontBrakesPowerUsage { get; set; }
         /// <summary>
         /// Rear brakes usage [%]
         /// </summary>
-        public double RearBrakesUsage { get; set; }
+        public double RearBrakesPowerUsage { get; set; }
         /// <summary>
         /// Fuel consumption [mL]
         /// </summary>
@@ -350,6 +353,7 @@ namespace InternshipTest.Results
         public double CoordinatesY { get; set; }
         #endregion
         #region Constructors
+        public LapTimeSimulationResultPoint() { }
         public LapTimeSimulationResultPoint(double elapsedTime, double elapsedDistance, double speed,
             double longitudinalAcceleration, double lateralAcceleration, int gearNumber, double dragCoefficient, double liftCoefficient, double downforceDistribution, double dragForce, double liftForce, double frontLiftForce, double rearLiftForce, double totalVerticalLoad, double totalLongitudinalLoadTransfer, double unsprungLoadTransfer, double sprungLoadTransfer, double frontWheelLoad, double rearWheelLoad, double frontWheelRadius, double rearWheelRadius, double frontSuspensionDeflection, double rearSuspensionDeflection, double frontRideHeight, double rearRideHeight, double lateralForce, double inertiaEfficiency, double longitudinalForce, double frontWheelLongitudinalForce, double rearWheelLongitudinalForce, double frontWheelTorque, double rearWheelTorque, double frontWheelAngularSpeed, double rearWheelAngularSpeed, double enginePower, double engineAvailablePower, double enginePowerUsage, double frontBrakesPower, double rearBrakesPower, double frontBrakesAvailablePower, double rearBrakesAvailablePower, double frontBrakesUsage, double rearBrakesUsage, double fuelConsumption, double coordinatesX, double coordinatesY)
         {
@@ -368,8 +372,8 @@ namespace InternshipTest.Results
             RearLiftForce = rearLiftForce;
             TotalVerticalLoad = totalVerticalLoad;
             TotalLongitudinalLoadTransfer = totalLongitudinalLoadTransfer;
-            UnsprungLongitudinalLoadTransfers = unsprungLoadTransfer;
-            SprungLongitudinalLoadTransfers = sprungLoadTransfer;
+            UnsprungLongitudinalLoadTransfer = unsprungLoadTransfer;
+            SprungLongitudinalLoadTransfer = sprungLoadTransfer;
             FrontWheelLoad = frontWheelLoad;
             RearWheelLoad = rearWheelLoad;
             FrontWheelRadius = frontWheelRadius * 1000;
@@ -394,8 +398,8 @@ namespace InternshipTest.Results
             RearBrakesPower = rearBrakesPower / 1000;
             FrontBrakesAvailablePower = frontBrakesAvailablePower / 1000;
             RearBrakesAvailablePower = rearBrakesAvailablePower / 1000;
-            FrontBrakesUsage = frontBrakesUsage * 100;
-            RearBrakesUsage = rearBrakesUsage * 100;
+            FrontBrakesPowerUsage = frontBrakesUsage * 100;
+            RearBrakesPowerUsage = rearBrakesUsage * 100;
             FuelConsumption = fuelConsumption * 1e6;
             CoordinatesX = coordinatesX;
             CoordinatesY = coordinatesY;

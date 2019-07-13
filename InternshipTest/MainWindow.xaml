@@ -2563,7 +2563,6 @@
                                 <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
                                 <ComboBoxItem Content="Aerodynamic Downforce Distribution"/>
                                 <ComboBoxItem Content="Aerodynamic Drag Force"/>
-                                <ComboBoxItem Content="Aerodynamic Side Force"/>
                                 <ComboBoxItem Content="Aerodynamic Lift Force"/>
                                 <ComboBoxItem Content="Aerodynamic Front Lift Force"/>
                                 <ComboBoxItem Content="Aerodynamic Rear Lift Force"/>
@@ -2612,7 +2611,6 @@
                                 <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
                                 <ComboBoxItem Content="Aerodynamic Downforce Distribution"/>
                                 <ComboBoxItem Content="Aerodynamic Drag Force"/>
-                                <ComboBoxItem Content="Aerodynamic Side Force"/>
                                 <ComboBoxItem Content="Aerodynamic Lift Force"/>
                                 <ComboBoxItem Content="Aerodynamic Front Lift Force"/>
                                 <ComboBoxItem Content="Aerodynamic Rear Lift Force"/>
@@ -2717,7 +2715,6 @@
                                 <ComboBoxItem Content="Aerodynamic Lift Coefficient"/>
                                 <ComboBoxItem Content="Aerodynamic Downforce Distribution"/>
                                 <ComboBoxItem Content="Aerodynamic Drag Force"/>
-                                <ComboBoxItem Content="Aerodynamic Side Force"/>
                                 <ComboBoxItem Content="Aerodynamic Lift Force"/>
                                 <ComboBoxItem Content="Aerodynamic Front Lift Force"/>
                                 <ComboBoxItem Content="Aerodynamic Rear Lift Force"/>

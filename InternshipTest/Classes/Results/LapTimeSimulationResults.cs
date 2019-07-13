@@ -15,6 +15,8 @@ namespace InternshipTest.Results
     {
         private double lapTime;
         #region Properties
+        public List<LapTimeSimulationResultsViewModel> ViewModelsPerSector { get; set; }
+        public LapTimeSimulationResultsViewModel ViewModel { get; set; }
         #region Standard Array Results
         /// <summary>
         /// GGV Diarams used in the lap time simulation
@@ -167,8 +169,8 @@ namespace InternshipTest.Results
         public double[] RearBrakesPowers { get; set; }
         public double[] FrontBrakesAvailablePowers { get; set; }
         public double[] RearBrakesAvailablePowers { get; set; }
-        public double[] FrontBrakesUsages { get; set; }
-        public double[] RearBrakesUsages { get; set; }
+        public double[] FrontBrakesPowerUsage { get; set; }
+        public double[] RearBrakesPowerUsage { get; set; }
         #endregion
         #endregion
         #region Key Performance Indicators:
@@ -232,6 +234,13 @@ namespace InternshipTest.Results
             LapTime = ElapsedTimes.Last();
             TotalFuelConsumption = FuelConsumptions.Last();
             AmountOfGearShifts = _GetAmountOfGearShifts();
+            ViewModel = new LapTimeSimulationResultsViewModel(this);
+            // Gets the results per sector
+            ViewModelsPerSector = new List<LapTimeSimulationResultsViewModel>();
+            for (int iSector = 1; iSector < LocalSectors.Last() + 1; iSector++)
+            {
+                ViewModelsPerSector.Add(new LapTimeSimulationResultsViewModel(this, iSector));
+            }
         }
         #region Private
         /// <summary>
@@ -287,8 +296,8 @@ namespace InternshipTest.Results
             RearBrakesPowers = new double[amountOfPointsInPath];
             FrontBrakesAvailablePowers = new double[amountOfPointsInPath];
             RearBrakesAvailablePowers = new double[amountOfPointsInPath];
-            FrontBrakesUsages = new double[amountOfPointsInPath];
-            RearBrakesUsages = new double[amountOfPointsInPath];
+            FrontBrakesPowerUsage = new double[amountOfPointsInPath];
+            RearBrakesPowerUsage = new double[amountOfPointsInPath];
             LocalFuelConsumptions = new double[amountOfPointsInPath];
             FuelConsumptions = new double[amountOfPointsInPath];
         }
@@ -465,7 +474,10 @@ namespace InternshipTest.Results
         {
             if (LongitudinalForces[iPoint] - AeroDragForces[iPoint] > 0)
             {
-                EnginePowers[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetEnginePower(new double[] { FrontWheelsTorques[iPoint], RearWheelsTorques[iPoint] }, new double[] { FrontWheelsAngularSpeeds[iPoint], RearWheelsAngularSpeeds[iPoint] });
+                double enginePowerFromForces = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetEnginePowerFromForce(new double[] { FrontWheelsLongiudinalForces[iPoint], RearWheelsLongiudinalForces[iPoint] }, Speeds[iPoint]);
+                double enginePowerFromTorques= GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetEnginePowerFromTorque(new double[] { FrontWheelsTorques[iPoint], RearWheelsTorques[iPoint] }, new double[] { FrontWheelsAngularSpeeds[iPoint], RearWheelsAngularSpeeds[iPoint] });
+                double powerDifference = enginePowerFromTorques - enginePowerFromForces;
+                EnginePowers[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetEnginePowerFromForce(new double[] { FrontWheelsLongiudinalForces[iPoint], RearWheelsLongiudinalForces[iPoint] }, Speeds[iPoint]);
             }
             else EnginePowers[iPoint] = 0;
         }
@@ -496,7 +508,7 @@ namespace InternshipTest.Results
         {
             if (LongitudinalForces[iPoint] - AeroDragForces[iPoint] < 0)
             {
-                double[] brakesPowers = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetBrakesPower(new double[] { FrontWheelsTorques[iPoint], RearWheelsTorques[iPoint] }, new double[] { FrontWheelsAngularSpeeds[iPoint], RearWheelsAngularSpeeds[iPoint] });
+                double[] brakesPowers = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetBrakesPower(new double[] { FrontWheelsLongiudinalForces[iPoint], RearWheelsLongiudinalForces[iPoint] }, Speeds[iPoint]);
                 FrontBrakesPowers[iPoint] = brakesPowers[0];
                 RearBrakesPowers[iPoint] = brakesPowers[1];
             }
@@ -524,8 +536,8 @@ namespace InternshipTest.Results
         /// <param name="iSector"> Index of the current sector. </param>
         private void _GetBrakesUsages(int iPoint, int iSector)
         {
-            FrontBrakesUsages[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetUsageRatio(FrontBrakesPowers[iPoint], FrontBrakesAvailablePowers[iPoint]);
-            RearBrakesUsages[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetUsageRatio(RearBrakesPowers[iPoint], RearBrakesAvailablePowers[iPoint]);
+            FrontBrakesPowerUsage[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetUsageRatio(FrontBrakesPowers[iPoint], FrontBrakesAvailablePowers[iPoint]);
+            RearBrakesPowerUsage[iPoint] = GGVDiagramsPerSector[iSector].SectorGGVDiagram.GetUsageRatio(RearBrakesPowers[iPoint], RearBrakesAvailablePowers[iPoint]);
         }
         /// <summary>
         /// Gets the car's fuel consumption.
